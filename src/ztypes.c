@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "typed.h"
+#include "ztypes.h"
 
 static void *safe_realloc(void * data, size_t size)
 {
@@ -19,12 +19,12 @@ static void *safe_realloc(void * data, size_t size)
 }
 
 
-z__Dynt z__Dynt_create(size_t size, z__u32 len, const char *name, size_t nameLength)
+z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *name, size_t nameLength)
 {
     z__Dynt arrt;
 
-    arrt.data = malloc(size * len);
-    arrt.size = size;
+    arrt.data = malloc(type * len);
+    arrt.size = type;
     arrt.len = len;
     arrt.lenUsed = 0;
 

@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "typed_config.h"
+#include "ztypes_config.h"
 
 typedef uint8_t  z__u8;
 typedef uint16_t z__u16;
@@ -88,7 +88,9 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 
 }z__Dynt;
 
-z__Dynt z__Dynt_create(size_t size, z__u32 len, const char *name, size_t nameLength);
+#define z__typeof sizeof
+#define z__type size_t
+z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *name, size_t nameLength);
 void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
 void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
