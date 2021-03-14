@@ -1,15 +1,11 @@
 #ifndef ZAKAROUF__DYNAMIC_TYPE_H
 #define ZAKAROUF__DYNAMIC_TYPE_H
 
-
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-
-#define Z___TYPE_CONFIG__USE_TYPE_ARRAYS
-#define Z___TYPE_CONFIG__USE_F64_FOR_VECTOR
-
+#include "typed_config.h"
 
 typedef uint8_t  z__u8;
 typedef uint16_t z__u16;
