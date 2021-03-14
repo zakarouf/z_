@@ -435,11 +435,21 @@ void z__boolArr_resize( z__boolArr *arr, z__bool newSize)
 #endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
 
+#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
 
+typedef uint32_t z__type;
 
+typedef struct _Z__DYNAMICTYPED_TYPES_DEFAULT_ST
+{
+    z__Dynt *types;
+    uint32_t used;
+    uint32_t size;
+
+}_z__DEF_TYPES;
 
 z__Dynt z__Dynt_CreateNew(z__CreateDyntInfo info)
 {
     return (z__Dynt){0};
 }
 
+#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT

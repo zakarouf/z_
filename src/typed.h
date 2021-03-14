@@ -373,6 +373,7 @@ z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt);
 
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
+
 typedef struct _Z_CREATE_DYNT_INFO_ST
 {   
     size_t typeSize;
@@ -406,6 +407,6 @@ typedef struct __ZAKAROUF__DYNAMIC_TYPE_STRUCT
 
 }z__Dynt;
 
+#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
 
-
-#endif
+#endif // Header Guard
