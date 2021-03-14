@@ -110,6 +110,16 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+
+z__ptrArr z__ptrArr_create(z__u32 len)
+{
+    return (z__ptrArr) {
+        .data = malloc(sizeof (z__ptr) * len),
+        .len = len,
+        .lenUsed = 0
+    };
+}
+
 z__i8Arr z__i8Arr_create(z__u32 len)
 {
     return (z__i8Arr) {

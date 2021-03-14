@@ -202,6 +202,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 	}z__boolArr;
 
+	typedef struct __ZAKAROUF__ptrArr_TYPE_STRUCT
+	{
+		z__ptr *data;
+		
+		z__u32 len;
+		z__u32 lenUsed;
+
+	}z__ptrArr;
+
+	
 
 	z__i8Arr z__i8Arr_create(z__u32 len);
 	z__i16Arr z__i16Arr_create(z__u32 len);
@@ -216,6 +226,8 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 	z__f64Arr z__f64Arr_create(z__u32 len);
 
 	z__boolArr z__boolArr_create(z__u32 len);
+
+	z__ptrArr z__ptrArr_create(z__u32 len);
 
 
 	void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
