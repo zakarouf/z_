@@ -88,9 +88,16 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 	z__u32 size;
 	z__u32 len;
 	z__u32 lenUsed;
-	char *name;
+	char *comment;
 
-}z__Arrt;
+}z__ptrArr;
+
+z__ptrArr z__ptrArr_create(size_t size, z__u32 len, const char *name, size_t nameLength);
+void z__ptrArr_delete(z__ptrArr* arrt, z__bool nameFree);
+void z__ptrArr_push( z__ptrArr *arrt, void *val);
+void z__ptrArr_pop( z__ptrArr *arrt);
+z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt);
+
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
@@ -201,6 +208,10 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 #endif
 
 
+#define z__ptrArr_getvalSize(arr)\
+	(z__ptrArr)arr.size
+#define z__ptrArr_getVal(arr, at)\
+	((arr.data) + (at * arr.size))
 typedef struct _Z_CREATE_DYNT_INFO_ST
 {   
     size_t typeSize;
