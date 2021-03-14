@@ -86,13 +86,14 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 	z__u32 lenUsed;
 	char *comment;
 
-}z__ptrArr;
+}z__Dynt;
 
-z__ptrArr z__ptrArr_create(size_t size, z__u32 len, const char *name, size_t nameLength);
-void z__ptrArr_delete(z__ptrArr* arrt, z__bool nameFree);
-void z__ptrArr_push( z__ptrArr *arrt, void *val);
-void z__ptrArr_pop( z__ptrArr *arrt);
-z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt);
+z__Dynt z__Dynt_create(size_t size, z__u32 len, const char *name, size_t nameLength);
+void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
+void z__Dynt_push( z__Dynt *arrt, void *val);
+void z__Dynt_pop( z__Dynt *arrt);
+void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
+z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
@@ -360,49 +361,10 @@ z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt);
 #define z__Arr_getTop(arr)\
 	arr.data[arr.lenUsed-1]
 
-#define z__ptrArr_getvalSize(arr)\
-	(z__ptrArr)arr.size
-#define z__ptrArr_getVal(arr, at)\
+#define z__Dynt_getvalSize(arr)\
+	(z__Dynt)arr.size
+#define z__Dynt_getVal(arr, at)\
 	((arr.data) + (at * arr.size))
 
-
-
-
-#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
-
-typedef struct _Z_CREATE_DYNT_INFO_ST
-{   
-    size_t typeSize;
-    z__u32 len;
-
-    char *name;
-    size_t nameSize;
-    z__ptr initVal;
-    size_t initValSize;
-
-
-}z__CreateDyntInfo;
-
-typedef struct __ZAKAROUF__DYNAMIC_TYPE_ATTRIBUTE_STRUCT
-{
-
-	size_t size;
-	char * name;
-	const z__u16 mod;
-
-
-}z__Dynt__attr;
-
-typedef struct __ZAKAROUF__DYNAMIC_TYPE_STRUCT
-{
-	z__ptr data;
-	z__u32 len;
-	z__u32 lenUsed;
-
-	z__Dynt__attr attr;
-
-}z__Dynt;
-
-#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
 
 #endif // Header Guard

@@ -19,9 +19,9 @@ static void *safe_realloc(void * data, size_t size)
 }
 
 
-z__ptrArr z__ptrArr_create(size_t size, z__u32 len, const char *name, size_t nameLength)
+z__Dynt z__Dynt_create(size_t size, z__u32 len, const char *name, size_t nameLength)
 {
-    z__ptrArr arrt;
+    z__Dynt arrt;
 
     arrt.data = malloc(size * len);
     arrt.size = size;
@@ -40,7 +40,7 @@ z__ptrArr z__ptrArr_create(size_t size, z__u32 len, const char *name, size_t nam
 
     return arrt;
 }
-void z__ptrArr_push( z__ptrArr *arrt, void *val)
+void z__Dynt_push( z__Dynt *arrt, void *val)
 {
     if (arrt->lenUsed >= arrt->len)
     {
@@ -52,7 +52,7 @@ void z__ptrArr_push( z__ptrArr *arrt, void *val)
     memcpy(tmpptr, val, arrt->size);
     arrt->lenUsed += 1;
 }
-void z__ptrArr_pop( z__ptrArr *arrt)
+void z__Dynt_pop( z__Dynt *arrt)
 {
     arrt->lenUsed -= 1;
     if ((arrt->len - arrt->lenUsed) >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
@@ -61,7 +61,7 @@ void z__ptrArr_pop( z__ptrArr *arrt)
         arrt->data = safe_realloc(arrt->data,  arrt->size * (arrt->len) );
     }
 }
-void z__ptrArr_resize(z__ptrArr *arrt, z__u32 newsize)
+void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
 {
     arrt->len = newsize;
     if (arrt->lenUsed > arrt->len)
@@ -71,9 +71,9 @@ void z__ptrArr_resize(z__ptrArr *arrt, z__u32 newsize)
 
     arrt->data = safe_realloc(arrt->data, arrt->size * (arrt->len));
 }
-z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt)
+z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
 {
-    z__ptrArr arrtCopy = {
+    z__Dynt arrtCopy = {
         .data = malloc(arrt.len * arrt.size),
         .len = arrt.len,
         .lenUsed = arrt.lenUsed,
@@ -92,7 +92,7 @@ z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt)
     return arrtCopy;
 
 }
-void z__ptrArr_delete(z__ptrArr* arrt, z__bool nameFree)
+void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 {
     free(arrt->data);
     arrt->len = 0;
@@ -433,23 +433,3 @@ void z__boolArr_resize( z__boolArr *arr, z__bool newSize)
 }
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
-
-
-#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
-
-typedef uint32_t z__type;
-
-typedef struct _Z__DYNAMICTYPED_TYPES_DEFAULT_ST
-{
-    z__Dynt *types;
-    uint32_t used;
-    uint32_t size;
-
-}_z__DEF_TYPES;
-
-z__Dynt z__Dynt_CreateNew(z__CreateDyntInfo info)
-{
-    return (z__Dynt){0};
-}
-
-#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
