@@ -205,13 +205,174 @@ z__ptrArr z__ptrArr_makeCopy(const z__ptrArr arrt);
 
 	}z__boolArr;
 
+
+	z__i8Arr z__i8Arr_create(z__u32 len);
+	z__i16Arr z__i16Arr_create(z__u32 len);
+	z__i32Arr z__i32Arr_create(z__u32 len);
+	z__i64Arr z__i64Arr_create(z__u32 len);
+
+	z__u8Arr z__u8Arr_create(z__u32 len);
+	z__u16Arr z__u16Arr_create(z__u32 len);
+	z__u32Arr z__u32Arr_create(z__u32 len);
+	z__u64Arr z__u64Arr_create(z__u32 len);
+
+	z__f64Arr z__f64Arr_create(z__u32 len);
+
+	z__boolArr z__boolArr_create(z__u32 len);
+
+
+	void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
+	void z__i16Arr_push( z__i16Arr *arr, z__i16 val);
+	void z__i32Arr_push( z__i32Arr *arr, z__i32 val);
+	void z__i64Arr_push( z__i64Arr *arr, z__i64 val);
+
+	void z__u8Arr_push( z__u8Arr *arr, z__u8 val);
+	void z__u16Arr_push( z__u16Arr *arr, z__u16 val);
+	void z__u32Arr_push( z__u32Arr *arr, z__u32 val);
+	void z__u64Arr_push( z__u64Arr *arr, z__u64 val);
+
+	void z__f32Arr_push( z__f32Arr *arr, z__f32 val);
+	void z__f64Arr_push( z__f64Arr *arr, z__f64 val);
+
+	void z__boolArr_push( z__boolArr *arr, z__bool val);
+
+
+	void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize);
+	void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize);
+	void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize);
+	void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize);
+
+	void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize);
+	void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize);
+	void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize);
+	void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize);
+
+	void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize);
+	void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize);
+
+	void z__boolArr_resize( z__boolArr *arr, z__bool newSize);
+
+
+	#define z__i8Arr_pop(arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__i8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__i16Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__i16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__i32Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__i32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__i64Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__i64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__u8Arr_pop(arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__u8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__u16Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__u16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__u32Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__u32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__u64Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__u64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__f32Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__f32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__f64Arr_pop( arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__f64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+	#define z__boolArr_pop(arr)\
+		{\
+			arr.lenUsed -= 1;\
+			if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
+			{\
+				z__boolArr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
+			}\
+		}
+
+
+	#define z__Arr_delete(arr)\
+	{\
+	    arr.len = 0;\
+	    arr.lenUsed = 0;\
+	    free(arr.data);\
+	}
+
 #endif
 
+
+#define z__Arr_getLen(arr)\
+	arr.len
+#define z__Arr_getUsed(arr)\
+	arr.lenUsed
+#define z__Arr_getData(arr)\
+	arr.data
+#define z__Arr_getVal(arr, at)\
+	arr.data[at]
+#define z__Arr_getTop(arr)\
+	arr.data[arr.lenUsed-1]
 
 #define z__ptrArr_getvalSize(arr)\
 	(z__ptrArr)arr.size
 #define z__ptrArr_getVal(arr, at)\
 	((arr.data) + (at * arr.size))
+
+
+
+
+#ifdef Z___TYPE_CONFIG__USE_TYPE_DYNT
 typedef struct _Z_CREATE_DYNT_INFO_ST
 {   
     size_t typeSize;
