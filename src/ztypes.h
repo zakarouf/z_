@@ -7,6 +7,9 @@
 
 #include "ztypes_config.h"
 
+#ifdef Z___TYPE_INCLUED_CGLM
+    #include <cglm/cglm.h>
+#endif
 typedef uint8_t  z__u8;
 typedef uint16_t z__u16;
 typedef uint32_t z__u32;
@@ -33,52 +36,57 @@ typedef struct _ZSE_Vint2
 	z__int x, y;
 }z__Vint2;
 
-typedef struct _ZSE_Vint3
-{
-	z__int x, y, z;
-}z__Vint3;
+    // CGLM PRE_REQUSITE GOES HERE...
+    #ifdef Z___TYPE_USE_CGLM
+        
+    #endif
 
-typedef struct _ZSE_Vint4
-{
-	z__int x, y, z, w;
-}z__Vint4;
+    #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR
+        /* |x, y, z, w| -> w is the last */
+        #ifdef Z___TYPE_INCLUED_CGLM
 
 
-#ifdef Z___TYPE_CONFIG__USE_F64_FOR_VECTOR
+            typedef z__int  z__ivec2[2];
+            typedef ivec3   z__ivec3;
+            typedef z__int  z__ivec4[4];
 
-	typedef struct _ZSE_Vector2
-	{
-		z__f64 x, y;
-	}z__Vector2;
+            typedef vec2    z__vec2;
+            typedef vec3    z__vec3;
+            typedef vec4    z__vec4;
 
-	typedef struct _ZSE_Vector3
-	{
-		z__f64 x, y, z;
-	}z__Vector3;
+            typedef versor  z__versor;
 
-	typedef struct _ZSE_Vector4
-	{
-		z__f64 x, y, z, w;
-	}z__Vector4;
+            typedef mat2  z__mat2;
+            typedef mat3  z__mat3;
+            typedef mat4  z__mat4;
 
-#else
 
-	typedef struct _ZSE_Vector2
-	{
-		z__f32 x, y;
-	}z__Vector2;
 
-	typedef struct _ZSE_Vector3
-	{
-		z__f32 x, y, z;
-	}z__Vector3;
+        #else
 
-	typedef struct _ZSE_Vector4
-	{
-		z__f32 x, y, z, w;
-	}z__Vector4;
 
-#endif
+            typedef z__i32                  z__ivec2[2];
+            typedef z__i32                  z__ivec3[3];
+            typedef z__i32                  z__ivec4[4];
+
+            typedef z__f32                  z__vec2[2];
+            typedef z__f32                  z__vec3[3];
+            typedef z__f32                  z__vec4[4];
+
+            typedef z__vec4                 z__versor;
+
+            typedef z__vec2                 z__mat2[2];
+            typedef z__vec3                 z__mat3[3];
+            typedef z__vec4                 z__mat4[4];
+
+        #endif
+
+        #define z__vec_x(vec) vec[0]
+        #define z__vec_y(vec) vec[1]
+        #define z__vec_z(vec) vec[2]
+        #define z__vec_w(vec) vec[3]
+
+    #endif
 
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
