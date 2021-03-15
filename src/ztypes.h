@@ -4,12 +4,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-
 #include "ztypes_config.h"
 
 #ifdef Z___TYPE_INCLUED_CGLM
     #include <cglm/cglm.h>
 #endif
+
 typedef uint8_t  z__u8;
 typedef uint16_t z__u16;
 typedef uint32_t z__u32;
@@ -31,10 +31,7 @@ typedef bool z__bool;
 
 typedef void* z__ptr;
 
-typedef struct _ZSE_Vint2
-{
-	z__int x, y;
-}z__Vint2;
+#ifdef Z___TYPE_CONFIG__USE_VECTORS
 
     // CGLM PRE_REQUSITE GOES HERE...
     #ifdef Z___TYPE_USE_CGLM
@@ -88,6 +85,82 @@ typedef struct _ZSE_Vint2
 
     #endif
 
+    #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
+        #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
+
+            typedef struct _Z__Vector2__STRUCT
+            {
+                z__f64 x, y;
+            }z__Vector2;
+
+            typedef struct _Z__Vector3__STRUCT
+            {
+                z__f64 x, y, z;
+            }z__Vector3;
+
+            typedef struct _Z__Vector4__STRUCT
+            {
+                z__f64 x, y, z, w;
+            }z__Vector4;
+
+        #else
+
+            typedef struct _Z__Vector2__STRUCT
+            {
+                z__f32 x, y;
+            }z__Vector2;
+
+            typedef struct _Z__Vector3__STRUCT
+            {
+                z__f32 x, y, z;
+            }z__Vector3;
+
+            typedef struct _Z__Vector4__STRUCT
+            {
+                z__f32 x, y, z, w;
+            }z__Vector4;
+
+        #endif
+
+        #ifdef Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
+
+            typedef struct _Z__Vint2__STRUCT
+            {
+                z__i64 x, y;
+            }z__Vint2;
+
+            typedef struct _Z__Vint3__STRUCT
+            {
+                z__i64 x, y, z;
+            }z__Vint3;
+
+            typedef struct _Z__Vint4__STRUCT
+            {
+                z__i64 x, y, z, w;
+            }z__Vint4;
+
+        #else
+
+            typedef struct _Z__Vint2__STRUCT
+            {
+                z__i32 x, y;
+            }z__Vint2;
+
+            typedef struct _Z__Vint3__STRUCT
+            {
+                z__i32 x, y, z;
+            }z__Vint3;
+
+            typedef struct _Z__Vint4__STRUCT
+            {
+                z__i32 x, y, z, w;
+            }z__Vint4;
+
+        #endif
+
+    #endif
+
+#endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
 	z__ptr data;
