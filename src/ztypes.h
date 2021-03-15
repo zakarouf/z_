@@ -22,6 +22,8 @@ typedef int z__int;
 typedef float z__f32;
 typedef double z__f64;
 
+typedef int z__int;
+typedef float z__float;
 typedef bool z__bool;
 
 typedef void* z__ptr;
