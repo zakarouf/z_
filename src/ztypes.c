@@ -19,7 +19,7 @@ static void *safe_realloc(void * data, size_t size)
 }
 
 
-z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *name, size_t nameLength)
+z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, size_t commentLength)
 {
     z__Dynt arrt;
 
@@ -28,14 +28,14 @@ z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *name, size_t nameLe
     arrt.len = len;
     arrt.lenUsed = 0;
 
-    if (nameLength == 0)
+    if (commentLength == 0)
     {
         arrt.comment = NULL;
     }
     else
     {
-        arrt.comment = malloc(sizeof(char) * nameLength);
-        memcpy(arrt.comment, name, nameLength);
+        arrt.comment = malloc(sizeof(char) * commentLength);
+        memcpy(arrt.comment, comment, commentLength);
     }
 
     return arrt;

@@ -90,7 +90,7 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 
 #define z__typeof sizeof
 #define z__type size_t
-z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *name, size_t nameLength);
+z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, size_t commentLength);
 void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
 void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
@@ -271,7 +271,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__i8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__i16Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -279,7 +279,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__i16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__i32Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -287,7 +287,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__i32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__i64Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -295,7 +295,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__i64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__u8Arr_pop(arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -303,7 +303,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__u8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__u16Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -311,7 +311,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__u16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__u32Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -319,7 +319,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__u32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__u64Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -327,7 +327,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__u64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__f32Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -335,7 +335,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__f32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__f64Arr_pop( arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -343,7 +343,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__f64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 	#define z__boolArr_pop(arr)\
 		{\
 			arr.lenUsed -= 1;\
@@ -351,7 +351,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			{\
 				z__boolArr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
 			}\
-		}
+		};
 
 
 	#define z__Arr_delete(arr)\
@@ -365,20 +365,29 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 
 #define z__Arr_getLen(arr)\
-	arr.len
+	(arr.len)
 #define z__Arr_getUsed(arr)\
-	arr.lenUsed
+	(arr.lenUsed)
 #define z__Arr_getData(arr)\
-	arr.data
-#define z__Arr_getVal(arr, at)\
-	arr.data[at]
+	(arr.data)
+#define z__Arr_getVal(arr, index)\
+	(arr.data[index])
 #define z__Arr_getTop(arr)\
-	arr.data[arr.lenUsed-1]
+	(arr.data[arr.lenUsed-1])
 
-#define z__Dynt_getvalSize(arr)\
-	(z__Dynt)arr.size
-#define z__Dynt_getVal(arr, at)\
-	((arr.data) + (at * arr.size))
+
+#define z__Dynt_getValSize(arr)\
+	((z__Dynt)arr.size)
+
+#define z__Dynt_getValAddress(arr, index)\
+	((arr.data) + (index * arr.size))
+
+#define z__Dynt_getComment(arr)\
+	((z__Dynt)arr.comment)
+#define z__Dynt_getLen(arr)\
+	((z__Dynt)arr.len)
+#define z__Dynt_getUsed(arr)\
+	((z__Dynt)arr.lenUsed)
 
 
 #endif // Header Guard
