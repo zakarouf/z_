@@ -28,6 +28,34 @@ typedef float z__float;
 typedef bool z__bool;
 typedef void* z__ptr;
 
+typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
+{
+    z__ptr data;
+    z__u32 size;
+    z__u32 len;
+    z__u32 lenUsed;
+    char *comment;
+
+}z__Dynt;
+
+#define z__typeof sizeof
+typedef size_t z__type;
+z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
+void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
+void z__Dynt_push( z__Dynt *arrt, void *val);
+void z__Dynt_pop( z__Dynt *arrt);
+void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
+z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
+
+#define z__Dynt_getValSize(arr)           (arr.size)
+#define z__Dynt_getTop(arr, type)         ( *( type *)( (arr.data) + ((arr.lenUsed-1) * arr.size)) )
+#define z__Dynt_getVal(arr, index , type) ( *( type *)( (arr.data) + (index * arr.size)) )
+#define z__Dynt_getValAddress(arr, index) ((arr.data) + (index * arr.size))
+#define z__Dynt_getComment(arr)           (arr.comment)
+#define z__Dynt_getLen(arr)               (arr.len)
+#define z__Dynt_getUsed(arr)              (arr.lenUsed)
+
+
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
 
     // CGLM PRE_REQUSITE GOES HERE...
@@ -158,26 +186,6 @@ typedef void* z__ptr;
     #endif
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
-
-typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
-{
-    z__ptr data;
-    z__u32 size;
-    z__u32 len;
-    z__u32 lenUsed;
-    char *comment;
-
-}z__Dynt;
-
-#define z__typeof sizeof
-typedef size_t z__type;
-z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, size_t commentLength);
-void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
-void z__Dynt_push( z__Dynt *arrt, void *val);
-void z__Dynt_pop( z__Dynt *arrt);
-void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
-z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
-
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
@@ -442,33 +450,17 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         free(arr.data);\
     }
 
+
+    #define z__Arr_getLen(arr)          arr.len
+    #define z__Arr_getUsed(arr)         arr.lenUsed
+    #define z__Arr_getData(arr)         arr.data
+    #define z__Arr_getVal(arr, index)   arr.data[index]
+    #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
+
 #endif
 
 
-#define z__Arr_getLen(arr)\
-    (arr.len)
-#define z__Arr_getUsed(arr)\
-    (arr.lenUsed)
-#define z__Arr_getData(arr)\
-    (arr.data)
-#define z__Arr_getVal(arr, index)\
-    (arr.data[index])
-#define z__Arr_getTop(arr)\
-    (arr.data[arr.lenUsed-1])
-
-
-#define z__Dynt_getValSize(arr)\
-    ((z__Dynt)arr.size)
-
-#define z__Dynt_getValAddress(arr, index)\
-    ((arr.data) + (index * arr.size))
-
-#define z__Dynt_getComment(arr)\
-    ((z__Dynt)arr.comment)
-#define z__Dynt_getLen(arr)\
-    ((z__Dynt)arr.len)
-#define z__Dynt_getUsed(arr)\
-    ((z__Dynt)arr.lenUsed)
+#define 
 
 
 #endif // Header Guard
