@@ -222,6 +222,49 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         free(arr.data);		\
     }
 
+#define z__Arr_create(arr, sz)\
+    {                     						\
+    	arr.data = malloc(sizeof(*arr.data)*sz);\
+    	arr.len = sz;							\
+    	arr.lenUsed = 0;						\
+    }
+#define z__Arr_push(arr, val)\
+    {                     																\
+	    if (arr.lenUsed >= arr.len)														\
+	    {																				\
+	        arr.len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;								\
+	        arr.data = z__safe_realloc(arr.data,  sizeof(*arr.data)* (arr.len) );		\
+	    }																				\
+	    arr.data[arr.lenUsed] = val;													\
+	    arr.lenUsed += 1;																\
+    }
+#define z__Arr_resize(arr, newSize)\
+    {																			\
+	    if (arr.lenUsed > newSize)												\
+	    {																		\
+	        arr.lenUsed = newSize;												\
+	    }																		\
+	    arr.data = z__safe_realloc(arr.data, newSize * sizeof(*arr.data));		\
+	    arr.len = newSize;														\
+	}
+#define z__Arr_pop(arr)\
+    {																			\
+        arr.lenUsed -= 1;														\
+        if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)		\
+        {																		\
+            z__Arr_resize(arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
+        }																		\
+    }
+#define z__Arr_join(dest, from)\
+    {																							\
+    	z__i32 totalLength = dest.lenUsed*sizeof(*dest.data) + from.lenUsed*sizeof(*from.data);	\
+    	if (totalLength > dest.len)																\
+    	{																						\
+    		z__Arr_resize(dest, totalLength+1)													\
+    	}																						\
+    	memcpy(&dest.data[dest.lenUsed], from.data, from.lenUsed * sizeof(*dest.data));			\
+    }
+
 
  #define z__Arr_getLen(arr)          arr.len
  #define z__Arr_getUsed(arr)         arr.lenUsed
@@ -233,172 +276,143 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
     // Signed
-
     typedef z__Arr(z__i8)  z__i8Arr;
     typedef z__Arr(z__i16) z__i16Arr;
     typedef z__Arr(z__i32) z__i32Arr;
     typedef z__Arr(z__i64) z__i64Arr;
 
     // Unsigned
-
     typedef z__Arr(z__u8)  z__u8Arr;
     typedef z__Arr(z__u16) z__u16Arr;
     typedef z__Arr(z__u32) z__u32Arr;
     typedef z__Arr(z__u64) z__u64Arr;
 
-
+    // Floats
     typedef z__Arr(z__f32) z__f32Arr;
     typedef z__Arr(z__f64) z__f64Arr;
 
+    // Boolean
     typedef z__Arr(z__bool) z__boolArr;
 
+    // Void *
     typedef z__Arr(z__ptr) z__ptrArr;
 
-    
 
-    z__i8Arr z__i8Arr_create(z__u32 len);
-    z__i16Arr z__i16Arr_create(z__u32 len);
-    z__i32Arr z__i32Arr_create(z__u32 len);
-    z__i64Arr z__i64Arr_create(z__u32 len);
+	#ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
-    z__u8Arr z__u8Arr_create(z__u32 len);
-    z__u16Arr z__u16Arr_create(z__u32 len);
-    z__u32Arr z__u32Arr_create(z__u32 len);
-    z__u64Arr z__u64Arr_create(z__u32 len);
+	    // Initialization
+	    z__i8Arr z__i8Arr_create(z__u32 len);
+	    z__i16Arr z__i16Arr_create(z__u32 len);
+	    z__i32Arr z__i32Arr_create(z__u32 len);
+	    z__i64Arr z__i64Arr_create(z__u32 len);
 
-    z__f64Arr z__f64Arr_create(z__u32 len);
+	    z__u8Arr z__u8Arr_create(z__u32 len);
+	    z__u16Arr z__u16Arr_create(z__u32 len);
+	    z__u32Arr z__u32Arr_create(z__u32 len);
+	    z__u64Arr z__u64Arr_create(z__u32 len);
 
-    z__boolArr z__boolArr_create(z__u32 len);
+	    z__f64Arr z__f64Arr_create(z__u32 len);
 
-    z__ptrArr z__ptrArr_create(z__u32 len);
+	    z__boolArr z__boolArr_create(z__u32 len);
+
+	    z__ptrArr z__ptrArr_create(z__u32 len);
+
+	    // Adding Value At top
+	    void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
+	    void z__i16Arr_push( z__i16Arr *arr, z__i16 val);
+	    void z__i32Arr_push( z__i32Arr *arr, z__i32 val);
+	    void z__i64Arr_push( z__i64Arr *arr, z__i64 val);
+
+	    void z__u8Arr_push( z__u8Arr *arr, z__u8 val);
+	    void z__u16Arr_push( z__u16Arr *arr, z__u16 val);
+	    void z__u32Arr_push( z__u32Arr *arr, z__u32 val);
+	    void z__u64Arr_push( z__u64Arr *arr, z__u64 val);
+
+	    void z__f32Arr_push( z__f32Arr *arr, z__f32 val);
+	    void z__f64Arr_push( z__f64Arr *arr, z__f64 val);
+
+	    void z__boolArr_push( z__boolArr *arr, z__bool val);
+
+	    // Resizing Arrays
+	    void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize);
+	    void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize);
+	    void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize);
+	    void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize);
+
+	    void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize);
+	    void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize);
+	    void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize);
+	    void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize);
+
+	    void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize);
+	    void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize);
+
+	    void z__boolArr_resize( z__boolArr *arr, z__bool newSize);
 
 
-    void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
-    void z__i16Arr_push( z__i16Arr *arr, z__i16 val);
-    void z__i32Arr_push( z__i32Arr *arr, z__i32 val);
-    void z__i64Arr_push( z__i64Arr *arr, z__i64 val);
+	    // Removing Value from the top
+	    #define _z__Arrpop_tmpl(arr, func)\
+	        {																				\
+	            arr.lenUsed -= 1;															\
+	            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)			\
+	            {																			\
+	                func (&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
+	            }																			\
+	        }
+	    #define z__i8Arr_pop(arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__i8Arr_resize)	\
+	        }
+	    #define z__i16Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__i16Arr_resize)	\
+	        }
+	    #define z__i32Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__i32Arr_resize)	\
+	        }
+	    #define z__i64Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__i64Arr_resize)	\
+	        }
+	    #define z__u8Arr_pop(arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__u8Arr_resize)	\
+	        }
+	    #define z__u16Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__u16Arr_resize)	\
+	        }
+	    #define z__u32Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__u32Arr_resize)	\
+	        }
+	    #define z__u64Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__u64Arr_resize)	\
+	        }
+	    #define z__f32Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__f32Arr_resize)	\
+	        }
+	    #define z__f64Arr_pop( arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__f64Arr_resize)	\
+	        }
+	    #define z__boolArr_pop(arr)\
+	        {											\
+	        	_z__Arrpop_tmpl(arr, z__boolArr_resize)\
+	        }
 
-    void z__u8Arr_push( z__u8Arr *arr, z__u8 val);
-    void z__u16Arr_push( z__u16Arr *arr, z__u16 val);
-    void z__u32Arr_push( z__u32Arr *arr, z__u32 val);
-    void z__u64Arr_push( z__u64Arr *arr, z__u64 val);
+	    #undef _z__Arrpop_tmp
 
-    void z__f32Arr_push( z__f32Arr *arr, z__f32 val);
-    void z__f64Arr_push( z__f64Arr *arr, z__f64 val);
-
-    void z__boolArr_push( z__boolArr *arr, z__bool val);
-
-
-    void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize);
-    void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize);
-    void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize);
-    void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize);
-
-    void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize);
-    void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize);
-    void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize);
-    void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize);
-
-    void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize);
-    void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize);
-
-    void z__boolArr_resize( z__boolArr *arr, z__bool newSize);
-
-
-    #define z__i8Arr_pop(arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__i8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__i16Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__i16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__i32Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__i32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__i64Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__i64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__u8Arr_pop(arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__u8Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__u16Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__u16Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__u32Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__u32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__u64Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__u64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__f32Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__f32Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__f64Arr_pop( arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__f64Arr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
-    #define z__boolArr_pop(arr)\
-        {\
-            arr.lenUsed -= 1;\
-            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)\
-            {\
-                z__boolArr_resize(&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);\
-            }\
-        };
+	#endif //Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
 
 #endif
 
 
 
-
+#undef z__safe_realloc
 
 #endif // Header Guard
