@@ -59,19 +59,19 @@ typedef ptrdiff_t z__ptrdiff;
         #ifdef Z___TYPE_INCLUED_CGLM
 
 
-            typedef z__int  z__ivec2[2];
-            typedef ivec3   z__ivec3;
-            typedef z__int  z__ivec4[4];
+            typedef z__int  				z__ivec2[2];
+            typedef ivec3   				z__ivec3;
+            typedef z__int  				z__ivec4[4];
 
-            typedef vec2    z__vec2;
-            typedef vec3    z__vec3;
-            typedef vec4    z__vec4;
+            typedef vec2    				z__vec2;
+            typedef vec3    				z__vec3;
+            typedef vec4    				z__vec4;
 
-            typedef versor  z__versor;
+            typedef versor  				z__versor;
 
-            typedef mat2  z__mat2;
-            typedef mat3  z__mat3;
-            typedef mat4  z__mat4;
+            typedef mat2  					z__mat2;
+            typedef mat3  					z__mat3;
+            typedef mat4  					z__mat4;
 
 
 
@@ -99,86 +99,45 @@ typedef ptrdiff_t z__ptrdiff;
         #define z__vec_z(vec) vec[2]
         #define z__vec_w(vec) vec[3]
 
+
     #endif
 
     #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
+
+		#define z__Vector(T, ...)\
+			struct              \
+			{					\
+				T __VA_ARGS__;	\
+			}
+
         #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
-
-            typedef struct _Z__Vector2__STRUCT
-            {
-                z__f64 x, y;
-            }z__Vector2;
-
-            typedef struct _Z__Vector3__STRUCT
-            {
-                z__f64 x, y, z;
-            }z__Vector3;
-
-            typedef struct _Z__Vector4__STRUCT
-            {
-                z__f64 x, y, z, w;
-            }z__Vector4;
-
+			#define __vecDefType z__f64
         #else
-
-            typedef struct _Z__Vector2__STRUCT
-            {
-                z__f32 x, y;
-            }z__Vector2;
-
-            typedef struct _Z__Vector3__STRUCT
-            {
-                z__f32 x, y, z;
-            }z__Vector3;
-
-            typedef struct _Z__Vector4__STRUCT
-            {
-                z__f32 x, y, z, w;
-            }z__Vector4;
-
+			#define __vecDefType z__f32
         #endif
+
+            typedef z__Vector(__vecDefType, x, y) z__Vector2;
+            typedef z__Vector(__vecDefType, x, y, z) z__Vector3;
+            typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
+        #undef __vecDefType
 
         #ifdef Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
-
-            typedef struct _Z__Vint2__STRUCT
-            {
-                z__i64 x, y;
-            }z__Vint2;
-
-            typedef struct _Z__Vint3__STRUCT
-            {
-                z__i64 x, y, z;
-            }z__Vint3;
-
-            typedef struct _Z__Vint4__STRUCT
-            {
-                z__i64 x, y, z, w;
-            }z__Vint4;
-
+			#define __vecDefType z__i64
         #else
-
-            typedef struct _Z__Vint2__STRUCT
-            {
-                z__i32 x, y;
-            }z__Vint2;
-
-            typedef struct _Z__Vint3__STRUCT
-            {
-                z__i32 x, y, z;
-            }z__Vint3;
-
-            typedef struct _Z__Vint4__STRUCT
-            {
-                z__i32 x, y, z, w;
-            }z__Vint4;
-
+			#define __vecDefType z__i32
         #endif
+
+            typedef z__Vector(__vecDefType, x, y) z__Vint2;
+            typedef z__Vector(__vecDefType, x, y, z) z__Vint3;
+            typedef z__Vector(__vecDefType, x, y, z, w) z__Vint4;
+        #undef __vecDefType
 
     #endif
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
 
-
+void *z__safe_realloc(void * data, size_t size);
+// Unknown Unsafe type Arrays
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
     z__ptr data;
@@ -207,6 +166,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__Dynt_getUsed(arr)              (arr.lenUsed)
 
 
+// Type-safe arrays
 #define z__Arr(T)\
 	struct              \
 	{					\
