@@ -28,34 +28,6 @@ typedef float z__float;
 typedef bool z__bool;
 typedef void* z__ptr;
 
-typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
-{
-    z__ptr data;
-    z__u32 size;
-    z__u32 len;
-    z__u32 lenUsed;
-    char *comment;
-
-}z__Dynt;
-
-#define z__typeof sizeof
-typedef size_t z__type;
-z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
-void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
-void z__Dynt_push( z__Dynt *arrt, void *val);
-void z__Dynt_pop( z__Dynt *arrt);
-void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
-z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
-
-#define z__Dynt_getValSize(arr)           (arr.size)
-#define z__Dynt_getTop(arr, type)         ( *( type *)( (arr.data) + ((arr.lenUsed-1) * arr.size)) )
-#define z__Dynt_getVal(arr, index , type) ( *( type *)( (arr.data) + (index * arr.size)) )
-#define z__Dynt_getValAddress(arr, index) ((arr.data) + (index * arr.size))
-#define z__Dynt_getComment(arr)           (arr.comment)
-#define z__Dynt_getLen(arr)               (arr.len)
-#define z__Dynt_getUsed(arr)              (arr.lenUsed)
-
-
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
 
     // CGLM PRE_REQUSITE GOES HERE...
@@ -187,120 +159,81 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
 
+
+typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
+{
+    z__ptr data;
+    z__u32 size;
+    z__u32 len;
+    z__u32 lenUsed;
+    char *comment;
+
+}z__Dynt;
+
+#define z__typeof sizeof
+typedef size_t z__type;
+z__Dynt z__Dynt_create(z__type T, z__u32 len, const char *comment, z__i32 commentLength);
+void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
+void z__Dynt_push( z__Dynt *arrt, void *val);
+void z__Dynt_pop( z__Dynt *arrt);
+void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
+z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
+
+#define z__Dynt_getValSize(arr)           (arr.size)
+#define z__Dynt_getTop(arr, T)         ( *( T *)( (arr.data) + ((arr.lenUsed-1) * arr.size)) )
+#define z__Dynt_getVal(arr, index , T) ( *( T *)( (arr.data) + (index * arr.size)) )
+#define z__Dynt_getValAddress(arr, index) ((arr.data) + (index * arr.size))
+#define z__Dynt_getComment(arr)           (arr.comment)
+#define z__Dynt_getLen(arr)               (arr.len)
+#define z__Dynt_getUsed(arr)              (arr.lenUsed)
+
+
+#define z__Arr(T)\
+	struct              \
+	{					\
+		T* data;		\
+		z__i32 len;		\
+		z__i32 lenUsed;	\
+	}
+
+#define z__Arr_delete(arr)\
+    {                     	\
+        arr.len = -1;		\
+        arr.lenUsed = -1;	\
+        free(arr.data);		\
+    }
+
+
+ #define z__Arr_getLen(arr)          arr.len
+ #define z__Arr_getUsed(arr)         arr.lenUsed
+ #define z__Arr_getData(arr)         arr.data
+ #define z__Arr_getVal(arr, index)   arr.data[index]
+ #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
+
+
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
     // Signed
 
-    typedef struct __ZAKAROUF__i8Arr_TYPE_STRUCT
-    {
-        z__i8 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__i8Arr;
-
-    typedef struct __ZAKAROUF__i16Arr_TYPE_STRUCT
-    {
-        z__i16 *data;
-
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__i16Arr;
-
-    typedef struct __ZAKAROUF__i32Arr_TYPE_STRUCT
-    {
-        z__i32 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__i32Arr;
-
-    typedef struct __ZAKAROUF__i64Arr_TYPE_STRUCT
-    {
-        z__i64 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__i64Arr;
+    typedef z__Arr(z__i8)  z__i8Arr;
+    typedef z__Arr(z__i16) z__i16Arr;
+    typedef z__Arr(z__i32) z__i32Arr;
+    typedef z__Arr(z__i64) z__i64Arr;
 
     // Unsigned
 
-    typedef struct __ZAKAROUF__u8Arr_TYPE_STRUCT
-    {
-        z__u8 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__u8Arr;
-
-    typedef struct __ZAKAROUF__u16Arr_TYPE_STRUCT
-    {
-        z__u16 *data;
-
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__u16Arr;
-
-    typedef struct __ZAKAROUF__u32Arr_TYPE_STRUCT
-    {
-        z__u32 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__u32Arr;
-
-    typedef struct __ZAKAROUF__u64Arr_TYPE_STRUCT
-    {
-        z__u64 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__u64Arr;
+    typedef z__Arr(z__u8)  z__u8Arr;
+    typedef z__Arr(z__u16) z__u16Arr;
+    typedef z__Arr(z__u32) z__u32Arr;
+    typedef z__Arr(z__u64) z__u64Arr;
 
 
-    typedef struct __ZAKAROUF__f32Arr_TYPE_STRUCT
-    {
-        z__f32 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
+    typedef z__Arr(z__f32) z__f32Arr;
+    typedef z__Arr(z__f64) z__f64Arr;
 
-    }z__f32Arr;
+    typedef z__Arr(z__bool) z__boolArr;
 
-    typedef struct __ZAKAROUF__f64Arr_TYPE_STRUCT
-    {
-        z__f64 *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__f64Arr;
-
-    typedef struct __ZAKAROUF__boolArr_TYPE_STRUCT
-    {
-        z__bool *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__boolArr;
-
-    typedef struct __ZAKAROUF__ptrArr_TYPE_STRUCT
-    {
-        z__ptr *data;
-        
-        z__u32 len;
-        z__u32 lenUsed;
-
-    }z__ptrArr;
+    typedef z__Arr(z__ptr) z__ptrArr;
 
     
 
@@ -443,24 +376,10 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         };
 
 
-    #define z__Arr_delete(arr)\
-    {\
-        arr.len = 0;\
-        arr.lenUsed = 0;\
-        free(arr.data);\
-    }
-
-
-    #define z__Arr_getLen(arr)          arr.len
-    #define z__Arr_getUsed(arr)         arr.lenUsed
-    #define z__Arr_getData(arr)         arr.data
-    #define z__Arr_getVal(arr, index)   arr.data[index]
-    #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
-
 #endif
 
 
-#define 
+
 
 
 #endif // Header Guard
