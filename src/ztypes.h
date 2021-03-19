@@ -166,7 +166,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__Dynt_getUsed(arr)              (arr.lenUsed)
 
 
-// Type-safe arrays
+// Known Type-safe arrays
 #define z__Arr(T)\
 	struct              \
 	{					\
