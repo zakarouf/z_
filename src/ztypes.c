@@ -5,7 +5,7 @@
 
 #include "ztypes.h"
 
-static void *safe_realloc(void * data, size_t size)
+void *z__safe_realloc(void * data, size_t size)
 {
     void *tmpdata = realloc(data, size);
     if (tmpdata != NULL)
