@@ -26,6 +26,7 @@
 
 /* Array Types, Use Pre-defined typed arrays? */
 #define Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+	#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 	#define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
 
 		
