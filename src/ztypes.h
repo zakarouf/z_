@@ -148,6 +148,7 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 
 }z__Dynt;
 
+
 #define z__typeof sizeof
 typedef size_t z__type;
 z__Dynt z__Dynt_create(z__type T, z__u32 len, const char *comment, z__i32 commentLength);
@@ -176,53 +177,53 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 	}
 
 #define z__Arr_delete(arr)\
-    {                     	\
-        arr.len = -1;		\
-        arr.lenUsed = -1;	\
-        free(arr.data);		\
+    {                     		\
+        (arr)->len = -1;		\
+        (arr)->lenUsed = -1;	\
+        free((arr)->data);		\
     }
 
 #define z__Arr_create(arr, sz)\
-    {                     						\
-    	arr.data = malloc(sizeof(*arr.data)*sz);\
-    	arr.len = sz;							\
-    	arr.lenUsed = 0;						\
+    {                     								\
+    	(arr)->data = malloc(sizeof(*(arr)->data)*sz);	\
+    	(arr)->len = sz;								\
+    	(arr)->lenUsed = 0;								\
     }
 #define z__Arr_push(arr, val)\
-    {                     																\
-	    if (arr.lenUsed >= arr.len)														\
-	    {																				\
-	        arr.len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;								\
-	        arr.data = z__safe_realloc(arr.data,  sizeof(*arr.data)* (arr.len) );		\
-	    }																				\
-	    arr.data[arr.lenUsed] = val;													\
-	    arr.lenUsed += 1;																\
+    {                     																		\
+	    if ((arr)->lenUsed >= (arr)->len)														\
+	    {																						\
+	        (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;									\
+	        (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );	\
+	    }																						\
+	    (arr)->data[(arr)->lenUsed] = val;														\
+	    (arr)->lenUsed += 1;																	\
     }
 #define z__Arr_resize(arr, newSize)\
-    {																			\
-	    if (arr.lenUsed > newSize)												\
-	    {																		\
-	        arr.lenUsed = newSize;												\
-	    }																		\
-	    arr.data = z__safe_realloc(arr.data, newSize * sizeof(*arr.data));		\
-	    arr.len = newSize;														\
+    {																				\
+	    if ((arr)->lenUsed > newSize)												\
+	    {																			\
+	       ( arr)->lenUsed = newSize;												\
+	    }																			\
+	    (arr)->data = z__safe_realloc((arr)->data, newSize * sizeof(*(arr)->data));	\
+	    (arr)->len = newSize;														\
 	}
 #define z__Arr_pop(arr)\
-    {																			\
-        arr.lenUsed -= 1;														\
-        if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)		\
-        {																		\
-            z__Arr_resize(arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
-        }																		\
+    {																				\
+        (arr)->lenUsed -= 1;														\
+        if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)		\
+        {																			\
+            z__Arr_resize(arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
+        }																			\
     }
 #define z__Arr_join(dest, from)\
-    {																							\
-    	z__i32 totalLength = dest.lenUsed*sizeof(*dest.data) + from.lenUsed*sizeof(*from.data);	\
-    	if (totalLength > dest.len)																\
-    	{																						\
-    		z__Arr_resize(dest, totalLength+1)													\
-    	}																						\
-    	memcpy(&dest.data[dest.lenUsed], from.data, from.lenUsed * sizeof(*dest.data));			\
+    {																									\
+    	z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);	\
+    	if (totalLength > (dest)->len)																	\
+    	{																								\
+    		z__Arr_resize(dest, totalLength+1)															\
+    	}																								\
+    	memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));		\
     }
 
 
@@ -312,12 +313,12 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 	    // Removing Value from the top
 	    #define _z__Arrpop_tmpl(arr, func)\
-	        {																				\
-	            arr.lenUsed -= 1;															\
-	            if ((arr.len - arr.lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)			\
-	            {																			\
-	                func (&arr, arr.len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
-	            }																			\
+	        {																			\
+	            (arr)->lenUsed -= 1;													\
+	            if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)	\
+	            {																		\
+	                func (arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);		\
+	            }																		\
 	        }
 	    #define z__i8Arr_pop(arr)\
 	        {											\
