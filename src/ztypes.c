@@ -60,7 +60,7 @@ void z__Dynt_pop( z__Dynt *arrt)
         arrt->data = z__safe_realloc(arrt->data,  arrt->size * (arrt->len) );
     }
 }
-void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
+inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
 {
     arrt->len = newsize;
     if (arrt->lenUsed > arrt->len)
@@ -91,7 +91,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
     return arrtCopy;
 
 }
-void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
+inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 {
     free(arrt->data);
     arrt->len = 0;
@@ -128,7 +128,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__i8Arr_push( z__i8Arr *arr, z__i8 val)
+		inline void z__i8Arr_push( z__i8Arr *arr, z__i8 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -148,7 +148,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__i16Arr_push( z__i16Arr *arr, z__i16 val)
+		inline void z__i16Arr_push( z__i16Arr *arr, z__i16 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -168,7 +168,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__i32Arr_push( z__i32Arr *arr, z__i32 val)
+		inline void z__i32Arr_push( z__i32Arr *arr, z__i32 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -188,7 +188,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__i64Arr_push( z__i64Arr *arr, z__i64 val)
+		inline void z__i64Arr_push( z__i64Arr *arr, z__i64 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -208,7 +208,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__u8Arr_push( z__u8Arr *arr, z__u8 val)
+		inline void z__u8Arr_push( z__u8Arr *arr, z__u8 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -228,7 +228,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__u16Arr_push( z__u16Arr *arr, z__u16 val)
+		inline void z__u16Arr_push( z__u16Arr *arr, z__u16 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -248,7 +248,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__u32Arr_push( z__u32Arr *arr, z__u32 val)
+		inline void z__u32Arr_push( z__u32Arr *arr, z__u32 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -268,7 +268,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__u64Arr_push( z__u64Arr *arr, z__u64 val)
+		inline void z__u64Arr_push( z__u64Arr *arr, z__u64 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -288,7 +288,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__f32Arr_push( z__f32Arr *arr, z__f32 val)
+		inline void z__f32Arr_push( z__f32Arr *arr, z__f32 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -308,7 +308,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__f64Arr_push( z__f64Arr *arr, z__f64 val)
+		inline void z__f64Arr_push( z__f64Arr *arr, z__f64 val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -329,7 +329,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		        .lenUsed = 0
 		    };
 		}
-		void z__boolArr_push( z__boolArr *arr, z__bool val)
+		inline void z__boolArr_push( z__boolArr *arr, z__bool val)
 		{
 		    if (arr->lenUsed >= arr->len)
 		    {
@@ -342,7 +342,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 
 
 
-		void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize)
+		inline void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -351,7 +351,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i8));
 		}
-		void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize)
+		inline void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -360,7 +360,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i16));
 		}
-		void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize)
+		inline void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -369,7 +369,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i32));
 		}
-		void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize)
+		inline void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -378,7 +378,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i64));
 		}
-		void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize)
+		inline void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -387,7 +387,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u8));
 		}
-		void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize)
+		inline void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -396,7 +396,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u16));
 		}
-		void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize)
+		inline void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -405,7 +405,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u32));
 		}
-		void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize)
+		inline void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -414,7 +414,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u64));
 		}
-		void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize)
+		inline void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -423,7 +423,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__f32));
 		}
-		void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize)
+		inline void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
@@ -432,7 +432,7 @@ void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    }
 		    arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__f64));
 		}
-		void z__boolArr_resize( z__boolArr *arr, z__bool newSize)
+		inline void z__boolArr_resize( z__boolArr *arr, z__bool newSize)
 		{
 		    arr->len = newSize;
 		    if (arr->lenUsed > arr->len)
