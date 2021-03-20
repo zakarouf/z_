@@ -139,15 +139,38 @@ typedef ptrdiff_t z__ptrdiff;
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
 
+
 void *z__safe_realloc(void * data, size_t size);
-// Unknown Unsafe type Arrays
+
+#ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
+	/* Unsafe Irregular Object Holder array */
+	typedef struct __ZAKAROUF__IRREGULAR_TYPE_STRUCT
+	{
+		z__ptr *data;
+		size_t *size;
+		z__u8  *typeID;
+		z__i32 len;
+		z__i32 lenUsed;
+		char** comment;
+
+	}z__Irrg;
+
+	z__Irrg z__Irrg_create(z__u32 len);
+	void z__Irrg_resize(z__Irrg *irgt, size_t newsize);
+	void z__Irrg_push(z__Irrg *irgt, void *val, size_t size, z__u8 typeID, const char *comment, z__i32 commentLength);
+	void z__Irrg_pop(z__Irrg *irgt);
+	void z__Irrg_delete(z__Irrg *irgt);
+
+#endif
+
+/* Unknown Similar size Unsafe type Arrays */
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
     z__ptr data;
     z__u32 size;
+    z__u8  typeID;
     z__u32 len;
     z__u32 lenUsed;
-    z__u8 typeID;
     char *comment;
 
 }z__Dynt;
@@ -170,8 +193,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__Dynt_getLen(arr)               (arr.len)
 #define z__Dynt_getUsed(arr)              (arr.lenUsed)
 
-
-// Known Type-safe arrays
+/* Known Type-safe arrays */
 #define z__FxArr(T, sz, N) T N[sz]
 
 #define z__SxArr(T, sz, N)\

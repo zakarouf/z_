@@ -31,7 +31,7 @@
 	#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 	#define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
 
-
+#define Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 
 /* Array Types, Use Vectors? */
 #define Z___TYPE_CONFIG__USE_VECTORS						
