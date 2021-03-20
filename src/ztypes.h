@@ -393,10 +393,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 #endif
 
+
+	#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
+
+	#define z__contof(ptr, T, M) ({ \
+	    const typeof(((T *)0)->M) * __mptr = (ptr); \
+	    (T *)((char *)__mptr - offsetof(T, M)); })
+
 #undef z__safe_realloc
 
-
-
+#ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES
 	
 	#define z__type_isequal(AT, T) __builtin_types_compatible_p(typeof(AT), T)
 
