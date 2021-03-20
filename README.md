@@ -185,7 +185,7 @@ Creates a New copy arrt and returns it.
 ---
 # Dispatching Types
 `ztypes` also provides for you to define your own types.
-## Dynamic Arrays Arrays
+## Dynamic Arrays
 Using `z__Arr(T)` macro lets you define your own Array type, Here 'T' is the type the array is going to hold
 To Create Your own type just do
 ```c
@@ -201,6 +201,24 @@ z__Arr_create(&Var1);
 z__Arr_create(&Var2);
 // No new type is created
 ```
+**Functions**
+`z__Arr(T)` Provides some generic funtions for Array Manipulation
+```C
+z__Arr_create(arr);          // Create A new Array
+z__Arr_delete(arr);          // Delete The Array
+z__Arr_push(arr, Val);       // Push a new Value at Top
+z__Arr_resize(arr, newsize); // Resize The Array
+z__Arr_pop(arr);             // Delete A Value From top
+                             
+z__Arr_getTop(arr);          // Get The Value from Top
+z__Arr_getUsed(arr);         // Get Length Used
+z__Arr_getLen(arr);          // Get Total Length Allocated
+z__Arr_getVal(arr, index);   // Access Value from an Index
+```
+***NOTE: These FUCTIONS ARE COMPATITBLE WITH Pre-Defined Array Types BUT ONLY `get` FUNTIONS ARE COMPATIBLE WITH only `z__SxArr` Fixed Length Arrays Type, whilst `z__FxArr` is not***
+
+Dynamic Arrays are heap allocated; They are needed to be deleted once they are no longer needed, otherwise it will cause a memory leak.
+
 ## Fixed Length Arrays
 There are two types of Fixed length arrays
 * **z__FxArr(T, sz, N)**: Equivalent to `foo bar[size]`
@@ -209,10 +227,52 @@ There are two types of Fixed length arrays
 Using FxArr is really straight forward.
 ```c
 z__FxArr(/*YourType*/, /*Length*/, /*Name*/);
-z__FxArr(int, 10, list); // Creates a Fixed Array named 'list' of length 10 holding capacity of 10 ints
-list[9] = 3; // Changing Value
-// You can Also Create a Type Defination
+/********************************************/
+
+z__FxArr(int, 10, list);    // Creates a Fixed Array named 'list' of length 10 holding capacity of 10 ints
+list[9] = 3;                // Changing Value
+
+/* You can Also Create a Type Defination */
 typedef z__FxArr(float, 3, vec3);
 vec3 position = {1.0f, 1.0f, 0.0f};
 ```
+Fixed Length Arrays are Stack allocated.
 
+`z__SxArr` Holds objects other than just array data similar to Dynamic Array.  Infact z__SxArr types can use `z__Arr_get...` functions but only those function.  Using Other than that will break the program as they are oriented towards dynamic memory allocation on Heap.
+
+`z__SxArr` provides two functions and few definitions
+```c
+z__SxArr(/*YourType*/, /*Length*/, /*Name*/); // Create a new object of fixed length array
+/********************************************/
+
+z__SxArr(int, 55, foo);                 // Creates a new Variable object 'foo' holding Fixed Length array
+typedef z__dSxArr(int, size) newType;   // Creates a type of Fixed Length Array of type `int` holding 10 value capacity
+z__iSxArr(newType, Val);                // Creates a New Variable of type 'newType'
+
+z__SxArr_push(arr, val);                // Push value at top
+z__SxArr_pop(arr);                      // Deletes Value From Top
+```
+
+## Vectors
+We can also init our own vector type with `z__Vector(T)`.
+Here is how it works
+```c
+        z__Vector(/*YourType*/, /*Members*/) NewTypeValue;
+typedef z__Vector(/*YourType*/, /*Members*/) NewType;
+/********************************************/
+
+z__Vector(double, w, z, y) newVal;
+newVal.w = 89.023f;
+newVal.y = 77;
+
+typedef z__Vector(double, w, z, y) newTypeV;
+newTypeV tmpData = {
+    .w = 10f,
+    .z = 244.078f,
+    .y = 3.14f
+};
+
+```
+Vectors Are Stack Allocated
+
+# End
