@@ -164,6 +164,13 @@ void *z__safe_realloc(void * data, size_t size);
 	void z__Irrg_pop(z__Irrg *irgt);
 	void z__Irrg_delete(z__Irrg *irgt);
 
+	#define z__Irrg_getValSize(arr, of)       (arr.size[of])
+	#define z__Irrg_gettypeID(arr, of)        (arr.typeID[of])
+	#define z__Irrg_getComment(arr, of)       (arr.comment[of])
+	#define z__Irrg_getValAddress(arr, of)	  (arr.data[of])
+	#define z__Irrg_getLen(arr)               (arr.len)
+	#define z__Irrg_getUsed(arr)              (arr.lenUsed)
+
 #endif
 
 /* Unknown Similar size Unsafe type Arrays */
