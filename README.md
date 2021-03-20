@@ -4,9 +4,9 @@ A small library for defining type and such
 ## What it does?
 It defines common data types, Array types, Vectors, Dynamic Type Arrays
 
-### Types
+## Types
 
-#### Generic Types
+### Generic Types
 
 |Type|Description|
 |---|---|
@@ -25,14 +25,14 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |`z__bool`| Bool Type |
 |`z__ptr`| Void Pointer |
 
-#### Array Types
+### Array Types
 
 |Type|Description|
 |---|---|
 |`z__<type>Arr`| Dynamic Array for specified Type|
 |`z__Dynt`| Dynamic Array for Unknown or Non-primitive Type|
 
-#### Vector Types
+### Vector Types
 
 **Struct**
 |Type|Description|
@@ -55,7 +55,7 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |`z__ivec4`| 4D Integer Vector {x, y, z, w} |
 
 
-#### Matrices
+### Matrices
 
 |Type|Description|
 |---|---|
@@ -69,7 +69,7 @@ This Library Provides 2 types of arrays
 - Generic Type Array (int, float)
 - Unknown Type Array (any struct or typedefs)
 
-#### Generic Type Array
+**Generic Type Array**
 Originally This library was meant to only provide 1 type of Arrays; Dynamic Unknown Type, which would work similarly to std::vector.
 Generic Type was added later in order to replace the type checking hassle with array types which people will often use like i32 or f32 arrays which are essential even in small projects.
 
@@ -78,26 +78,26 @@ Generic Type was added later in order to replace the type checking hassle with a
 
 `ztypes` Library also provides some funtions for Creating and Manupulating `Arr` types, NOTE the basic structure of types is same except for types names so macro functions are used in some cases.
 
-- `z__<type>Arr z__<type>Arr_create(z__u32 <len>);`
+`z__<type>Arr z__<type>Arr_create(z__u32 <len>);`</ br>
     Creates a initializes Array of <type> and of size <len> and Returns it.
     USAGE: z__i8Arr i8_array = z__i8Arr_create(32);
 
-- `z__Arr_delete(arr);`
+`z__Arr_delete(arr);` </ br>
     Deletes a `Arr` type 
     USAGE: z__Arr_delete_(i8_array)
            z__Arr_delete_(f32_array)
 
-- `z__<type>Arr_push(<type>Arr \*array ,<type> value);`
+`z__<type>Arr_push(<type>Arr \*array ,<type> value);`</ br>
     Pushes Value At top
     *Reallocates the Array if No more space is Availiable*
     USAGE: z__i16Arr_push(array, 9);
 
-- `z__<type>Arr_pop(array);`
+`z__<type>Arr_pop(array);`</ br>
     Deletes the top Value
     *Reallocates the Array if Unused space is are more than gross limit*
     USAGE: z__u64_pop(array);
 
-#### Dynamic Unknown Type Array
+**Dynamic Unknown Type Array**
 A array which enables for quick initialization of array for non-standard types.
 To initialize a Dynamic Unknown Type Array `z__Dynt` is used.
 
