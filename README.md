@@ -182,5 +182,37 @@ Creates a New copy arrt and returns it.
 > ```C
 > z__Dynt_makeCopy(const z__Dynt arrt);
 > ```
+---
+# Dispatching Types
+`ztypes` also provides for you to define your own types.
+## Dynamic Arrays Arrays
+Using `z__Arr(T)` macro lets you define your own Array type, Here 'T' is the type the array is going to hold
+To Create Your own type just do
+```c
+typedef z__Arr(/*YourType*/) newArray;
+newArray Var1, Var2;
+z__Arr_create(&Var1);
+z__Arr_create(&Var2);
+```
+Or you can Create a one time array without declaring a whole new type
+```c
+z__Arr(/*YourType*/) Var1, Var2;
+z__Arr_create(&Var1);
+z__Arr_create(&Var2);
+// No new type is created
+```
+## Fixed Length Arrays
+There are two types of Fixed length arrays
+* **z__FxArr(T, sz, N)**: Equivalent to `foo bar[size]`
+* **z__SxArr(T, sz, N)**: Initializes a Struct with Attributes of `z__Arr(T)`
 
+Using FxArr is really straight forward.
+```c
+z__FxArr(/*YourType*/, /*Length*/, /*Name*/);
+z__FxArr(int, 10, list); // Creates a Fixed Array named 'list' of length 10 holding capacity of 10 ints
+list[9] = 3; // Changing Value
+// You can Also Create a Type Defination
+typedef z__FxArr(float, 3, vec3);
+vec3 position = {1.0f, 1.0f, 0.0f};
+```
 
