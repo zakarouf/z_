@@ -168,6 +168,27 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 
 // Known Type-safe arrays
+#define z__FxArr(T, sz, N) T N[sz]
+
+#define z__SxArr(T, sz)\
+    struct                      \
+    {                           \
+        T data[sz];       		\
+        const z__i32 len;  		\
+        z__i32 lenUsed;     	\
+    }
+
+#define z__dSxArr(T, sz, N)\
+    struct                      \
+    {                           \
+        T data[sz];       		\
+        const z__i32 len;  		\
+        z__i32 lenUsed;     	\
+    } N = {.len = sz}
+
+#define z__iSxArr(T, N)\
+    T N = {.len = sizeof(N.data)/sizeof(N.data[0])}
+
 #define z__Arr(T)\
 	struct              \
 	{					\
