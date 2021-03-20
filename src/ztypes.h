@@ -47,6 +47,9 @@ typedef uintptr_t z__uptr;
 
 typedef ptrdiff_t z__ptrdiff;
 
+#define z__sizeof sizeof
+typedef size_t z__size;
+
 
 /* Vectors And Matrices For Graphical Maths */
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
@@ -147,7 +150,7 @@ void *z__safe_realloc(void * data, size_t size);
 	typedef struct __ZAKAROUF__IRREGULAR_TYPE_STRUCT
 	{
 		z__ptr *data;
-		size_t *size;
+		z__size *size;
 		z__u8  *typeID;
 		z__i32 len;
 		z__i32 lenUsed;
@@ -156,8 +159,8 @@ void *z__safe_realloc(void * data, size_t size);
 	}z__Irrg;
 
 	z__Irrg z__Irrg_create(z__u32 len);
-	void z__Irrg_resize(z__Irrg *irgt, size_t newsize);
-	void z__Irrg_push(z__Irrg *irgt, void *val, size_t size, z__u8 typeID, const char *comment, z__i32 commentLength);
+	void z__Irrg_resize(z__Irrg *irgt, z__size newsize);
+	void z__Irrg_push(z__Irrg *irgt, void *val, z__size size, z__u8 typeID, const char *comment, z__i32 commentLength);
 	void z__Irrg_pop(z__Irrg *irgt);
 	void z__Irrg_delete(z__Irrg *irgt);
 
@@ -167,7 +170,7 @@ void *z__safe_realloc(void * data, size_t size);
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
     z__ptr data;
-    z__u32 size;
+    z__size size;
     z__u8  typeID;
     z__u32 len;
     z__u32 lenUsed;
@@ -176,8 +179,6 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 }z__Dynt;
 
 
-#define z__sizeof sizeof
-typedef size_t z__size;
 z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
 void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
 void z__Dynt_push( z__Dynt *arrt, void *val);

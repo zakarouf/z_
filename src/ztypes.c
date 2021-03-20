@@ -23,7 +23,7 @@ z__Irrg z__Irrg_create(z__u32 len)
 {
 	return (z__Irrg) {
 		.data = malloc(sizeof(z__ptr*)*len),
-		.size = malloc(sizeof(size_t*)*len),
+		.size = malloc(sizeof(z__size*)*len),
 		.typeID = malloc(sizeof(z__u8)*len),
 		.len = len,
 		.lenUsed = 0,
@@ -31,9 +31,9 @@ z__Irrg z__Irrg_create(z__u32 len)
 	};
 }
 
-void z__Irrg_resize(z__Irrg *irgt, size_t newsize)
+void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
 {
-	irgt->size = z__safe_realloc(irgt->size, sizeof(size_t)*newsize );
+	irgt->size = z__safe_realloc(irgt->size, sizeof(z__size)*newsize );
 	irgt->typeID = z__safe_realloc(irgt->typeID, sizeof(z__u8)*newsize);
 
 	for (int i = irgt->len; i < newsize; ++i)
@@ -52,7 +52,7 @@ void z__Irrg_push
 (
 	  z__Irrg *irgt
 	, void *val
-	, size_t size
+	, z__size size
 	, z__u8 typeID
 	, const char *comment
 	, z__i32 commentLength
@@ -60,7 +60,7 @@ void z__Irrg_push
 {
 	if (irgt->lenUsed >= irgt->len)
 	{
-		size_t news = irgt->len + Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+		z__size news = irgt->len + Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
 		z__Irrg_resize(irgt, news);
 	}
 
@@ -93,7 +93,7 @@ void z__Irrg_pop(z__Irrg *irgt)
 
 		if ((irgt->len - irgt->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
 		{
-			size_t news = irgt->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+			z__size news = irgt->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
 			z__Irrg_resize(irgt, news);
 		}
 	}
