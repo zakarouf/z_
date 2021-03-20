@@ -18,14 +18,15 @@ void *z__safe_realloc(void * data, size_t size)
     return data;
 }
 
-z__Dynt z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength)
+z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
 {
     z__Dynt arrt;
 
-    arrt.data = malloc(type * len);
-    arrt.size = type;
+    arrt.data = malloc(size * len);
+    arrt.size = size;
     arrt.len = len;
     arrt.lenUsed = 0;
+    arrt.typeID = typeID;
 
     if (commentLength == 0) {
         arrt.comment = NULL;

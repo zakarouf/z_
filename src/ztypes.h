@@ -147,14 +147,15 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
     z__u32 size;
     z__u32 len;
     z__u32 lenUsed;
+    z__u8 typeID;
     char *comment;
 
 }z__Dynt;
 
 
-#define z__typeof sizeof
-typedef size_t z__type;
-z__Dynt z__Dynt_create(z__type T, z__u32 len, const char *comment, z__i32 commentLength);
+#define z__sizeof sizeof
+typedef size_t z__size;
+z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
 void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
 void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
