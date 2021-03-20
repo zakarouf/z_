@@ -78,32 +78,40 @@ ztypes Provides Arr types for all int and float types
 
 `ztypes` Library also provides some funtions for Creating and Manupulating `Arr` types, NOTE the basic structure of types is same except for types names so macro functions are used in some cases.
 
+Creates a initializes Array of <type> and of size <len> and Returns it.
 ```C
 z__<type>Arr z__<type>Arr_create(z__u32 <len>);
 ```
-    Creates a initializes Array of <type> and of size <len> and Returns it.
-    USAGE: z__i8Arr i8_array = z__i8Arr_create(32);
-
+```C
+z__i8Arr i8_array = z__i8Arr_create(32);
+```
+---
+Delete a `Arr` type 
 ```C
 z__Arr_delete(arr);
 ```
-    Deletes a `Arr` type 
-    USAGE: z__Arr_delete_(i8_array)
-           z__Arr_delete_(f32_array)
-
+```C
+z__Arr_delete_(i8_array);
+z__Arr_delete_(f32_array);
+```
+---
+Pushe Value At top
+*Reallocates the Array if No more space is Availiable*
 ```C
 z__<type>Arr_push(<type>Arr \*array ,<type> value);
 ```
-    Pushes Value At top
-    *Reallocates the Array if No more space is Availiable*
-    USAGE: z__i16Arr_push(array, 9);
-
+```C
+z__i16Arr_push(array, 9);
+```
+---
+Deletes the top Value
+*Reallocates the Array if Unused space is are more than gross limit*
 ```C
 z__<type>Arr_pop(array);
 ```
-    Deletes the top Value
-    *Reallocates the Array if Unused space is are more than gross limit*
-    USAGE: z__u64_pop(array);
+```C
+z__u64_pop(array);
+```
 
 **Dynamic Unknown Type Array**
 A array which enables for quick initialization of array for non-standard types.
