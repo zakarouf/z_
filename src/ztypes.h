@@ -10,6 +10,7 @@
     #include <cglm/cglm.h>
 #endif
 
+/* Basic Types */
 typedef uint8_t  z__u8;
 typedef uint16_t z__u16;
 typedef uint32_t z__u32;
@@ -47,6 +48,7 @@ typedef uintptr_t z__uptr;
 typedef ptrdiff_t z__ptrdiff;
 
 
+/* Vectors And Matrices For Graphical Maths */
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
 
     // CGLM PRE_REQUSITE GOES HERE...
@@ -104,6 +106,7 @@ typedef ptrdiff_t z__ptrdiff;
 
     #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
 
+        /* New type declarator, Vector */
 		#define z__Vector(T, ...)\
 			struct              \
 			{					\
