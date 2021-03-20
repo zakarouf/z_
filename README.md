@@ -181,11 +181,12 @@ Resizing array.
 z__Dynt_resize(object_box, 23);
 ```
 
-
-```C
-z__Dynt_makeCopy(const z__Dynt arrt);
-```
 Creates a New copy arrt and returns it.
 *NOTE: New Copy is not linked with the passed value so its safe to delete it*
 >USAGE
+>
+> ```C
+> z__Dynt_makeCopy(const z__Dynt arrt);
+> ```
+
 
