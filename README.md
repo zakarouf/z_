@@ -89,42 +89,37 @@ ztypes Provides Arr types for all int and float types
 
 Create a initializes Array of <type> and of size <len> and Returns it.
 >USAGE
-```C
-z__<type>Arr z__<type>Arr_create(z__u32 <len>);
-```
-```C
-z__i8Arr i8_array = z__i8Arr_create(32);
-```
+> ```C
+> z__<type>Arr z__<type>Arr_create(z__u32 <len>);
+> z__i8Arr i8_array = z__i8Arr_create(32);
+> ```
 
 Delete a `Arr` type 
 >USAGE
-```C
-z__Arr_delete(arr);
-```
-```C
-z__Arr_delete_(i8_array);
-z__Arr_delete_(f32_array);
-```
+>
+> ```C
+> z__Arr_delete(arr);
+> z__Arr_delete_(i8_array);
+> z__Arr_delete_(f32_array);
+> ```
 
 Push Value At top
 *Reallocates the Array if No more space is Availiable*
 >USAGE
-```C
-z__<type>Arr_push(<type>Arr \*array ,<type> value);
-```
-```C
-z__i16Arr_push(array, 9);
-```
+>
+> ```C
+> z__<type>Arr_push(<type>Arr \*array ,<type> value);
+> z__i16Arr_push(array, 9);
+> ```
 
 Deletes the top Value
 *Reallocates the Array if Unused space is are more than gross limit*
 >USAGE
-```C
-z__<type>Arr_pop(array);
-```
-```C
-z__u64_pop(array);
-```
+>
+>```C
+>z__<type>Arr_pop(array);
+>z__u64_pop(array);
+>```
 
 ## Dynamic Unknown Type Array
 A array which enables for quick initialization of array for non-standard types.
@@ -133,53 +128,52 @@ To initialize a Dynamic Unknown Type Array `z__Dynt` is used.
 ### Functions
 Create a initializes Array of <type> and of size <len> with a given Comment for the type and Returns it.
 >USAGE
-```C
-z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
-```
-
-```C
-    typedef struct _objecttype
-    {
-        z__u8 info;
-        z__u32 len
-        z__Vector3 pos;
-    }object;
-
-    z__Dynt object_box = z__Dynt_create(z__typeof(object), 32, "Object:Box", -1);
-```
+>
+> ```C
+> z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
+> 
+>     typedef struct _objecttype
+>     {
+>         z__u8 info;
+>         z__u32 len
+>         z__Vector3 pos;
+>     }object;
+> 
+>     z__Dynt object_box = z__Dynt_create(z__typeof(object), 32, "Object:Box", -1);
+> ```
 
 Delete a `Dynt` type and frees its comment if you dont want it be free set nameFree to False or 0.
 >USAGE
-```C
-z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
-```
-```C
-z__Dynt_delete(&object_box, true);
-```
+>
+> ```C
+> z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
+> z__Dynt_delete(&object_box, true);
+> ```
 
 Pushes Value At top
 *Reallocates the Array if No more space is Availiable*
 >USAGE
-```C
-z__Dynt_push( z__Dynt *arrt, void *val);
-```
-```C
-z__Dynt_push( &object_box, (object){2, 1, (z__Vector3){0, 3 ,0}});
-```
+>
+> ```C
+> z__Dynt_push( z__Dynt *arrt, void *val);
+> z__Dynt_push( &object_box, (object){2, 1, (z__Vector3){0, 3 ,0}});
+> ```
 
 Delete the top Value
 *Reallocates the Array if Unused space is are more than gross limit*
 >USAGE
-```C
-z__Dynt_pop( z__Dynt *arrt);
-```
+>
+> ```C
+> z__Dynt_pop( z__Dynt *arrt);
+> ```
 
 Resizing array.
 *Note: If array was larger then all values b/w oldsize and newsize is gone*
 >USAGE
-```C
-z__Dynt_resize(object_box, 23);
-```
+>
+> ```C
+> z__Dynt_resize(object_box, 23);
+> ```
 
 Creates a New copy arrt and returns it.
 *NOTE: New Copy is not linked with the passed value so its safe to delete it*
