@@ -423,7 +423,8 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 #ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES
 	
-	#define z__type_isequal(AT, T) __builtin_types_compatible_p(typeof(AT), T)
+	#define z__type_isequal(val, T) __builtin_types_compatible_p(typeof(val), T)
+	#define z__type_issame(T1, T2) 	__builtin_types_compatible_p(T, T)
 
 	#ifdef Z___TYPE_CONFIG__USE_TYPE_IDENTIFIER
 		#define __builtin_choose_expr __builtin_choose_expr
