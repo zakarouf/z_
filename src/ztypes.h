@@ -167,7 +167,9 @@ void *z__safe_realloc(void * data, size_t size);
 	#define z__Irrg_getValSize(arr, of)       (arr.size[of])
 	#define z__Irrg_gettypeID(arr, of)        (arr.typeID[of])
 	#define z__Irrg_getComment(arr, of)       (arr.comment[of])
-	#define z__Irrg_getValAddress(arr, of)	  (arr.data[of])
+	#define z__Irrg_getVal(arr, of, T)        ( *( T *)(*arr.data[of]) )
+	#define z__Irrg_getValTop(arr, T)         ( *( T *)(*arr.data[arr.lenUsed-1]) )
+	#define z__Irrg_getAddress(arr, of)		  (*arr.data[of])
 	#define z__Irrg_getLen(arr)               (arr.len)
 	#define z__Irrg_getUsed(arr)              (arr.lenUsed)
 
@@ -196,7 +198,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__Dynt_getValSize(arr)           (arr.size)
 #define z__Dynt_getTop(arr, T)         ( *( T *)( (arr.data) + ((arr.lenUsed-1) * arr.size)) )
 #define z__Dynt_getVal(arr, index , T) ( *( T *)( (arr.data) + (index * arr.size)) )
-#define z__Dynt_getValAddress(arr, index) ((arr.data) + (index * arr.size))
+#define z__Dynt_getAddress(arr, index) ((arr.data) + (index * arr.size))
 #define z__Dynt_getComment(arr)           (arr.comment)
 #define z__Dynt_getLen(arr)               (arr.len)
 #define z__Dynt_getUsed(arr)              (arr.lenUsed)
@@ -391,6 +393,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 	                func (arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);		\
 	            }																		\
 	        }
+
 	    #define z__i8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i8Arr_resize)
 	    #define z__i16Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i16Arr_resize)
 	    #define z__i32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i32Arr_resize)
@@ -447,10 +450,6 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			__builtin_choose_expr(z__type_isequal(T, z__f32Arr), 17, \
 			__builtin_choose_expr(z__type_isequal(T, z__f64Arr), 18, \
 				\
-			__builtin_choose_expr(z__type_isequal(T, z__char), 19, \
-			__builtin_choose_expr(z__type_isequal(T, z__String), 20, \
-			__builtin_choose_expr(z__type_isequal(T, z__StringLines), 21, \
-			__builtin_choose_expr(z__type_isequal(T, z__StringLinesArr), 22, \
 				\
 			__builtin_choose_expr(z__type_isequal(T, z__ptr), 23, \
 			__builtin_choose_expr(z__type_isequal(T, z__Dynt), 24, \
@@ -475,7 +474,13 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 			__builtin_choose_expr(z__type_isequal(T, z__mat4), 40, \
 			__builtin_choose_expr(sizeof(T) == 1, 19, \
 			__builtin_choose_expr(sizeof(T) == 2, 1, \
-			(0)  )))))))))))))))))))))))))))))))))))))))))) // wtf? just no
+			(0)  )))))))))))))))))))))))))))))))))))))) // wtf? just no
+
+			//
+			//__builtin_choose_expr(z__type_isequal(T, z__char), 19, \
+			__builtin_choose_expr(z__type_isequal(T, z__String), 20, \
+			__builtin_choose_expr(z__type_isequal(T, z__StringLines), 21, \
+			__builtin_choose_expr(z__type_isequal(T, z__StringLinesArr), 22, \
 
 	#endif
 
