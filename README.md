@@ -22,6 +22,7 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |`z__float`| Generic float system provides |
 |`z__bool`| Bool Type |
 |`z__ptr`| Void Pointer |
+
 ---
 # Dyanmic Array Types
 
@@ -30,6 +31,7 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |`z__Arr(T)`| Type-safe, User generated Array, of type 'T'|
 |`z__<type>Arr`| Dynamic Array for specified Type|
 |`z__Dynt`| Dynamic Array for Unknown or Non-primitive Type|
+
 ---
 # Fixed Length Arrays
 
@@ -37,6 +39,7 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |---|---|
 |`z__FxArr`| Fixed length Array (minimal) |
 |`z__SxArr`| Fixed length Array, Contained in a Struct with const len and lenUsed |
+
 ---
 # Vector Types
 
@@ -72,9 +75,10 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 
 ---
 # Dynamic Arrays
-This Library Provides 2 types of Dynamic arrays
-- Generic Type Array (int, float)
-- Unknown Type Array (any struct or typedefs)
+This Library Provides 3 types of Dynamic arrays
+- Generic Type Array (any, typesafe).
+- Unknown Type Array (any, type-unsafe) of similar size.
+- Unknown Object Type Arrat (same as Unknown Type but every new value can be of differnt size and type)
 
 ## Generic Type Array
 Originally This library was meant to only provide 1 type of Arrays; Dynamic Unknown Type, which would work similarly to std::vector.
@@ -83,43 +87,39 @@ Generic Type was added later in order to replace the type checking hassle with a
 ztypes Provides Arr types for all int and float types
 `z__<type>Arr` is the basic format for defining an Array, such as `z__i64Arr` means a singned 64bit integer Array.
 
+You can Also Create your own type using `z__Arr(T)`. See [Dispatching Types](# Dispatching Types)
+
 `ztypes` Library also provides some funtions for Creating and Manupulating `Arr` types, NOTE the basic structure of types is same except for types names so macro functions are used in some cases.
 
-### Functions
+### Functions (Predefined)
 
 Create a initializes Array of <type> and of size <len> and Returns it.
 >USAGE
-> ```C
-> z__<type>Arr z__<type>Arr_create(z__u32 <len>);
-> z__i8Arr i8_array = z__i8Arr_create(32);
-> ```
+ ```C
+ z__<type>Arr z__<type>Arr_create(z__u32 <len>);
+ z__i8Arr i8_array = z__i8Arr_create(32);
+ ```
 
 Delete a `Arr` type 
->USAGE
->
-> ```C
-> z__Arr_delete(arr);
-> z__Arr_delete_(i8_array);
-> z__Arr_delete_(f32_array);
-> ```
+ ```c
+ z__Arr_delete(arr);
+ z__Arr_delete_(i8_array);
+ z__Arr_delete_(f32_array);
+ ```
 
 Push Value At top
 *Reallocates the Array if No more space is Availiable*
->USAGE
->
-> ```C
-> z__<type>Arr_push(<type>Arr \*array ,<type> value);
-> z__i16Arr_push(array, 9);
-> ```
+ ```C
+ z__<type>Arr_push(<type>Arr \*array ,<type> value);
+ z__i16Arr_push(array, 9);
+ ```
 
 Deletes the top Value
 *Reallocates the Array if Unused space is are more than gross limit*
->USAGE
->
->```C
->z__<type>Arr_pop(array);
->z__u64_pop(array);
->```
+ ```C
+ z__<type>Arr_pop(array);
+ z__u64_pop(array);
+ ```
 
 ## Dynamic Unknown Type Array
 A array which enables for quick initialization of array for non-standard types.
@@ -128,60 +128,66 @@ To initialize a Dynamic Unknown Type Array `z__Dynt` is used.
 ### Functions
 Create a initializes Array of <type> and of size <len> with a given Comment for the type and Returns it.
 >USAGE
->
-> ```C
-> z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
-> 
->     typedef struct _objecttype
->     {
->         z__u8 info;
->         z__u32 len
->         z__Vector3 pos;
->     }object;
-> 
->     z__Dynt object_box = z__Dynt_create(z__typeof(object), 32, "Object:Box", -1);
-> ```
+ ```C
+ z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
+ 
+     typedef struct _objecttype
+     {
+         z__u8 info;
+         z__u32 len
+         z__Vector3 pos;
+     }object;
+ 
+     z__Dynt object_box = z__Dynt_create(z__typeof(object), 32, "Object:Box", -1);
+ ```
 
 Delete a `Dynt` type and frees its comment if you dont want it be free set nameFree to False or 0.
 >USAGE
->
-> ```C
-> z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
-> z__Dynt_delete(&object_box, true);
-> ```
+  ```C
+  z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
+  z__Dynt_delete(&object_box, true);
+  ```
 
 Pushes Value At top
 *Reallocates the Array if No more space is Availiable*
 >USAGE
->
-> ```C
-> z__Dynt_push( z__Dynt *arrt, void *val);
-> z__Dynt_push( &object_box, (object){2, 1, (z__Vector3){0, 3 ,0}});
-> ```
+ ```C
+ z__Dynt_push( z__Dynt *arrt, void *val);
+ z__Dynt_push( &object_box, (object){2, 1, (z__Vector3){0, 3 ,0}});
+ ```
 
 Delete the top Value
 *Reallocates the Array if Unused space is are more than gross limit*
 >USAGE
->
-> ```C
-> z__Dynt_pop( z__Dynt *arrt);
-> ```
+ ```C
+ z__Dynt_pop( z__Dynt *arrt);
+ ```
 
 Resizing array.
 *Note: If array was larger then all values b/w oldsize and newsize is gone*
 >USAGE
->
-> ```C
-> z__Dynt_resize(object_box, 23);
-> ```
+ ```C
+ z__Dynt_resize(object_box, 23);
+ ```
 
 Creates a New copy arrt and returns it.
 *NOTE: New Copy is not linked with the passed value so its safe to delete it*
 >USAGE
->
-> ```C
-> z__Dynt_makeCopy(const z__Dynt arrt);
-> ```
+ ```C
+ z__Dynt_makeCopy(const z__Dynt arrt);
+ ```
+
+## Dynamic Unknown Object Type Array
+Unlike `Dynt` where type and single value size of an the entire array if fixed, We can create a Array type that will hold all irregulars objects and with every value pushed you need to specify the size or type of object;
+
+To Create a Irregular Array type use `z__Irrg` typedef
+```
+z__Irrg newVar;               // Creating a new variable
+newVar = z__Irrg_create(10);  // Initializes type with empty space allocated
+z__Irrg_delete(&newVar)       // Dealloctes All the conetents in holding
+
+```
+
 ---
 # Dispatching Types
 `ztypes` also provides for you to define your own types.
@@ -275,4 +281,8 @@ newTypeV tmpData = {
 ```
 Vectors Are Stack Allocated
 
-# End
+---
+# Ending Note
+This library is not perfect and I know there are many others like it, but this one is mine.
+
+---
