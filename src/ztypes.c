@@ -36,13 +36,17 @@ void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
 	irgt->size = z__safe_realloc(irgt->size, sizeof(z__size)*newsize );
 	irgt->typeID = z__safe_realloc(irgt->typeID, sizeof(z__u8)*newsize);
 
-	for (int i = irgt->len; i < newsize; ++i)
+	// Free memory if _resize is not called from _push or pop
+	for (int i = irgt->lenUsed; i > newsize; --i)
 	{
+		//printf("==%d\n", i);
 		free(irgt->data[i]);
 		free(irgt->comment[i]);
+		irgt->lenUsed -= 1;
 	}
 
 	irgt->data = z__safe_realloc(irgt->data, sizeof(z__ptr*)*newsize);
+
 	irgt->comment = z__safe_realloc(irgt->comment, sizeof(char*)*newsize);
 
 	irgt->len = newsize;
@@ -58,10 +62,11 @@ void z__Irrg_push
 	, z__i32 commentLength
 )
 {
-	if (irgt->lenUsed >= irgt->len)
+	if (irgt->lenUsed == irgt->len)
 	{
 		z__size news = irgt->len + Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
 		z__Irrg_resize(irgt, news);
+
 	}
 
 	irgt->data[irgt->lenUsed] = malloc(size);
