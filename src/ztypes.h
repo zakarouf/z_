@@ -307,6 +307,26 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
  #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
 
 
+// Link Lists
+#ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
+	#define z__LinkS(N, T, ...)\
+		struct _ZAKAROUF__TYPE_LINK_LIST__##N {             \
+			T data;                                         \
+			__VA_ARGS__;                                    \
+			struct _ZAKAROUF__TYPE_LINK_LIST__##N  *next;   \
+			struct _ZAKAROUF__TYPE_LINK_LIST__##N  *prev;   \
+		} N
+
+	#define z__Link(T, ...)\
+		struct {                \
+			struct T  *head;    \
+			struct T  *tail;    \
+			                    \
+			__VA_ARGS__;		/* Additialnal members for the the user*/\
+		}
+
+#endif
+
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
 
     // Signed
