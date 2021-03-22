@@ -39,7 +39,7 @@ syn keyword cType z__Vint2 z__Vint3 z__Vint4
 
 syn keyword cStructure z__Vector z__Arr
 syn keyword cStructure z__FxArr z__SxArr z__SxArrDef z__SxArrI
-syn keyword cStructure z__Link z__LinkS
+syn keyword cStructure z__Link z__LinkStruct z__LinkDef
 
 syn keyword cOperator z__typeof z__sizeof z__typeID
 

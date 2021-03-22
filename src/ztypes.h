@@ -304,21 +304,100 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 // Link Lists
 #ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
-	#define z__LinkS(N, T, ...)\
-		struct _ZAKAROUF__TYPE_LINK_LIST__##N {             \
-			T data;                                         \
-			__VA_ARGS__;                                    \
-			struct _ZAKAROUF__TYPE_LINK_LIST__##N  *next;   \
-			struct _ZAKAROUF__TYPE_LINK_LIST__##N  *prev;   \
-		} N
+	#define z__LinkStruct(N, DT, ...)\
+		struct _z__linkLs##N {              \
+			DT data;                        \
+			__VA_ARGS__;                    \
+			struct _z__linkLs##N  *next;    \
+			struct _z__linkLs##N  *prev;    \
+		}
+
+    #define z__LinkDef(T)\
+        struct _z__linkLs##T
 
 	#define z__Link(T, ...)\
-		struct {                \
-			struct T  *head;    \
-			struct T  *tail;    \
-			                    \
+		struct {                     \
+			z__LinkDef(T)  *head;    \
+            z__LinkDef(T)  *tail;    \
+            z__LinkDef(T)  *at;      \
+			             \
 			__VA_ARGS__;		/* Additialnal members for the the user*/\
 		}
+    /*
+     * How to Create a Link list
+     *         z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );
+     * typedef z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );  << Creates a typedef
+     * :Create a Link
+     *         z__Link(<z__LinkStruct>, <AdditionalMembers>) <Var>;
+     * typedef z__Link(<z__LinkStruct>, <AdditionalMembers>) <newType>;  << Creates a typedef
+     * Link list defination is complete;
+     */
+
+    #define z__MALLOC malloc
+    #define z__REALLOC realloc
+    #define z__FREE free
+
+    #define z__Link_create(zls, D)\
+        {                                                   \
+            (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
+            (zls)->head->next = NULL;                       \
+            (zls)->head->prev = NULL;                       \
+            (zls)->head->data = D;                          \
+            (zls)->at = (zls)->head;                        \
+            (zls)->tail = (zls)->head;                      \
+        }
+
+    #define z__Link_popHead(zls)\
+        {                                           \
+            if((zls)->head != NULL) {               \
+                if(((zls)->head->prev != NULL)) {   \
+                    (zls)->at = (zls)->head->prev;  \
+                    z__FREE((zls)->at->next);       \
+                        \
+                    (zls)->at->next = NULL;         \
+                    (zls)->head = (zls)->at;        \
+                }                                   \
+            }                                       \
+                                                    \
+        }
+
+    #define z__Link_delete(zls)\
+        {                                   \
+            while((zls)->head->prev != NULL)\
+            {                               \
+                z__Link_popHead(zls);       \
+            }                               \
+            z__FREE((zls)->head);           \
+            (zls)->head = NULL;             \
+        }
+    
+    #define z__Link_pushHead(zls, D)\
+        {                                                                   \
+            (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
+            (zls)->head->next->prev = (zls)->head;                          \
+            (zls)->head = (zls)->head->next;                                \
+                                                                            \
+            (zls)->head->data = D;                                          \
+            (zls)->head->next = NULL;                                       \
+        }
+        
+
+    #define z__Link_inext(zls, n)\
+        {                                                           \
+            for(int i = 0; i < n && (zls)->at->next != NULL; i++)   \
+            {                                                       \
+                (zls)->at = (zls)->at->next;                        \
+            }                                                       \
+        }
+
+    #define z__Link_iprev(zls, n)\
+        {\
+            for(int i = 0; i < n && (zls)->at->prev != NULL; i++)   \
+            {                                                       \
+                (zls)->at = (zls)->at->prev;                        \
+            }                                                       \
+        }
+
 
 #endif
 
