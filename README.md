@@ -248,12 +248,12 @@ Fixed Length Arrays are Stack allocated.
 
 `z__SxArr` provides two functions and few definitions
 ```c
-z__SxArr(/*YourType*/, /*Length*/, /*Name*/); // Create a new object of fixed length array
+z__SxArrI(/*YourType*/, /*Length*/, /*Name*/); // Create a new object of fixed length array
 /********************************************/
 
-z__SxArr(int, 55, foo);                 // Creates a new Variable object 'foo' holding Fixed Length array
-typedef z__dSxArr(int, size) newType;   // Creates a type of Fixed Length Array of type `int` holding 10 value capacity
-z__iSxArr(newType, Val);                // Creates a New Variable of type 'newType'
+z__SxArrI(int, 55, foo);                 // Creates a new Variable object 'foo' holding Fixed Length array
+typedef z__SxArrDef(int, size) newType;   // Creates a type of Fixed Length Array of type `int` holding 10 value capacity
+z__SxArr(newType, Val);                // Creates a New Variable of type 'newType'
 
 z__SxArr_push(arr, val);                // Push value at top
 z__SxArr_pop(arr);                      // Deletes Value From Top
@@ -280,6 +280,46 @@ newTypeV tmpData = {
 
 ```
 Vectors Are Stack Allocated
+
+## Linked List
+In ztypes the Linked Lists are comes with bare-bones template for type defination, with handful of funtions.
+### Decleration
+First we have to create our data structure with `z__LinkStruct`
+```c
+z__LinkStruct(
+	  <tagName>
+	, <mainDataType>
+	, <optionalMembers>); // Creating a Link list compactible Structure 
+			      // with tag name given by the user
+
+z__Link(<tagName>, <optionalMembers>) varName; // Create The link list Variable
+```
+Or we can use typedef to create a new type
+```C
+typedef z__Link(<tagName>, <optionalMembers>) TypeName; // Create The link list Type
+TypeName newVar; // Creates A new Variable of type TypeName;
+```
+There is Also a way to create a one use Variable for temporary use
+Below creates a node resembling link list Structure of `tagName`
+```C
+z__LinkDef(<tagName>) varName; // Creates A new variable holding structure of LinkStruct.
+```
+### Functions
+This Type also comes with its own set of fuctions for doing basic stuff
+```C
+ z__Link_create(<z__Link>);           // Initializes Linked List
+ z__Link_delete(<z__Link>);           // Deletes Initialized List
+
+ z__Link_pushHead(<z__Link>, <Data>); // Creates a new space for head pushes data, links with previous head
+ z__Link_popHead(<z__Link>);          // Frees Head, sets previous link to head as new head;
+
+ z__Link_iprev(<z__Link>, n);         // Go backwards in List (n) times, stops if at tail end.
+ z__Link_inext(<z__Link>, n);         // Go forwards in List (n) times, stops if at head end.
+```
+### Link List in action
+![sample](docs/imgs/samplepgrm.png)
+<br>Will produce the following output.
+![sample_out](docs/imgs/output.png)
 
 ---
 # Ending Note
