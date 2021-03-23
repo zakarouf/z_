@@ -215,7 +215,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 }
 
 
-#ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+#ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 	#ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
 		z__ptrArr z__ptrArr_create(z__u32 len)
@@ -550,4 +550,4 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		}
 
 	#endif // #define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
-#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+#endif //#ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED

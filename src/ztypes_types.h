@@ -401,7 +401,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 #endif
 
-#ifdef Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+#ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 
     // Signed
     typedef z__Arr(z__i8)  z__i8Arr;
