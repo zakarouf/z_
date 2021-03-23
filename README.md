@@ -31,6 +31,7 @@ It defines common data types, Array types, Vectors, Dynamic Type Arrays
 |`z__Arr(T)`| Type-safe, User generated Array, of type 'T'|
 |`z__<type>Arr`| Dynamic Array for specified Type|
 |`z__Dynt`| Dynamic Array for Unknown or Non-primitive Type|
+|`z__Irrg`| Dynamic Object Holder |
 
 ---
 # Fixed Length Arrays
