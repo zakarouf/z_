@@ -1,4 +1,4 @@
-#include "zstring.h"
+#include "ztypes_string.h"
 
 
 #include <stdlib.h>
