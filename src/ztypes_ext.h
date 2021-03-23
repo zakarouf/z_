@@ -1,5 +1,5 @@
-#ifndef ZAKAROUF__ZTYPES_H
-#define ZAKAROUF__ZTYPES_H
+#ifndef ZAKAROUF__ZTYPES_EXTENDED_H
+#define ZAKAROUF__ZTYPES_EXTENDED_H
 
 #include "ztypes_types.h"
 #include "ztypes_string.h"
