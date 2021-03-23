@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "ztypes.h"
+#include "ztypes_types.h"
 
 void *z__safe_realloc(void * data, size_t size)
 {
