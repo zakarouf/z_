@@ -1,9 +1,12 @@
 #ifndef ZAKAROUF__ZTYPES_EXTENDED_H
 #define ZAKAROUF__ZTYPES_EXTENDED_H
 
-#include "ztypes_types.h"
-#include "ztypes_string.h"
 #include "ztypes_config.h"
+
+#include "ztypes_types.h"
+#ifdef Z___TYPE_CONFIG__USE_STRING
+	#include "ztypes_string.h"
+#endif
 
 
 #ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES

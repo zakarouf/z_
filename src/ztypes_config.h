@@ -24,7 +24,8 @@
 /* CGLM LIBRARY for graphics maths */
 //#define Z___TYPE_INCLUED_CGLM
 
-
+/* Used String Type */
+#define Z___TYPE_CONFIG__USE_STRING
 
 /* Array Types, Use Pre-defined typed arrays? */
 #define Z___TYPE_CONFIG__USE_TYPE_ARRAYS
