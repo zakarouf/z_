@@ -21,6 +21,11 @@
  *	them out.  Such as CGLM or Vector Types etc.
  */
 
+
+/* General */
+#define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
+
+
 /* CGLM LIBRARY for graphics maths */
 //#define Z___TYPE_INCLUED_CGLM
 
@@ -28,9 +33,8 @@
 #define Z___TYPE_CONFIG__USE_STRING
 
 /* Array Types, Use Pre-defined typed arrays? */
-#define Z___TYPE_CONFIG__USE_TYPE_ARRAYS
+#define Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 	#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
-	#define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
 
 #define Z___TYPE_CONFIG__USE_TYPE_LINKLIST
 
