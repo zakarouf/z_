@@ -4,7 +4,7 @@ A small library for defining type and such
 # What it does?
 It defines common data types, Array types, Vectors, Dynamic Type Arrays
 
-# Generic Types
+# Primitive Types
 
 |Type|Description|
 |---|---|
