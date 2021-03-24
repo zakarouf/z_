@@ -1,0 +1,5 @@
+#!/bin/sh
+
+gcc -Os -O2 -c src/ztypes_types.c src/ztypes_string.c
+
+
