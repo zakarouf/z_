@@ -43,7 +43,7 @@ syn keyword cStructure z__Link z__LinkStruct z__LinkDef
 
 syn keyword cOperator z__typeof z__sizeof z__typeID
 
-"syn match cFunction \"\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
-"syn match cFunction \"\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1 
-hi cFunction gui=NONE guifg=#B5A1FF
+"syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
+"syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1 
+"hi cFunction gui=NONE guifg=#aff232
 
