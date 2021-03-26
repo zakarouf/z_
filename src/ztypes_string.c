@@ -125,6 +125,35 @@
 	    memcpy(&dest[dest->used], src->data, src->used);
 	}
 
+	#include <stdio.h>
+	z__String z__String_readFile(char filename[])
+	{
+	    FILE *f;
+
+	    if ((f = fopen(filename, "rb")) == NULL)
+	    {
+	        return (z__String) {
+	            NULL, -1, -1
+	        };
+	    }
+
+	    fseek(f, 0, SEEK_END);
+	    long fsize = ftell(f);
+	    fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
+
+	    char *string = malloc(fsize + 1);
+	    fread(string, 1, fsize, f);
+	    fclose(f);
+
+	    string[fsize] = 0;
+	    return (z__String){
+	    	 .data = string
+	    	,.size = fsize +1
+	    	,.used = fsize +1
+	    };
+	}
+	   
+	
 	/* See if `Char` exist in a string */
 	int z_findCharInStr(z__String str, z__char c, int fromIndex)
 	{
