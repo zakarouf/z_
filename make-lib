@@ -1,5 +1,13 @@
 #!/bin/sh
 
-gcc -Os -O2 -c src/ztypes_types.c src/ztypes_string.c
+CC=gcc
+AR=ar
+OUT="libzkcollection.a"
+CFILES="src/ztypes_types.c src/ztypes_string.c"
 
+CC -Os -O2 -c $CFILES
+AR -q $OUT *.o
+rm *.o
 
+mkdir headers
+cp src/*.h headers/
