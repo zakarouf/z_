@@ -424,6 +424,8 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
     // Void *
     typedef z__Arr(z__ptr) z__ptrArr;
+    typedef z__Arr(void) z__voidArr;
+
 
 
 	#ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
