@@ -1,6 +1,11 @@
 #ifndef ZAKAROUF__ZTYPES_H
 #define ZAKAROUF__ZTYPES_H
 
+#define ZAKAROUF__ZTYPES_VERSION_MAJOR 1
+#define ZAKAROUF__ZTYPES_VERSION_MINOR 1
+#define ZAKAROUF__ZTYPES_VERSION_PATCH 0
+
 #include "ztypes_ext.h"
 
 #endif
+
