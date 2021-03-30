@@ -415,6 +415,13 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             }                                       \
         }
 
+
+    #define z__Link_getCursor(zls)         (zls.cursor)           // Get Cursor  
+    #define z__Link_getData(zls)           (zls.cursor->data)     // Get Data From Cursor
+    #define z__Link_getMember(zls, member) (zls.cursor->member)   // Get Member Data from Cursor
+    #define z__Link_getHead(zls)           (zls.head)             // Get Head
+    #define z__Link_getTail(zls)           (zls.tail)             // Get Tail
+
 #endif
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
