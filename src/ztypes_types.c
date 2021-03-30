@@ -155,19 +155,21 @@ z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const 
 	}
 
 	fseek(fp, 0, SEEK_END);
-    long fsize = ftell(fp);
-	fsize += 1;
+    long fsz = ftell(fp);
+	fsz += 1;
     fseek(fp, 0, SEEK_SET);  /* same as rewind(fp); */
 
-    void *data = malloc(fsize);
-    fread(data, 1, fsize-1, fp);
+	z__u64 len = fsz/sizePerVal;
+
+    void *data = malloc(len * sizePerVal);
+    fread(data, 1, fsz-1, fp);
     fclose(fp);
 
     return (z__Dynt){
          .data = data
         ,.size = sizePerVal
-        ,.len = fsize/sizePerVal
-		,.lenUsed = (fsize/sizePerVal) -1
+        ,.len = len
+		,.lenUsed = (len) -1
     };
 }
 void z__Dynt_push( z__Dynt *arrt, void *val)
