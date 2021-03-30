@@ -227,6 +227,15 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
 		    };
 		}
 
+		z__voidArr z__voidArr_create(size_t size)
+		{
+			return (z__voidArr) {
+				.data = malloc(size),
+				.len = size,
+				.lenUsed = 0
+			};
+		}
+
 		z__i8Arr z__i8Arr_create(z__u32 len)
 		{
 		    return (z__i8Arr) {
