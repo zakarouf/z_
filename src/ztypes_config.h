@@ -31,6 +31,7 @@
 
 /* Used String Type */
 #define Z___TYPE_CONFIG__USE_STRING
+	#define Z___TYPE_CONFIG__STRING__DEFAULT_SIZE 32
 
 /* Array Types, Use Pre-defined typed arrays? */
 #define Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
