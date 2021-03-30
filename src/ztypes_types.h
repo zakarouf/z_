@@ -399,6 +399,21 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             }                                                           \
         }
 
+    #define z__Link_setCursorHead(zls)\
+        {                                               \
+            while((zls)->cursor->next != NULL)          \
+            {                                           \
+                (zls)->cursor = (zls)->cursor->next;    \
+            }                                           \
+        }                                               \
+
+    #define z__Link_setCursorTail(zls)\
+        {                                           \
+            while((zls)->cursor->prev != NULL)      \
+            {                                       \
+               (zls)->cursor = (zls)->cursor->prev; \
+            }                                       \
+        }
 
 #endif
 
