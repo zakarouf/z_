@@ -320,7 +320,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 		struct {                     \
 			z__LinkDef(T)  *head;    \
             z__LinkDef(T)  *tail;    \
-            z__LinkDef(T)  *at;      \
+            z__LinkDef(T)  *cursor;  \
 			             \
 			__VA_ARGS__;		/* Additialnal members for the the user*/\
 		}
@@ -344,7 +344,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (zls)->head->next = NULL;                       \
             (zls)->head->prev = NULL;                       \
             (zls)->head->data = D;                          \
-            (zls)->at = (zls)->head;                        \
+            (zls)->cursor = (zls)->head;                    \
             (zls)->tail = (zls)->head;                      \
         }
 
@@ -352,11 +352,11 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         {                                           \
             if((zls)->head != NULL) {               \
                 if(((zls)->head->prev != NULL)) {   \
-                    (zls)->at = (zls)->head->prev;  \
-                    z__FREE((zls)->at->next);       \
+                    (zls)->cursor = (zls)->head->prev;  \
+                    z__FREE((zls)->cursor->next);       \
                         \
-                    (zls)->at->next = NULL;         \
-                    (zls)->head = (zls)->at;        \
+                    (zls)->cursor->next = NULL;         \
+                    (zls)->head = (zls)->cursor;        \
                 }                                   \
             }                                       \
                                                     \
@@ -384,19 +384,19 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         
 
     #define z__Link_inext(zls, n)\
-        {                                                           \
-            for(int i = 0; i < n && (zls)->at->next != NULL; i++)   \
-            {                                                       \
-                (zls)->at = (zls)->at->next;                        \
-            }                                                       \
+        {                                                               \
+            for(int i = 0; i < n && (zls)->cursor->next != NULL; i++)   \
+            {                                                           \
+                (zls)->cursor = (zls)->cursor->next;                    \
+            }                                                           \
         }
 
     #define z__Link_iprev(zls, n)\
-        {\
-            for(int i = 0; i < n && (zls)->at->prev != NULL; i++)   \
-            {                                                       \
-                (zls)->at = (zls)->at->prev;                        \
-            }                                                       \
+        {                                                               \
+            for(int i = 0; i < n && (zls)->cursor->prev != NULL; i++)   \
+            {                                                           \
+                (zls)->cursor = (zls)->cursor->prev;                    \
+            }                                                           \
         }
 
 
