@@ -491,17 +491,17 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 	            }																		\
 	        }
 
-	    #define z__i8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i8Arr_resize)
+	    #define z__i8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i8Arr_resize )
 	    #define z__i16Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i16Arr_resize)
 	    #define z__i32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i32Arr_resize)
 	    #define z__i64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i64Arr_resize)
-	    #define z__u8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u8Arr_resize)
+	    #define z__u8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u8Arr_resize )
 	    #define z__u16Arr_pop(arr)	_z__Arrpop_tmpl(arr, z__u16Arr_resize)
 	    #define z__u32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u32Arr_resize)
 	    #define z__u64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u64Arr_resize)
 	    #define z__f32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__f32Arr_resize)
 	    #define z__f64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__f64Arr_resize)
-	    #define z__boolArr_pop(arr) _z__Arrpop_tmpl(arr, z__boolArr_resize
+	    #define z__boolArr_pop(arr) _z__Arrpop_tmpl(arr, z__boolArr_resize)
 
 
 	#endif //Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
