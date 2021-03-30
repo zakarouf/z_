@@ -126,14 +126,14 @@
 	}
 
 	#include <stdio.h>
-	z__String z__String_readFile(char filename[])
+	z__String z__String_createFromFile(char filename[])
 	{
 	    FILE *f;
 
 	    if ((f = fopen(filename, "rb")) == NULL)
 	    {
 	        return (z__String) {
-	            NULL, -1, -1
+	            NULL, 0, 0
 	        };
 	    }
 

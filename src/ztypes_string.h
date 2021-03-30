@@ -48,7 +48,7 @@ z__String z__String_MakeCopy(const z__String str);
 z__String z__String_Link(const z__String str);
 void z__Strint_append(z__String *str, const z__char* src, int length);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
-z__String z__String_readFile(char filename[]);
+z__String z__String_createFromFile(char filename[]);
 
 
 z__StringLines z__StringLines_createEmpty(int x, int y);
