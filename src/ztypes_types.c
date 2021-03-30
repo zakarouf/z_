@@ -146,6 +146,30 @@ z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 com
 
     return arrt;
 }
+z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
+{
+	FILE *fp;
+	if((fp = fopen(filepath, "rb")) == NULL)
+	{
+		return (z__Dynt){NULL, 0, 0, 0, 0, NULL};
+	}
+
+	fseek(fp, 0, SEEK_END);
+    long fsize = ftell(fp);
+	fsize += 1;
+    fseek(fp, 0, SEEK_SET);  /* same as rewind(fp); */
+
+    void *data = malloc(fsize);
+    fread(data, 1, fsize-1, fp);
+    fclose(fp);
+
+    return (z__Dynt){
+         .data = data
+        ,.size = sizePerVal
+        ,.len = fsize/sizePerVal
+		,.lenUsed = (fsize/sizePerVal) -1
+    };
+}
 void z__Dynt_push( z__Dynt *arrt, void *val)
 {
     if (arrt->lenUsed >= arrt->len)

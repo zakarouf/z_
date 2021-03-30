@@ -189,6 +189,7 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 
 
 z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
+z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID);
 void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
 void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
