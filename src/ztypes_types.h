@@ -64,19 +64,19 @@ typedef size_t z__size;
         #ifdef Z___TYPE_INCLUED_CGLM
 
 
-            typedef z__int  				z__ivec2[2];
-            typedef ivec3   				z__ivec3;
-            typedef z__int  				z__ivec4[4];
+            typedef z__int                  z__ivec2[2];
+            typedef ivec3                   z__ivec3;
+            typedef z__int                  z__ivec4[4];
 
-            typedef vec2    				z__vec2;
-            typedef vec3    				z__vec3;
-            typedef vec4    				z__vec4;
+            typedef vec2                    z__vec2;
+            typedef vec3                    z__vec3;
+            typedef vec4                    z__vec4;
 
-            typedef versor  				z__versor;
+            typedef versor                  z__versor;
 
-            typedef mat2  					z__mat2;
-            typedef mat3  					z__mat3;
-            typedef mat4  					z__mat4;
+            typedef mat2                    z__mat2;
+            typedef mat3                    z__mat3;
+            typedef mat4                    z__mat4;
 
 
 
@@ -110,16 +110,16 @@ typedef size_t z__size;
     #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
 
         /* New type declarator, Vector */
-		#define z__Vector(T, ...)\
-			struct              \
-			{					\
-				T __VA_ARGS__;	\
-			}
+        #define z__Vector(T, ...)\
+            struct              \
+            {                   \
+                T __VA_ARGS__;  \
+            }
 
         #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
-			#define __vecDefType z__f64
+            #define __vecDefType z__f64
         #else
-			#define __vecDefType z__f32
+            #define __vecDefType z__f32
         #endif
 
             typedef z__Vector(__vecDefType, x, y) z__Vector2;
@@ -128,9 +128,9 @@ typedef size_t z__size;
         #undef __vecDefType
 
         #ifdef Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
-			#define __vecDefType z__i64
+            #define __vecDefType z__i64
         #else
-			#define __vecDefType z__i32
+            #define __vecDefType z__i32
         #endif
 
             typedef z__Vector(__vecDefType, x, y) z__Vint2;
@@ -146,32 +146,32 @@ typedef size_t z__size;
 void *z__safe_realloc(void * data, size_t size);
 
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
-	/* Unsafe Irregular Object Holder array */
-	typedef struct __ZAKAROUF__IRREGULAR_TYPE_STRUCT
-	{
-		z__ptr *data;
-		z__size *size;
-		z__u8  *typeID;
-		z__i32 len;
-		z__i32 lenUsed;
-		char** comment;
+    /* Unsafe Irregular Object Holder array */
+    typedef struct __ZAKAROUF__IRREGULAR_TYPE_STRUCT
+    {
+        z__ptr *data;
+        z__size *size;
+        z__u8  *typeID;
+        z__i32 len;
+        z__i32 lenUsed;
+        char** comment;
 
-	}z__Irrg;
+    }z__Irrg;
 
-	z__Irrg z__Irrg_create(z__u32 len);
-	void z__Irrg_resize(z__Irrg *irgt, z__size newsize);
-	void z__Irrg_push(z__Irrg *irgt, void *val, z__size size, z__u8 typeID, const char *comment, z__i32 commentLength);
-	void z__Irrg_pop(z__Irrg *irgt);
-	void z__Irrg_delete(z__Irrg *irgt);
+    z__Irrg z__Irrg_create(z__u32 len);
+    void z__Irrg_resize(z__Irrg *irgt, z__size newsize);
+    void z__Irrg_push(z__Irrg *irgt, void *val, z__size size, z__u8 typeID, const char *comment, z__i32 commentLength);
+    void z__Irrg_pop(z__Irrg *irgt);
+    void z__Irrg_delete(z__Irrg *irgt);
 
-	#define z__Irrg_getValSize(arr, of)       (arr.size[of])
-	#define z__Irrg_gettypeID(arr, of)        (arr.typeID[of])
-	#define z__Irrg_getComment(arr, of)       (arr.comment[of])
-	#define z__Irrg_getVal(arr, of, T)        ( *( T *)(*arr.data[of]) )
-	#define z__Irrg_getValTop(arr, T)         ( *( T *)(*arr.data[arr.lenUsed-1]) )
-	#define z__Irrg_getAddress(arr, of)		  (*arr.data[of])
-	#define z__Irrg_getLen(arr)               (arr.len)
-	#define z__Irrg_getUsed(arr)              (arr.lenUsed)
+    #define z__Irrg_getValSize(arr, of)       (arr.size[of])
+    #define z__Irrg_gettypeID(arr, of)        (arr.typeID[of])
+    #define z__Irrg_getComment(arr, of)       (arr.comment[of])
+    #define z__Irrg_getVal(arr, of, T)        ( *( T *)(*arr.data[of]) )
+    #define z__Irrg_getValTop(arr, T)         ( *( T *)(*arr.data[arr.lenUsed-1]) )
+    #define z__Irrg_getAddress(arr, of)       (*arr.data[of])
+    #define z__Irrg_getLen(arr)               (arr.len)
+    #define z__Irrg_getUsed(arr)              (arr.lenUsed)
 
 #endif
 
@@ -210,9 +210,9 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__SxArrDef(T, sz)\
     struct                      \
     {                           \
-        T data[sz];       		\
-        const z__i32 len;  		\
-        z__i32 lenUsed;     	\
+        T data[sz];             \
+        const z__i32 len;       \
+        z__i32 lenUsed;         \
     } 
 
 #define z__SxArr(SDef, N)\
@@ -222,77 +222,77 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
     z__SxArrDef(T, sz) N = {.len = sz, .lenUsed = 0}
 
 #define z__SxArr_push(arr)\
-    {											\
-    	if((arr)->lenUsed < (arr->len))			\
-    	{										\
-    		(arr)->data[(arr)->lenUsed] = val;	\
-    		(arr)->lenUsed += 1;				\
-    	};										\
+    {                                           \
+        if((arr)->lenUsed < (arr->len))         \
+        {                                       \
+            (arr)->data[(arr)->lenUsed] = val;  \
+            (arr)->lenUsed += 1;                \
+        };                                      \
     }
 #define z__SxArr_pop(arr)\
-    {							\
-    	if((arr)->lenUsed >= 0)	\
-    	{						\
-    		(arr)->lenUsed -= 1;\
-    	};						\
+    {                           \
+        if((arr)->lenUsed >= 0) \
+        {                       \
+            (arr)->lenUsed -= 1;\
+        };                      \
     }
 
 #define z__Arr(T)\
-	struct              \
-	{					\
-		T* data;		\
-		z__i32 len;		\
-		z__i32 lenUsed;	\
-	}
+    struct              \
+    {                   \
+        T* data;        \
+        z__i32 len;     \
+        z__i32 lenUsed; \
+    }
 
 #define z__Arr_delete(arr)\
-    {                     		\
-        (arr)->len = -1;		\
-        (arr)->lenUsed = -1;	\
-        free((arr)->data);		\
+    {                           \
+        (arr)->len = -1;        \
+        (arr)->lenUsed = -1;    \
+        free((arr)->data);      \
     }
 
 #define z__Arr_create(arr, sz)\
-    {                     								\
-    	(arr)->data = malloc(sizeof(*(arr)->data)*sz);	\
-    	(arr)->len = sz;								\
-    	(arr)->lenUsed = 0;								\
+    {                                                   \
+        (arr)->data = malloc(sizeof(*(arr)->data)*sz);  \
+        (arr)->len = sz;                                \
+        (arr)->lenUsed = 0;                             \
     }
 #define z__Arr_push(arr, val)\
-    {                     																		\
-	    if ((arr)->lenUsed >= (arr)->len)														\
-	    {																						\
-	        (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;									\
-	        (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );	\
-	    }																						\
-	    (arr)->data[(arr)->lenUsed] = val;														\
-	    (arr)->lenUsed += 1;																	\
+    {                                                                                           \
+        if ((arr)->lenUsed >= (arr)->len)                                                       \
+        {                                                                                       \
+            (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;                                   \
+            (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
+        }                                                                                       \
+        (arr)->data[(arr)->lenUsed] = val;                                                      \
+        (arr)->lenUsed += 1;                                                                    \
     }
 #define z__Arr_resize(arr, newSize)\
-    {																				\
-	    if ((arr)->lenUsed > newSize)												\
-	    {																			\
-	       ( arr)->lenUsed = newSize;												\
-	    }																			\
-	    (arr)->data = z__safe_realloc((arr)->data, newSize * sizeof(*(arr)->data));	\
-	    (arr)->len = newSize;														\
-	}
+    {                                                                               \
+        if ((arr)->lenUsed > newSize)                                               \
+        {                                                                           \
+           ( arr)->lenUsed = newSize;                                               \
+        }                                                                           \
+        (arr)->data = z__safe_realloc((arr)->data, newSize * sizeof(*(arr)->data)); \
+        (arr)->len = newSize;                                                       \
+    }
 #define z__Arr_pop(arr)\
-    {																				\
-        (arr)->lenUsed -= 1;														\
-        if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)		\
-        {																			\
-            z__Arr_resize(arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);	\
-        }																			\
+    {                                                                               \
+        (arr)->lenUsed -= 1;                                                        \
+        if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)     \
+        {                                                                           \
+            z__Arr_resize(arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);    \
+        }                                                                           \
     }
 #define z__Arr_join(dest, from)\
-    {																									\
-    	z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);	\
-    	if (totalLength > (dest)->len)																	\
-    	{																								\
-    		z__Arr_resize(dest, totalLength+1)															\
-    	}																								\
-    	memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));		\
+    {                                                                                                   \
+        z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);   \
+        if (totalLength > (dest)->len)                                                                  \
+        {                                                                                               \
+            z__Arr_resize(dest, totalLength+1)                                                          \
+        }                                                                                               \
+        memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
 
 
@@ -305,25 +305,25 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 // Link Lists
 #ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
-	#define z__LinkStruct(N, DT, ...)\
-		struct _z__linkLs##N {              \
-			DT data;                        \
-			__VA_ARGS__;                    \
-			struct _z__linkLs##N  *next;    \
-			struct _z__linkLs##N  *prev;    \
-		}
+    #define z__LinkStruct(N, DT, ...)\
+        struct _z__linkLs##N {              \
+            DT data;                        \
+            __VA_ARGS__;                    \
+            struct _z__linkLs##N  *next;    \
+            struct _z__linkLs##N  *prev;    \
+        }
 
     #define z__LinkDef(T)\
         struct _z__linkLs##T
 
-	#define z__Link(T, ...)\
-		struct {                     \
-			z__LinkDef(T)  *head;    \
+    #define z__Link(T, ...)\
+        struct {                     \
+            z__LinkDef(T)  *head;    \
             z__LinkDef(T)  *tail;    \
             z__LinkDef(T)  *cursor;  \
-			             \
-			__VA_ARGS__;		/* Additialnal members for the the user*/\
-		}
+                         \
+            __VA_ARGS__;        /* Additialnal members for the the user*/\
+        }
     /*
      * How to Create a Link list
      *         z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );
@@ -451,89 +451,89 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 
 
-	#ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
+    #ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
-	    // Initialization
-	    z__i8Arr z__i8Arr_create(z__u32 len);
-	    z__i16Arr z__i16Arr_create(z__u32 len);
-	    z__i32Arr z__i32Arr_create(z__u32 len);
-	    z__i64Arr z__i64Arr_create(z__u32 len);
+        // Initialization
+        z__i8Arr z__i8Arr_create(z__u32 len);
+        z__i16Arr z__i16Arr_create(z__u32 len);
+        z__i32Arr z__i32Arr_create(z__u32 len);
+        z__i64Arr z__i64Arr_create(z__u32 len);
 
-	    z__u8Arr z__u8Arr_create(z__u32 len);
-	    z__u16Arr z__u16Arr_create(z__u32 len);
-	    z__u32Arr z__u32Arr_create(z__u32 len);
-	    z__u64Arr z__u64Arr_create(z__u32 len);
+        z__u8Arr z__u8Arr_create(z__u32 len);
+        z__u16Arr z__u16Arr_create(z__u32 len);
+        z__u32Arr z__u32Arr_create(z__u32 len);
+        z__u64Arr z__u64Arr_create(z__u32 len);
 
-	    z__f64Arr z__f64Arr_create(z__u32 len);
+        z__f64Arr z__f64Arr_create(z__u32 len);
 
-	    z__boolArr z__boolArr_create(z__u32 len);
+        z__boolArr z__boolArr_create(z__u32 len);
 
-	    z__ptrArr z__ptrArr_create(z__u32 len);
+        z__ptrArr z__ptrArr_create(z__u32 len);
 
-	    // Adding Value At top
-	    void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
-	    void z__i16Arr_push( z__i16Arr *arr, z__i16 val);
-	    void z__i32Arr_push( z__i32Arr *arr, z__i32 val);
-	    void z__i64Arr_push( z__i64Arr *arr, z__i64 val);
+        // Adding Value At top
+        void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
+        void z__i16Arr_push( z__i16Arr *arr, z__i16 val);
+        void z__i32Arr_push( z__i32Arr *arr, z__i32 val);
+        void z__i64Arr_push( z__i64Arr *arr, z__i64 val);
 
-	    void z__u8Arr_push( z__u8Arr *arr, z__u8 val);
-	    void z__u16Arr_push( z__u16Arr *arr, z__u16 val);
-	    void z__u32Arr_push( z__u32Arr *arr, z__u32 val);
-	    void z__u64Arr_push( z__u64Arr *arr, z__u64 val);
+        void z__u8Arr_push( z__u8Arr *arr, z__u8 val);
+        void z__u16Arr_push( z__u16Arr *arr, z__u16 val);
+        void z__u32Arr_push( z__u32Arr *arr, z__u32 val);
+        void z__u64Arr_push( z__u64Arr *arr, z__u64 val);
 
-	    void z__f32Arr_push( z__f32Arr *arr, z__f32 val);
-	    void z__f64Arr_push( z__f64Arr *arr, z__f64 val);
+        void z__f32Arr_push( z__f32Arr *arr, z__f32 val);
+        void z__f64Arr_push( z__f64Arr *arr, z__f64 val);
 
-	    void z__boolArr_push( z__boolArr *arr, z__bool val);
+        void z__boolArr_push( z__boolArr *arr, z__bool val);
 
-	    // Resizing Arrays
-	    void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize);
-	    void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize);
-	    void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize);
-	    void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize);
+        // Resizing Arrays
+        void z__i8Arr_resize( z__i8Arr *arr, z__i8 newSize);
+        void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize);
+        void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize);
+        void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize);
 
-	    void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize);
-	    void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize);
-	    void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize);
-	    void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize);
+        void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize);
+        void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize);
+        void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize);
+        void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize);
 
-	    void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize);
-	    void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize);
+        void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize);
+        void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize);
 
-	    void z__boolArr_resize( z__boolArr *arr, z__bool newSize);
-
-
-	    // Removing Value from the top
-	    #define _z__Arrpop_tmpl(arr, func)\
-	        {																			\
-	            (arr)->lenUsed -= 1;													\
-	            if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)	\
-	            {																		\
-	                func (arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);		\
-	            }																		\
-	        }
-
-	    #define z__i8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i8Arr_resize )
-	    #define z__i16Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i16Arr_resize)
-	    #define z__i32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i32Arr_resize)
-	    #define z__i64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__i64Arr_resize)
-	    #define z__u8Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u8Arr_resize )
-	    #define z__u16Arr_pop(arr)	_z__Arrpop_tmpl(arr, z__u16Arr_resize)
-	    #define z__u32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u32Arr_resize)
-	    #define z__u64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__u64Arr_resize)
-	    #define z__f32Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__f32Arr_resize)
-	    #define z__f64Arr_pop(arr) 	_z__Arrpop_tmpl(arr, z__f64Arr_resize)
-	    #define z__boolArr_pop(arr) _z__Arrpop_tmpl(arr, z__boolArr_resize)
+        void z__boolArr_resize( z__boolArr *arr, z__bool newSize);
 
 
-	#endif //Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
+        // Removing Value from the top
+        #define _z__Arrpop_tmpl(arr, func)\
+            {                                                                           \
+                (arr)->lenUsed -= 1;                                                    \
+                if (((arr)->len - (arr)->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT) \
+                {                                                                       \
+                    func (arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);        \
+                }                                                                       \
+            }
+
+        #define z__i8Arr_pop(arr)   _z__Arrpop_tmpl(arr, z__i8Arr_resize )
+        #define z__i16Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__i16Arr_resize)
+        #define z__i32Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__i32Arr_resize)
+        #define z__i64Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__i64Arr_resize)
+        #define z__u8Arr_pop(arr)   _z__Arrpop_tmpl(arr, z__u8Arr_resize )
+        #define z__u16Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__u16Arr_resize)
+        #define z__u32Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__u32Arr_resize)
+        #define z__u64Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__u64Arr_resize)
+        #define z__f32Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__f32Arr_resize)
+        #define z__f64Arr_pop(arr)  _z__Arrpop_tmpl(arr, z__f64Arr_resize)
+        #define z__boolArr_pop(arr) _z__Arrpop_tmpl(arr, z__boolArr_resize)
+
+
+    #endif //Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
 
 #endif
 
 
 #define z__offsetof(T, M) ((size_t) &((T *)0)->M)
-	        
+            
 #define z__contof(ptr, T, M) ({ \
     const typeof(((T *)0)->M) * __mptr = (ptr); \
     (T *)((char *)__mptr - offsetof(T, M)); })
