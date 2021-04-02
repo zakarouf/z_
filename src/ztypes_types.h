@@ -311,6 +311,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
  #define z__Arr_getData(arr)         arr.data
  #define z__Arr_getVal(arr, index)   arr.data[index]
  #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
+ #define z__Arr_getTopMT(arr)        arr.data[arr.lenUsed]
 
 
 // Link Lists
