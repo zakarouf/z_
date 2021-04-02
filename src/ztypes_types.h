@@ -268,6 +268,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         (arr)->data[(arr)->lenUsed] = val;                                                      \
         (arr)->lenUsed += 1;                                                                    \
     }
+#define z__Arr_pushCpy(arr, val)\
+    {                                                                                           \
+        if ((arr)->lenUsed >= (arr)->len)                                                       \
+        {                                                                                       \
+            (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;                                   \
+            (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
+        }                                                                                       \
+        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data)*);                     \
+        (arr)->lenUsed += 1;                                                                    \
+    }
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
         if ((arr)->lenUsed > newSize)                                               \
