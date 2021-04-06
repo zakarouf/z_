@@ -149,9 +149,6 @@ typedef size_t z__size;
 
 #endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
 
-
-void *z__safe_realloc(void * data, size_t size);
-
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
     /* Unsafe Irregular Object Holder array */
     typedef struct __ZAKAROUF__IRREGULAR_TYPE_STRUCT
@@ -312,136 +309,6 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
 
-
- #define z__Arr_getLen(arr)          arr.len
- #define z__Arr_getUsed(arr)         arr.lenUsed
- #define z__Arr_getData(arr)         arr.data
- #define z__Arr_getVal(arr, index)   arr.data[index]
- #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
- #define z__Arr_getTopMT(arr)        arr.data[arr.lenUsed]
-
-
-// Link Lists
-#ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
-    #define z__LinkStruct(N, DT, ...)\
-        struct _z__linkLs##N {              \
-            DT data;                        \
-            __VA_ARGS__;                    \
-            struct _z__linkLs##N  *next;    \
-            struct _z__linkLs##N  *prev;    \
-        }
-
-    #define z__LinkDef(T)\
-        struct _z__linkLs##T
-
-    #define z__Link(T, ...)\
-        struct {                     \
-            z__LinkDef(T)  *head;    \
-            z__LinkDef(T)  *tail;    \
-            z__LinkDef(T)  *cursor;  \
-                         \
-            __VA_ARGS__;        /* Additialnal members for the the user*/\
-        }
-    /*
-     * How to Create a Link list
-     *         z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );
-     * typedef z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );  << Creates a typedef
-     * :Create a Link
-     *         z__Link(<z__LinkStruct>, <AdditionalMembers>) <Var>;
-     * typedef z__Link(<z__LinkStruct>, <AdditionalMembers>) <newType>;  << Creates a typedef
-     * Link list defination is complete;
-     */
-
-    #define z__MALLOC malloc
-    #define z__REALLOC realloc
-    #define z__FREE free
-
-    #define z__Link_create(zls, D)\
-        {                                                   \
-            (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
-            (zls)->head->next = NULL;                       \
-            (zls)->head->prev = NULL;                       \
-            (zls)->head->data = D;                          \
-            (zls)->cursor = (zls)->head;                    \
-            (zls)->tail = (zls)->head;                      \
-        }
-
-    #define z__Link_popHead(zls)\
-        {                                           \
-            if((zls)->head != NULL) {               \
-                if(((zls)->head->prev != NULL)) {   \
-                    (zls)->cursor = (zls)->head->prev;  \
-                    z__FREE((zls)->cursor->next);       \
-                        \
-                    (zls)->cursor->next = NULL;         \
-                    (zls)->head = (zls)->cursor;        \
-                }                                   \
-            }                                       \
-                                                    \
-        }
-
-    #define z__Link_delete(zls)\
-        {                                   \
-            while((zls)->head->prev != NULL)\
-            {                               \
-                z__Link_popHead(zls);       \
-            }                               \
-            z__FREE((zls)->head);           \
-            (zls)->head = NULL;             \
-        }
-    
-    #define z__Link_pushHead(zls, D)\
-        {                                                                   \
-            (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
-            (zls)->head->next->prev = (zls)->head;                          \
-            (zls)->head = (zls)->head->next;                                \
-                                                                            \
-            (zls)->head->data = D;                                          \
-            (zls)->head->next = NULL;                                       \
-        }
-        
-
-    #define z__Link_inext(zls, n)\
-        {                                                               \
-            for(int i = 0; i < n && (zls)->cursor->next != NULL; i++)   \
-            {                                                           \
-                (zls)->cursor = (zls)->cursor->next;                    \
-            }                                                           \
-        }
-
-    #define z__Link_iprev(zls, n)\
-        {                                                               \
-            for(int i = 0; i < n && (zls)->cursor->prev != NULL; i++)   \
-            {                                                           \
-                (zls)->cursor = (zls)->cursor->prev;                    \
-            }                                                           \
-        }
-
-    #define z__Link_setCursorHead(zls)\
-        {                                               \
-            while((zls)->cursor->next != NULL)          \
-            {                                           \
-                (zls)->cursor = (zls)->cursor->next;    \
-            }                                           \
-        }                                               \
-
-    #define z__Link_setCursorTail(zls)\
-        {                                           \
-            while((zls)->cursor->prev != NULL)      \
-            {                                       \
-               (zls)->cursor = (zls)->cursor->prev; \
-            }                                       \
-        }
-
-
-    #define z__Link_getCursor(zls)         (zls.cursor)           // Get Cursor  
-    #define z__Link_getData(zls)           (zls.cursor->data)     // Get Data From Cursor
-    #define z__Link_getMember(zls, member) (zls.cursor->member)   // Get Member Data from Cursor
-    #define z__Link_getHead(zls)           (zls.head)             // Get Head
-    #define z__Link_getTail(zls)           (zls.tail)             // Get Tail
-
-#endif
-
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 
     // Signed
@@ -546,6 +413,146 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
     #endif //Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
+
+#endif
+
+#ifdef Z___TYPE_CONFIG__USE_ARR_FUNTION_GENERATION_TEMPLATE
+
+    #define z__Arr_FN(T, vT)                            \
+        typedef z__Arr(vT) T;                           \
+        Z__INLINE T z__ ## T ## Arr_create(z__u32 len)  \
+        {                                               \
+            return (T) {                                \
+                .data = malloc(sizeof (vT) * len),      \
+                .len = len,                             \
+                .lenUsed = 0                            \
+            };                                          \
+        }
+
+#endif
+
+
+ #define z__Arr_getLen(arr)          arr.len
+ #define z__Arr_getUsed(arr)         arr.lenUsed
+ #define z__Arr_getData(arr)         arr.data
+ #define z__Arr_getVal(arr, index)   arr.data[index]
+ #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
+ #define z__Arr_getTopMT(arr)        arr.data[arr.lenUsed]
+
+// Link Lists
+#ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
+    #define z__LinkStruct(N, DT, ...)\
+        struct _z__linkLs##N {              \
+            DT data;                        \
+            __VA_ARGS__;                    \
+            struct _z__linkLs##N  *next;    \
+            struct _z__linkLs##N  *prev;    \
+        }
+
+    #define z__LinkDef(T)\
+        struct _z__linkLs##T
+
+    #define z__Link(T, ...)\
+        struct {                     \
+            z__LinkDef(T)  *head;    \
+            z__LinkDef(T)  *tail;    \
+            z__LinkDef(T)  *cursor;  \
+                         \
+            __VA_ARGS__;        /* Additialnal members for the the user*/\
+        }
+    /*
+     * How to Create a Link list
+     *         z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );
+     * typedef z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );  << Creates a typedef
+     * :Create a Link
+     *         z__Link(<z__LinkStruct>, <AdditionalMembers>) <Var>;
+     * typedef z__Link(<z__LinkStruct>, <AdditionalMembers>) <newType>;  << Creates a typedef
+     * Link list defination is complete;
+     */
+
+    #define z__Link_create(zls, D)\
+        {                                                   \
+            (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
+            (zls)->head->next = NULL;                       \
+            (zls)->head->prev = NULL;                       \
+            (zls)->head->data = D;                          \
+            (zls)->cursor = (zls)->head;                    \
+            (zls)->tail = (zls)->head;                      \
+        }
+
+    #define z__Link_popHead(zls)\
+        {                                           \
+            if((zls)->head != NULL) {               \
+                if(((zls)->head->prev != NULL)) {   \
+                    (zls)->cursor = (zls)->head->prev;  \
+                    z__FREE((zls)->cursor->next);       \
+                        \
+                    (zls)->cursor->next = NULL;         \
+                    (zls)->head = (zls)->cursor;        \
+                }                                   \
+            }                                       \
+                                                    \
+        }
+
+    #define z__Link_delete(zls)\
+        {                                   \
+            while((zls)->head->prev != NULL)\
+            {                               \
+                z__Link_popHead(zls);       \
+            }                               \
+            z__FREE((zls)->head);           \
+            (zls)->head = NULL;             \
+        }
+    
+    #define z__Link_pushHead(zls, D)\
+        {                                                                   \
+            (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
+            (zls)->head->next->prev = (zls)->head;                          \
+            (zls)->head = (zls)->head->next;                                \
+                                                                            \
+            (zls)->head->data = D;                                          \
+            (zls)->head->next = NULL;                                       \
+        }
+        
+
+    #define z__Link_inext(zls, n)\
+        {                                                               \
+            for(int i = 0; i < n && (zls)->cursor->next != NULL; i++)   \
+            {                                                           \
+                (zls)->cursor = (zls)->cursor->next;                    \
+            }                                                           \
+        }
+
+    #define z__Link_iprev(zls, n)\
+        {                                                               \
+            for(int i = 0; i < n && (zls)->cursor->prev != NULL; i++)   \
+            {                                                           \
+                (zls)->cursor = (zls)->cursor->prev;                    \
+            }                                                           \
+        }
+
+    #define z__Link_setCursorHead(zls)\
+        {                                               \
+            while((zls)->cursor->next != NULL)          \
+            {                                           \
+                (zls)->cursor = (zls)->cursor->next;    \
+            }                                           \
+        }                                               \
+
+    #define z__Link_setCursorTail(zls)\
+        {                                           \
+            while((zls)->cursor->prev != NULL)      \
+            {                                       \
+               (zls)->cursor = (zls)->cursor->prev; \
+            }                                       \
+        }
+
+
+    #define z__Link_getCursor(zls)         (zls.cursor)           // Get Cursor  
+    #define z__Link_getData(zls)           (zls.cursor->data)     // Get Data From Cursor
+    #define z__Link_getMember(zls, member) (zls.cursor->member)   // Get Member Data from Cursor
+    #define z__Link_getHead(zls)           (zls.head)             // Get Head
+    #define z__Link_getTail(zls)           (zls.tail)             // Get Tail
 
 #endif
 

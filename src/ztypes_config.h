@@ -51,6 +51,7 @@
 /* Array Types, Use Pre-defined typed arrays? */
 #define Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 	#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
+	//#define Z___TYPE_CONFIG__USE_ARR_FUNTION_GENERATION_TEMPLATE
 
 #define Z___TYPE_CONFIG__USE_TYPE_LINKLIST
 
@@ -60,8 +61,8 @@
 #define Z___TYPE_CONFIG__USE_VECTORS						
 	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array
 	#define Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
-	//#define Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
-	//#define Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
+		//#define Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
+		//#define Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
 
 #define Z___TYPES_CONFIG__USE_EXTENDED_FEATURES
 	//#define Z___TYPE_CONFIG__USE_TYPE_IDENTIFIER
