@@ -51,6 +51,13 @@ typedef ptrdiff_t z__ptrdiff;
 typedef size_t z__size;
 
 
+    void *z__safe_realloc(void * data, size_t size);
+
+    #define z__MALLOC malloc
+    #define z__REALLOC realloc
+    #define z__FREE free
+
+
 /* Vectors And Matrices For Graphical Maths */
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
 
