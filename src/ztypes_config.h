@@ -22,6 +22,21 @@
  */
 
 
+#if defined(_MSC_VER)
+#  ifdef CGLM_STATIC
+#    define Z__EXPORT
+#  elif defined(CGLM_EXPORTS)
+#    define Z__EXPORT __declspec(dllexport)
+#  else
+#    define Z__EXPORT __declspec(dllimport)
+#  endif
+#  define Z__INLINE __forceinline
+#else
+#  define Z__EXPORT __attribute__((visibility("default")))
+#  define Z__INLINE static inline __attribute((always_inline))
+#endif
+
+
 /* General */
 #define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
 
