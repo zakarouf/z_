@@ -484,7 +484,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
      * Link list defination is complete;
      */
 
-    #define z__Link_create(zls, D)\
+    #define z__Link_create(zls, D...)\
         {                                                   \
             (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
             (zls)->head->next = NULL;                       \
@@ -518,7 +518,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (zls)->head = NULL;             \
         }
     
-    #define z__Link_pushHead(zls, D)\
+    #define z__Link_pushHead(zls, D...)\
         {                                                                   \
             (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
             (zls)->head->next->prev = (zls)->head;                          \
