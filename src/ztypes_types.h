@@ -282,6 +282,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                     \
         (arr)->lenUsed += 1;                                                                    \
     }
+#define z__Arr_pushN(arr, val...)\
+    {                                           \
+        (arr)->data[(arr)->lenUsed] = val;      \
+        (arr)->lenUsed += 1;                    \
+    }
+#define z__Arr_pushNMC(arr, val...)\
+    {                                                                       \
+        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));  \
+        (arr)->lenUsed += 1;                                                \
+    }
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
         if ((arr)->lenUsed > newSize)                                               \
@@ -428,6 +438,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
                 .lenUsed = 0                            \
             };                                          \
         }
+        
 
 #endif
 
