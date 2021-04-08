@@ -211,19 +211,22 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 /* Known Type-safe arrays */
 #define z__FxArr(T, sz, N) T N[sz]
 
-#define z__SxArrDef(T, sz)\
-    struct                      \
-    {                           \
-        T data[sz];             \
-        const z__i32 len;       \
-        z__i32 lenUsed;         \
-    } 
+#define z__SxArrDef(T, sz, tagName)\
+    struct  _z__SxArr_deftag_ ## tagName	\
+    {                           		\
+        T data[sz];             		\
+        const z__i32 len;       		\
+        z__i32 lenUsed;         		\
+    }
 
-#define z__SxArr(SDef, N)\
-    SDef N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
+#define z__SxArr(SDeftag, N)\
+    struct _z__SxArr_deftag_ ## SDeftag N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
+
+#define z__SxArrT(T, N)\
+    T N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
 
 #define z__SxArrI(T, sz, N)\
-    z__SxArrDef(T, sz) N = {.len = sz, .lenUsed = 0}
+    z__SxArrDef(T, sz, N) N = {.len = sz, .lenUsed = 0}
 
 #define z__SxArr_push(arr)\
     {                                           \
