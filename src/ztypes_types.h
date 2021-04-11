@@ -55,6 +55,7 @@ typedef size_t z__size;
 
     #define z__MALLOC malloc
     #define z__REALLOC realloc
+    #define z__CALLOC calloc
     #define z__FREE free
 
 
