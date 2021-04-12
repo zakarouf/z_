@@ -39,6 +39,7 @@ typedef int z__int;
 typedef float z__float;
 typedef bool z__bool;
 typedef void* z__ptr;
+typedef z__u8 z__byte;
 
 typedef intmax_t z__imax;
 typedef uintmax_t z__umax;
