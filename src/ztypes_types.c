@@ -5,19 +5,6 @@
 
 #include "ztypes_types.h"
 
-void *z__safe_realloc(void * data, size_t size)
-{
-    void *tmpdata = realloc(data, size);
-    if (tmpdata != NULL)
-    {
-        if (tmpdata != data)
-        {
-            return tmpdata;
-        }
-    }
-    return data;
-}
-
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 z__Irrg z__Irrg_create(z__u32 len)
 {
