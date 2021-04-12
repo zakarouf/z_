@@ -3,6 +3,7 @@ A small library for defining type and such
 
 ## What it does?
 It provides common data types, Array types, Vectors, Dynamic Arrays etc.
+It Also Provides An memory manager (NOT GARBAGE COLLECTOR); to Track allocated memory.
 
 - Primitive Types
 - String
