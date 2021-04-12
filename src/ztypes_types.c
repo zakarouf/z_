@@ -20,8 +20,8 @@ z__Irrg z__Irrg_create(z__u32 len)
 
 void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
 {
-    irgt->size = z__safe_realloc(irgt->size, sizeof(z__size)*newsize );
-    irgt->typeID = z__safe_realloc(irgt->typeID, sizeof(z__u8)*newsize);
+    irgt->size = z__REALLOC_SAFE(irgt->size, sizeof(z__size)*newsize );
+    irgt->typeID = z__REALLOC_SAFE(irgt->typeID, sizeof(z__u8)*newsize);
 
     // Free memory if _resize is not called from _push or pop
     for (int i = irgt->lenUsed; i > newsize; --i)
@@ -32,9 +32,9 @@ void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
         irgt->lenUsed -= 1;
     }
 
-    irgt->data = z__safe_realloc(irgt->data, sizeof(z__ptr*)*newsize);
+    irgt->data = z__REALLOC_SAFE(irgt->data, sizeof(z__ptr*)*newsize);
 
-    irgt->comment = z__safe_realloc(irgt->comment, sizeof(char*)*newsize);
+    irgt->comment = z__REALLOC_SAFE(irgt->comment, sizeof(char*)*newsize);
 
     irgt->len = newsize;
 }
@@ -164,7 +164,7 @@ void z__Dynt_push( z__Dynt *arrt, void *val)
     if (arrt->lenUsed >= arrt->len)
     {
         arrt->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-        arrt->data = z__safe_realloc(arrt->data,  arrt->size * (arrt->len) );
+        arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
     }
     
     void *tmpptr = (arrt->data) + (arrt->lenUsed * arrt->size);
@@ -177,7 +177,7 @@ void z__Dynt_pop( z__Dynt *arrt)
     if ((arrt->len - arrt->lenUsed) >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
     {
         arrt->len -= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-        arrt->data = z__safe_realloc(arrt->data,  arrt->size * (arrt->len) );
+        arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
     }
 }
 inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
@@ -188,7 +188,7 @@ inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
         arrt->lenUsed = arrt->len;
     }
 
-    arrt->data = z__safe_realloc(arrt->data, arrt->size * (arrt->len));
+    arrt->data = z__REALLOC_SAFE(arrt->data, arrt->size * (arrt->len));
 }
 z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
 {
@@ -262,7 +262,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data,  sizeof(z__i8)* (arr->len) );
+                arr->data = z__REALLOC_SAFE(arr->data,  sizeof(z__i8)* (arr->len) );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -282,7 +282,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__i16)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__i16)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -302,7 +302,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__i32)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__i32)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -322,7 +322,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__i64)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__i64)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -342,7 +342,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__u8)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__u8)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -362,7 +362,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__u16)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__u16)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -382,7 +382,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__u32)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__u32)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -402,7 +402,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__u64)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__u64)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -422,7 +422,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__f32)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__f32)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -442,7 +442,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__f64)*arr->len );
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__f64)*arr->len );
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -463,7 +463,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             if (arr->lenUsed >= arr->len)
             {
                 arr->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-                arr->data = z__safe_realloc(arr->data, sizeof(z__bool) *arr->len);
+                arr->data = z__REALLOC_SAFE(arr->data, sizeof(z__bool) *arr->len);
             }
             arr->data[arr->lenUsed] = val;
             arr->lenUsed += 1;
@@ -478,7 +478,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i8));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__i8));
         }
         inline void z__i16Arr_resize( z__i16Arr *arr, z__i16 newSize)
         {
@@ -487,7 +487,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i16));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__i16));
         }
         inline void z__i32Arr_resize( z__i32Arr *arr, z__i32 newSize)
         {
@@ -496,7 +496,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i32));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__i32));
         }
         inline void z__i64Arr_resize( z__i64Arr *arr, z__i64 newSize)
         {
@@ -505,7 +505,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__i64));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__i64));
         }
         inline void z__u8Arr_resize( z__u8Arr *arr, z__u8 newSize)
         {
@@ -514,7 +514,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u8));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__u8));
         }
         inline void z__u16Arr_resize( z__u16Arr *arr, z__u16 newSize)
         {
@@ -523,7 +523,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u16));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__u16));
         }
         inline void z__u32Arr_resize( z__u32Arr *arr, z__u32 newSize)
         {
@@ -532,7 +532,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u32));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__u32));
         }
         inline void z__u64Arr_resize( z__u64Arr *arr, z__u64 newSize)
         {
@@ -541,7 +541,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__u64));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__u64));
         }
         inline void z__f32Arr_resize( z__f32Arr *arr, z__f32 newSize)
         {
@@ -550,7 +550,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__f32));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__f32));
         }
         inline void z__f64Arr_resize( z__f64Arr *arr, z__f64 newSize)
         {
@@ -559,7 +559,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__f64));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__f64));
         }
         inline void z__boolArr_resize( z__boolArr *arr, z__bool newSize)
         {
@@ -568,7 +568,7 @@ inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
             {
                 arr->lenUsed = arr->len;
             }
-            arr->data = z__safe_realloc(arr->data, arr->len * sizeof(z__bool));
+            arr->data = z__REALLOC_SAFE(arr->data, arr->len * sizeof(z__bool));
         }
 
     #endif // #define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS

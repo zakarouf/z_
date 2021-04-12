@@ -309,7 +309,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
             (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;                                   \
-            (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
+            (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
         (arr)->data[(arr)->lenUsed] = val;                                                      \
         (arr)->lenUsed += 1;                                                                    \
@@ -319,7 +319,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
             (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;                                   \
-            (arr)->data = z__safe_realloc((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
+            (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                     \
         (arr)->lenUsed += 1;                                                                    \
@@ -340,7 +340,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         {                                                                           \
            ( arr)->lenUsed = newSize;                                               \
         }                                                                           \
-        (arr)->data = z__safe_realloc((arr)->data, newSize * sizeof(*(arr)->data)); \
+        (arr)->data = z__REALLOC_SAFE((arr)->data, newSize * sizeof(*(arr)->data)); \
         (arr)->len = newSize;                                                       \
     }
 #define z__Arr_pop(arr)\
