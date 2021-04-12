@@ -23,9 +23,9 @@
 
 
 #if defined(_MSC_VER)
-#  ifdef CGLM_STATIC
+#  ifdef Z__STATIC
 #    define Z__EXPORT
-#  elif defined(CGLM_EXPORTS)
+#  elif defined(Z__EXPORTS)
 #    define Z__EXPORT __declspec(dllexport)
 #  else
 #    define Z__EXPORT __declspec(dllimport)
