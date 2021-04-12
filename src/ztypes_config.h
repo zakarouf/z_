@@ -57,6 +57,11 @@
 
 #define Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 
+/* Memory Management */
+#define Z___TYPE_CONFIG__USE_MEM
+	//#define Z___TYPE_CONFIG__USE_MEM__TRACK
+	//#define Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
+
 /* Array Types, Use Vectors? */
 #define Z___TYPE_CONFIG__USE_VECTORS						
 	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array

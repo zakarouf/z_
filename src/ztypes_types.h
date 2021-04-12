@@ -50,14 +50,51 @@ typedef ptrdiff_t z__ptrdiff;
 #define z__sizeof sizeof
 typedef size_t z__size;
 
+#ifdef Z___TYPE_CONFIG__USE_MEM
 
-    void *z__safe_realloc(void * data, size_t size);
+    void *z__mem_safe_realloc(void * data, size_t size);
 
-    #define z__MALLOC malloc
-    #define z__REALLOC realloc
-    #define z__CALLOC calloc
-    #define z__FREE free
+    #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 
+        void z__mem_init(void);
+        z__ptr z__mem_tmalloc(z__size sz);
+        z__ptr z__mem_tcalloc(z__size count ,z__size sz);
+        void z__mem_tfree(z__ptr mem);
+        z__u32 z__mem_checkfor_usedMemory(void);
+
+        #define z__tMALLOC   z__mem_tmalloc
+        #define z__tREALLOC  realloc
+        #define z__tCALLOC   z__mem_tcalloc
+        #define z__tFREE     z__mem_tfree
+
+        #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
+
+            #define z__MALLOC    z__tMALLOC   
+            #define z__REALLOC   z__tREALLOC  
+            #define z__CALLOC    z__tCALLOC   
+            #define z__FREE      z__tFREE     
+
+        #endif
+    #endif
+
+#endif
+
+/* fallback */
+#ifndef z__MALLOC
+    #define z__MALLOC   malloc
+#endif
+#ifndef z__REALLOC
+    #define z__REALLOC  realloc
+#endif
+#ifndef z__CALLOC
+    #define z__CALLOC   calloc
+#endif
+#ifndef z__FREE
+    #define z__FREE     free
+#endif
+#ifndef z__REALLOC_SAFE
+    #define z__REALLOC_SAFE z__safe_realloc
+#endif
 
 /* Vectors And Matrices For Graphical Maths */
 #ifdef Z___TYPE_CONFIG__USE_VECTORS
