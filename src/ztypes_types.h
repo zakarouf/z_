@@ -94,7 +94,7 @@ typedef size_t z__size;
     #define z__FREE     free
 #endif
 #ifndef z__REALLOC_SAFE
-    #define z__REALLOC_SAFE z__safe_realloc
+    #define z__REALLOC_SAFE z__mem_safe_realloc
 #endif
 
 /* Vectors And Matrices For Graphical Maths */
