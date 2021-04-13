@@ -58,6 +58,7 @@ typedef size_t z__size;
     #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 
         void z__mem_init(void);
+        void z__mem_end(void);
         z__ptr z__mem_tmalloc(z__size sz);
         z__ptr z__mem_tcalloc(z__size count ,z__size sz);
         void z__mem_tfree(z__ptr mem);
@@ -67,6 +68,17 @@ typedef size_t z__size;
         #define z__tREALLOC  realloc
         #define z__tCALLOC   z__mem_tcalloc
         #define z__tFREE     z__mem_tfree
+
+        #ifdef Z___TYPE_CONFIG__USE_MEM__VTRACK
+
+            extern void * (*_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *);
+            void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *));
+
+            #define z__tvMALLOC(s)      _Z__MEM_LOG_FN_PTR_("Malloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(s));
+            #define z__tvCALLOC(c, s)   _Z__MEM_LOG_FN_PTR_("Calloc:" ,__FILE__, __func__, __LINE__, z__tMALLOC(c, s));
+            #define z__tvFREE(ptr)      _Z__MEM_LOG_FN_PTR_("Free:" ,__FILE__, __func__, __LINE__, ptr); z__tFREE(ptr)
+
+        #endif
 
         #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
 

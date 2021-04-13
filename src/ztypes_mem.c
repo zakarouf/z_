@@ -93,8 +93,32 @@ void *z__mem_safe_realloc(void * data, size_t size)
 			_z__mem_memlist.len = INIT_MEM;
 			_z__mem_memlist.lenUsed = 0;
 		}
+		void z__mem_end(void)
+		{
+			free(_z__mem_memlist.data);
+			_z__mem_memlist.len = 0;
+			_z__mem_memlist.lenUsed = 0;
+		}
+
+		#ifdef Z___TYPE_CONFIG__USE_MEM__VTRACK
+
+			#include <stdio.h>
+			void *_Z__MEM_LOG_FN_PTR_DEFAULT(const char *msg ,const char *fl, const char *fn, const int l, void *ptr)
+			{
+				fprintf(stdout, "%s >> %s:%d (%s):: %p\n", msg, fl, l, fn, ptr);
+				return ptr;
+			}
+
+			void * (*_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *) = _Z__MEM_LOG_FN_PTR_DEFAULT;
+			void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *))
+			{
+			 	return (_Z__MEM_LOG_FN_PTR_ = newfnptr);
+			}
+
+		#endif
 
 	#endif
+
 
 
 #endif

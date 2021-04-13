@@ -59,6 +59,7 @@
 
 /* Memory Management */
 #define Z___TYPE_CONFIG__USE_MEM
+	//#define Z___TYPE_CONFIG__USE_MEM__VTRACK
 	//#define Z___TYPE_CONFIG__USE_MEM__TRACK
 	//#define Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
 
