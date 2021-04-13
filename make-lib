@@ -3,7 +3,7 @@
 CC=gcc
 AR=ar
 OUT="libzkcollection.a"
-CFILES="src/ztypes_types.c src/ztypes_string.c"
+CFILES="src/ztypes_types.c src/ztypes_string.c src/ztypes_mem.c"
 
 CC -Os -O2 -c $CFILES
 AR -q $OUT *.o
