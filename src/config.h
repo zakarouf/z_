@@ -50,11 +50,13 @@
 
 /* Array Types, Use Pre-defined typed arrays? */
 #define Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
-	#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
+	//#define Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 	//#define Z___TYPE_CONFIG__USE_ARR_FUNTION_GENERATION_TEMPLATE
 
+/* Linked List Type */
 #define Z___TYPE_CONFIG__USE_TYPE_LINKLIST
 
+/* Use Irregular Object holder */
 #define Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 
 /* Memory Management */
