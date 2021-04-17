@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "ztypes_types.h"
+#include "base.h"
 
 #ifdef Z___TYPE_CONFIG__USE_MEM
 

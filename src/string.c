@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ztypes_string.h"
+#include "string.h"
 
 #ifdef Z___TYPE_CONFIG__USE_STRING
     // Malloc And Free 2d Char, Orginally were Part of Ztorg (https://github.com/zakarouf/ztorg)

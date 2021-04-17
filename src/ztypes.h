@@ -5,7 +5,7 @@
 #define ZAKAROUF__ZTYPES_VERSION_MINOR 2
 #define ZAKAROUF__ZTYPES_VERSION_PATCH 0
 
-#include "ztypes_ext.h"
+#include "ext.h"
 
 #endif
 

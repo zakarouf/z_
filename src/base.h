@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "ztypes_config.h"
+#include "config.h"
 
 #ifdef Z___TYPE_INCLUED_CGLM
     #include <cglm/cglm.h>
@@ -75,8 +75,8 @@ typedef size_t z__size;
             void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *));
 
             #define z__tvMALLOC(s)      _Z__MEM_LOG_FN_PTR_("Malloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(s));
-            #define z__tvCALLOC(c, s)   _Z__MEM_LOG_FN_PTR_("Calloc:" ,__FILE__, __func__, __LINE__, z__tMALLOC(c, s));
-            #define z__tvFREE(ptr)      _Z__MEM_LOG_FN_PTR_("Free:" ,__FILE__, __func__, __LINE__, ptr); z__tFREE(ptr)
+            #define z__tvCALLOC(c, s)   _Z__MEM_LOG_FN_PTR_("Calloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(c, s));
+            #define z__tvFREE(ptr)      _Z__MEM_LOG_FN_PTR_("Free:   " ,__FILE__, __func__, __LINE__, ptr); z__tFREE(ptr)
 
         #endif
 
@@ -260,9 +260,9 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 #define z__Dynt_getUsed(arr)              (arr.lenUsed)
 
 /* Known Type-safe arrays */
-#define z__FxArr(T, sz, N) T N[sz]
+#define z__ArrFx(T, sz, N) T N[sz]
 
-#define z__SxArrDef(T, sz, tagName)\
+#define z__ArrSxDef(T, sz, tagName)\
     struct  _z__SxArr_deftag_ ## tagName	\
     {                           		\
         T data[sz];             		\
@@ -270,16 +270,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         z__i32 lenUsed;         		\
     }
 
-#define z__SxArr(SDeftag, N)\
+#define z__ArrSx(SDeftag, N)\
     struct _z__SxArr_deftag_ ## SDeftag N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
 
-#define z__SxArrT(T, N)\
+#define z__ArrSxT(T, N)\
     T N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
 
-#define z__SxArrI(T, sz, N)\
+#define z__ArrSxI(T, sz, N)\
     z__SxArrDef(T, sz, N) N = {.len = sz, .lenUsed = 0}
 
-#define z__SxArr_push(arr)\
+#define z__ArrSx_push(arr)\
     {                                           \
         if((arr)->lenUsed < (arr->len))         \
         {                                       \
@@ -287,7 +287,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (arr)->lenUsed += 1;                \
         };                                      \
     }
-#define z__SxArr_pop(arr)\
+#define z__ArrSx_pop(arr)\
     {                           \
         if((arr)->lenUsed >= 0) \
         {                       \
@@ -333,7 +333,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (arr)->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;                                   \
             (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
-        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                     \
+        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                      \
         (arr)->lenUsed += 1;                                                                    \
     }
 #define z__Arr_pushN(arr, val...)\
@@ -484,14 +484,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
     #define z__Arr_FN(T, vT)                            \
         typedef z__Arr(vT) T;                           \
-        Z__INLINE T z__ ## T ## Arr_create(z__u32 len)  \
+        Z__INLINE T z__Arr ## T ## _create(z__u32 len)  \
         {                                               \
             return (T) {                                \
                 .data = malloc(sizeof (vT) * len),      \
                 .len = len,                             \
                 .lenUsed = 0                            \
             };                                          \
-        }
+        }                                               \
+        \
+        Z__INLINE T z__Arr ## T ## _push(z__u32 len)
         
 
 #endif
@@ -620,14 +622,5 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
     #define z__Link_getTail(zls)           (zls.tail)             // Get Tail
 
 #endif
-
-
-#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
-            
-#define z__contof(ptr, T, M) ({ \
-    const typeof(((T *)0)->M) * __mptr = (ptr); \
-    (T *)((char *)__mptr - offsetof(T, M)); })
-
-#undef z__safe_realloc
 
 #endif // Header Guard

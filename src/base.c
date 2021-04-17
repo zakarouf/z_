@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "ztypes_types.h"
+#include "base.h"
 
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 z__Irrg z__Irrg_create(z__u32 len)

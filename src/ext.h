@@ -1,16 +1,24 @@
 #ifndef ZAKAROUF__ZTYPES_EXTENDED_H
 #define ZAKAROUF__ZTYPES_EXTENDED_H
 
-#include "ztypes_config.h"
+#include "config.h"
 
-#include "ztypes_types.h"
+#include "base.h"
 #ifdef Z___TYPE_CONFIG__USE_STRING
-	#include "ztypes_string.h"
+	#include "string.h"
 #endif
 
 
 #ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES
 	
+	#define z__typeof typeof
+
+	#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
+            
+	#define z__contof(ptr, T, M) ({ \
+    	const typeof(((T *)0)->M) * __mptr = (ptr); \
+    	(T *)((char *)__mptr - offsetof(T, M)); })
+
 	#define z__type_isequal(val, T) __builtin_types_compatible_p(typeof(val), T)
 	#define z__type_issame(T1, T2) 	__builtin_types_compatible_p(T, T)
 
