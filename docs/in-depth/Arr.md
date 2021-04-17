@@ -21,6 +21,9 @@ myvar.lenUsed   // The Total space already in use.
 typedef z__Arr(int) myarrtype; 
 myarrtype myvar; // We can also create a typedef for multiple usecase
 ```
+### Pre-requisites
+* If `len` is -1 or 0, then that means Array is not initialized.
+* If `len` is -1 and `lenUsed` is > 0 then its presumed the z__Arr is soft copy; Linked with some other array.
 
 ## Constructing an Array
 We have created our array but before we start using it, we have to initialize it first.
@@ -60,4 +63,18 @@ z__Arr_push(&Px, p1);                       // Pushing At Top index[1].
 
 ```
 
+## Popping & Deleting
+Popping funtion for z__Arr is pretty straight forward.
+```c
+z__Arr_pop(&Px); // Delete the last pushed value.
+```
+It also checks if too many unused memory is allocated, if yes it'll resize it,
+leaving enough spaces determined by a threshold.
 
+### Deletion
+Remember `z__Arr` is allocated on heap, so we have to manually delete the variable we have created.
+
+```c
+z__Arr_delete(&Px); // Free up allocated memory and set len & lenUsed to -1.
+```
+This Cleans up your array.
