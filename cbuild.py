@@ -12,7 +12,7 @@ ignorePatternFront = ["."]
 onlyTakePatternEnd = [".c"]
 
 CC="gcc-mp-10"
-ERRFLAGS = ["-Wall", "-pedantic"]
+ERRFLAGS = ["-Wall"]
 CFLAGS=["-std=c99", "-ffunction-sections", "-fdata-sections", "-fopenmp", "-Os", "-O2"] + ERRFLAGS
 LDFLAGS=["-lm", "-Wl,-rpath", "-Wl,/usr/local/lib", "-fopenmp"]
 OUTEXE="build/test"
