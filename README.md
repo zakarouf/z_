@@ -1,9 +1,12 @@
-# Ztypes
-A small library for defining type and such
+# z_
+A Small System Module.
 
 ## What it does?
+### Memory Tracker
+A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
+
+### Types
 It provides common data types, Array types, Vectors, Dynamic Arrays etc.
-It Also Provides An memory manager (NOT GARBAGE COLLECTOR); to Track allocated memory.
 
 - Primitive Types
 - String
@@ -24,12 +27,15 @@ It Also Provides An memory manager (NOT GARBAGE COLLECTOR); to Track allocated m
 
 _[See Overview](docs/overview.md)_
 
-## Getting Started
+### Multi Threading?
+Whilst Still in Process & Totally Optional. A multi thread implementation around pthread and OpenMP is on the to-do list.
+
+## Getting Started, Only Types
 
 Inorder to integrated ztypes in your project
 ```sh
 git clone --depth=1 git://github.com/zakarouf/typed.git
-cp -R typed/src /to/your/project/source/typed
+cp -R z_/src/types /to/your/project/source/types
 ```
 Then include the header by
 ```c
