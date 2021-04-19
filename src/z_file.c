@@ -71,7 +71,7 @@ z__StringLines z__file_getfnames(char path[])
     closedir(drip);
     drip = opendir(path);
 
-    z__StringLines fnames = z__StringLines_createEmpty(ZSE_MAX_FILENAME_SIZE, items);
+    z__StringLines fnames = z__StringLines_createEmpty(32, items);
 
     int i = 0;
     while((dp = readdir(drip)) != NULL)
