@@ -615,19 +615,53 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         }
 
     #define z__Link_setCursorHead(zls)\
-        {                                               \
-            while((zls)->cursor->next != NULL)          \
-            {                                           \
-                (zls)->cursor = (zls)->cursor->next;    \
-            }                                           \
-        }                                               \
+        {                                           \
+            (zls)->cursor = (zls)->head;            \
+        }                                           
 
     #define z__Link_setCursorTail(zls)\
         {                                           \
-            while((zls)->cursor->prev != NULL)      \
-            {                                       \
-               (zls)->cursor = (zls)->cursor->prev; \
-            }                                       \
+            (zls)->cursor = (zls)->tail;            \
+        }
+
+    #define z__Link_cursorDel_setPrev(zls)\
+        {                                                               \
+            if ((zls)->cursor->prev != NULL)                            \
+            {                                                           \
+                (zls)->head->next = (zls)->cursor->prev;                \
+                                                                        \
+                (zls)->cursor->prev->next = (zls)->cursor->next;        \
+                (zls)->cursor->next->prev = (zls)->cursor->prev;        \
+                                                                        \
+                z__FREE((zls)->cursor);                                 \
+                (zls)->cursor = (zls)->head->next;                      \
+                (zls)->head->next = NULL;                               \
+            }                                                           \
+        }
+    #define z__Link_cursorDel_setNext(zls)\
+        {                                                               \
+            if ((zls)->cursor->next != NULL)                            \
+            {                                                           \
+                (zls)->head->next = (zls)->cursor->next;                \
+                                                                        \
+                (zls)->cursor->prev->next = (zls)->cursor->next;        \
+                (zls)->cursor->next->prev = (zls)->cursor->prev;        \
+                                                                        \
+                z__FREE((zls)->cursor);                                 \
+                (zls)->cursor = (zls)->head->next;                      \
+                (zls)->head->next = NULL;                               \
+            }                                                           \
+        }
+    #define z__Link_cursorDel(zls)\
+        {                                                           \
+            if ((zls)->cursor->prev) {                              \
+                 (zls)->cursor->prev->next = (zls)->cursor->next;   \
+            }                                                       \
+            if ((zls)->cursor->next) {                              \
+                (zls)->cursor->next->prev = (zls)->cursor->prev;    \
+            }                                                       \
+            z__FREE((zls)->cursor);                                 \
+            (zls)->cursor = NULL;                                   \
         }
 
 
