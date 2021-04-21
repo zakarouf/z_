@@ -508,22 +508,22 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 // Link Lists
 #ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
-    #define z__LinkStruct(N, DT, ...)\
-        struct _z__linkLs##N {              \
-            DT data;                        \
-            __VA_ARGS__;                    \
-            struct _z__linkLs##N  *next;    \
-            struct _z__linkLs##N  *prev;    \
+    #define z__LinkStruct(NEWTAG, DT, ...)\
+        struct _z__linkLs##NEWTAG {              \
+            DT data;                             \
+            __VA_ARGS__;                         \
+            struct _z__linkLs##NEWTAG  *next;    \
+            struct _z__linkLs##NEWTAG  *prev;    \
         }
 
-    #define z__LinkDef(T)\
-        struct _z__linkLs##T
+    #define z__LinkDef(TAG)\
+        struct _z__linkLs##TAG
 
-    #define z__Link(T, ...)\
+    #define z__Link(TAG, ...)\
         struct {                     \
-            z__LinkDef(T)  *head;    \
-            z__LinkDef(T)  *tail;    \
-            z__LinkDef(T)  *cursor;  \
+            z__LinkDef(TAG)  *head;    \
+            z__LinkDef(TAG)  *tail;    \
+            z__LinkDef(TAG)  *cursor;  \
                          \
             __VA_ARGS__;        /* Additialnal members for the the user*/\
         }
