@@ -587,6 +587,15 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (zls)->head->data = D;                                          \
             (zls)->head->next = NULL;                                       \
         }
+    #define z__Link_pushTail(zls, D...)\
+        {                                                                   \
+            (zls)->tail->prev = z__MALLOC(sizeof( *(zls)->tail->prev ) );   \
+            (zls)->tail->prev->next = (zls)->tail;                          \
+            (zls)->tail = (zls)->tail->prev;                                \
+            (zls)->tail->prev = NULL;                                       \
+                                                                            \
+            (zls)->tail->data = D;                                          \
+        }
         
 
     #define z__Link_inext(zls, n)\
