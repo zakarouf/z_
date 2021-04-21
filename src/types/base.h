@@ -551,14 +551,21 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         {                                           \
             if((zls)->head != NULL) {               \
                 if(((zls)->head->prev != NULL)) {   \
-                    (zls)->cursor = (zls)->head->prev;  \
-                    z__FREE((zls)->cursor->next);       \
-                        \
-                    (zls)->cursor->next = NULL;         \
-                    (zls)->head = (zls)->cursor;        \
-                }                                   \
-            }                                       \
-                                                    \
+                    (zls)->head = (zls)->head->prev;\
+                    z__FREE((zls)->head->next);     \
+                    (zls)->head->next = NULL;       \
+                }                                       \
+            }                                           \
+        }
+    #define z__Link_popTail(zls)\
+        {                                               \
+            if ((zls)->tail) {                          \
+                if ((zls)->tail->next) {                \
+                    (zls)->tail = (zls)->tail->next;    \
+                    z__FREE((zls)->tail->prev);         \
+                    (zls)->tail->prev = NULL;           \
+                }                                       \
+            }                                           \
         }
 
     #define z__Link_delete(zls)\
