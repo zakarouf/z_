@@ -6,8 +6,8 @@
 
 // SHOUDL BWE AWD CONFIG PRE_P GAULD
 
-#include "types/string.h"
-#include "types/base.h"
+#include "../types/string.h"
+#include "../types/base.h"
 
 z__i8Arr z__file__readFile(char filename[])
 {
