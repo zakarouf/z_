@@ -110,14 +110,14 @@ typedef size_t z__size;
 #endif
 
 /* Vectors And Matrices For Graphical Maths */
-#ifdef Z___TYPE_CONFIG__USE_VECTORS
+#ifdef Z___TYPE_CONFIG__USE_GMATHTYPE
 
     // CGLM PRE_REQUSITE GOES HERE...
     #ifdef Z___TYPE_USE_CGLM
         
     #endif
 
-    #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR
+    #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR_AND_MATRIX
         /* |x, y, z, w| -> w is the last */
         #ifdef Z___TYPE_INCLUED_CGLM
 
@@ -165,7 +165,7 @@ typedef size_t z__size;
 
     #endif
 
-    #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
+    #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR_AND_MATRIX
 
         /* New type declarator, Vector */
         #define z__Vector(T, ...)\
@@ -196,9 +196,82 @@ typedef size_t z__size;
             typedef z__Vector(__vecDefType, x, y, z, w) z__Vint4;
         #undef __vecDefType
 
+
+        typedef z__Vector(z__f32
+            , _0_0, _0_1
+            , _1_0, _1_1 ) z__Matrix2;
+
+        typedef z__Vector(z__f32
+            , _0_0, _0_1, _0_2
+            , _1_0, _1_1, _1_2
+            , _2_0, _2_1, _2_2 ) z__Matrix3;
+
+        typedef z__Vector(z__f32
+            , _0_0, _0_1, _0_2, _0_3
+            , _1_0, _1_1, _1_2, _1_3
+            , _2_0, _2_1, _2_2, _2_3
+            , _3_0, _3_1, _3_2, _3_3 ) z__Matrix4;
+
+        // Integer
+        typedef z__Vector(z__i32
+            , _0_0, _0_1
+            , _1_0, _1_1 ) z__Mint2;
+
+        typedef z__Vector(z__i32
+            , _0_0, _0_1, _0_2
+            , _1_0, _1_1, _1_2
+            , _2_0, _2_1, _2_2 ) z__Mint3;
+
+        typedef z__Vector(z__i32
+            , _0_0, _0_1, _0_2, _0_3
+            , _1_0, _1_1, _1_2, _1_3
+            , _2_0, _2_1, _2_2, _2_3
+            , _3_0, _3_1, _3_2, _3_3 ) z__Mint4;
+
+        /* Basic Arithmatic */
+        #define z__Vector2_A(a, b, operator, dest)  \
+        {                                           \
+            (dest).x = (a).x operator (b).x;        \
+            (dest).y = (a).y operator (b).y;        \
+        }
+        #define z__Vector3_A(a, b, operator, dest)  \
+        {                                           \
+            (dest).x = (a).x operator (b).x;        \
+            (dest).y = (a).y operator (b).y;        \
+            (dest).z = (a).z operator (b).z;        \
+        }
+        #define z__Vector4_A(a, b, operator, dest)  \
+        {                                           \
+            (dest).x = (a).x operator (b).x;        \
+            (dest).y = (a).y operator (b).y;        \
+            (dest).z = (a).z operator (b).z;        \
+            (dest).w = (a).w operator (b).w;        \
+        }
+
+
+        #define z__Matrix2_A (a, b, operator, dest)\
+        {\
+            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1;   \
+            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1;   \
+        }
+
+        #define z__Matrix3_A (a, b, operator, dest)\
+        {\
+            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1; /**/ dest._0_2 = a._0_2 operator b._0_2;   \
+            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1; /**/ dest._1_2 = a._1_2 operator b._1_2;   \
+            dest._2_0 = a._2_0 operator b._2_0; /**/ dest._2_1 = a._2_1 operator b._2_1; /**/ dest._2_2 = a._2_2 operator b._2_2;   \
+        }
+        #define z__Matrix4_A (a, b, operator, dest)\
+        {\
+            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1; /**/ dest._0_2 = a._0_2 operator b._0_2; /**/ dest._0_3 = a._0_3 operator b._0_3; \
+            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1; /**/ dest._1_2 = a._1_2 operator b._1_2; /**/ dest._1_3 = a._1_3 operator b._1_3; \
+            dest._2_0 = a._2_0 operator b._2_0; /**/ dest._2_1 = a._2_1 operator b._2_1; /**/ dest._2_2 = a._2_2 operator b._2_2; /**/ dest._2_3 = a._2_3 operator b._2_3; \
+            dest._3_0 = a._3_0 operator b._3_0; /**/ dest._3_1 = a._3_1 operator b._3_1; /**/ dest._3_2 = a._3_2 operator b._3_2; /**/ dest._3_3 = a._3_3 operator b._3_3; \
+        }
+
     #endif
 
-#endif //#ifdef Z___TYPE_CONFIG__USE_VECTORS
+#endif //#ifdef Z___TYPE_CONFIG__USE_GMATHTYPE
 
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
     /* Unsafe Irregular Object Holder array */

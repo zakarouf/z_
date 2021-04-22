@@ -52,9 +52,9 @@
 	//#define Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
 
 /* Array Types, Use Vectors? */
-#define Z___TYPE_CONFIG__USE_VECTORS						
-	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array
-	#define Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR
+#define Z___TYPE_CONFIG__USE_GMATHTYPE						
+	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR_AND_MATRIX			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array
+	#define Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR_AND_MATRIX
 		//#define Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
 		//#define Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
 
