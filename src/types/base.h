@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include "config.h"
 
+#include "../prep/zprep.h"
+
 #ifdef Z___TYPE_INCLUED_CGLM
     #include <cglm/cglm.h>
 #endif
@@ -448,6 +450,24 @@ typedef size_t z__size;
         }                                                                                               \
         memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
+
+#define z__Arr_slice_5(arr, dest, from, upto, step)\
+{                                                       \
+    if ((arr).lenUsed > (dest)->len) {                  \
+        z__Arr_resize(dest, (arr).lenUsed);             \
+    }                                                   \
+    int j = 0, i = from;                                \
+    for (; i < upto; i += step,j++) {                   \
+        (dest)->data[j] = (arr).data[i];                \
+    }                                                   \
+    (dest)->lenUsed = (j);                              \
+}
+
+#define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
+#define z__Arr_slice_3(arr, dest, from) z__Arr_slice_5(arr, dest, from, (arr).lenUsed, 1)
+#define z__Arr_slice_2(arr, dest) z__Arr_slice_5(arr, dest, 0, (arr).lenUsed, 1)
+#define z__Arr_slice(...) zpp__Args_Overload(z__Arr_slice_, __VA_ARGS__)
+
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 
