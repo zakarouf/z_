@@ -14,9 +14,9 @@
 	#define z__typeof typeof
 
 	#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
-            
+
 	#define z__contof(ptr, T, M) ({ \
-    	const typeof(((T *)0)->M) * __mptr = (ptr); \
+    	const z__typeof(((T *)0)->M) * __mptr = (ptr); \
     	(T *)((char *)__mptr - offsetof(T, M)); })
 
 	#define z__type_isequal(val, T) __builtin_types_compatible_p(typeof(val), T)
