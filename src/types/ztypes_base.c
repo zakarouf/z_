@@ -6,227 +6,230 @@
 #include "base.h"
 
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
-z__Irrg z__Irrg_create(z__u32 len)
-{
-    return (z__Irrg) {
-        .data = malloc(sizeof(z__ptr*)*len),
-        .size = malloc(sizeof(z__size*)*len),
-        .typeID = malloc(sizeof(z__u8)*len),
-        .len = len,
-        .lenUsed = 0,
-        .comment = malloc(sizeof(char*)*len)
-    };
-}
-
-void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
-{
-    irgt->size = z__REALLOC_SAFE(irgt->size, sizeof(z__size)*newsize );
-    irgt->typeID = z__REALLOC_SAFE(irgt->typeID, sizeof(z__u8)*newsize);
-
-    // Free memory if _resize is not called from _push or pop
-    for (int i = irgt->lenUsed; i > newsize; --i)
+    z__Irrg z__Irrg_create(z__u32 len)
     {
-        //printf("==%d\n", i);
-        free(irgt->data[i]);
-        free(irgt->comment[i]);
-        irgt->lenUsed -= 1;
+        return (z__Irrg) {
+            .data = malloc(sizeof(z__ptr*)*len),
+            .size = malloc(sizeof(z__size*)*len),
+            .typeID = malloc(sizeof(z__u8)*len),
+            .len = len,
+            .lenUsed = 0,
+            .comment = malloc(sizeof(char*)*len)
+        };
     }
 
-    irgt->data = z__REALLOC_SAFE(irgt->data, sizeof(z__ptr*)*newsize);
-
-    irgt->comment = z__REALLOC_SAFE(irgt->comment, sizeof(char*)*newsize);
-
-    irgt->len = newsize;
-}
-
-void z__Irrg_push
-(
-      z__Irrg *irgt
-    , void *val
-    , z__size size
-    , z__u8 typeID
-    , const char *comment
-    , z__i32 commentLength
-)
-{
-    if (irgt->lenUsed == irgt->len)
+    void z__Irrg_resize(z__Irrg *irgt, z__size newsize)
     {
-        z__size news = irgt->len + Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-        z__Irrg_resize(irgt, news);
+        irgt->size = z__REALLOC_SAFE(irgt->size, sizeof(z__size)*newsize );
+        irgt->typeID = z__REALLOC_SAFE(irgt->typeID, sizeof(z__u8)*newsize);
 
-    }
-
-    irgt->data[irgt->lenUsed] = malloc(size);
-    memcpy(irgt->data[irgt->lenUsed], val, size);
-
-    irgt->size[irgt->lenUsed] = size;
-    irgt->typeID[irgt->lenUsed] = typeID;
-
-    if (commentLength == 0) {
-        irgt->comment[irgt->lenUsed] = NULL;
-    } else if (commentLength == -1) {
-        irgt->comment[irgt->lenUsed] = malloc(sizeof(char) * strnlen(comment, 1024));
-        snprintf(irgt->comment[irgt->lenUsed], 1024, "%s", comment);
-    } else {
-        irgt->comment[irgt->lenUsed] = malloc(sizeof(char) * commentLength);
-        memcpy(irgt->comment[irgt->lenUsed], comment, commentLength);
-    }
-
-    irgt->lenUsed += 1;
-
-}
-
-void z__Irrg_pop(z__Irrg *irgt)
-{
-    if (irgt->lenUsed-1 >= 0)
-    {
-        free(irgt->data[irgt->lenUsed-1]);
-        irgt->lenUsed -= 1;
-
-        if ((irgt->len - irgt->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+        // Free memory if _resize is not called from _push or pop
+        for (int i = irgt->lenUsed; i > newsize; --i)
         {
-            z__size news = irgt->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-            z__Irrg_resize(irgt, news);
+            //printf("==%d\n", i);
+            free(irgt->data[i]);
+            free(irgt->comment[i]);
+            irgt->lenUsed -= 1;
         }
+
+        irgt->data = z__REALLOC_SAFE(irgt->data, sizeof(z__ptr*)*newsize);
+
+        irgt->comment = z__REALLOC_SAFE(irgt->comment, sizeof(char*)*newsize);
+
+        irgt->len = newsize;
     }
 
-}
-
-void z__Irrg_delete(z__Irrg *irgt)
-{
-    for (int i = irgt->lenUsed; i >= 0; --i)
+    void z__Irrg_push
+    (
+          z__Irrg *irgt
+        , void *val
+        , z__size size
+        , z__u8 typeID
+        , const char *comment
+        , z__i32 commentLength
+    )
     {
-        free(irgt->data[i]);
-        free(irgt->comment[i]);
-        
+        if (irgt->lenUsed == irgt->len)
+        {
+            z__size news = irgt->len + Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+            z__Irrg_resize(irgt, news);
+
+        }
+
+        irgt->data[irgt->lenUsed] = malloc(size);
+        memcpy(irgt->data[irgt->lenUsed], val, size);
+
+        irgt->size[irgt->lenUsed] = size;
+        irgt->typeID[irgt->lenUsed] = typeID;
+
+        if (commentLength == 0) {
+            irgt->comment[irgt->lenUsed] = NULL;
+        } else if (commentLength == -1) {
+            irgt->comment[irgt->lenUsed] = malloc(sizeof(char) * strnlen(comment, 1024));
+            snprintf(irgt->comment[irgt->lenUsed], 1024, "%s", comment);
+        } else {
+            irgt->comment[irgt->lenUsed] = malloc(sizeof(char) * commentLength);
+            memcpy(irgt->comment[irgt->lenUsed], comment, commentLength);
+        }
+
+        irgt->lenUsed += 1;
+
     }
-    free(irgt->size);
-    free(irgt->typeID);
 
-    free(irgt->data);
-    free(irgt->comment);
+    void z__Irrg_pop(z__Irrg *irgt)
+    {
+        if (irgt->lenUsed-1 >= 0)
+        {
+            free(irgt->data[irgt->lenUsed-1]);
+            irgt->lenUsed -= 1;
 
-    irgt->len = 0;
-    irgt->lenUsed = 0;
-}
+            if ((irgt->len - irgt->lenUsed) > Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+            {
+                z__size news = irgt->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+                z__Irrg_resize(irgt, news);
+            }
+        }
+
+    }
+
+    void z__Irrg_delete(z__Irrg *irgt)
+    {
+        for (int i = irgt->lenUsed; i >= 0; --i)
+        {
+            free(irgt->data[i]);
+            free(irgt->comment[i]);
+            
+        }
+        free(irgt->size);
+        free(irgt->typeID);
+
+        free(irgt->data);
+        free(irgt->comment);
+
+        irgt->len = 0;
+        irgt->lenUsed = 0;
+    }
 #endif
 
-z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
-{
-    z__Dynt arrt;
-
-    arrt.data = malloc(size * len);
-    arrt.size = size;
-    arrt.len = len;
-    arrt.lenUsed = 0;
-    arrt.typeID = typeID;
-
-    if (commentLength == 0) {
-        arrt.comment = NULL;
-    } else if (commentLength == -1) {
-        arrt.comment = malloc(sizeof(char) * strnlen(comment, 1024));
-        snprintf(arrt.comment, 1024, "%s", comment);
-    } else {
-        arrt.comment = malloc(sizeof(char) * commentLength);
-        memcpy(arrt.comment, comment, commentLength);
-    }
-
-    return arrt;
-}
-z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
-{
-    FILE *fp;
-    if((fp = fopen(filepath, "rb")) == NULL)
-    {
-        return (z__Dynt){NULL, 0, 0, 0, 0, NULL};
-    }
-
-    fseek(fp, 0, SEEK_END);
-    long fsz = ftell(fp);
-    fsz += 1;
-    fseek(fp, 0, SEEK_SET);  /* same as rewind(fp); */
-
-    z__u64 len = fsz/sizePerVal;
-
-    void *data = malloc(len * sizePerVal);
-    fread(data, 1, fsz-1, fp);
-    fclose(fp);
-
-    return (z__Dynt){
-         .data = data
-        ,.size = sizePerVal
-        ,.len = len
-        ,.lenUsed = (len) -1
-    };
-}
-void z__Dynt_push( z__Dynt *arrt, void *val)
-{
-    if (arrt->lenUsed >= arrt->len)
-    {
-        arrt->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-        arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
-    }
+#ifdef Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
     
-    void *tmpptr = (arrt->data) + (arrt->lenUsed * arrt->size);
-    memcpy(tmpptr, val, arrt->size);
-    arrt->lenUsed += 1;
-}
-void z__Dynt_pop( z__Dynt *arrt)
-{
-    arrt->lenUsed -= 1;
-    if ((arrt->len - arrt->lenUsed) >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+    z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
     {
-        arrt->len -= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
-        arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
+        z__Dynt arrt;
+
+        arrt.data = malloc(size * len);
+        arrt.size = size;
+        arrt.len = len;
+        arrt.lenUsed = 0;
+        arrt.typeID = typeID;
+
+        if (commentLength == 0) {
+            arrt.comment = NULL;
+        } else if (commentLength == -1) {
+            arrt.comment = malloc(sizeof(char) * strnlen(comment, 1024));
+            snprintf(arrt.comment, 1024, "%s", comment);
+        } else {
+            arrt.comment = malloc(sizeof(char) * commentLength);
+            memcpy(arrt.comment, comment, commentLength);
+        }
+
+        return arrt;
     }
-}
-inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
-{
-    arrt->len = newsize;
-    if (arrt->lenUsed > arrt->len)
+    z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
     {
-        arrt->lenUsed = arrt->len;
-    }
-
-    arrt->data = z__REALLOC_SAFE(arrt->data, arrt->size * (arrt->len));
-}
-z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
-{
-    z__Dynt arrtCopy = {
-        .data = malloc(arrt.len * arrt.size),
-        .len = arrt.len,
-        .lenUsed = arrt.lenUsed,
-        .size = arrt.size
-    };
-
-    z__u32 namelen = strlen(arrt.comment);
-    if (namelen > 0)
-    {
-        arrtCopy.comment = malloc(sizeof(char) * namelen);
-        memcpy(arrtCopy.comment, arrt.comment, namelen);
-    } else {
-        arrtCopy.comment = NULL;
-    }
-
-    return arrtCopy;
-
-}
-inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
-{
-    free(arrt->data);
-    arrt->len = 0;
-    arrt->lenUsed = 0;
-    arrt->size = 0;
-
-    if (nameFree)
-    {
-        if (arrt->comment != NULL)
+        FILE *fp;
+        if((fp = fopen(filepath, "rb")) == NULL)
         {
-            free(arrt->comment);
+            return (z__Dynt){NULL, 0, 0, 0, 0, NULL};
+        }
+
+        fseek(fp, 0, SEEK_END);
+        long fsz = ftell(fp);
+        fsz += 1;
+        fseek(fp, 0, SEEK_SET);  /* same as rewind(fp); */
+
+        z__u64 len = fsz/sizePerVal;
+
+        void *data = malloc(len * sizePerVal);
+        fread(data, 1, fsz-1, fp);
+        fclose(fp);
+
+        return (z__Dynt){
+             .data = data
+            ,.size = sizePerVal
+            ,.len = len
+            ,.lenUsed = (len) -1
+        };
+    }
+    void z__Dynt_push( z__Dynt *arrt, void *val)
+    {
+        if (arrt->lenUsed >= arrt->len)
+        {
+            arrt->len += Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+            arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
+        }
+        
+        void *tmpptr = (arrt->data) + (arrt->lenUsed * arrt->size);
+        memcpy(tmpptr, val, arrt->size);
+        arrt->lenUsed += 1;
+    }
+    void z__Dynt_pop( z__Dynt *arrt)
+    {
+        arrt->lenUsed -= 1;
+        if ((arrt->len - arrt->lenUsed) >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+        {
+            arrt->len -= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT;
+            arrt->data = z__REALLOC_SAFE(arrt->data,  arrt->size * (arrt->len) );
         }
     }
-}
+    inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
+    {
+        arrt->len = newsize;
+        if (arrt->lenUsed > arrt->len)
+        {
+            arrt->lenUsed = arrt->len;
+        }
 
+        arrt->data = z__REALLOC_SAFE(arrt->data, arrt->size * (arrt->len));
+    }
+    z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
+    {
+        z__Dynt arrtCopy = {
+            .data = malloc(arrt.len * arrt.size),
+            .len = arrt.len,
+            .lenUsed = arrt.lenUsed,
+            .size = arrt.size
+        };
+
+        z__u32 namelen = strlen(arrt.comment);
+        if (namelen > 0)
+        {
+            arrtCopy.comment = malloc(sizeof(char) * namelen);
+            memcpy(arrtCopy.comment, arrt.comment, namelen);
+        } else {
+            arrtCopy.comment = NULL;
+        }
+
+        return arrtCopy;
+
+    }
+    inline void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree)
+    {
+        free(arrt->data);
+        arrt->len = 0;
+        arrt->lenUsed = 0;
+        arrt->size = 0;
+
+        if (nameFree)
+        {
+            if (arrt->comment != NULL)
+            {
+                free(arrt->comment);
+            }
+        }
+    }
+
+#endif
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
     #ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS

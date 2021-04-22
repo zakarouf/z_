@@ -44,6 +44,7 @@
 
 /* Use Irregular Object holder */
 #define Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
+#define Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
 
 /* Memory Management */
 #define Z___TYPE_CONFIG__USE_MEM
