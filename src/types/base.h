@@ -520,7 +520,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         struct _z__linkLs##TAG
 
     #define z__LList(TAG, ...)\
-        struct {                     \
+        struct {                       \
             z__LinkDef(TAG)  *head;    \
             z__LinkDef(TAG)  *tail;    \
             z__LinkDef(TAG)  *cursor;  \
@@ -559,7 +559,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         }
     #define z__LList_popTail(zls)\
         {                                               \
-            if ((zls)->tail) {                          \
+            if ((zls)->tail != NULL) {                  \
                 if ((zls)->tail->next) {                \
                     (zls)->tail = (zls)->tail->next;    \
                     z__FREE((zls)->tail->prev);         \
@@ -661,6 +661,17 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
                 (zls)->cursor->next->prev = (zls)->cursor->prev;    \
             }                                                       \
             z__FREE((zls)->cursor);                                 \
+            (zls)->cursor = NULL;                                   \
+        }
+    #define z__LList_cursorTakeOut(zls, var)\
+        {\
+            if ((zls)->cursor->prev) {                              \
+                 (zls)->cursor->prev->next = (zls)->cursor->next;   \
+            }                                                       \
+            if ((zls)->cursor->next) {                              \
+                (zls)->cursor->next->prev = (zls)->cursor->prev;    \
+            }                                                       \
+            var = (zls)->cursor;									\
             (zls)->cursor = NULL;                                   \
         }
 
