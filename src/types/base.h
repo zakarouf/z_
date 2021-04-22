@@ -508,7 +508,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
 // Link Lists
 #ifdef Z___TYPE_CONFIG__USE_TYPE_LINKLIST
-    #define z__LinkStruct(NEWTAG, DT, ...)\
+    #define z__Link(NEWTAG, DT, ...)\
         struct _z__linkLs##NEWTAG {              \
             DT data;                             \
             __VA_ARGS__;                         \
@@ -519,7 +519,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
     #define z__LinkDef(TAG)\
         struct _z__linkLs##TAG
 
-    #define z__Link(TAG, ...)\
+    #define z__LList(TAG, ...)\
         struct {                     \
             z__LinkDef(TAG)  *head;    \
             z__LinkDef(TAG)  *tail;    \
@@ -528,16 +528,16 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             __VA_ARGS__;        /* Additialnal members for the the user*/\
         }
     /*
-     * How to Create a Link list
-     *         z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );
-     * typedef z__LinkStruct(<Name>, <typename>, <AdditionalMembers> );  << Creates a typedef
+     * How to Create a Linked list
+     *         z__Link(<NewTagName>, <MainDataType>, <AdditionalMembers> );
+     * typedef z__Link(<NewTagName>, <MainDataType>, <AdditionalMembers> );  << Creates a typedef
      * :Create a Link
-     *         z__Link(<z__LinkStruct>, <AdditionalMembers>) <Var>;
-     * typedef z__Link(<z__LinkStruct>, <AdditionalMembers>) <newType>;  << Creates a typedef
+     *         z__LList(<TagName>, <AdditionalMembers>) <Var>;
+     * typedef z__LList(<TagName>, <AdditionalMembers>) <newType>;  << Creates a typedef
      * Link list defination is complete;
      */
 
-    #define z__Link_create(zls, D...)\
+    #define z__LList_create(zls, D...)\
         {                                                   \
             (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
             (zls)->head->next = NULL;                       \
@@ -547,7 +547,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (zls)->tail = (zls)->head;                      \
         }
 
-    #define z__Link_popHead(zls)\
+    #define z__LList_popHead(zls)\
         {                                           \
             if((zls)->head != NULL) {               \
                 if(((zls)->head->prev != NULL)) {   \
@@ -557,7 +557,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
                 }                                       \
             }                                           \
         }
-    #define z__Link_popTail(zls)\
+    #define z__LList_popTail(zls)\
         {                                               \
             if ((zls)->tail) {                          \
                 if ((zls)->tail->next) {                \
@@ -568,17 +568,17 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             }                                           \
         }
 
-    #define z__Link_delete(zls)\
+    #define z__LList_delete(zls)\
         {                                   \
             while((zls)->head->prev != NULL)\
             {                               \
-                z__Link_popHead(zls);       \
+                z__LList_popHead(zls);       \
             }                               \
             z__FREE((zls)->head);           \
             (zls)->head = NULL;             \
         }
     
-    #define z__Link_pushHead(zls, D...)\
+    #define z__LList_pushHead(zls, D...)\
         {                                                                   \
             (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
             (zls)->head->next->prev = (zls)->head;                          \
@@ -587,7 +587,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             (zls)->head->data = D;                                          \
             (zls)->head->next = NULL;                                       \
         }
-    #define z__Link_pushTail(zls, D...)\
+    #define z__LList_pushTail(zls, D...)\
         {                                                                   \
             (zls)->tail->prev = z__MALLOC(sizeof( *(zls)->tail->prev ) );   \
             (zls)->tail->prev->next = (zls)->tail;                          \
@@ -598,7 +598,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         }
         
 
-    #define z__Link_inext(zls, n)\
+    #define z__LList_inext(zls, n)\
         {                                                               \
             for(int i = 0; i < n && (zls)->cursor->next != NULL; i++)   \
             {                                                           \
@@ -606,7 +606,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             }                                                           \
         }
 
-    #define z__Link_iprev(zls, n)\
+    #define z__LList_iprev(zls, n)\
         {                                                               \
             for(int i = 0; i < n && (zls)->cursor->prev != NULL; i++)   \
             {                                                           \
@@ -614,17 +614,17 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             }                                                           \
         }
 
-    #define z__Link_setCursorHead(zls)\
+    #define z__LList_setCursorHead(zls)\
         {                                           \
             (zls)->cursor = (zls)->head;            \
         }                                           
 
-    #define z__Link_setCursorTail(zls)\
+    #define z__LList_setCursorTail(zls)\
         {                                           \
             (zls)->cursor = (zls)->tail;            \
         }
 
-    #define z__Link_cursorDel_setPrev(zls)\
+    #define z__LList_cursorDel_setPrev(zls)\
         {                                                               \
             if ((zls)->cursor->prev != NULL)                            \
             {                                                           \
@@ -638,7 +638,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
                 (zls)->head->next = NULL;                               \
             }                                                           \
         }
-    #define z__Link_cursorDel_setNext(zls)\
+    #define z__LList_cursorDel_setNext(zls)\
         {                                                               \
             if ((zls)->cursor->next != NULL)                            \
             {                                                           \
@@ -652,7 +652,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
                 (zls)->head->next = NULL;                               \
             }                                                           \
         }
-    #define z__Link_cursorDel(zls)\
+    #define z__LList_cursorDel(zls)\
         {                                                           \
             if ((zls)->cursor->prev) {                              \
                  (zls)->cursor->prev->next = (zls)->cursor->next;   \
@@ -665,11 +665,12 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
         }
 
 
-    #define z__Link_getCursor(zls)         (zls.cursor)           // Get Cursor  
-    #define z__Link_getData(zls)           (zls.cursor->data)     // Get Data From Cursor
-    #define z__Link_getMember(zls, member) (zls.cursor->member)   // Get Member Data from Cursor
-    #define z__Link_getHead(zls)           (zls.head)             // Get Head
-    #define z__Link_getTail(zls)           (zls.tail)             // Get Tail
+    #define z__LList_getCursor(zls)         		(zls).cursor         		// Get Cursor  
+    #define z__LList_getCursorData(zls)           	(zls).cursor->data     		// Get Data From Cursor
+    #define z__LList_getCursorMember(zls, member) 	(zls).cursor->member   		// Get Member Data from Cursor
+    #define z__LList_getMember(zls, member) 		(zls).member   			    // Get Member Data from Cursor
+    #define z__LList_getHead(zls)           		(zls).head             		// Get Head
+    #define z__LList_getTail(zls)           		(zls).tail             		// Get Tail
 
 #endif
 
