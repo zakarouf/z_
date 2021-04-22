@@ -383,8 +383,8 @@ typedef size_t z__size;
 
 #define z__Arr_delete(arr)\
     {                           \
-        (arr)->len = -1;        \
-        (arr)->lenUsed = -1;    \
+        (arr)->len = 0;        \
+        (arr)->lenUsed = 0;    \
         free((arr)->data);      \
     }
 
@@ -463,10 +463,39 @@ typedef size_t z__size;
     (dest)->lenUsed = (j);                              \
 }
 
-#define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
-#define z__Arr_slice_3(arr, dest, from) z__Arr_slice_5(arr, dest, from, (arr).lenUsed, 1)
-#define z__Arr_slice_2(arr, dest) z__Arr_slice_5(arr, dest, 0, (arr).lenUsed, 1)
+/*
+ * #define z__Arr_slice_4(arr, dest, from, upto)\
+ * {\
+ *     if ((arr).lenUsed > (dest)->len) {                                                          \
+ *         z__Arr_resize(dest, (arr).lenUsed);                                                     \
+ *     }\
+ *     int _upto = (arr).lenUsed-upto;                                 \
+ *     memcpy(&(dest)->data, &(arr).data[from], _upto);                \
+ *     (dest)->lenUsed = (arr).lenUsed-upto;                           \
+ * }
+ */
+#define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_4(arr, dest, from, upto, 1)
+#define z__Arr_slice_3(arr, dest, from) z__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
+#define z__Arr_slice_2(arr, dest) z__Arr_slice_4(arr, dest, 0, (arr).lenUsed-1)
 #define z__Arr_slice(...) zpp__Args_Overload(z__Arr_slice_, __VA_ARGS__)
+
+
+#define z__Arr_sliceR_5(arr, dest, from, upto, step)\
+{                                                                                               \
+    if ((arr).lenUsed > (dest)->len) {                                                          \
+        z__Arr_resize(dest, (arr).lenUsed);                                                     \
+    }                                                                                           \
+    int j = 0, i = (arr).lenUsed-from, _upto = (((arr).lenUsed-from > 0)?(arr).lenUsed-from:0);   \
+    for (; i > _upto; i -= step, j++) {                                                         \
+        (dest)->data[j] = (arr).data[i];                                                        \
+    }                                                                                           \
+    (dest)->lenUsed = (j);                                                                      \
+}
+
+#define z__Arr_sliceR_4(arr, dest, from, upto) z__Arr_sliceR_5(arr, dest, from, upto, 1)
+#define z__Arr_sliceR_3(arr, dest, from) z__Arr_sliceR_4(arr, dest, from, (arr).lenUsed)
+#define z__Arr_sliceR_2(arr, dest) z__Arr_sliceR_4(arr, dest, 0, (arr).lenUsed)
+#define z__Arr_sliceR(...) zpp__Args_Overload(z__Arr_sliceR_, __VA_ARGS__)
 
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
