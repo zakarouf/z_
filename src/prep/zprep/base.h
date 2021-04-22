@@ -9,4 +9,7 @@
 #define zpp__CAT3(a, b, c)      zpp__PRIMITIVE_CAT3(a, b, c) 
 #define zpp__CAT4(a, b, c, d)   zpp__PRIMITIVE_CAT4(a, b, c, d) 
 
+
+#define zpp__V(...) (0zpp__V, __VA_ARGS__)
+
 #endif
