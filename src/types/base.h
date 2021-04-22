@@ -484,7 +484,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
 
     #define z__Arr_FN(T, vT)                            \
         typedef z__Arr(vT) T;                           \
-        Z__INLINE T z__Arr ## T ## _create(z__u32 len)  \
+        Z__INLINE T z__Arr_ ## T ## _create(z__u32 len)  \
         {                                               \
             return (T) {                                \
                 .data = malloc(sizeof (vT) * len),      \
@@ -493,7 +493,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
             };                                          \
         }                                               \
         \
-        Z__INLINE T z__Arr ## T ## _push(z__u32 len)
+        Z__INLINE T z__Arr_ ## T ## _push(z__u32 len)
         
 
 #endif
