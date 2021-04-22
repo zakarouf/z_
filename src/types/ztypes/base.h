@@ -4,9 +4,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "config.h"
+#include "../config.h"
 
-#include "../prep/zprep.h"
+#include "../../prep/zprep.h"
 
 #ifdef Z___TYPE_INCLUED_CGLM
     #include <cglm/cglm.h>

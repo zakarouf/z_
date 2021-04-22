@@ -3,8 +3,8 @@
 
 #define ZAKAROUF__ZTYPES_VERSION_MAJOR 2
 #define ZAKAROUF__ZTYPES_VERSION_MINOR 6
-#define ZAKAROUF__ZTYPES_VERSION_PATCH 1
+#define ZAKAROUF__ZTYPES_VERSION_PATCH 2
 
-#include "ztypes_ext.h"
+#include "ztypes/ztypes_ext.h"
 
 #endif

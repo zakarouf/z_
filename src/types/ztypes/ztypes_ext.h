@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_EXTENDED_H
 #define ZAKAROUF__ZTYPES_EXTENDED_H
 
-#include "config.h"
+#include "../config.h"
 
 #include "base.h"
 #ifdef Z___TYPE_CONFIG__USE_STRING
