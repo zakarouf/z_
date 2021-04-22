@@ -11,7 +11,7 @@
 
 #ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES
 	
-	#define z__typeof typeof
+	#define z__typeof __typeof__
 
 	#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
 
