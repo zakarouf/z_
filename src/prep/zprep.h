@@ -8,6 +8,6 @@
 
 #include "zprep/base.h"
 #include "zprep/var.h"
-#include "zprep/assert.h"
+#include "zprep/assert_comp.h"
 
 #endif
