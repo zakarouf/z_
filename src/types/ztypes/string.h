@@ -40,7 +40,7 @@ typedef struct
 
 int z_findCharInStr(z__String str, z__char c, int fromIndex);
 
-z__String z__String_create(int size);
+z__String z__String_new(int size);
 void z__String_delete(z__String * s);
 void z__String_resize(z__String *str, int newsize);
 void z__String_Copy(z__String *str, const z__String val);
@@ -48,10 +48,10 @@ z__String z__String_MakeCopy(const z__String str);
 z__String z__String_Link(const z__String str);
 void z__Strint_append(z__String *str, const z__char* src, int length);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
-z__String z__String_createFromFile(char filename[]);
+z__String z__String_newFromFile(char filename[]);
 
 
-z__StringLines z__StringLines_createEmpty(int x, int y);
+z__StringLines z__StringLines_new(int x, int y);
 void z__StringLines_delete(z__StringLines *strLines);
 void z__StringLines_Resize_Y (z__StringLines *ln , unsigned int newsize);
 void z__StringLines_Resize_X (z__StringLines *ln, unsigned int newsize);
@@ -60,7 +60,7 @@ z__StringLines z__String_spiltChar(z__String buffer, const char * breaker);
 void z__StringLines_pushString(z__StringLines *strLines, int len, const char *string);
 
 
-z__StringLinesArr z__StringLinesArr_createEmpty(int size, int x, int y);
+z__StringLinesArr z__StringLinesArr_new(int size, int x, int y);
 void z__StringLinesArr_delete(z__StringLinesArr *lns);
 void z__StringLinesArr_resize(z__StringLinesArr *lns, int newsize);
 

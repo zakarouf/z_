@@ -288,7 +288,7 @@ typedef size_t z__size;
 
     }z__Irrg;
 
-    z__Irrg z__Irrg_create(z__u32 len);
+    z__Irrg z__Irrg_new(z__u32 len);
     void z__Irrg_resize(z__Irrg *irgt, z__size newsize);
     void z__Irrg_push(z__Irrg *irgt, void *val, z__size size, z__u8 typeID, const char *comment, z__i32 commentLength);
     void z__Irrg_pop(z__Irrg *irgt);
@@ -319,8 +319,8 @@ typedef size_t z__size;
     }z__Dynt;
 
 
-    z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
-    z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID);
+    z__Dynt z__Dynt_new(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
+    z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID);
     void z__Dynt_delete(z__Dynt* arrt, z__bool nameFree);
     void z__Dynt_push( z__Dynt *arrt, void *val);
     void z__Dynt_pop( z__Dynt *arrt);
@@ -388,7 +388,7 @@ typedef size_t z__size;
         free((arr)->data);      \
     }
 
-#define z__Arr_create(arr, sz)\
+#define z__Arr_new(arr, sz)\
     {                                                   \
         (arr)->data = malloc(sizeof(*(arr)->data)*sz);  \
         (arr)->len = sz;                                \
@@ -460,20 +460,8 @@ typedef size_t z__size;
     for (; i < upto; i += step,j++) {                   \
         (dest)->data[j] = (arr).data[i];                \
     }                                                   \
-    (dest)->lenUsed = (j)+1;                              \
+    (dest)->lenUsed = (j)+1;                            \
 }
-
-/*
- * #define z__Arr_slice_4(arr, dest, from, upto)\
- * {\
- *     if ((arr).lenUsed > (dest)->len) {                                                          \
- *         z__Arr_resize(dest, (arr).lenUsed);                                                     \
- *     }\
- *     int _upto = (arr).lenUsed-upto;                                 \
- *     memcpy(&(dest)->data, &(arr).data[from], _upto);                \
- *     (dest)->lenUsed = (arr).lenUsed-upto;                           \
- * }
- */
 #define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
 #define z__Arr_slice_3(arr, dest, from) z__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
 #define z__Arr_slice_2(arr, dest) z__Arr_slice_4(arr, dest, 0, (arr).lenUsed-1)
@@ -543,21 +531,21 @@ typedef size_t z__size;
     #ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
         // Initialization
-        z__i8Arr z__i8Arr_create(z__u32 len);
-        z__i16Arr z__i16Arr_create(z__u32 len);
-        z__i32Arr z__i32Arr_create(z__u32 len);
-        z__i64Arr z__i64Arr_create(z__u32 len);
+        z__i8Arr z__i8Arr_new(z__u32 len);
+        z__i16Arr z__i16Arr_new(z__u32 len);
+        z__i32Arr z__i32Arr_new(z__u32 len);
+        z__i64Arr z__i64Arr_new(z__u32 len);
 
-        z__u8Arr z__u8Arr_create(z__u32 len);
-        z__u16Arr z__u16Arr_create(z__u32 len);
-        z__u32Arr z__u32Arr_create(z__u32 len);
-        z__u64Arr z__u64Arr_create(z__u32 len);
+        z__u8Arr z__u8Arr_new(z__u32 len);
+        z__u16Arr z__u16Arr_new(z__u32 len);
+        z__u32Arr z__u32Arr_new(z__u32 len);
+        z__u64Arr z__u64Arr_new(z__u32 len);
 
-        z__f64Arr z__f64Arr_create(z__u32 len);
+        z__f64Arr z__f64Arr_new(z__u32 len);
 
-        z__boolArr z__boolArr_create(z__u32 len);
+        z__boolArr z__boolArr_new(z__u32 len);
 
-        z__ptrArr z__ptrArr_create(z__u32 len);
+        z__ptrArr z__ptrArr_new(z__u32 len);
 
         // Adding Value At top
         void z__i8Arr_push( z__i8Arr *arr, z__i8 val);
@@ -624,7 +612,7 @@ typedef size_t z__size;
 
     #define z__Arr_FN(T, vT)                            \
         typedef z__Arr(vT) T;                           \
-        Z__INLINE T z__Arr_ ## T ## _create(z__u32 len)  \
+        Z__INLINE T z__Arr_ ## T ## _new(z__u32 len)  \
         {                                               \
             return (T) {                                \
                 .data = malloc(sizeof (vT) * len),      \
@@ -677,7 +665,7 @@ typedef size_t z__size;
      * Link list defination is complete;
      */
 
-    #define z__LList_create(zls, D...)\
+    #define z__LList_new(zls, D...)\
         {                                                   \
             (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
             (zls)->head->next = NULL;                       \

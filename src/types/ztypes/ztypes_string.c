@@ -43,7 +43,7 @@
 
     // Strings
 
-    z__String z__String_create(int size)
+    z__String z__String_new(int size)
     {
         return (z__String){
 
@@ -126,7 +126,7 @@
     }
 
     #include <stdio.h>
-    z__String z__String_createFromFile(char filename[])
+    z__String z__String_newFromFile(char filename[])
     {
         FILE *f;
 
@@ -165,7 +165,7 @@
         return -1;
     }
 
-    z__StringLines z__StringLines_createEmpty(int x, int y)
+    z__StringLines z__StringLines_new(int x, int y)
     {
         return (z__StringLines){
             .data = zse_calloc_2D_array_char(x, y),
@@ -183,7 +183,7 @@
 
     z__StringLines z__StringLines_MakeCopy(z__StringLines strLines)
     {
-        z__StringLines tmp = z__StringLines_createEmpty(strLines.sizeofString, strLines.lines);
+        z__StringLines tmp = z__StringLines_new(strLines.sizeofString, strLines.lines);
         for (int i = 0; i < tmp.lines; ++i)
         {
             memcpy(tmp.data[i], strLines.data[i], tmp.sizeofString);
@@ -238,7 +238,7 @@
 
         lastbuff = tmp.data;
 
-        z__StringLines returnVal = z__StringLines_createEmpty(128, ycount);
+        z__StringLines returnVal = z__StringLines_new(128, ycount);
 
         for (int i = 0; i < returnVal.lines && token != NULL; ++i)
         {
@@ -268,7 +268,7 @@
         strLines->linesUsed++;
     }
 
-    z__StringLinesArr z__StringLinesArr_createEmpty(int size, int x, int y)
+    z__StringLinesArr z__StringLinesArr_new(int size, int x, int y)
     {
         z__StringLinesArr lns = {
             .Sldata = calloc(sizeof(z__StringLines), size),
@@ -278,7 +278,7 @@
 
         for (int i = 0; i < lns.size; ++i)
         {
-            lns.Sldata[i] = z__StringLines_createEmpty(x, y);
+            lns.Sldata[i] = z__StringLines_new(x, y);
         }
 
         return lns;
@@ -310,7 +310,7 @@
             lns->size = newsize;
             for (int i = lns->size; i < newsize; ++i)
             {
-                lns->Sldata[i] = z__StringLines_createEmpty(lns->Sldata[0].sizeofString, lns->Sldata[0].lines);
+                lns->Sldata[i] = z__StringLines_new(lns->Sldata[0].sizeofString, lns->Sldata[0].lines);
             }
         }
     }

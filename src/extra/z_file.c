@@ -46,7 +46,7 @@ z__Dynt z__file__Dynt_readFile(const char filename[],const z__size subDiv,const 
 
     fseek(fp, 0, SEEK_SET);  /* same as rewind(f); */
 
-    z__Dynt Object = z__Dynt_create(subDiv, fsize/subDiv, comment, commentLen, 0);
+    z__Dynt Object = z__Dynt_new(subDiv, fsize/subDiv, comment, commentLen, 0);
     memset(Object.data, 0, fsize);
 
     fread(Object.data, 1, (fsize-1), fp);
@@ -71,7 +71,7 @@ z__StringLines z__file_getfnames(char path[])
     closedir(drip);
     drip = opendir(path);
 
-    z__StringLines fnames = z__StringLines_createEmpty(32, items);
+    z__StringLines fnames = z__StringLines_new(32, items);
 
     int i = 0;
     while((dp = readdir(drip)) != NULL)

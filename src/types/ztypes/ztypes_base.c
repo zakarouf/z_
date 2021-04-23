@@ -6,7 +6,7 @@
 #include "base.h"
 
 #ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
-    z__Irrg z__Irrg_create(z__u32 len)
+    z__Irrg z__Irrg_new(z__u32 len)
     {
         return (z__Irrg) {
             .data = malloc(sizeof(z__ptr*)*len),
@@ -113,7 +113,7 @@
 
 #ifdef Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
     
-    z__Dynt z__Dynt_create(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
+    z__Dynt z__Dynt_new(z__size size, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
     {
         z__Dynt arrt;
 
@@ -135,7 +135,7 @@
 
         return arrt;
     }
-    z__Dynt z__Dynt_createFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
+    z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
     {
         FILE *fp;
         if((fp = fopen(filepath, "rb")) == NULL)
@@ -234,7 +234,7 @@
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
     #ifdef Z___TYPE_CONFIG__USE_ARR_PREDEFINED_FUNCS
 
-        z__ptrArr z__ptrArr_create(z__u32 len)
+        z__ptrArr z__ptrArr_new(z__u32 len)
         {
             return (z__ptrArr) {
                 .data = malloc(sizeof (z__ptr) * len),
@@ -243,7 +243,7 @@
             };
         }
 
-        z__voidArr z__voidArr_create(size_t size)
+        z__voidArr z__voidArr_new(size_t size)
         {
             return (z__voidArr) {
                 .data = malloc(size),
@@ -252,7 +252,7 @@
             };
         }
 
-        z__i8Arr z__i8Arr_create(z__u32 len)
+        z__i8Arr z__i8Arr_new(z__u32 len)
         {
             return (z__i8Arr) {
                 .data = malloc(sizeof (z__i8) * len),
@@ -272,7 +272,7 @@
         }
 
 
-        z__i16Arr z__i16Arr_create(z__u32 len)
+        z__i16Arr z__i16Arr_new(z__u32 len)
         {
             return (z__i16Arr) {
                 .data = malloc(sizeof(z__i16) * len),
@@ -292,7 +292,7 @@
         }
 
 
-        z__i32Arr z__i32Arr_create(z__u32 len)
+        z__i32Arr z__i32Arr_new(z__u32 len)
         {
             return (z__i32Arr) {
                 .data = malloc(sizeof(z__i32) * len),
@@ -312,7 +312,7 @@
         }
 
 
-        z__i64Arr z__i64Arr_create(z__u32 len)
+        z__i64Arr z__i64Arr_new(z__u32 len)
         {
             return (z__i64Arr) {
                 .data = malloc(sizeof(z__i64) * len),
@@ -332,7 +332,7 @@
         }
 
 
-        z__u8Arr z__u8Arr_create(z__u32 len)
+        z__u8Arr z__u8Arr_new(z__u32 len)
         {
             return (z__u8Arr) {
                 .data = malloc(sizeof(z__u8) * len),
@@ -352,7 +352,7 @@
         }
 
 
-        z__u16Arr z__u16Arr_create(z__u32 len)
+        z__u16Arr z__u16Arr_new(z__u32 len)
         {
             return (z__u16Arr) {
                 .data = malloc(sizeof(z__u16) * len),
@@ -372,7 +372,7 @@
         }
 
 
-        z__u32Arr z__u32Arr_create(z__u32 len)
+        z__u32Arr z__u32Arr_new(z__u32 len)
         {
             return (z__u32Arr) {
                 .data = malloc(sizeof(z__u32) * len),
@@ -392,7 +392,7 @@
         }
 
 
-        z__u64Arr z__u64Arr_create(z__u32 len)
+        z__u64Arr z__u64Arr_new(z__u32 len)
         {
             return (z__u64Arr) {
                 .data = malloc(sizeof(z__u64) * len),
@@ -412,7 +412,7 @@
         }
 
 
-        z__f32Arr z__f32Arr_create(z__u32 len)
+        z__f32Arr z__f32Arr_new(z__u32 len)
         {
             return (z__f32Arr) {
                 .data = malloc(sizeof(z__f32) * len),
@@ -432,7 +432,7 @@
         }
 
 
-        z__f64Arr z__f64Arr_create(z__u32 len)
+        z__f64Arr z__f64Arr_new(z__u32 len)
         {
             return (z__f64Arr) {
                 .data = malloc(sizeof(z__f64) * len),
@@ -453,7 +453,7 @@
 
 
 
-        z__boolArr z__boolArr_create(z__u32 len)
+        z__boolArr z__boolArr_new(z__u32 len)
         {
             return (z__boolArr) {
                 .data = malloc(sizeof(z__bool) * len),
