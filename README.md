@@ -1,7 +1,9 @@
-# z_
-A Small System Module.
+<div align="center">
+  <img src="docs/imgs/ztypes_preview.png" width="600"/>
+  <h1>z_</h1>
 
-<center><img src="docs/imgs/ztypes_preview.png"></center>
+  Intuitive System Module with datatypes, memory tracker, and _more_.
+</div>
 
 ## What it does?
 ### Memory Tracker
