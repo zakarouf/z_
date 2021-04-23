@@ -486,7 +486,7 @@ typedef size_t z__size;
 #define z__Arr_sliceR(...) zpp__Args_Overload(z__Arr_sliceR_, __VA_ARGS__)
 
 
-#define z__Arr_map_4(arr, mapValFrom, mapValStep, operator)                             \
+#define z__Arr_map_4(arr, mapValStep, mapValFrom, operator)                             \
 {                                                                                       \
     z__typeof(*(arr)->data)z__Arr_map__TMP_DATA = mapValFrom;                           \
     for(int i = 0; i < (arr)->len; i++, z__Arr_map__TMP_DATA operator##= mapValStep)    \
@@ -495,8 +495,8 @@ typedef size_t z__size;
     }; (arr)->lenUsed = (arr)->len;                                                     \
 }
 
-#define z__Arr_map_3(arr, mapValFrom, mapValStep) z__Arr_map_4(arr, mapValFrom, mapValStep, +)
-#define z__Arr_map_2(arr, mapValFrom) z__Arr_map_4(arr, mapValFrom, 0, +)
+#define z__Arr_map_3(arr, mapValStep, mapValFrom) z__Arr_map_4(arr, mapValStep, mapValFrom, +)
+#define z__Arr_map_2(arr, mapValStep) z__Arr_map_4(arr, mapValStep, 0, +)
 #define z__Arr_map_1(arr) { memset((arr)->data, 0, (arr)->len * sizeof(*(arr)->data)); }
 #define z__Arr_map(...) zpp__Args_Overload(z__Arr_map_, __VA_ARGS__)
 
