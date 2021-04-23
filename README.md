@@ -1,6 +1,8 @@
 # z_
 A Small System Module.
 
+<center><img src="docs/imgs/ztypes_preview.png"></center>
+
 ## What it does?
 ### Memory Tracker
 A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
