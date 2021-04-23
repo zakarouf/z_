@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/imgs/ztypes_preview.png"/>
+  <img src="docs/imgs/ztypes_preview.png" width="400"/>
   <h1>z_</h1>
 
   Intuitive System Module with datatypes, memory tracker, and _more_.
