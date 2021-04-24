@@ -51,3 +51,76 @@
 			   "Distance:%d\n"\
 			   "Time:%d\n", total.x, total.y);
 	}
+
+
+
+/* Linked List */
+
+	z__Link(Integers, z__i32);
+
+
+	
+	z__Link(
+		Jist,			// <-- Tag Name
+		int,			// <-- Main Data Type
+		z__float dt;	// <-- Optional Members Start
+		z__i64 id       // There Can be More Than One!
+	);
+	
+
+	struct Buffer {
+		int member1;
+		/* More Members!!! ... */
+	};
+
+	z__Link(Tabs, struct Buffer);
+
+
+	/* Linked List Structure */
+	z__Link(Mats, z__Matrix4, z__Vector2 pos);
+
+	/* Creating a new handler */
+
+
+	z__LList(Mats, int total) matrices = {
+		.head = NULL,
+		.tail = NULL,
+		.cursor = NULL,
+		.total = 0
+	};
+
+
+
+	/*       ^         ^
+	 *	"Tag Name" "New Linked List"
+	 */
+
+	void t(){;
+
+
+		z__Matrix4 mat4 = {
+			1, 4, 6, 2,
+			5, 2, 5, 7,
+			1, 5, 4, 5
+		};
+
+		z__LList_new(&matrices, mat4);
+
+		
+
+		z__Matrix4 appr = {
+			25, 55, 26, 66,
+			02, 07, 20, 82,
+			52, 07, 24, 62
+		};
+
+
+
+
+
+		z__LList_popTail(&matrices);
+
+
+
+
+	}
