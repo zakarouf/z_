@@ -701,13 +701,13 @@ typedef size_t z__size;
         {                                   \
             while((zls)->head->prev != NULL)\
             {                               \
-                z__LList_popHead(zls);       \
+                z__LList_popHead(zls);      \
             }                               \
             z__FREE((zls)->head);           \
             (zls)->head = NULL;             \
         }
     
-    #define z__LList_pushHead(zls, D...)\
+    #define z__LList_pushHead(zls, D)\
         {                                                                   \
             (zls)->head->next = z__MALLOC(sizeof( *(zls)->head->next) );    \
             (zls)->head->next->prev = (zls)->head;                          \
@@ -716,7 +716,7 @@ typedef size_t z__size;
             (zls)->head->data = D;                                          \
             (zls)->head->next = NULL;                                       \
         }
-    #define z__LList_pushTail(zls, D...)\
+    #define z__LList_pushTail(zls, D)\
         {                                                                   \
             (zls)->tail->prev = z__MALLOC(sizeof( *(zls)->tail->prev ) );   \
             (zls)->tail->prev->next = (zls)->tail;                          \
@@ -751,6 +751,43 @@ typedef size_t z__size;
     #define z__LList_setCursorTail(zls)\
         {                                           \
             (zls)->cursor = (zls)->tail;            \
+        }
+    #define z__LList_setCursorNext(zls)\
+        {                                           \
+            if((zls)->cursor->next) {               \
+                (zls)->cursor = (zls)->cursor->next;\
+            }                                       \
+        }                                           
+
+    #define z__LList_setCursorPrev(zls)\
+        {                                           \
+            if((zls)->cursor->prev) {               \
+                (zls)->cursor = (zls)->cursor->prev;\
+            }                                       \
+        }
+
+    #define z__LList_pushCursor_next(zls, D)\
+        {                                                                       \
+            if((zls)->cursor) {                                                 \
+                (zls)->head->next = (zls)->cursor->next;                        \
+                (zls)->cursor->next = z__MALLOC(sizeof(*(zls)->cursor->next));  \
+                (zls)->cursor->next->data = D;                                  \
+                (zls)->cursor->next->prev = (zls)->cursor;                      \
+                (zls)->cursor->next->next = (zls)->head->next;                  \
+                (zls)->head->next->prev = (zls)->cursor->next;                  \
+                (zls)->head->next = NULL;                                       \
+            }                                                                   \
+        }
+    #define z__LList_pushCursor_prev(zls, D)\
+        {                                                                       \
+            if ((zls)->cursor) {                                                \
+                (zls)->head->next = (zls)->cursor->prev;                        \
+                (zls)->cursor->prev = z__MALLOC(sizeof(*(zls)->cursor->prev));  \
+                (zls)->cursor->prev->next = (zls)->cursor;                      \
+                (zls)->cursor->prev->prev = (zls)->head->next;                  \
+                (zls)->head->next->next = (zls)->cursor->prev;                  \
+                (zls)->head->next = NULL;                                       \
+            }                                                                   \
         }
 
     #define z__LList_cursorDel_setPrev(zls)\
