@@ -249,7 +249,8 @@ typedef size_t z__size;
             (dest).z = (a).z operator (b).z;        \
             (dest).w = (a).w operator (b).w;        \
         }
-
+        #define z__Vector3_dot(a,b) ((a.x * b.x)+(a.y * b.y)+(a.z * b.z))
+        
 
         #define z__Matrix2_A(a, b, operator, dest)\
         {                                                                                  \
