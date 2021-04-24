@@ -22,19 +22,19 @@ typedef z__Arr(int) myarrtype;
 myarrtype myvar; // We can also create a typedef for multiple usecase
 ```
 ### Pre-requisites
-* If `len` is -1 or 0, then that means Array is not initialized.
-* If `len` is -1 and `lenUsed` is > 0 then its presumed the z__Arr is soft copy; Linked with some other array.
+* If `len` is 0, then that means Array is not initialized.
+* If `len` is 0 and `lenUsed` is > 0 then its presumed the z__Arr is soft copy; Linked with some other array.
 
 ## Constructing an Array
 We have created our array but before we start using it, we have to initialize it first.
 ```c
 int space = 13;
-z__Arr_create(myvar, space);
+z__Arr_new(myvar, space);
 // @var: Variable name
 // @space: The amount of space to be initialized at start.
 ```
 
-That it now we can we our Array.
+Thats it, Now we can use we our Array.
 
 There are multiple ways to access and add or delete values from the array.
 Like the Direct Spartan way.
@@ -56,7 +56,7 @@ struct Point {int x, int y};
 struct Point p1 = {32 , 4};
 
 z__Arr(struct Point) Px;    // Defining a new Array.
-z__Arr_create(&Px, 8);      // Initializing the Array.
+z__Arr_new(&Px, 8);      // Initializing the Array.
 
 z__Arr_push(&Px, (struct Point){12, 32} );  // Pushing At Top index[0].
 z__Arr_push(&Px, p1);                       // Pushing At Top index[1].
@@ -75,6 +75,13 @@ leaving enough spaces determined by a threshold.
 Remember `z__Arr` is allocated on heap, so we have to manually delete the variable we have created.
 
 ```c
-z__Arr_delete(&Px); // Free up allocated memory and set len & lenUsed to -1.
+z__Arr_delete(&Px); // Free up allocated memory and set len & lenUsed to 0.
 ```
 This Cleans up your array.
+
+## Previews
+<div align="center">
+    <img src="../imgs/Arr_preview0.png">
+    <h2>Output</h2>
+    <img src="../imgs/Arr_preview0_op.png">
+</div>

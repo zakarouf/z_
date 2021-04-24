@@ -93,8 +93,8 @@ You can Also Create your own type using `z__Arr(T)`. See [Dispatching Types](# D
 Create a initializes Array of <type> and of size <len> and Returns it.
 >USAGE
  ```C
- z__<type>Arr z__<type>Arr_create(z__u32 <len>);
- z__i8Arr i8_array = z__i8Arr_create(32);
+ z__<type>Arr z__<type>Arr_new(z__u32 <len>);
+ z__i8Arr i8_array = z__i8Arr_new(32);
  ```
 
 Delete a `Arr` type 
@@ -127,7 +127,7 @@ To initialize a Dynamic Unknown Type Array `z__Dynt` is used.
 Create a initializes Array of <type> and of size <len> with a given Comment for the type and Returns it.
 >USAGE
  ```C
- z__Dynt_create(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
+ z__Dynt_new(z__type type, z__u32 len, const char *comment, z__i32 commentLength);
  
      typedef struct _objecttype
      {
@@ -136,7 +136,7 @@ Create a initializes Array of <type> and of size <len> with a given Comment for 
          z__Vector3 pos;
      }object;
  
-     z__Dynt object_box = z__Dynt_create(z__typeof(object), 32, "Object:Box", -1);
+     z__Dynt object_box = z__Dynt_new(z__typeof(object), 32, "Object:Box", -1);
  ```
 
 Delete a `Dynt` type and frees its comment if you dont want it be free set nameFree to False or 0.
@@ -182,7 +182,7 @@ Unlike `Dynt` where type and single value size of an the entire array if fixed, 
 To Create a Irregular Array type use `z__Irrg` typedef
 ```c
 z__Irrg newVar;               // Creating a new variable
-newVar = z__Irrg_create(10);  // Initializes type with empty space allocated
+newVar = z__Irrg_new(10);  // Initializes type with empty space allocated
 z__Irrg_delete(&newVar)       // Dealloctes All the conetents in holding
 
 ```
@@ -196,20 +196,20 @@ To Create Your own type just do
 ```c
 typedef z__Arr(/*YourType*/) newArray;
 newArray Var1, Var2;
-z__Arr_create(&Var1);
-z__Arr_create(&Var2);
+z__Arr_new(&Var1);
+z__Arr_new(&Var2);
 ```
 Or you can Create a one time array without declaring a whole new type
 ```c
 z__Arr(/*YourType*/) Var1, Var2;
-z__Arr_create(&Var1);
-z__Arr_create(&Var2);
+z__Arr_new(&Var1);
+z__Arr_new(&Var2);
 // No new type is created
 ```
 **Functions**
 `z__Arr(T)` Provides some generic funtions for Array Manipulation
 ```C
-z__Arr_create(arr);          // Create A new Array
+z__Arr_new(arr);          // Create A new Array
 z__Arr_delete(arr);          // Delete The Array
 z__Arr_push(arr, Val);       // Push a new Value at Top
 z__Arr_resize(arr, newsize); // Resize The Array
@@ -288,17 +288,17 @@ In ztypes the Linked Lists are comes with bare-bones template for type definatio
 #### Decleration
 First we have to create our data structure with `z__LinkStruct`
 ```c
-z__LinkStruct(
+z__Link(
 	  <tagName>
 	, <mainDataType>
 	, <optionalMembers>); // Creating a Link list compactible Structure 
 			      // with tag name given by the user
 
-z__Link(<tagName>, <optionalMembers>) varName; // Create The link list Variable
+z__LList(<tagName>, <optionalMembers>) varName; // Create The link list Variable
 ```
 Or we can use typedef to create a new type
 ```C
-typedef z__Link(<tagName>, <optionalMembers>) TypeName; // Create The link list Type
+typedef z__LList(<tagName>, <optionalMembers>) TypeName; // Create The link list Type
 TypeName newVar; // Creates A new Variable of type TypeName;
 ```
 There is Also a way to create a one use Variable for temporary use
@@ -309,20 +309,15 @@ z__LinkDef(<tagName>) varName; // Creates A new variable holding structure of Li
 #### Functions
 This Type also comes with its own set of fuctions for doing basic stuff
 ```C
- z__Link_create(<z__Link>);           // Initializes Linked List
- z__Link_delete(<z__Link>);           // Deletes Initialized List
+ z__Link_new(<z__LList>);           // Initializes Linked List
+ z__Link_delete(<z__LList>);           // Deletes Initialized List
 
- z__Link_pushHead(<z__Link>, <Data>); // Creates a new space for head pushes data, links with previous head
- z__Link_popHead(<z__Link>);          // Frees Head, sets previous link to head as new head;
+ z__Link_pushHead(<z__LList>, <Data>); // Creates a new space for head pushes data, links with previous head
+ z__Link_popHead(<z__LList>);          // Frees Head, sets previous link to head as new head;
 
- z__Link_iprev(<z__Link>, n);         // Go backwards in List (n) times, stops if at tail end.
- z__Link_inext(<z__Link>, n);         // Go forwards in List (n) times, stops if at head end.
+ z__Link_iprev(<z__LList>, n);         // Go backwards in List (n) times, stops if at tail end.
+ z__Link_inext(<z__LList>, n);         // Go forwards in List (n) times, stops if at head end.
 ```
-#### Link List in action
-![sample](imgs/samplepgrm.png)
-<br>*Will produce the following output.*
-![sample_out](imgs/output.png)
-
 ---
 ### Ending Note
 This library is not perfect and I know there are many others like it, but this one is mine.

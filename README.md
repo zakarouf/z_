@@ -5,12 +5,11 @@
   Intuitive System Module with datatypes, memory tracker, and _more_.
 </div>
 
-## What it does?
+## Contents
 ### Memory Tracker
 A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 
 ### Types
-It provides common data types, Array types, Vectors, Dynamic Arrays etc.
 
 - Primitive Types
 - String
@@ -31,8 +30,11 @@ It provides common data types, Array types, Vectors, Dynamic Arrays etc.
 
 _[See Overview](docs/overview.md)_
 
+### PreP
+For Metaprograming
+
 ### Multi Threading?
-Whilst Still in Process & Totally Optional. A multi thread implementation around pthread and OpenMP is on the to-do list.
+Whilst not yet avaliable. A multi thread implementation around pthread and OpenMP is on the to-do list.
 
 ## Getting Started, Only Types
 

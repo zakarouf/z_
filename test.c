@@ -136,9 +136,4 @@ void test_yo_wtf(void)
 	printf("%d:%d\n", y ,a);
 }
 
-int main(int argc, char const *argv[])
-{
 
-
-	return 0;
-}
