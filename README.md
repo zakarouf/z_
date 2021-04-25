@@ -11,11 +11,11 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 
 ### Types
 
-- Primitive Types
+- [Primitive Types](./docs/in-depth/primitive_types.md)
 - String
 - StringLines
 - StringLines Array
-- Dyanmic Array Types
+- [Dyanmic Array Types](./docs/in-depth/Arr.md)
   - Generic
   - Unknown Type
   - Unknown Object
@@ -26,7 +26,7 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
   - Struct
   - Array
 - Matrices
-- Linked List
+- [Linked List](./docs/in-depth/Linklist.md)
 
 _[See Overview](docs/overview.md)_
 

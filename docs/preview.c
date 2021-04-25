@@ -115,12 +115,30 @@
 		};
 
 
+	
+		/* Iterates twice towards next */
+		z__LList_inext(&matrices, 2);
+
+		
+		/* Iterates thrice towards prev */
+		z__LList_iprev(&matrices, 3);
+
+
+		
+		z__LList_setCursorHead(&matrices);
+
+		z__LList_setCursorTail(&matrices);
+
+		z__LList_setCursorNext(&matrices);
+
+		z__LList_setCursorPrev(&matrices);
 
 
 
-		z__LList_popTail(&matrices);
-
-
+	
+		
+		z__LList_pushCursor_next(&matrices, appr);
+		z__LList_pushCursor_prev(&matrices, appr);
 
 
 	}

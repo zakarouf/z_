@@ -29,7 +29,7 @@ In order to Create a new Linked List, we first have to create a 'Linked List Str
 </div>
 <br>
 
-There are **Three** main parameters that can be given to <font color='#6633333'> _**z__Link**_ </font> of which **one** is optional.
+There are **Three** main parameters that can be given to <font color='#6633333'> _**z__Link**_, </font> **one** of which is optional.
 
 * **Tag Name:** The name to identify that particular Linked List Structure. Similar to struct names or typedefs. <br>
     >  _Tag Names are only there to identify the Linked List and therefore can be used again as indentifies, though they can induce confusion._
@@ -38,7 +38,7 @@ There are **Three** main parameters that can be given to <font color='#6633333'>
 
 > These two are the mandatory Fields.
 
-* **Opetional Members:** This the Third _though not limited to_ Field.
+* **Optional Members:** This the Third _though not limited to_ Field.
 <br>
 <div align="center">
     <img src="../imgs/LinkedList/z__Link_2.png" width=450/>
@@ -53,10 +53,13 @@ The Third Field is a Vardic Argument and can be used to insert more members into
 In both previous we used integers as the main datatype but truely they can be of any type. Here some examples...
 <br>
 <div align="center">
-    <img src="../imgs/LinkedList/z__Link_3.png" width=450/>
+    <img src="../imgs/LinkedList/z__Link_3.png" width=500>
 </div>
+
+<br>
+
 <div align="center">
-    <img src="../imgs/LinkedList/z__Link_4.png" width=450/>
+    <img src="../imgs/LinkedList/z__Link_4.png" width=450>
 </div>
 <br>
 
@@ -68,7 +71,7 @@ Now, in-order to create a new Handler we use <font color='#6633333'> _**z__LList
 
 <br>
 <div align="center">
-    <img src="../imgs/LinkedList/z__Link_5.png" width=450/>
+    <img src="../imgs/LinkedList/z__Link_5.png" width=450>
 </div>
 <br>
 
@@ -80,7 +83,7 @@ The Handler by default consist of three members.
 
 <br>
 <div align="center">
-    <img src="../imgs/LinkedList/z__Link_6.png" width=360/>
+    <img src="../imgs/LinkedList/z__Link_6.png" width=360>
 </div>
 <br>
 
@@ -163,4 +166,28 @@ With this we have more control over our Linked list as it allows us to manipulat
 ### 1. Setting Up the Cursor
 At default Cursor points to initialized value of the Linked List (or NULL if Linked List is uninitialized).
 
+To iterate over the Linked List we have:
 
+* <font color='#339966'> _**z__LList_inext(zls, n)**_ </font>**:** Iterates towards next pointer.
+* <font color='#339966'> _**z__LList_iprev(zls, n)**_ </font>**:** Iterates towards previous pointer.
+
+<br>
+<div align="center">
+    <img src="../imgs/LinkedList/z__Link_15.png"/>
+    <br>
+    <h3>And</h3>
+</div>
+<br>
+<div align="center">
+    <img src="../imgs/LinkedList/z__Link_16.png"/>
+</div>
+<br>
+
+> Which are pretty self-elxplanatory.
+
+### 2. Insertion
+> Incomeplete.
+
+
+### 3. Deletion
+> Incomeplete.
