@@ -233,43 +233,43 @@ typedef size_t z__size;
         /* Basic Arithmatic */
         #define z__Vector2_A(a, b, operator, dest)  \
         {                                           \
-            (dest).x = (a).x operator (b).x;        \
-            (dest).y = (a).y operator (b).y;        \
+            (dest)->x = (a).x operator (b).x;        \
+            (dest)->y = (a).y operator (b).y;        \
         }
         #define z__Vector3_A(a, b, operator, dest)  \
         {                                           \
-            (dest).x = (a).x operator (b).x;        \
-            (dest).y = (a).y operator (b).y;        \
-            (dest).z = (a).z operator (b).z;        \
+            (dest)->x = (a).x operator (b).x;        \
+            (dest)->y = (a).y operator (b).y;        \
+            (dest)->z = (a).z operator (b).z;        \
         }
         #define z__Vector4_A(a, b, operator, dest)  \
         {                                           \
-            (dest).x = (a).x operator (b).x;        \
-            (dest).y = (a).y operator (b).y;        \
-            (dest).z = (a).z operator (b).z;        \
-            (dest).w = (a).w operator (b).w;        \
+            (dest)->x = (a).x operator (b).x;        \
+            (dest)->y = (a).y operator (b).y;        \
+            (dest)->z = (a).z operator (b).z;        \
+            (dest)->w = (a).w operator (b).w;        \
         }
-        #define z__Vector3_dot(a,b) ((a.x * b.x)+(a.y * b.y)+(a.z * b.z))
+        #define z__Vector3_dot(a,b) (((a).x * (b).x)+((a).y * (b).y)+((a).z * (b).z))
         
 
         #define z__Matrix2_A(a, b, operator, dest)\
         {                                                                                  \
-            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1;   \
-            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1;   \
+            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1;   \
+            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1;   \
         }
 
         #define z__Matrix3_A(a, b, operator, dest)\
         {                                                                                                                           \
-            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1; /**/ dest._0_2 = a._0_2 operator b._0_2;   \
-            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1; /**/ dest._1_2 = a._1_2 operator b._1_2;   \
-            dest._2_0 = a._2_0 operator b._2_0; /**/ dest._2_1 = a._2_1 operator b._2_1; /**/ dest._2_2 = a._2_2 operator b._2_2;   \
+            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1; /**/ (dest)->_0_2 = (a)._0_2 operator (b)._0_2;   \
+            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1; /**/ (dest)->_1_2 = (a)._1_2 operator (b)._1_2;   \
+            (dest)->_2_0 = (a)._2_0 operator (b)._2_0; /**/ (dest)->_2_1 = (a)._2_1 operator (b)._2_1; /**/ (dest)->_2_2 = (a)._2_2 operator (b)._2_2;   \
         }
         #define z__Matrix4_A(a, b, operator, dest)\
         {                                                                                                                                                                   \
-            dest._0_0 = a._0_0 operator b._0_0; /**/ dest._0_1 = a._0_1 operator b._0_1; /**/ dest._0_2 = a._0_2 operator b._0_2; /**/ dest._0_3 = a._0_3 operator b._0_3;  \
-            dest._1_0 = a._1_0 operator b._1_0; /**/ dest._1_1 = a._1_1 operator b._1_1; /**/ dest._1_2 = a._1_2 operator b._1_2; /**/ dest._1_3 = a._1_3 operator b._1_3;  \
-            dest._2_0 = a._2_0 operator b._2_0; /**/ dest._2_1 = a._2_1 operator b._2_1; /**/ dest._2_2 = a._2_2 operator b._2_2; /**/ dest._2_3 = a._2_3 operator b._2_3;  \
-            dest._3_0 = a._3_0 operator b._3_0; /**/ dest._3_1 = a._3_1 operator b._3_1; /**/ dest._3_2 = a._3_2 operator b._3_2; /**/ dest._3_3 = a._3_3 operator b._3_3;  \
+            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1; /**/ (dest)->_0_2 = (a)._0_2 operator (b)._0_2; /**/ (dest)->_0_3 = (a)._0_3 operator (b)._0_3;  \
+            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1; /**/ (dest)->_1_2 = (a)._1_2 operator (b)._1_2; /**/ (dest)->_1_3 = (a)._1_3 operator (b)._1_3;  \
+            (dest)->_2_0 = (a)._2_0 operator (b)._2_0; /**/ (dest)->_2_1 = (a)._2_1 operator (b)._2_1; /**/ (dest)->_2_2 = (a)._2_2 operator (b)._2_2; /**/ (dest)->_2_3 = (a)._2_3 operator (b)._2_3;  \
+            (dest)->_3_0 = (a)._3_0 operator (b)._3_0; /**/ (dest)->_3_1 = (a)._3_1 operator (b)._3_1; /**/ (dest)->_3_2 = (a)._3_2 operator (b)._3_2; /**/ (dest)->_3_3 = (a)._3_3 operator (b)._3_3;  \
         }
 
     #endif

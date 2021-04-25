@@ -28,7 +28,7 @@
 	{
 		Route total = {0, 0};
 		for (int i = 0; i < z__Arr_getLen(routes); i++) {
-			z__Vector2_A(z__Arr_getVal(routes, i), total, + , total);
+			z__Vector2_A(z__Arr_getVal(routes, i), total, + , &total);
 		}
 		return total;
 	}
