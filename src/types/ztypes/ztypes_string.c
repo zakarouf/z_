@@ -276,6 +276,51 @@
         return ln;
     }
 
+    z__StringLines z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len)
+    {
+        if (str_len == -1)
+        {
+            str_len = strlen(str);
+        }
+        if (mainStrLen == -1)
+        {
+            mainStrLen = strlen(mainStr);
+        }
+
+        char *tmp_mainStr = malloc(sizeof(*tmp_mainStr) * mainStrLen);
+        memcpy(tmp_mainStr, mainStr, mainStrLen);
+
+        char *strst = strnstr(tmp_mainStr, str, mainStrLen);
+
+        while(strst) {
+            memset(strst, 0, str_len);
+            strst += str_len;
+            strst = strstr(strst, str);
+        }
+
+        strst = tmp_mainStr;
+        z__StringLines ln = z__StringLines_new(8);
+
+        int i = 0, len = 0;
+        if (*strst)
+        {
+            i = strlen(strst);
+            z__StringLines_push(&ln, strst, i);
+            strst += i + str_len;
+        }
+
+        while(i <= mainStrLen) {
+
+            len = strnlen(strst, mainStrLen-i);
+            z__StringLines_push(&ln, strst, len);
+
+            i += len+str_len;
+            strst += len + str_len;
+        }
+
+        return ln;
+    }
+
     z__StringLinesArr z__StringLinesArr_new(int size, int x, int y)
     {
         z__StringLinesArr lns = {
