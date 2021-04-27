@@ -53,15 +53,6 @@
         return str2;
     }
 
-    z__String z__String_Link(const z__String str)
-    {
-        return (z__String) {
-            .data = str.data,
-            .size = str.size,
-            .used = str.used
-        };
-    }
-
     inline void z__Strint_append(z__String *str, const z__char *src, int length)
     {
         if (length > 0)
@@ -76,9 +67,17 @@
         }
     }
 
-    inline void z__String_write(z__String *s, const z__char *st)
+    inline void z__String_write(z__String *s, const z__char *st, int len)
     {
+        if (len == -1) {
+            len = strlen(st);
+        }
+        if (len > s->size) {
+            z__String_resize(s, len+1);
+        }
+
         memcpy(s->data, st, s->size);
+        s->used = len;
     }
 
     inline void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace)
@@ -117,17 +116,6 @@
         };
     }
        
-    
-    /* See if `Char` exist in a string */
-    int z_findCharInStr(z__String str, z__char c, int fromIndex)
-    {
-        for (int i = fromIndex; i < str.size; ++i)
-        {
-            if(str.data[i] == c)
-                return i;
-        }
-        return -1;
-    }
 
     z__StringLines z__StringLines_new(unsigned int base_lines_count)
     {
