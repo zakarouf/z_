@@ -1,47 +1,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "base.h"
 #include "string.h"
 
+
 #ifdef Z___TYPE_CONFIG__USE_STRING
-    // Malloc And Free 2d Char, Orginally were Part of Ztorg (https://github.com/zakarouf/ztorg)
-    // Now Moved to Common String
-    static z__char **zse_calloc_2D_array_char (unsigned int x, unsigned int y) {
-
-        z__char **arr = calloc(sizeof(z__char*), y);
-        for (int i = 0; i < y; ++i)
-        {
-            arr[i] = calloc(sizeof(z__char), x);
-        }
-
-        return arr;
-
-    }
-    static void zse_free2dchar(z__char **mem, int size)
-    {
-        for (int i = 0; i < size; ++i)
-        {
-            free(mem[i]);
-        }
-        free(mem);
-
-    }
-
-
-    static void *safe_realloc(void * data, size_t size)
-    {
-        void *tmpdata = realloc(data, size);
-        if (tmpdata != NULL)
-        {
-            if (tmpdata != data)
-            {
-                return tmpdata;
-            }
-        }
-        return data;
-    }
-
-    // Strings
 
     z__String z__String_new(int size)
     {
@@ -63,7 +27,7 @@
     inline void z__String_resize(z__String *str, int newsize)
     {
         str->size = newsize;
-        str->data = safe_realloc(str->data, newsize);
+        str->data = z__mem_safe_realloc(str->data, newsize);
     }
 
     void z__String_Copy(z__String *dest, const z__String val)
@@ -165,107 +129,163 @@
         return -1;
     }
 
-    z__StringLines z__StringLines_new(int x, int y)
+    z__StringLines z__StringLines_new(unsigned int base_lines_count)
     {
-        return (z__StringLines){
-            .data = zse_calloc_2D_array_char(x, y),
-            .sizeofString = x,
-            .lines = y,
+        z__StringLines ln = {
+            .data = calloc(base_lines_count, sizeof(*ln.data)),
+            .lines = base_lines_count,
             .linesUsed = 0
         };
-    }
-    void z__StringLines_delete(z__StringLines *strLines)
-    {
-        zse_free2dchar(strLines->data, strLines->lines);
-        strLines->sizeofString = 0;
-        strLines->lines = 0;
+        ln.sizeofString = calloc(base_lines_count, sizeof(*ln.sizeofString));
+
+        return ln;
     }
 
-    z__StringLines z__StringLines_MakeCopy(z__StringLines strLines)
+    void z__StringLines_delete(z__StringLines *ln)
     {
-        z__StringLines tmp = z__StringLines_new(strLines.sizeofString, strLines.lines);
-        for (int i = 0; i < tmp.lines; ++i)
+        for (int i = 0; i < ln->linesUsed; ++i)
         {
-            memcpy(tmp.data[i], strLines.data[i], tmp.sizeofString);
+            free(ln->data[i]);
         }
-        return tmp;
+        free(ln->data);
+        free(ln->sizeofString);
+
+        ln->lines = 0;
+        ln->linesUsed = 0;
     }
 
-    void z__StringLines_Resize_Y (z__StringLines *ln , unsigned int newsize)
+    void z__StringLines_pushString(z__StringLines *ln ,z__String str)
     {
-        if (ln->lines > newsize)
-        {
-            for (int i = newsize; i < ln->lines; ++i)
-            {
-                free(ln->data[i]);
-            }
-            ln->data = safe_realloc(ln->data, sizeof(z__char*)*newsize);
-            
-        }
-        else if (ln->lines < newsize)
-        {
-            ln->data = safe_realloc(ln->data, newsize);
-            for (int i = ln->lines; i < newsize; ++i)
-            {
-                ln->data[i] = calloc(sizeof(z__char), ln->sizeofString);
-            }
+        if(ln->linesUsed >= ln->lines) {
+            ln->lines += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
         }
 
-        ln->lines = newsize;
+        ln->data[ln->linesUsed] = calloc(str.used+1, sizeof(**ln->data));
+        memcpy(ln->data[ln->linesUsed], str.data, str.used * sizeof(*str.data));
+        ln->sizeofString[ln->linesUsed] = str.used;
+        ln->linesUsed += 1;
     }
-    void z__StringLines_Resize_X (z__StringLines *ln, unsigned int newsize)
+
+    void z__StringLines_push(z__StringLines *ln , char const * st, int len)
     {
-        for (int i = 0; i < ln->lines; ++i)
-        {
-            ln->data[i] = reallocf(ln->data[i], sizeof(z__char) * newsize);
+        if(ln->linesUsed >= ln->lines) {
+            ln->lines += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
+            ln->sizeofString = z__mem_safe_realloc(ln->sizeofString, sizeof(*ln->sizeofString) *ln->lines);
         }
 
-        ln->sizeofString = newsize;   
+        if (len == -1) {
+            len = strlen(st);
+        }
+
+        ln->data[ln->linesUsed] = calloc(len, sizeof(**ln->data));
+        memcpy(ln->data[ln->linesUsed], st, len * sizeof(*st));
+        ln->sizeofString[ln->linesUsed] = len;
+        ln->linesUsed += 1;
     }
 
-    z__StringLines z__String_spiltChar (z__String buffer, const char *restrict breaker)
+    void z__StringLines_pop(z__StringLines *ln)
     {
-        z__String tmp = z__String_MakeCopy(buffer);
+        free(ln->data[ln->linesUsed-1]);
+        ln->linesUsed -= 1;
+        /*
+        if (ln->lines - ln->linesUsed >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+        {
+            ln->lines -= Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
+            ln->sizeofString = z__mem_safe_realloc(ln->sizeofString, sizeof(*ln->sizeofString) *ln->lines);
+        }
+        */
+    }
+
+    z__StringLines z__StringLines_newFrom(z__StringLines const *ln)
+    {
+        z__StringLines newln = {
+            .lines = ln->lines,
+            .linesUsed = ln->linesUsed
+        };
+
+        newln.sizeofString = malloc(sizeof(*newln.sizeofString) * newln.lines);
+        memcpy(newln.sizeofString, ln->sizeofString, sizeof(*newln.sizeofString)*newln.lines);
+
+        newln.data = malloc(sizeof(*newln.data) * newln.lines);
+
+        for (int i = 0; i < newln.linesUsed; ++i) {
+            newln.data[i] = malloc(sizeof(**newln.data) * newln.sizeofString[i]);
+            memcpy(newln.data[i], ln->data[i], newln.sizeofString[i]);
+        }
+
+        return newln;
+    }
+
+    z__StringLines z__String_splitTok(z__String str, char const *restrict seperator)
+    {
+        z__String tmp = z__String_MakeCopy(str);
         char *lastbuff = tmp.data;
-        char *token = strtok_r(lastbuff, breaker, &lastbuff);
+        char *token = strtok_r(lastbuff, seperator, &lastbuff);
 
-        int ycount = 0;
-        while(token != NULL)
-        {
-            ycount += 1;
-            token = strtok_r(lastbuff, breaker, &lastbuff);
-        }
+        /*Count*/
+        int linesCount = 0;
+        while(token) {
 
-        lastbuff = tmp.data;
-
-        z__StringLines returnVal = z__StringLines_new(128, ycount);
-
-        for (int i = 0; i < returnVal.lines && token != NULL; ++i)
-        {
-            strcpy(returnVal.data[i], token);
-            token = strtok_r(lastbuff, breaker, &lastbuff);
+            linesCount += 1;
+            token = strtok_r(lastbuff, seperator, &lastbuff);
         }
 
         z__String_delete(&tmp);
+        tmp = z__String_MakeCopy(str);
 
-        return returnVal;
+        lastbuff = tmp.data;
+        token = strtok_r(lastbuff, seperator, &lastbuff);
 
+        z__StringLines ln = z__StringLines_new(linesCount);
+
+        while(token) {
+            z__StringLines_push(&ln, token, -1);
+            token = strtok_r(lastbuff, seperator, &lastbuff);
+        }
+
+        return ln;
     }
 
-    void z__StringLines_pushString(z__StringLines *strLines, int len, const z__char *string)
+    z__StringLines z__String_splitTok_raw(char const *restrict stri, int len, char const *restrict seperator)
     {
-        if (strLines->lines <= strLines->linesUsed )
+        if (len == -1)
         {
-            z__StringLines_Resize_Y(strLines, strLines->linesUsed+8);
+            len = strlen(stri);
         }
-        int linesUsed = strLines->linesUsed;
+        
+        char *tmp_stri = malloc(len * sizeof(*tmp_stri));
+        memcpy(tmp_stri, stri, len);
 
-        if (len >= strLines->sizeofString)
-        {
-            z__StringLines_Resize_X(strLines, len+8);
-        }    
-        memcpy(strLines->data[linesUsed], string, len);
-        strLines->linesUsed++;
+        char *lastbuff = tmp_stri;
+        char *token = strtok_r(lastbuff, seperator, &lastbuff);
+
+        /*Count*/
+        int linesCount = 0;
+        while(token) {
+
+            linesCount += 1;
+            token = strtok_r(lastbuff, seperator, &lastbuff);
+        }
+
+        free(tmp_stri);
+        tmp_stri = malloc(len * sizeof(*tmp_stri));
+        memcpy(tmp_stri, stri, len);
+
+        lastbuff = tmp_stri;
+
+        token = strtok_r(lastbuff, seperator, &lastbuff);
+
+        z__StringLines ln = z__StringLines_new(linesCount);
+
+        while(token) {
+            z__StringLines_push(&ln, token, -1);
+            token = strtok_r(lastbuff, seperator, &lastbuff);
+        }
+
+        return ln;
     }
 
     z__StringLinesArr z__StringLinesArr_new(int size, int x, int y)
@@ -278,7 +298,7 @@
 
         for (int i = 0; i < lns.size; ++i)
         {
-            lns.Sldata[i] = z__StringLines_new(x, y);
+            lns.Sldata[i] = z__StringLines_new(x);
         }
 
         return lns;
@@ -290,6 +310,8 @@
         {
             z__StringLines_delete(&lns->Sldata[i]);
         }
+        free(lns->Sldata);
+        lns->Sldata = NULL;
         lns->size = 0;
     }
 
@@ -301,16 +323,16 @@
             {
                 z__StringLines_delete(&lns->Sldata[i]);
             }
-            lns->Sldata = safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
+            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
             lns->size = newsize;
         }
         else if (newsize > lns->size)
         {
-            lns->Sldata = safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
+            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
             lns->size = newsize;
             for (int i = lns->size; i < newsize; ++i)
             {
-                lns->Sldata[i] = z__StringLines_new(lns->Sldata[0].sizeofString, lns->Sldata[0].lines);
+                lns->Sldata[i] = z__StringLines_new(lns->Sldata[0].lines);
             }
         }
     }

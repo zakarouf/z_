@@ -25,6 +25,7 @@
 
 /* General */
 #define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
+#define Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT 8
 
 
 /* CGLM LIBRARY for graphics maths */

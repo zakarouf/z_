@@ -71,13 +71,11 @@ z__StringLines z__file_getfnames(char path[])
     closedir(drip);
     drip = opendir(path);
 
-    z__StringLines fnames = z__StringLines_new(32, items);
+    z__StringLines fnames = z__StringLines_new(32);
 
-    int i = 0;
     while((dp = readdir(drip)) != NULL)
     {
-        sprintf(fnames.data[i], "%s", dp->d_name);
-        i++;
+        z__StringLines_push(&fnames, dp->d_name, dp->d_namlen);
     }
     closedir(drip);
 

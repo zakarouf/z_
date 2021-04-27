@@ -3,18 +3,18 @@
 
 #ifdef Z___TYPE_CONFIG__USE_MEM
 
-void *z__mem_safe_realloc(void * data, size_t size)
-{
-    void *tmpdata = realloc(data, size);
-    if (tmpdata != NULL)
-    {
-        if (tmpdata != data)
-        {
-            return tmpdata;
-        }
-    }
-    return data;
-}
+	void *z__mem_safe_realloc(void * data, size_t size)
+	{
+	    void *tmpdata = realloc(data, size);
+	    if (tmpdata != NULL)
+	    {
+	        if (tmpdata != data)
+	        {
+	            return tmpdata;
+	        }
+	    }
+	    return data;
+	}
 
 	#ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 		/* TODO: Create Unique Sorting & Accesing Algorithm For Storing All tracked memory*/
