@@ -19,7 +19,7 @@
     	const z__typeof(((T *)0)->M) * __mptr = (ptr); \
     	(T *)((char *)__mptr - offsetof(T, M)); })
 
-	#define z__type_isequal(val, T) __builtin_types_compatible_p(typeof(val), T)
+	#define z__type_isequal(val, T) __builtin_types_compatible_p(z__typeof(val), T)
 	#define z__type_issame(T1, T2) 	__builtin_types_compatible_p(T, T)
 
 	#ifdef Z___TYPE_CONFIG__USE_TYPE_IDENTIFIER
@@ -76,7 +76,7 @@
 			__builtin_choose_expr(z__type_isequal(T, z__mat4), 40, \
 			__builtin_choose_expr(sizeof(T) == 1, 19, \
 			__builtin_choose_expr(sizeof(T) == 2, 1, \
-			(0)  )))))))))))))))))))))))))))))))))))))) // wtf? just no
+			(0)  )))))))))))))))))))))))))))))))))))))))))) // wtf? just no
 
 			
 
