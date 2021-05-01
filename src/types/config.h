@@ -29,8 +29,8 @@
 
 
 /* CGLM LIBRARY for graphics maths */
-#define Z___TYPE_INCLUED_CGLM
-	#define Z___TYPE_USE_CGLM_FOR_TYPES
+//#define Z___TYPE_INCLUED_CGLM
+	//#define Z___TYPE_USE_CGLM_FOR_TYPES
 
 /* Used String Type */
 #define Z___TYPE_CONFIG__USE_STRING
