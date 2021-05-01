@@ -170,20 +170,20 @@ typedef size_t z__size;
     #ifdef Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR_AND_MATRIX
 
         /* New type declarator, Vector */
+        #define z__VectorSt(T, ...)\
+            struct {\
+                T __VA_ARGS__;\
+            }
         #define z__Vector(T, ...)\
             union {                                 \
                 T raw[zpp__Args_Count(__VA_ARGS__)];\
-                struct {                            \
-                    T __VA_ARGS__;                  \
-                };                                  \
+                z__VectorSt(T, __VA_ARGS__);        \
             }
-        #define z__Matrix(T, x, y, ...)\
-            union {                     \
-                T raw[y][x];            \
-                T col[y][x];            \
-                struct {                \
-                    T __VA_ARGS__;      \
-                };                      \
+        #define z__Matrix(T, x, y, ...)         \
+            union {                             \
+                T raw[y][x];                    \
+                T col[y][x];                    \
+                z__VectorSt(T, __VA_ARGS__);    \
             }
 
         #ifdef Z___TYPE_USE_CGLM_FOR_TYPES
@@ -213,6 +213,15 @@ typedef size_t z__size;
                 typedef z__Vector(__vecDefType, x, y, g) z__Vector2;
                 typedef z__Vector(__vecDefType, x, y, z) z__Vector3;
                 typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
+                typedef union {
+                    z__vec4 raw;
+                    z__VectorSt(z__f32, x, y, z, w);
+                    struct {
+                        z__vec3 real;
+                        z__f32  imag;
+                    };
+                } z__Versor;
+
             #undef __vecDefType
 
             typedef z__Matrix(z__f32, 2, 2
