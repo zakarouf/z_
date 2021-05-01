@@ -177,6 +177,14 @@ typedef size_t z__size;
                 };                                  \
                 T raw[zpp__Args_Count(__VA_ARGS__)];\
             }
+        #define z__Matrix(T, x, y, ...)\
+            union {                     \
+                T raw[y][x];            \
+                T col[y][x];            \
+                struct {                \
+                    T __VA_ARGS__;      \
+                };                      \
+            }
 
         #ifdef Z___TYPE_USE_CGLM_FOR_TYPES
 
@@ -207,16 +215,16 @@ typedef size_t z__size;
                 typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
             #undef __vecDefType
 
-            typedef z__Vector(z__f32
+            typedef z__Matrix(z__f32, 2, 2
                 , m00, m01
                 , m10, m11 ) z__Matrix2;
 
-            typedef z__Vector(z__f32
+            typedef z__Matrix(z__f32, 3, 3
                 , m00, m01, m02
                 , m10, m11, m12
                 , m20, m21, m22 ) z__Matrix3;
 
-            typedef z__Vector(z__f32
+            typedef z__Matrix(z__f32, 4, 4
                 , m00, m01, m02, m03
                 , m10, m11, m12, m13
                 , m20, m21, m22, m23
@@ -243,16 +251,16 @@ typedef size_t z__size;
         #undef __vecDefType
 
         // Integer
-        typedef z__Vector(z__i32
+        typedef z__Matrix(z__i32, 2, 2
             , m00, m01
             , m10, m11 ) z__Mint2;
 
-        typedef z__Vector(z__i32
+        typedef z__Matrix(z__i32, 3, 3
             , m00, m01, m02
             , m10, m11, m12
             , m20, m21, m22 ) z__Mint3;
 
-        typedef z__Vector(z__i32
+        typedef z__Matrix(z__i32, 4, 4
             , m00, m01, m02, m03
             , m10, m11, m12, m13
             , m20, m21, m22, m23
