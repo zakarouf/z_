@@ -172,10 +172,10 @@ typedef size_t z__size;
         /* New type declarator, Vector */
         #define z__Vector(T, ...)\
             union {                                 \
+                T raw[zpp__Args_Count(__VA_ARGS__)];\
                 struct {                            \
                     T __VA_ARGS__;                  \
                 };                                  \
-                T raw[zpp__Args_Count(__VA_ARGS__)];\
             }
         #define z__Matrix(T, x, y, ...)\
             union {                     \
