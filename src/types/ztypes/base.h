@@ -115,13 +115,13 @@ typedef size_t z__size;
 #ifdef Z___TYPE_CONFIG__USE_GMATHTYPE
 
     // CGLM PRE_REQUSITE GOES HERE...
-    #ifdef Z___TYPE_USE_CGLM
+    #ifdef Z___TYPE_USE_CGLM_FOR_TYPES
         
     #endif
 
     #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR_AND_MATRIX
         /* |x, y, z, w| -> w is the last */
-        #ifdef Z___TYPE_INCLUED_CGLM
+        #ifdef Z___TYPE_USE_CGLM_FOR_TYPES
 
 
             typedef z__int                  z__ivec2[2];
