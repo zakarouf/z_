@@ -171,9 +171,11 @@ typedef size_t z__size;
 
         /* New type declarator, Vector */
         #define z__Vector(T, ...)\
-            struct              \
-            {                   \
-                T __VA_ARGS__;  \
+            union {                                 \
+                struct {                            \
+                    T __VA_ARGS__;                  \
+                };                                  \
+                T raw[zpp__Args_Count(__VA_ARGS__)];\
             }
 
         #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
