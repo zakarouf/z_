@@ -178,17 +178,55 @@ typedef size_t z__size;
                 T raw[zpp__Args_Count(__VA_ARGS__)];\
             }
 
-        #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
-            #define __vecDefType z__f64
+        #ifdef Z___TYPE_USE_CGLM_FOR_TYPES
+
+            #include <cglm/struct.h>
+
+            typedef vec2s z__Vector2;
+            typedef vec3s z__Vector3;
+            typedef vec4s z__Vector4;
+
+            typedef ivec3s z__Vint3;
+
+            typedef versors z__Versor;
+
+            typedef mat2s z__Matrix2;
+            typedef mat3s z__Matrix3;
+            typedef mat4s z__Matrix4;
+
         #else
-            #define __vecDefType z__f32
+
+            #ifdef Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
+                #define __vecDefType z__f64
+            #else
+                #define __vecDefType z__f32
+            #endif
+
+                typedef z__Vector(__vecDefType, x, y, g) z__Vector2;
+                typedef z__Vector(__vecDefType, x, y, z) z__Vector3;
+                typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
+            #undef __vecDefType
+
+            typedef z__Vector(z__f32
+                , m00, m01
+                , m10, m11 ) z__Matrix2;
+
+            typedef z__Vector(z__f32
+                , m00, m01, m02
+                , m10, m11, m12
+                , m20, m21, m22 ) z__Matrix3;
+
+            typedef z__Vector(z__f32
+                , m00, m01, m02, m03
+                , m10, m11, m12, m13
+                , m20, m21, m22, m23
+                , m30, m31, m32, m33 ) z__Matrix4;
+
         #endif
 
-            typedef z__Vector(__vecDefType, x, y) z__Vector2;
-            typedef z__Vector(__vecDefType, x, y, z) z__Vector3;
-            typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
-        #undef __vecDefType
 
+        // Integer Vector Struct and Integer Matrix Struct are not
+        // present in cglm (except Vint3).
         #ifdef Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
             #define __vecDefType z__i64
         #else
@@ -196,82 +234,72 @@ typedef size_t z__size;
         #endif
 
             typedef z__Vector(__vecDefType, x, y) z__Vint2;
-            typedef z__Vector(__vecDefType, x, y, z) z__Vint3;
             typedef z__Vector(__vecDefType, x, y, z, w) z__Vint4;
+
+            #ifndef Z___TYPE_USE_CGLM_FOR_TYPES
+                typedef z__Vector(__vecDefType, x, y, z) z__Vint3;
+            #endif
+
         #undef __vecDefType
-
-
-        typedef z__Vector(z__f32
-            , _0_0, _0_1
-            , _1_0, _1_1 ) z__Matrix2;
-
-        typedef z__Vector(z__f32
-            , _0_0, _0_1, _0_2
-            , _1_0, _1_1, _1_2
-            , _2_0, _2_1, _2_2 ) z__Matrix3;
-
-        typedef z__Vector(z__f32
-            , _0_0, _0_1, _0_2, _0_3
-            , _1_0, _1_1, _1_2, _1_3
-            , _2_0, _2_1, _2_2, _2_3
-            , _3_0, _3_1, _3_2, _3_3 ) z__Matrix4;
 
         // Integer
         typedef z__Vector(z__i32
-            , _0_0, _0_1
-            , _1_0, _1_1 ) z__Mint2;
+            , m00, m01
+            , m10, m11 ) z__Mint2;
 
         typedef z__Vector(z__i32
-            , _0_0, _0_1, _0_2
-            , _1_0, _1_1, _1_2
-            , _2_0, _2_1, _2_2 ) z__Mint3;
+            , m00, m01, m02
+            , m10, m11, m12
+            , m20, m21, m22 ) z__Mint3;
 
         typedef z__Vector(z__i32
-            , _0_0, _0_1, _0_2, _0_3
-            , _1_0, _1_1, _1_2, _1_3
-            , _2_0, _2_1, _2_2, _2_3
-            , _3_0, _3_1, _3_2, _3_3 ) z__Mint4;
+            , m00, m01, m02, m03
+            , m10, m11, m12, m13
+            , m20, m21, m22, m23
+            , m30, m31, m32, m33 ) z__Mint4;
 
-        /* Basic Arithmatic */
+
+        /* Basic Arithmatic Operations For Vectors And Matrix
+         **/
         #define z__Vector2_A(a, b, operator, dest)  \
         {                                           \
-            (dest)->x = (a).x operator (b).x;        \
-            (dest)->y = (a).y operator (b).y;        \
+            (dest)->raw[0] = (a).raw[0] operator (b).raw[0];        \
+            (dest)->raw[1] = (a).raw[1] operator (b).raw[1];        \
         }
         #define z__Vector3_A(a, b, operator, dest)  \
         {                                           \
-            (dest)->x = (a).x operator (b).x;        \
-            (dest)->y = (a).y operator (b).y;        \
-            (dest)->z = (a).z operator (b).z;        \
+            (dest)->raw[0] = (a).raw[0] operator (b).raw[0];        \
+            (dest)->raw[1] = (a).raw[1] operator (b).raw[1];        \
+            (dest)->raw[2] = (a).raw[2] operator (b).raw[2];        \
         }
         #define z__Vector4_A(a, b, operator, dest)  \
         {                                           \
-            (dest)->x = (a).x operator (b).x;        \
-            (dest)->y = (a).y operator (b).y;        \
-            (dest)->z = (a).z operator (b).z;        \
-            (dest)->w = (a).w operator (b).w;        \
+            (dest)->raw[0] = (a).raw[0] operator (b).raw[0];        \
+            (dest)->raw[1] = (a).raw[1] operator (b).raw[1];        \
+            (dest)->raw[2] = (a).raw[2] operator (b).raw[2];        \
+            (dest)->raw[3] = (a).raw[3] operator (b).raw[3];        \
         }
         #define z__Vector3_dot(a,b) (((a).x * (b).x)+((a).y * (b).y)+((a).z * (b).z))
         
 
         #define z__Matrix2_A(a, b, operator, dest)\
         {                                                                                  \
-            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1;   \
-            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1;   \
+            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01;   \
+            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11;   \
         }
 
         #define z__Matrix3_A(a, b, operator, dest)\
         {                                                                                                                           \
-            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1; /**/ (dest)->_0_2 = (a)._0_2 operator (b)._0_2;   \
-            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1; /**/ (dest)->_1_2 = (a)._1_2 operator (b)._1_2;   \
-            (dest)->_2_0 = (a)._2_0 operator (b)._2_0; /**/ (dest)->_2_1 = (a)._2_1 operator (b)._2_1; /**/ (dest)->_2_2 = (a)._2_2 operator (b)._2_2;   \
+            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01; /**/ (dest)->m02 = (a).m02 operator (b).m02;   \
+            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11; /**/ (dest)->m12 = (a).m12 operator (b).m12;   \
+            (dest)->m20 = (a).m20 operator (b).m20; /**/ (dest)->m21 = (a).m21 operator (b).m21; /**/ (dest)->m22 = (a).m22 operator (b).m22;   \
         }
         #define z__Matrix4_A(a, b, operator, dest)\
         {                                                                                                                                                                   \
-            (dest)->_0_0 = (a)._0_0 operator (b)._0_0; /**/ (dest)->_0_1 = (a)._0_1 operator (b)._0_1; /**/ (dest)->_0_2 = (a)._0_2 operator (b)._0_2; /**/ (dest)->_0_3 = (a)._0_3 operator (b)._0_3;  \
-            (dest)->_1_0 = (a)._1_0 operator (b)._1_0; /**/ (dest)->_1_1 = (a)._1_1 operator (b)._1_1; /**/ (dest)->_1_2 = (a)._1_2 operator (b)._1_2; /**/ (dest)->_1_3 = (a)._1_3 operator (b)._1_3;  \
-            (dest)->_2_0 = (a)._2_0 operator (b)._2_0; /**/ (dest)->_2_1 = (a)._2_1 operator (b)._2_1; /**/ (dest)->_2_2 = (a)._2_2 operator (b)._2_2; /**/ (dest)->_2_3 = (a)._2_3 operator (b)._2_3;  \
-            (dest)->_3_0 = (a)._3_0 operator (b)._3_0; /**/ (dest)->_3_1 = (a)._3_1 operator (b)._3_1; /**/ (dest)->_3_2 = (a)._3_2 operator (b)._3_2; /**/ (dest)->_3_3 = (a)._3_3 operator (b)._3_3;  \
+            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01; /**/ (dest)->m02 = (a).m02 operator (b).m02; /**/ (dest)->m03 = (a).m03 operator (b).m03;  \
+            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11; /**/ (dest)->m12 = (a).m12 operator (b).m12; /**/ (dest)->m13 = (a).m13 operator (b).m13;  \
+            (dest)->m20 = (a).m20 operator (b).m20; /**/ (dest)->m21 = (a).m21 operator (b).m21; /**/ (dest)->m22 = (a).m22 operator (b).m22; /**/ (dest)->m23 = (a).m23 operator (b).m23;  \
+            (dest)->m30 = (a).m30 operator (b).m30; /**/ (dest)->m31 = (a).m31 operator (b).m31; /**/ (dest)->m32 = (a).m32 operator (b).m32; /**/ (dest)->m33 = (a).m33 operator (b).m33;  \
         }
 
     #endif

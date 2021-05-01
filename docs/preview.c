@@ -19,14 +19,14 @@
 		z__Arr_new(&routes, 8); // Initializing w/ 8 space.
 		for (int i = 0; i <	12; i++) {
 			z__Arr_push(&routes, (Route){
-							random()&127, random()&63
+							.x = random()&127, .y = random()&63
 						});
 		}
 	}
 
 	Route getTotal(void)
 	{
-		Route total = {0, 0};
+		Route total = {.x = 0, .y = 0};
 		for (int i = 0; i < z__Arr_getLen(routes); i++) {
 			z__Vector2_A(z__Arr_getVal(routes, i), total, + , &total);
 		}

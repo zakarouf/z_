@@ -14,7 +14,7 @@ onlyTakePatternEnd = [".c"]
 CC="gcc"
 ERRFLAGS = ["-Wall"]
 CFLAGS=["-std=c99", "-ffunction-sections", "-fdata-sections", "-fopenmp", "-Os", "-O2"] + ERRFLAGS
-LDFLAGS=["-lm", "-Wl,-rpath", "-Wl,/usr/local/lib", "-fopenmp"]
+LDFLAGS=["-lm", "-Wl,-rpath", "-Wl,/usr/local/lib", "-I/usr/local/include","-fopenmp"]
 OUTEXE="build/test"
 
 
