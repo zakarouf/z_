@@ -291,23 +291,23 @@ typedef size_t z__size;
         
 
         #define z__Matrix2_A(a, b, operator, dest)\
-        {                                                                                  \
-            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01;   \
-            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11;   \
+        {                                                                                                                               \
+            (dest)->raw[0][0] = (a).raw[0][0] operator (b).raw[0][0]; /**/ (dest)->raw[0][1] = (a).raw[0][1] operator (b).raw[0][1];    \
+            (dest)->raw[1][0] = (a).raw[1][0] operator (b).raw[1][0]; /**/ (dest)->raw[1][1] = (a).raw[1][1] operator (b).raw[1][1];    \
         }
 
         #define z__Matrix3_A(a, b, operator, dest)\
-        {                                                                                                                           \
-            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01; /**/ (dest)->m02 = (a).m02 operator (b).m02;   \
-            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11; /**/ (dest)->m12 = (a).m12 operator (b).m12;   \
-            (dest)->m20 = (a).m20 operator (b).m20; /**/ (dest)->m21 = (a).m21 operator (b).m21; /**/ (dest)->m22 = (a).m22 operator (b).m22;   \
+        {                                                                                                                                                                                           \
+            (dest)->raw[0][0] = (a).raw[0][0] operator (b).raw[0][0]; /**/ (dest)->raw[0][1] = (a).raw[0][1] operator (b).raw[0][1]; /**/ (dest)->raw[0][2] = (a).raw[0][2] operator (b).raw[0][2]; \
+            (dest)->raw[1][0] = (a).raw[1][0] operator (b).raw[1][0]; /**/ (dest)->raw[1][1] = (a).raw[1][1] operator (b).raw[1][1]; /**/ (dest)->raw[1][2] = (a).raw[1][2] operator (b).raw[1][2]; \
+            (dest)->raw[2][0] = (a).raw[2][0] operator (b).raw[2][0]; /**/ (dest)->raw[2][1] = (a).raw[2][1] operator (b).raw[2][1]; /**/ (dest)->raw[2][2] = (a).raw[2][2] operator (b).raw[2][2]; \
         }
         #define z__Matrix4_A(a, b, operator, dest)\
-        {                                                                                                                                                                   \
-            (dest)->m00 = (a).m00 operator (b).m00; /**/ (dest)->m01 = (a).m01 operator (b).m01; /**/ (dest)->m02 = (a).m02 operator (b).m02; /**/ (dest)->m03 = (a).m03 operator (b).m03;  \
-            (dest)->m10 = (a).m10 operator (b).m10; /**/ (dest)->m11 = (a).m11 operator (b).m11; /**/ (dest)->m12 = (a).m12 operator (b).m12; /**/ (dest)->m13 = (a).m13 operator (b).m13;  \
-            (dest)->m20 = (a).m20 operator (b).m20; /**/ (dest)->m21 = (a).m21 operator (b).m21; /**/ (dest)->m22 = (a).m22 operator (b).m22; /**/ (dest)->m23 = (a).m23 operator (b).m23;  \
-            (dest)->m30 = (a).m30 operator (b).m30; /**/ (dest)->m31 = (a).m31 operator (b).m31; /**/ (dest)->m32 = (a).m32 operator (b).m32; /**/ (dest)->m33 = (a).m33 operator (b).m33;  \
+        {                                                                                                                                                                                                                                                           \
+            (dest)->raw[0][0] = (a).raw[0][0] operator (b).raw[0][0]; /**/ (dest)->raw[0][1] = (a).raw[0][1] operator (b).raw[0][1];  /**/ (dest)->raw[0][2] = (a).raw[0][2] operator (b).raw[0][2]; /**/ (dest)->raw[0][3] = (a).raw[0][3] operator (b).raw[0][3]; \
+            (dest)->raw[1][0] = (a).raw[1][0] operator (b).raw[1][0]; /**/ (dest)->raw[1][1] = (a).raw[1][1] operator (b).raw[1][1];  /**/ (dest)->raw[1][2] = (a).raw[1][2] operator (b).raw[1][2]; /**/ (dest)->raw[1][3] = (a).raw[1][3] operator (b).raw[1][3]; \
+            (dest)->raw[2][0] = (a).raw[2][0] operator (b).raw[2][0]; /**/ (dest)->raw[2][1] = (a).raw[2][1] operator (b).raw[2][1];  /**/ (dest)->raw[2][2] = (a).raw[2][2] operator (b).raw[2][2]; /**/ (dest)->raw[2][3] = (a).raw[2][3] operator (b).raw[2][3]; \
+            (dest)->raw[3][0] = (a).raw[3][0] operator (b).raw[3][0]; /**/ (dest)->raw[3][1] = (a).raw[3][1] operator (b).raw[3][1];  /**/ (dest)->raw[3][2] = (a).raw[3][2] operator (b).raw[3][2]; /**/ (dest)->raw[3][3] = (a).raw[3][3] operator (b).raw[3][3]; \
         }
 
     #endif
