@@ -12,7 +12,7 @@
 #include "../types/ztypes/arr.h"
 #include "../types/ztypes/mem.h"
 
-z__i8Arr z__file__readFile(char filename[])
+z__i8Arr z__file__readFile(char const  filename[])
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -35,7 +35,7 @@ z__i8Arr z__file__readFile(char filename[])
     };
 }
 
-z__Dynt z__file__Dynt_readFile(const char filename[],const z__size subDiv,const char *comment, const z__i32 commentLen)
+z__Dynt z__file__Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -60,7 +60,7 @@ z__Dynt z__file__Dynt_readFile(const char filename[],const z__size subDiv,const 
 
 }
 
-z__StringLines z__file_getfnames(char path[])
+z__StringLines z__file_getfnames(char const path[])
 {
     DIR * drip = opendir(path);
     if(drip == NULL) return (z__StringLines){0};

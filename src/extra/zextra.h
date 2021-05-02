@@ -4,9 +4,9 @@
 #include "../types/ztypes.h"
 
 /* File */
-z__i8Arr z__file__readFile(char filename[]);
-z__Dynt z__file__Dynt_readFile(const char filename[],const z__size subDiv,const char *comment, const z__i32 commentLen);
-z__StringLines z__file_getfnames(char path[]);
+z__i8Arr z__file__readFile(char const filename[]);
+z__Dynt z__file__Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen);
+z__StringLines z__file_getfnames(char const path[]);
 
 /* System */
 long z__sys_getRamUsage(void);
@@ -22,6 +22,6 @@ Z__INLINE int z__sswitch(int i)
 }
 
 /* Log */
-void z__log_basic(void * fileStream ,const char * restrict format, ...);
+void z__log_basic(void * fileStream ,const char *format, ...);
 
 #endif

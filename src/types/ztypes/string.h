@@ -71,8 +71,8 @@ void z__StringLines_pushString(z__StringLines *ln ,z__String str);
 void z__StringLines_push(z__StringLines *ln , char const * st, int len);
 void z__StringLines_pop(z__StringLines *ln);
 
-z__StringLines z__String_splitTok(z__String str, char const *restrict seperator);
-z__StringLines z__String_splitTok_raw(char const *restrict stri, int len, char const *restrict seperator);
+z__StringLines z__String_splitTok(z__String str, char const * seperator);
+z__StringLines z__String_splitTok_raw(char const * stri, int len, char const * seperator);
 z__StringLines z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
 
 
