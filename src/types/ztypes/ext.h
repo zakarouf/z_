@@ -2,11 +2,7 @@
 #define ZAKAROUF__ZTYPES_EXTENDED_H
 
 #include "../config.h"
-
-#include "base.h"
-#ifdef Z___TYPE_CONFIG__USE_STRING
-	#include "string.h"
-#endif
+#include "ztypes.h"
 
 
 #ifdef Z___TYPES_CONFIG__USE_EXTENDED_FEATURES

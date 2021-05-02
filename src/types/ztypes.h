@@ -1,10 +1,10 @@
-#ifndef ZAKAROUF__ZTYPES_H
-#define ZAKAROUF__ZTYPES_H
+#ifndef ZAKAROUF__Z__TYPES_H
+#define ZAKAROUF__Z__TYPES_H
 
-#define ZAKAROUF__ZTYPES_VERSION_MAJOR 3
-#define ZAKAROUF__ZTYPES_VERSION_MINOR 3
-#define ZAKAROUF__ZTYPES_VERSION_PATCH 0
+#define ZAKAROUF__Z__TYPES_VERSION_MAJOR 3
+#define ZAKAROUF__Z__TYPES_VERSION_MINOR 3
+#define ZAKAROUF__Z__TYPES_VERSION_PATCH 0
 
-#include "ztypes/ztypes_ext.h"
+#include "ztypes/ext.h"
 
 #endif

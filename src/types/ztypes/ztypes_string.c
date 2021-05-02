@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "base.h"
+#include "mem.h"
 #include "string.h"
 
 

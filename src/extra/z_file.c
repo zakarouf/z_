@@ -8,6 +8,9 @@
 
 #include "../types/ztypes/string.h"
 #include "../types/ztypes/base.h"
+#include "../types/ztypes/dynt.h"
+#include "../types/ztypes/arr.h"
+#include "../types/ztypes/mem.h"
 
 z__i8Arr z__file__readFile(char filename[])
 {
