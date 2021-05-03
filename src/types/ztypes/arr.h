@@ -61,6 +61,7 @@
         (arr)->len = sz;                                \
         (arr)->lenUsed = 0;                             \
     }
+
 #define z__Arr_push(arr, val...)\
     {                                                                                           \
         if ((arr)->lenUsed >= (arr)->len)                                                       \
@@ -71,6 +72,7 @@
         (arr)->data[(arr)->lenUsed] = val;                                                      \
         (arr)->lenUsed += 1;                                                                    \
     }
+
 #define z__Arr_pushMC(arr, val...)\
     {                                                                                           \
         if ((arr)->lenUsed >= (arr)->len)                                                       \
@@ -81,16 +83,19 @@
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                      \
         (arr)->lenUsed += 1;                                                                    \
     }
-#define z__Arr_pushN(arr, val...)\
+
+#define z__Arr_push_nocheck(arr, val...)\
     {                                           \
         (arr)->data[(arr)->lenUsed] = val;      \
         (arr)->lenUsed += 1;                    \
     }
-#define z__Arr_pushNMC(arr, val...)\
+
+#define z__Arr_push_nocheckMC(arr, val...)\
     {                                                                       \
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));  \
         (arr)->lenUsed += 1;                                                \
     }
+
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
         if ((arr)->lenUsed > newSize)                                               \
@@ -100,6 +105,7 @@
         (arr)->data = z__REALLOC_SAFE((arr)->data, newSize * sizeof(*(arr)->data)); \
         (arr)->len = newSize;                                                       \
     }
+
 #define z__Arr_pop(arr)\
     {                                                                               \
         (arr)->lenUsed -= 1;                                                        \
@@ -108,6 +114,12 @@
             z__Arr_resize(arr, (arr)->len - Z___TYPE_REALLOC_RESIZE_BY_DEFAULT);    \
         }                                                                           \
     }
+
+#define z__Arr_pop_nocheck(arr)\
+    {                                                                               \
+        (arr)->lenUsed -= 1;                                                        \                                                                          \
+    }
+
 #define z__Arr_join(dest, from)\
     {                                                                                                   \
         z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);   \
@@ -129,6 +141,7 @@
     }                                                   \
     (dest)->lenUsed = (j)+1;                            \
 }
+
 #define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
 #define z__Arr_slice_3(arr, dest, from) z__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
 #define z__Arr_slice_2(arr, dest) z__Arr_slice_4(arr, dest, 0, (arr).lenUsed-1)
