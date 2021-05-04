@@ -41,7 +41,7 @@ syn keyword cType z__Matrix2 z__Matrix3 z__Matrix4
 syn keyword cType z__Mint2 z__Mint3 z__Mint4
 
 syn keyword cStructure z__Vector z__Arr z__Martix z__VectorSt
-syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI
+syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI z__ArrSxT
 syn keyword cStructure z__Link z__LList z__LinkDef
 
 syn keyword cOperator z__typeof z__sizeof z__typeID

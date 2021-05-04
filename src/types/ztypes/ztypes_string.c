@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
-#include "base.h"
 #include "mem.h"
 #include "string.h"
 
@@ -89,7 +89,44 @@
         memcpy(&dest[dest->used], src->data, src->used);
     }
 
-    #include <stdio.h>
+    void z__String_pushChar(z__String *dest, z__char ch)
+    {
+        if(dest->size <= dest->used) {
+            z__String_resize(dest, dest->size + 8);
+        }
+
+        dest->data[dest->used] = ch;
+        dest->used += 1;
+    }
+
+    void z__String_insertChar(z__String *dest, z__char ch, z__i32 pos)
+    {
+        if(pos >= dest->used && pos < 0) {
+            return;
+        }
+        
+        if (dest->size <= dest->used) {
+            z__String_resize(dest, dest->size +8);
+        }
+
+        z__char
+            tmpchar = dest->data[pos],
+            *buff = &dest->data[dest->used];
+        dest->data[pos] = ch;
+        dest->data[dest->used + 1] = 0;
+
+        int splen = dest->used - pos;
+
+        for (int i = 0; i < splen; i++) {
+            *buff = *(buff-1);
+            buff--;
+        }
+        dest->data[pos +1] = tmpchar;
+
+        dest->used += 1;
+    }
+
+    
     z__String z__String_newFromFile(char filename[])
     {
         FILE *f;
