@@ -62,7 +62,7 @@ void z__Strint_append(z__String *str, const z__char* src, int length);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
 z__String z__String_newFromFile(char filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
-
+void z__String_delChar(z__String *dest, int pos);
 
 z__StringLines z__StringLines_new(unsigned int base_lines_count);
 void z__StringLines_delete(z__StringLines *strLines);

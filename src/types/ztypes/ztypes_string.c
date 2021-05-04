@@ -126,6 +126,31 @@
         dest->used += 1;
     }
 
+    void z__String_delChar(z__String *dest, z__i32 pos)
+    {
+        if(pos >= dest->used && pos < 0) {
+            return;
+        }
+
+        int splen = dest->used - pos;
+        z__char *buff = &dest->data[pos];
+
+        for (int i = 0; i < splen; ++i)
+        {
+            *buff = *(buff+1);
+            buff++;
+        }
+        dest->used -= 1;
+    }
+
+    void z__String_replaceChar(z__String *dest, z__char ch, z__i32 pos)
+    {
+        if(pos >= dest->used && pos < 0) {
+            return;
+        }
+        dest->data[pos] = ch;
+    }
+
     
     z__String z__String_newFromFile(char filename[])
     {
