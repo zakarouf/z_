@@ -239,6 +239,26 @@
 #define z__Arr_map(...) zpp__Args_Overload(z__Arr_map_, __VA_ARGS__)
 
 
+/* foreach loop variant for Arr 
+ * Example: z__Arr_foreach(int *i, arr){
+ *              printf("%d\n", *i);
+ *          }
+ */
+#define z__Arr_foreach_5(item, arr, from, upto, step)\
+    for(  int _z_Arr_foreach_var_iterator = from   \
+        , _z_Arr_foreach_var_iterator_keep = 1     \
+            ; _z_Arr_foreach_var_iterator < upto   \
+            ; _z_Arr_foreach_var_iterator += step, _z_Arr_foreach_var_iterator_keep ^= 1) \
+        for(item = &z__Arr_getVal(arr, _z_Arr_foreach_var_iterator)\
+            ; _z_Arr_foreach_var_iterator_keep \
+            ; _z_Arr_foreach_var_iterator_keep ^= 1)\
+
+#define z__Arr_foreach_4(item, arr, from, upto) z__Arr_foreach_5(item, arr, from, upto, 1)
+#define z__Arr_foreach_3(item, arr, from) z__Arr_foreach_5(item, arr, from, arr.lenUsed, 1)
+#define z__Arr_foreach_2(item, arr) z__Arr_foreach_5(item, arr, 0, arr.lenUsed, 1)
+#define z__Arr_foreach(...) zpp__Args_Overload(z__Arr_foreach_, __VA_ARGS__)
+
+
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 	
 	#include "base.h"
