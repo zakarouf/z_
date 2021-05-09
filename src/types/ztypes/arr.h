@@ -5,6 +5,8 @@
 #include "mem.h"
 
 /* Known Type-safe arrays */
+
+//-------------------- Fixed-size Array ---------------------//
 #define z__ArrFx(T, sz, N) T N[sz]
 
 #define z__ArrSxDef(T, sz, tagName)\
@@ -24,7 +26,7 @@
 #define z__ArrSxI(T, sz, N)\
     z__SxArrDef(T, sz, N) N = {.len = sz, .lenUsed = 0}
 
-#define z__ArrSx_push(arr)\
+#define z__ArrSx_push(arr, val...)\
     {                                           \
         if((arr)->lenUsed < (arr->len))         \
         {                                       \
@@ -40,12 +42,20 @@
         };                      \
     }
 
+//-------------------- Dynamic Array ---------------------//
 #define z__Arr(T)\
     struct              \
     {                   \
         T* data;        \
         z__i32 len;     \
         z__i32 lenUsed; \
+    }
+
+#define z__Arr_new(arr, sz)\
+    {                                                   \
+        (arr)->data = malloc(sizeof(*(arr)->data)*sz);  \
+        (arr)->len = sz;                                \
+        (arr)->lenUsed = 0;                             \
     }
 
 #define z__Arr_delete(arr)\
@@ -55,11 +65,14 @@
         free((arr)->data);      \
     }
 
-#define z__Arr_new(arr, sz)\
-    {                                                   \
-        (arr)->data = malloc(sizeof(*(arr)->data)*sz);  \
-        (arr)->len = sz;                                \
-        (arr)->lenUsed = 0;                             \
+#define z__Arr_resize(arr, newSize)\
+    {                                                                               \
+        if ((arr)->lenUsed > newSize)                                               \
+        {                                                                           \
+           ( arr)->lenUsed = newSize;                                               \
+        }                                                                           \
+        (arr)->data = z__REALLOC_SAFE((arr)->data, newSize * sizeof(*(arr)->data)); \
+        (arr)->len = newSize;                                                       \
     }
 
 #define z__Arr_push(arr, val...)\
@@ -94,16 +107,6 @@
     {                                                                       \
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));  \
         (arr)->lenUsed += 1;                                                \
-    }
-
-#define z__Arr_resize(arr, newSize)\
-    {                                                                               \
-        if ((arr)->lenUsed > newSize)                                               \
-        {                                                                           \
-           ( arr)->lenUsed = newSize;                                               \
-        }                                                                           \
-        (arr)->data = z__REALLOC_SAFE((arr)->data, newSize * sizeof(*(arr)->data)); \
-        (arr)->len = newSize;                                                       \
     }
 
 #define z__Arr_pop(arr)\
@@ -314,7 +317,40 @@
 #define z__Arr_getData(arr)         arr.data
 #define z__Arr_getVal(arr, index)   arr.data[index]
 #define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
-#define z__Arr_getTopMT(arr)        arr.data[arr.lenUsed]
+#define z__Arr_getTopEmpty(arr)     arr.data[arr.lenUsed]
 
+
+#ifdef Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
+
+    //#define z__ArrSx$(SDeftag, N)           z__ArrSx(SDeftag, N)
+    //#define z__ArrSxDef$(T, sz, tagName)    z__ArrSxDef(T, sz, tagName)
+    #define z__ArrSx_push$(arr, val...)         z__ArrSx_push(arr, __VA_ARGS__)
+    #define z__ArrSx_pop$(arr)                  z__ArrSx_pop(arr)
+
+
+    #define z__Arr_new$(arr, sz)                z__Arr_new(arr, sz)
+    #define z__Arr_delete$(arr)                 z__Arr_delete(arr)
+    #define z__Arr_resize$(arr, newSize)        z__Arr_resize(arr, newSize)    
+    
+    #define z__Arr_push$(arr, ...)              z__Arr_push(arr, __VA_ARGS__)
+    #define z__Arr_push_nocheck$(arr, ...)      z__Arr_push_nocheck(arr, __VA_ARGS__)
+    #define z__Arr_push_nocheckMC$(arr, ...)    z__Arr_push_nocheckMC(arr, __VA_ARGS__)
+
+    #define z__Arr_pop$(arr)                    z__Arr_pop(arr)
+    #define z__Arr_pop_nocheck$(arr)            z__Arr_pop_nocheck(arr)
+
+    #define z__Arr_join$(dest, from)            z__Arr_join(dest, from)
+    #define z__Arr_map$(...)                    z__Arr_map(__VA_ARGS__)
+    #define z__Arr_slice$(...)                  z__Arr_slice(__VA_ARGS__)
+    #define z__Arr_sliceR$(...)                 z__Arr_sliceR(__VA_ARGS__)
+
+    #define z__Arr_getLen$(arr)                 z__Arr_getLen(arr)
+    #define z__Arr_getUsed$(arr)                z__Arr_getUsed(arr)
+    #define z__Arr_getData$(arr)                z__Arr_getData(arr)
+    #define z__Arr_getVal$(arr, index)          z__Arr_getVal(arr, index)
+    #define z__Arr_getTop$(arr)                 z__Arr_getTop(arr)
+    #define z__Arr_getTopEmpty$(arr)            z__Arr_getTopEmpty(arr)
+
+#endif
 
 #endif
