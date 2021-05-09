@@ -24,7 +24,7 @@
     T N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
 
 #define z__ArrSxI(T, sz, N)\
-    z__SxArrDef(T, sz, N) N = {.len = sz, .lenUsed = 0}
+    z__ArrSxDef(T, sz, N) N = {.len = sz, .lenUsed = 0}; N
 
 #define z__ArrSx_push(arr, val...)\
     {                                           \
@@ -64,6 +64,50 @@
         (arr)->lenUsed = 0;    \
         free((arr)->data);      \
     }
+
+#define z__Arr_init(arr_T, ...)\
+    ({                                                                                  \
+        arr_T temp_arr;                      \
+        z__Arr_new(&temp_arr, zpp__Args_Count(__VA_ARGS__));                            \
+        z__typeof(temp_arr.data) itr = temp_arr.data;                                   \
+        z__typeof(itr) testa = (z__typeof(*testa)[]){__VA_ARGS__};                      \
+        memcpy(itr, testa, sizeof(*itr) * zpp__Args_Count(__VA_ARGS__));                \
+        temp_arr.lenUsed = temp_arr.len;                                                \
+        temp_arr;                                                                       \
+    })
+
+#define z__Arr_newFromPtr(arr, src, srclen)\
+    {                                                           \
+        z__Arr_new(arr, srclen);                                \
+        z__typeof((arr)->data) src_in = src;                    \
+        memcpy((arr)->data, src_in, sizeof(*src_in) * srclen);  \
+        (arr)->lenUsed = srclen;                                \
+    }
+
+#define z__Arr_newCopy(arr, arr_src)\
+    {                                                                       \
+        z__Arr_new(arr, arr_src.len);                                       \
+        z__typeof(arr->data) src_in = arr_src.data;                         \
+        memcpy((arr)->data, src_in, sizeof(*src_in) * arr_src.len);         \
+        (arr)->lenUsed = arr_src.lenUsed;                                      \
+    }
+
+#define z__Arr_clone(arr)\
+    ({                                                                  \
+        z__typeof(arr) temp_arr;                                        \
+        z__Arr_new(&temp_arr, arr.len);                                 \
+        memcpy(temp_arr.data, arr.data, sizeof(*arr.data) * arr.len);   \
+        temp_arr.lenUsed = arr.lenUsed;                                 \
+        temp_arr;                                                       \
+    })
+
+#define z__Arr_cloneFromPtr(arr_T, src, srclen)\
+    ({                                              \
+        arr_T temp_arr;                             \
+        z__Arr_newFromPtr(&temp_arr, src, srclen);  \
+        temp_arr;                                   \
+    })
+
 
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
@@ -343,6 +387,12 @@
     #define z__Arr_map$(...)                    z__Arr_map(__VA_ARGS__)
     #define z__Arr_slice$(...)                  z__Arr_slice(__VA_ARGS__)
     #define z__Arr_sliceR$(...)                 z__Arr_sliceR(__VA_ARGS__)
+
+    #define z__Arr_init$(arr_T, ...)            z__Arr_init(arr_T, __VA_ARGS__)
+    #define z__Arr_newFromPtr$(arr, src, sl)    z__Arr_newFromPtr(arr, src, sl)
+    #define z__Arr_newCopy$(arr, arr_src)       z__Arr_newCopy(arr, arr_src)
+    #define z__Arr_clone$(arr)                  z__Arr_clone(arr)
+    #define z__Arr_cloneFromPtr$(arr_T, src, sl)z__Arr_cloneFromPtr(arr_T, src, sl)
 
     #define z__Arr_getLen$(arr)                 z__Arr_getLen(arr)
     #define z__Arr_getUsed$(arr)                z__Arr_getUsed(arr)
