@@ -3,7 +3,7 @@
 
 #include "../config.h"
 #include "base.h"
-#include "../../prep/zprep.h"
+#include "../../prep/prep.h"
 
 #ifdef Z___TYPE_INCLUED_CGLM
     #include "cglm.h"
