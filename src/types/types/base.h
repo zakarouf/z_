@@ -48,7 +48,6 @@ typedef ptrdiff_t z__ptrdiff;
 #define z__sizeof sizeof
 typedef size_t z__size;
 
-
-
+#include "fnptr.h"
 
 #endif // Header Guard

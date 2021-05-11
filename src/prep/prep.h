@@ -9,6 +9,6 @@
 #include "prep/base.h"
 #include "prep/var.h"
 #include "prep/assert.h"
-#include "prep/assert_comp.h"
+#include "prep/comp_eval.h"
 
 #endif

@@ -2,8 +2,8 @@
 #define ZAKAROUF__ZTYPES_H
 
 #include "base.h"
+#include "typeof.h"
 #include "mem.h"
-
 
 
 /* CGLM */
@@ -37,6 +37,10 @@
 
 #ifdef Z___TYPE_CONFIG__USE_STRING
 	#include "string.h"
+#endif
+
+#ifdef Z___TYPE_CONFIG__USE_EXTENDED_FEATURES
+    #include "base_ext.h"
 #endif
 
 #endif
