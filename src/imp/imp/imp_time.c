@@ -8,6 +8,7 @@
     #include <unistd.h> // for usleep
 #endif
 
+#include "time.h"
 
 void z__time_msleep(int milliseconds)
 { // cross-platform sleep function

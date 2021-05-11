@@ -4,15 +4,9 @@
 
 #include <dirent.h>
 
-// SHOUDL BWE AWD CONFIG PRE_P GAULD
+#include "io.h"
 
-#include "../types/ztypes/string.h"
-#include "../types/ztypes/base.h"
-#include "../types/ztypes/dynt.h"
-#include "../types/ztypes/arr.h"
-#include "../types/ztypes/mem.h"
-
-z__i8Arr z__file__readFile(char const  filename[])
+z__i8Arr z__io_readFile(char const  filename[])
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -35,7 +29,7 @@ z__i8Arr z__file__readFile(char const  filename[])
     };
 }
 
-z__Dynt z__file__Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
+z__Dynt z__io_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -60,7 +54,7 @@ z__Dynt z__file__Dynt_readFile(char const filename[], z__size const subDiv, char
 
 }
 
-z__StringLines z__file_getfnames(char const path[])
+z__StringLines z__io_getfnames(char const path[])
 {
     DIR * drip = opendir(path);
     if(drip == NULL) return (z__StringLines){0};
