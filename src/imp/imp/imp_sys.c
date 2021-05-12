@@ -6,9 +6,6 @@
 #include "sys.h"
 //#include "../../prep/prep.h"
 
-#define z__log_color(color, format, ...)\
-    z__log_basic(stdout, "\x1b[38;5;%dm" format "\x1b[0m", color, ##__VA_ARGS__ )
-
 long z__sys_getRamUsage(void)
 {
     struct rusage usage;
