@@ -16,6 +16,9 @@
 #define zpp__if_then_0(x, y) y
 #define zpp__if_then_1(x, y) x
 
+#define zpp__AND(exp) zpp__PRIMITIVE_CAT(zpp__AND_, exp)
+#define zpp__AND_0(exp) 0
+#define zpp__AND_1(exp) exp
 
 #define zpp__NOT(exp) zpp__CAT(zpp__NOT_, exp)
 #define zpp__NOT_0 1 
