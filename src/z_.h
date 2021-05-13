@@ -2,7 +2,7 @@
 #define ZAKAROUF_Z__H
 
 #define ZAKAROUF__Z__VERSION_MAJOR 3
-#define ZAKAROUF__Z__VERSION_MINOR 27
+#define ZAKAROUF__Z__VERSION_MINOR 28
 #define ZAKAROUF__Z__VERSION_PATCH 2
 
 #include "prep/prep.h"

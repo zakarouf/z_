@@ -11,6 +11,7 @@
 
 #define zpp__IGNORE(...)
 #define zpp__EXPAND(...) __VA_ARGS__
+#define zpp__EMPTY
 
 #define zpp__if_then(cond, x, y) zpp__CAT(zpp__if_then_, cond)(x, y)
 #define zpp__if_then_0(x, y) y
