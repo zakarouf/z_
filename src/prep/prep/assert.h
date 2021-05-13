@@ -13,11 +13,20 @@
 #define zpp__assert_eq_ptr(x, y) ( x==y?true:false )
 #define zpp__assert_ptr_checkNULL(x) (x==NULL?true:false)
 
+
+// Condtionals
+#define zpp__doif_construct_pre(condition, method, ...)\
+    if(condition)\
+        for(int keep = 1 ; keep?({ method(__VA_ARGS__); 1; }):0 ; keep ^= 1)
+
+#define zpp__doif_construct_post(condition, method, ...)\
+    if(condition)\
+        for(int keep = 1; keep; keep ^= 1, method(__VA_ARGS__) )
+            
 // Panic
 
 #define zpp__panicif(condition)\
         if(condition)\
-
 
 
 #endif
