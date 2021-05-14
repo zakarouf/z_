@@ -3,8 +3,8 @@
 CC=gcc
 AR=ar
 OUT="libzkcollection.a"
-CFILES="src/types/ztypes/ztypes_arr.c src/types/ztypes/ztypes_dynt.c src/types/ztypes/ztypes_irrg.c src/types/ztypes/ztypes_mem.c src/types/ztypes/ztypes_string.c"
-CFILES="$CFILES src/extra/z_file.c src/extra/z_log.c src/extra/z_misc.c src/extra/z_sys.c src/extra/z_time.c"
+CFILES="src/types/types/types_arr.c src/types/types/ztypes_dynt.c src/types/types/ztypes_irrg.c src/types/types/ztypes_mem.c src/types/types/ztypes_string.c"
+CFILES="$CFILES src/imp/imp/z_file.c src/imp/imp/z_log.c src/imp/imp/z_misc.c src/imp/imp/z_sys.c src/imp/imp/z_time.c"
 
 CC -Os -O2 -c $CFILES
 AR -q $OUT *.o
