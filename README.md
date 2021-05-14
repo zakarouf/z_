@@ -36,8 +36,9 @@ For Metaprograming
 ### Multi Threading?
 Whilst not yet avaliable. A multi thread implementation around pthread and OpenMP is on the to-do list.
 
-## Getting Started, Only Types
+## Getting Started
 
+### Types
 Inorder to integrated ztypes in your project
 ```sh
 git clone --depth=1 git://github.com/zakarouf/typed.git
@@ -57,6 +58,23 @@ In that case, do
 ./make-lib
 ```
 Will result a static library libzkztypes.a being made in the parent directory.
+
+## Previews & Example
+
+<div align="center">
+  <img src="docs/imgs/example/example_2.png">
+  <b> Getting Sum Of an Integer Array </b>
+</div>
+
+<div align="center">
+  <img src="docs/imgs/example/example_1.png">
+  <b> Array Init <b/>
+</div>
+
+<div align="center">
+  <img src="docs/imgs/example/fnptr_arr.png">
+  <b>Array of Functions</b>
+</div>
 
 ---
 ## Ending Note
