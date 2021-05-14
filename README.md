@@ -37,18 +37,23 @@ For Metaprograming
 Whilst not yet avaliable. A multi thread implementation around pthread and OpenMP is on the to-do list.
 
 ## Getting Started
+`z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
+it doesnt even include standard library except `stddef.h`, `stdint.h` and `stdbool.h` for type
+declaration **but** they still require the bare minimum `base` for to be working properly such
+as, `z_/types/types/arr.h` can be included in itself but it still require `base.h` of `types`
+for `z__u32` and `mem.h` for memory allocation definations.
 
-### Types
-Inorder to integrated ztypes in your project
+### Installing
+Inorder to integrated `z_` in your project
 ```sh
-git clone --depth=1 git://github.com/zakarouf/typed.git
-cp -R z_/src/types /to/your/project/source/types
+git clone --depth=1 git://github.com/zakarouf/z_.git
+cp -R z_/src /to/your/project/source/z_
 ```
 Then include the header by
 ```c
-#include "typed/ztypes.h"
+#include "z_/z_.h"
 ```
-Make sure to include the source files (*.c) from *typed* in your build script
+Make sure to include the source files (*.c) from *z_* in your build script
 
 **OR**
 
@@ -57,7 +62,36 @@ In that case, do
 ```sh
 ./make-lib
 ```
-Will result a static library libzkztypes.a being made in the parent directory.
+Will result a library libzkcollection.a created in the parent directory. <br>
+
+### Config
+Inside all 4 sub-library there is `config.h` that can be modified by the user in-order to
+change the behaviour, include, exclude the fuctionality of that sub-library.
+
+Such as inside of `src/types/config.h`
+```c
+#define Z___TYPE_CONFIG__USE_TYPE_LINKEDLIST
+
+```
+This particular config tells to include the Linked List type and its functionaity at core; when 
+`z_.h` is included, and if we comment out it
+```c
+//#define Z___TYPE_CONFIG__USE_TYPE_LINKEDLIST
+```
+![error1](docs/imgs/readme_gs_conf_error_1.png) <br>
+> Will result in a error
+This forces to you to include linked list type manually.
+```c
+#include "z_/types/types/llist.h"
+```
+Now this will work as it should.
+
+### Adding Syntax Highlighting (Vim)
+Additional syntax Highlighting for types and such are include in the extra/c.vim.
+
+To add it into your project, either copy the contents of the `c.vim` file or put
+`c.vim` into your `after/syntax` folder, such as `~/.config/vim/after/syntax/` directory.
+This will load on top of your syntax highlighting for every .c file.
 
 ## Previews & Example
 

@@ -23,6 +23,10 @@
 
 #include "../z__exp.h"
 
+
+/* Config Start */
+/*------------------------------------------*/
+
 /* General */
 #define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
 #define Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT 8
@@ -32,11 +36,7 @@
  * z__Arr_new$() <- is a macros
  */
 //#define Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
-#ifdef Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
-	#ifndef __GNUC__
-		#error "z_:types: Used of Gnu Extention `Dollar-sign` but not availiable!!!\n"
-	#endif
-#endif
+
 
 /* CGLM LIBRARY for graphics maths */
 //#define Z___TYPE_INCLUED_CGLM
@@ -78,5 +78,17 @@
 
 #define Z___TYPE_CONFIG__USE_EXTENDED_FEATURES
 	#define Z___TYPE_CONFIG__USE_TYPE_IDENTIFIER
+
+
+
+/* Config End */
+/*------------------------------------------*/
+/* Checks of Conflicting Configs and Errors */
+
+#ifdef Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
+    #ifndef __GNUC__
+        #error "z_:types: Used of Gnu Extention `Dollar-sign` but not availiable!!!\n"
+    #endif
+#endif
 
 #endif
