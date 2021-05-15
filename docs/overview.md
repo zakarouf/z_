@@ -41,6 +41,7 @@
 ## Vector Types
 
 ### Struct
+
 |Type|Description|
 |:---:|:---:|
 |`z__Vector(T)`| Creates User defined Vector Type |
@@ -52,6 +53,7 @@
 |`z__Vint4`| 4D Integer Vector {x, y, z, w} |
 
 ### Array
+
 |Type|Description|
 |:---:|:---:|
 |`z__vec2`| 2D Vector {x, y} |
@@ -72,12 +74,14 @@
 
 ---
 ## Dynamic Arrays
+
 This Library Provides 3 types of Dynamic arrays
 - Generic Type Array (any, typesafe).
 - Unknown Type Array (any, type-unsafe) of similar size.
 - Unknown Object Type Arrat (same as Unknown Type but every new value can be of differnt size and type)
 
 ### Generic Type Array
+
 Originally This library was meant to only provide 1 type of Arrays; Dynamic Unknown Type, which would work similarly to std::vector.
 Generic Type was added later in order to replace the type checking hassle with array types which people will often use like i32 or f32 arrays which are essential even in small projects.
 
@@ -260,6 +264,7 @@ z__SxArr_pop(arr);                      // Deletes Value From Top
 ```
 
 ---
+
 ### Vectors
 We can also init our own vector type with `z__Vector(T)`.
 Here is how it works
@@ -283,6 +288,7 @@ newTypeV tmpData = {
 Vectors Are Stack Allocated
 
 ---
+
 ### Linked List
 In ztypes the Linked Lists are comes with bare-bones template for type defination, with handful of funtions.
 #### Decleration
@@ -319,7 +325,9 @@ This Type also comes with its own set of fuctions for doing basic stuff
  z__Link_inext(<z__LList>, n);         // Go forwards in List (n) times, stops if at head end.
 ```
 ---
+
 ### Ending Note
+
 This library is not perfect and I know there are many others like it, but this one is mine.
 
 ---

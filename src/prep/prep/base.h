@@ -4,11 +4,20 @@
 #define zpp__PRIMITIVE_CAT(a, b)        a##b
 #define zpp__PRIMITIVE_CAT3(a, b, c)    a##b##c
 #define zpp__PRIMITIVE_CAT4(a, b, c, d) a##b##c##d
+#define zpp__PRIMITIVE_CAT5(a, b, c, d, e) a##b##c##d##e
 
-#define zpp__CAT(a, b)          zpp__PRIMITIVE_CAT(a, b) 
-#define zpp__CAT3(a, b, c)      zpp__PRIMITIVE_CAT3(a, b, c) 
-#define zpp__CAT4(a, b, c, d)   zpp__PRIMITIVE_CAT4(a, b, c, d) 
+#define zpp__CAT(_1, _2) zpp__PRIMITIVE_CAT(_1, _2)
+#define zpp__CAT3(_1,  _2, _3)                                \
+  zpp__CAT(zpp__CAT(_1, _2), _3)
+#define zpp__CAT4(_1,  _2, _3, _4)                            \
+  zpp__CAT(zpp__CAT3(_1, _2, _3), _4)
+#define zpp__CAT5(_1,  _2, _3, _4, _5)                        \
+  zpp__CAT(zpp__CAT4(_1, _2, _3, _4), _5)
+#define zpp__CAT6(_1,  _2, _3, _4, _5, _6)                    \
+  zpp__CAT(zpp__CAT5(_1, _2, _3, _4, _5), _6)
 
+
+#define zpp__PRIV_COMMA(...) ,
 #define zpp__IGNORE(...)
 #define zpp__EXPAND(...) __VA_ARGS__
 #define zpp__EMPTY
