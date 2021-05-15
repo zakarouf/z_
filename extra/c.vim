@@ -46,6 +46,12 @@ syn keyword cStructure z__Link z__LList z__LinkDef
 
 syn keyword cOperator z__typeof z__sizeof z__typeID
 
+"OpenMP
+
+syn keyword cStatement z__omp z__omp_parallel z__omp_for
+
+"OpenMP END
+
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1 
 "hi cFunction gui=NONE guifg=#aff232

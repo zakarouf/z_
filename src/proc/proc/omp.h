@@ -3,4 +3,6 @@
 
 #include <omp.h>
 
+#include "omp_base.h"
+
 #endif

@@ -34,7 +34,8 @@ _[See Overview](docs/overview.md)_
 For Metaprograming
 
 ### Multi Threading?
-Whilst not yet avaliable. A multi thread implementation around pthread and OpenMP is on the to-do list.
+The Development just had started with OpenMP, [Docs Here](docs/in-depth/omp.md).
+And with Pthreads impletation pending for the future.
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
