@@ -7,6 +7,7 @@
 
 #include "prep/nm/assert.h"
 #include "prep/nm/cond.h"
+#include "prep/nm/pragma.h"
 
 #include "prep/base.h"
 #include "prep/var.h"
