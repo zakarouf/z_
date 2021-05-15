@@ -102,7 +102,7 @@ This will load on top of your syntax highlighting for every .c file.
 
 <div align="center">
   <img src="docs/imgs/example/example_1.png">
-  <b> Array Init <b/>
+  <b> Array Init </b>
 </div>
 
 <div align="center">
@@ -111,7 +111,9 @@ This will load on top of your syntax highlighting for every .c file.
 </div>
 
 ---
+
 ## Ending Note
+
 This library is not perfect and I know there are many others like it, but this one is mine.
 
 ---
