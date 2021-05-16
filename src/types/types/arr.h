@@ -177,6 +177,16 @@
         memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
 
+#define z__Arr_isdataequal(arr1, arr2)\
+    (\
+        zpp__ter__if((arr1).lenUsed * sizeof(*(arr1).data)      \
+            != (arr2).lenUsed * sizeof(*(arr2).data)) (         \
+            false                                               \
+        ) zpp__ter__else (                                      \
+            !memcmp((arr1).data, (arr2).data, (arr1).lenUsed)   \
+        )                                                       \
+    )
+
 #define z__Arr_slice_5(arr, dest, from, upto, step)\
     {                                                       \
         if ((arr).lenUsed > (dest)->len) {                  \
