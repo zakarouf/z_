@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF_Z_IMP__EXT_H
 #define ZAKAROUF_Z_IMP__EXT_H
 
-#include "../../z__exp.h"
+#include "../z__exp.h"
 
 /* Misc */
 Z__INLINE int z__sswitch(int i)

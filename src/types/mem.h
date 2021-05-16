@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__MEMl_H
 #define ZAKAROUF__ZTYPES_TYPES__MEMl_H
 
-#include "../config.h"
+#include "../config_types.h"
 #include "base.h"
 
 void *z__mem_safe_realloc(void * data, size_t size);

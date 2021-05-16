@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__Z_TYPE_STRING_H
 #define ZAKAROUF__Z_TYPE_STRING_H
 
-#include "../config.h"
+#include "../config_types.h"
 
 typedef char z__char;
 

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "../config.h"
+#include "../config_types.h"
 
 
 /* Basic Types */

@@ -1,6 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_H
 #define ZAKAROUF__ZTYPES_H
 
+#include "../config_types.h"
 #include "base.h"
 #include "typeof.h"
 #include "mem.h"

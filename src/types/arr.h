@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__ARR_H
 #define ZAKAROUF__ZTYPES_TYPES__ARR_H
 
-#include "../config.h"
+#include "../config_types.h"
 #include "mem.h"
 
 /* Known Type-safe arrays */

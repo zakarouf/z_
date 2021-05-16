@@ -1,9 +1,9 @@
 #ifndef ZAKAROUF_Z_IMP__IO_H
 #define ZAKAROUF_Z_IMP__IO_H
 
-#include "../../types/types/string.h"
-#include "../../types/types/dynt.h"
-#include "../../types/types/arr.h"
+#include "../types/string.h"
+#include "../types/dynt.h"
+#include "../types/arr.h"
 
 
 /* File */

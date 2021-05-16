@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__CGLM_H
 #define ZAKAROUF__ZTYPES_TYPES__CGLM_H
 
-#include "../config.h"
+#include "../config_types.h"
 
 #include "base.h"
 #include <cglm/cglm.h>

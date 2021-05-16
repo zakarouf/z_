@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__Z__PROC_OMP_BASE_H
 #define ZAKAROUF__Z__PROC_OMP_BASE_H
 
-#include "../../prep/prep/nm/pragma.h"
+#include "../prep/nm/pragma.h"
 
 
 #define z__omp(...) zpp__pragma(omp __VA_ARGS__)

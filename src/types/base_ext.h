@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_EXTENDED_H
 #define ZAKAROUF__ZTYPES_EXTENDED_H
 
-#include "../config.h"
+#include "../config_types.h"
 #include "ztypes.h"
 	
 #define z__offsetof(T, M) ((size_t) &((T *)0)->M)

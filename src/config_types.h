@@ -21,7 +21,7 @@
  *	them out.  Such as CGLM or Vector Types etc.
  */
 
-#include "../z__exp.h"
+#include "z__exp.h"
 
 
 /* Config Start */

@@ -1,9 +1,9 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__GMATH_H
 #define ZAKAROUF__ZTYPES_TYPES__GMATH_H
 
-#include "../config.h"
+#include "../config_types.h"
 #include "base.h"
-#include "../../prep/prep.h"
+#include "../prep.h"
 
 #ifdef Z___TYPE_INCLUED_CGLM
     #include "cglm.h"
