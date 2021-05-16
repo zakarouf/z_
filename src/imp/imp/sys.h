@@ -16,6 +16,6 @@ void z__log_basic(void * fileStream ,const char *format, ...);
     z__log_basic(stdout, "%s:%u @ %s(): " format, __FILE__, __LINE__, __func__, __VA_ARGS__)
 
 #define z__log_color_verbose(color, format, ...)\
-    z__log_basic(stdout, "\x1b[38;5;%dm" "%s:%u @ %s(): " format "\x1b[0m", color, __FILE__, __LINE__, __func__, __VA_ARGS__)
+    z__log_basic(stdout, "\x1b[38;5;%dm" "%s:%u @ %s(): " format "\x1b[0m", color, __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
 #endif
