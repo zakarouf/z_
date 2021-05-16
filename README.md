@@ -111,6 +111,12 @@ This will load on top of your syntax highlighting for every .c file.
   <b>Array of Functions</b>
 </div>
 
+<div align="center">
+  <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
+  <b>Fill Up an array with OpenMP</b>
+</div>
+
+
 ---
 
 ## Ending Note
