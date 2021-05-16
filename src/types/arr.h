@@ -84,12 +84,18 @@
         (arr)->lenUsed = srclen;                                \
     }
 
+#define z__Arr_initFromPtr(arrT, src, srclen)\
+    ({\
+        arr_T z__Arr_initFromPtr__var__temp_arr;\
+        z__Arr_newFromPtr(&z__Arr_initFromPtr__var__temp_arr, src, srclen)\
+    })
+
 #define z__Arr_newCopy(arr, arr_src)\
     {                                                                       \
         z__Arr_new(arr, arr_src.len);                                       \
         z__typeof(arr->data) src_in = arr_src.data;                         \
         memcpy((arr)->data, src_in, sizeof(*src_in) * arr_src.len);         \
-        (arr)->lenUsed = arr_src.lenUsed;                                      \
+        (arr)->lenUsed = arr_src.lenUsed;                                   \
     }
 
 #define z__Arr_clone(arr)\
