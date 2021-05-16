@@ -16,6 +16,7 @@
 #define zpp__CAT6(_1,  _2, _3, _4, _5, _6)                    \
   zpp__CAT(zpp__CAT5(_1, _2, _3, _4, _5), _6)
 
+#define zpp__PRIV_TO_STRING(...) #__VA_ARGS__
 
 #define zpp__PRIV_COMMA(...) ,
 #define zpp__IGNORE(...)
