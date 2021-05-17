@@ -5,6 +5,7 @@
 #include "base.h"
 
 void *z__mem_safe_realloc(void * data, size_t size);
+z__size z__mem_memshift_right_nocheck(void *ori, z__u32 sz, z__u32 n ,z__size from, z__u32 upto);
 
 #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "mem.h"
 
 
@@ -13,6 +14,18 @@ void *z__mem_safe_realloc(void * data, size_t size)
         }
     }
     return data;
+}
+
+z__size z__mem_memshift_right_nocheck(void *ori, z__u32 sz, z__u32 n ,z__size from, z__u32 upto)
+{
+    char *dest = ori+ ((from+n) * sz);
+    char *src = ori+ (from * sz);
+
+    z__size diff = upto - from;
+    memmove(dest, src, sz * diff);
+    memset(src, 0, sz * n);
+
+    return diff;
 }
 
 #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
