@@ -97,23 +97,23 @@ This will load on top of your syntax highlighting for every .c file.
 ## Previews & Example
 
 <div align="center">
-  <img src="docs/imgs/example/example_2.png">
   <b> Getting Sum Of an Integer Array </b>
+  <img src="docs/imgs/example/example_2.png">
 </div>
 
 <div align="center">
-  <img src="docs/imgs/example/example_1.png">
   <b> Array Init </b>
+  <img src="docs/imgs/example/example_1.png">
 </div>
 
 <div align="center">
-  <img src="docs/imgs/example/fnptr_arr.png">
   <b>Array of Functions</b>
+  <img src="docs/imgs/example/fnptr_arr.png">
 </div>
 
 <div align="center">
-  <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
   <b>Fill Up an array with OpenMP</b>
+  <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
 </div>
 
 
