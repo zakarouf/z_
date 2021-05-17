@@ -63,13 +63,13 @@ In that case, do
 ```sh
 ./make-lib
 ```
-Will result a library libzkcollection.a created in the parent directory. <br>
+Will result a library libzkcollection.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
 
 ### Config
-Inside all 4 sub-library there is `config.h` that can be modified by the user in-order to
-change the behaviour, include, exclude the fuctionality of that sub-library.
+Inside the source directory `config_{MODULE}.h` that can be modified by the user in-order to change the behaviour, include, exclude the fuctionality of that sub-library.
+> {MODULE} is the name of the Module i.e. config_imp.h, config_prep.h etc.
 
-Such as inside of `src/types/config.h`
+Such as inside of `src/config_types.h`
 ```c
 #define Z___TYPE_CONFIG__USE_TYPE_LINKEDLIST
 

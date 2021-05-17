@@ -56,3 +56,5 @@ test
 a.out
 .DS_Store
 logtest
+build
+./build
