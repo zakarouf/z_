@@ -59,11 +59,14 @@
     }
 
 #define z__Arr_delete(arr)\
-    {                           \
+    {                          \
         (arr)->len = 0;        \
         (arr)->lenUsed = 0;    \
-        free((arr)->data);      \
+        free((arr)->data);     \
     }
+
+#define z__Arr_I(T, arr_n)\
+    z__Arr(T) arr_n; z__Arr_new(&arr_n, 8)
 
 #define z__Arr_init(arr_T, ...)\
     ({                                                                                  \
