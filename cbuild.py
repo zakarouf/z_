@@ -6,14 +6,14 @@ from datetime import datetime
 
 folderIgnore={"NULL"}
 
-IgnoreNames={"NULL"}
+IgnoreNames={"main_l.c"}
 
 ignorePatternFront = ["."]
 onlyTakePatternEnd = [".c"]
 
 CC="gcc"
 ERRFLAGS = ["-Wall"]
-CFLAGS=["-std=c99", "-ffunction-sections", "-fdata-sections", "-fopenmp", "-Os", "-O2"] + ERRFLAGS
+CFLAGS=["-std=c99", "-ffunction-sections", "-fdata-sections", "-fopenmp", "-Os"] + ERRFLAGS
 LDFLAGS=["-lm", "-Wl,-rpath", "-Wl,/usr/local/lib", "-I/usr/local/include","-fopenmp"]
 OUTEXE="build/test"
 
