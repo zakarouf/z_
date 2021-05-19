@@ -25,11 +25,12 @@ z__u32 gen(z__u32 x, z__u32 y);
 
 #if defined (print_map)
 
+int color[10]  = {196, 160, 124, 239, 245, 255, 40, 40, 28, 22};
 static void printmap(z__u32Arr *map, z__Vint2 dimen)
 {
     for (int i = 0; i < dimen.y; ++i) {
         for (int j = 0; j < dimen.x; ++j) {
-            fprintf(stdout , "%d",map->data[j + (i*dimen.x)]);
+            z__log_cl256_full(0 ,color[map->data[j + (i*dimen.x)]] , " ");
         }
         putc('\n', stdout);
     }
