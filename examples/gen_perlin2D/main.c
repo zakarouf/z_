@@ -3,6 +3,7 @@
 */
 
 #include <z_/types.h>
+#include <z_/imp.h>
 #include <z_/proc/pt.h>
 #include <z_/proc/omp.h>
 
