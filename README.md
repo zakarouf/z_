@@ -134,6 +134,7 @@ This will load on top of your syntax highlighting for every .c file.
   <b>Creating a Map with Pthread</b>
   <img src="docs/imgs/example/pt_pre_900px.gif">
 </div>
+
 ---
 
 ## Ending Note
