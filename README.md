@@ -130,7 +130,10 @@ This will load on top of your syntax highlighting for every .c file.
   <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
 </div>
 
-
+<div align="center">
+  <b>Creating a Map with Pthread</b>
+  <img src="docs/imgs/example/pt_pre_900px.gif">
+</div>
 ---
 
 ## Ending Note
