@@ -45,6 +45,9 @@ as, `z_/types/types/arr.h` can be included in itself but it still require `base.
 for `z__u32` and `mem.h` for memory allocation definations.
 
 ### Installing
+
+#### Method 1: Git Clone
+
 Inorder to integrated `z_` in your project
 ```sh
 git clone --depth=1 git://github.com/zakarouf/z_.git
@@ -56,14 +59,25 @@ Then include the header by
 ```
 Make sure to include the source files (*.c) from *z_* in your build script
 
-**OR**
+#### Method 2: Extracting Headers and Creating Library
 
 We can Create A library to link your program with
 In that case, do
 ```sh
-./make-lib
+./make-lib.sh
 ```
 Will result a library libzkcollection.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
+
+#### Method 3: Full Installation
+
+Run the `install.sh` script. <br>
+```sh
+sh install.sh
+```
+
+This will run the `make-lib.sh` script and move the headers and the library to their designated path in your system.<br>
+By Default, the path for Headers is `usr/local/include/z_` and for library it is `libzkcollection.a`, you can change it by editing the
+`install.sh` file itself, `LIB_DIR` and `INCLUDE_DIR` to be specfic.
 
 ### Config
 Inside the source directory `config_{MODULE}.h` that can be modified by the user in-order to change the behaviour, include, exclude the fuctionality of that sub-library.

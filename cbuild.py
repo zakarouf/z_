@@ -4,9 +4,9 @@ from subprocess import Popen
 from datetime import datetime
 
 
-folderIgnore={"NULL"}
+folderIgnore={"NULL", "examples"}
 
-IgnoreNames={"main_l.c"}
+IgnoreNames={"main-si.c"}
 
 ignorePatternFront = ["."]
 onlyTakePatternEnd = [".c"]
