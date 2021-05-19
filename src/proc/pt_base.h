@@ -4,7 +4,19 @@
 #include <pthread.h>
 
 #include "../types/base.h"
+//#include "../types/arr.h"
 
+// Wrapper //
+
+typedef pthread_t z__pt_Thread;
+
+#define z__pt_create(th, th_attr, fn, args)\
+    pthread_create((th), (th_attr), (fn), (args))
+
+#define z__pt_join(th, return_val)\
+    pthread_join((th), (return_val))
+
+// Args //
 
 #define z__pt_ArgContext_Tag(TagN, ...)\
     struct z__pt_ArgContext__tag##TagN {    \
