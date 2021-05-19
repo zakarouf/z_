@@ -11,10 +11,10 @@
 
 
 /* Enable One 'use' at a time for Bench mark, and uncomment `#define print_map` to print the map */
-//#define use_pt
+#define use_pt
 //#define use_nothing
-#define use_omp
-//#define print_map
+//#define use_omp
+#define print_map
 
 #define X 10000
 #define Y 10000
@@ -46,28 +46,26 @@ static void printmap(z__u32Arr *map, z__Vint2 dimen)
 #define array_slice_pt(len, t, i) (len/t *i)
 #define array_divide_each_on_thread_equal_len(len, t) (len/t)
 
-z__pt_Context_Tag(
-    mapdata__tag,
+z__pt_ArgContext_Tag(
+    maparg__tag,
         z__u32 *map;
         z__Vint2 dimen;
     );
 
-z__pt_ArgContext_Tag(mapdata__tag, maparg__tag);
-
 static void pt_gen_2D_array(z__pt_ArgContext(maparg__tag) *arg)
 {
-    z__u32 start_index =  array_slice_pt( arg->context->dimen.y, THREAD_MAX ,arg->id);
+    z__u32 start_index =  array_slice_pt( arg->dimen.y, THREAD_MAX ,arg->_id);
 
-    z__u32 div = array_divide_each_on_thread_equal_len(arg->context->dimen.y, THREAD_MAX) + start_index;
+    z__u32 div = array_divide_each_on_thread_equal_len(arg->dimen.y, THREAD_MAX) + start_index;
 
     // If The Total len is not multiple of Total Threads in Use
     // Then the remainder is mapped out, so we are just extending the div to also include it
     // Only if the we are at the last thread call.
-    if(arg->id == THREAD_MAX-1){
-        div += arg->context->dimen.y % THREAD_MAX;
+    if(arg->_id == THREAD_MAX-1){
+        div += arg->dimen.y % THREAD_MAX;
     }
-    z__u32 *map  = arg->context->map;
-    z__u32 x = arg->context->dimen.x;
+    z__u32 *map  = arg->map;
+    z__u32 x = arg->dimen.x;
 
     for (int i = start_index; i < div; ++i){
         for (int j = 0; j < x; ++j)
@@ -88,8 +86,8 @@ static void gen_2D_array_pt(void)
     z__Arr_new(&map, sz);
     
     /*Pthread*/
-    z__pt_Context(mapdata__tag) Map_Data = {map.data, dimen};
-    z__pt_ArgContext(maparg__tag) Map_Arg = {0, &Map_Data};
+
+    z__pt_ArgContext(maparg__tag) Map_Arg = {.map = map.data, .dimen = dimen};
     z__pt_Job(maparg__tag) mapJob;
 
     z__pt_Job_new(&mapJob, THREAD_MAX);
