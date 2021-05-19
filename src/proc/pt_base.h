@@ -54,7 +54,7 @@ typedef pthread_t z__pt_Thread;
 
 #define z__pt_Job_bind_Arg(Job, ArgContext, of) \
     {                                           \
-        (ArgContext)->_maxt = (Job)->Thread_Num;\
+        (ArgContext)._maxt = (Job)->Thread_Num;\
         (Job)->Args[of] = (ArgContext);         \
     }
 
