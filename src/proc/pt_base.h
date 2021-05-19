@@ -31,6 +31,8 @@ typedef pthread_t z__pt_Thread;
         (arg)->memo = (val);    \
     }
 
+#define z__pt_ArgArr(TagN) z__Arr(z__pt_ArgContext(TagN))
+
 //* Similar Jobs *//
 
 #define z__pt_Job(ArgContext, ...)\
