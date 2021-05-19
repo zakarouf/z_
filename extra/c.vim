@@ -50,7 +50,10 @@ syn keyword cOperator z__typeof z__sizeof z__typeID
 
 syn keyword cStatement z__omp z__omp_parallel z__omp_for
 
-"OpenMP END
+"Pthread
+
+syn keyword cType z__pt_VarJob z__pt_Thread
+syn keyword cStructure z__pt_Job z__pt_ArgContext_Tag z__pt_ArgContext z__pt_ArgArr
 
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1 
