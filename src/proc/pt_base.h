@@ -138,8 +138,8 @@ inline void z__pt_VarJob_set_Arg_id(z__pt_VarJob *vj, z__u32 id, z__u32 of)
 #define z__pt_VarJob_run(vj)\
     {\
         for (int i = 0; i < (vj)->Thread_Num; ++i) {\
-            z__pt_VarJob_set_Arg_id(&vj, i, i);\
-            pthread_create(&(vj)->Threads[i], NULL, (vj)->fn[i], &(vj)->Args[i]);   \
+            z__pt_VarJob_set_Arg_id(vj, i, i);\
+            pthread_create(&(vj)->Threads[i], NULL, (vj)->fn[i], (vj)->Args[i]);   \
         }                                                                           \
     }\
 
