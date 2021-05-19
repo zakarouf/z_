@@ -58,3 +58,4 @@ a.out
 logtest
 build
 ./build
+./docs/vid/*
