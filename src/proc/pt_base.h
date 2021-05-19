@@ -54,7 +54,8 @@ typedef pthread_t z__pt_Thread;
 
 #define z__pt_Job_bind_Arg(Job, ArgContext, of) \
     {                                           \
-        (Job)->Args[of] = (ArgContext);          \
+        (ArgContext)->_maxt = (Job)->Thread_Num;\
+        (Job)->Args[of] = (ArgContext);         \
     }
 
 #define z__pt_Job_bind_fn(Job, fn_name, of) \
@@ -125,8 +126,9 @@ inline void z__pt_VarJob_set_Arg_id(z__pt_VarJob *vj, z__u32 id, z__u32 of)
 }
 
 #define z__pt_VarJob_bind_Arg(vj, ArgContext, of)\
-    {                                   \
-        (vj)->Args[of] = (ArgContext);  \
+    {                                           \
+        (ArgContext)->_maxt = (vj)->Thread_Num; \
+        (vj)->Args[of] = (ArgContext);          \
     }
 
 
