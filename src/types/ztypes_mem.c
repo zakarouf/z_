@@ -28,6 +28,19 @@ z__size z__mem_memshift_right_nocheck(void *ori, z__u32 sz, z__u32 n ,z__size fr
     return diff;
 }
 
+#include "arr.h"
+void z__mem_Arr_clean(void * arr)
+{
+    z__voidArr *temp = arr;
+    //printf("%d, %p\n", temp->len, temp->data); // for Debug
+    z__Arr_delete(temp);
+}
+
+void z__mem_free(void * ptr)
+{
+	free(*(void **) ptr);
+}
+
 #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 	/* TODO: Create Unique Sorting & Accesing Algorithm For Storing All tracked memory*/
 	z__Arr(z__ptr) _z__mem_memlist;

@@ -28,7 +28,7 @@ syn keyword cType z__ptrArr z__boolArr z__f32Arr z__f64Arr
 
 syn keyword cType z__char z__String z__StringLines z__StringLinesArr
 
-" BASIC END
+" Types
 syn keyword cType z__ivec2 z__ivec3 z__ivec4
 syn keyword cType z__vec2 z__vec3 z__vec4
 syn keyword cType z__mat2 z__mat3 z__mat4
@@ -45,6 +45,10 @@ syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI z__ArrSxT
 syn keyword cStructure z__Link z__LList z__LinkDef
 
 syn keyword cOperator z__typeof z__sizeof z__typeID
+
+"Mem
+
+syn keyword cStatement z__autofree z__Arrfree
 
 "OpenMP
 
