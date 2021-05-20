@@ -12,5 +12,7 @@
 #include "prep/base.h"
 #include "prep/var.h"
 #include "prep/comp/eval.h"
+#include "prep/eval.h"
+#include "prep/map.h"
 
 #endif
