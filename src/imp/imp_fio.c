@@ -4,7 +4,7 @@
 
 #include <dirent.h>
 
-#include "io.h"
+#include "fio.h"
 
 z__i8Arr z__io_readFile(char const  filename[])
 {
