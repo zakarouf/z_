@@ -47,35 +47,45 @@
 		__builtin_choose_expr(z__type_isequal(T, z__ptr), 23, \
 		__builtin_choose_expr(z__type_isequal(T, z__Dynt), 24, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, z__Vector2), 25, \
-		__builtin_choose_expr(z__type_isequal(T, z__Vector3), 26, \
-		__builtin_choose_expr(z__type_isequal(T, z__Vector4), 27, \
+		__builtin_choose_expr(z__type_isequal(T, char[]), 	  			25, \
+		__builtin_choose_expr(z__type_isequal(T, unsigned char[]), 	  	26, \
+		__builtin_choose_expr(z__type_isequal(T, short[]), 	  			27, \
+		__builtin_choose_expr(z__type_isequal(T, unsigned short[]), 	28, \
+		__builtin_choose_expr(z__type_isequal(T, int[]), 	  			29, \
+		__builtin_choose_expr(z__type_isequal(T, unsigned int[]), 	  	30, \
+		__builtin_choose_expr(z__type_isequal(T, long long[]), 	  		31, \
+		__builtin_choose_expr(z__type_isequal(T, unsigned long long[]), 32, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, z__Vint2), 28, \
-		__builtin_choose_expr(z__type_isequal(T, z__Vint3), 29, \
-		__builtin_choose_expr(z__type_isequal(T, z__Vint4), 30, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vector2), 31, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vector3), 32, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vector4), 33, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, z__Matrix2), 31, \
-		__builtin_choose_expr(z__type_isequal(T, z__Matrix3), 32, \
-		__builtin_choose_expr(z__type_isequal(T, z__Matrix4), 33, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vint2), 34, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vint3), 35, \
+		__builtin_choose_expr(z__type_isequal(T, z__Vint4), 36, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, z__Mint2), 33, \
-		__builtin_choose_expr(z__type_isequal(T, z__Mint3), 34, \
-		__builtin_choose_expr(z__type_isequal(T, z__Mint4), 35, \
+		__builtin_choose_expr(z__type_isequal(T, z__Matrix2), 37, \
+		__builtin_choose_expr(z__type_isequal(T, z__Matrix3), 38, \
+		__builtin_choose_expr(z__type_isequal(T, z__Matrix4), 39, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, z__ivec2), 	41, \
-		__builtin_choose_expr(z__type_isequal(T, z__ivec3), 	42, \
-		__builtin_choose_expr(z__type_isequal(T, z__ivec4), 	43, \
-		__builtin_choose_expr(z__type_isequal(T, z__vec2), 		44, \
-		__builtin_choose_expr(z__type_isequal(T, z__vec3), 		45, \
-		__builtin_choose_expr(z__type_isequal(T, z__vec4), 		46, \
-		__builtin_choose_expr(z__type_isequal(T, z__versor), 	47, \
-		__builtin_choose_expr(z__type_isequal(T, z__mat2), 		48, \
-		__builtin_choose_expr(z__type_isequal(T, z__mat3), 		49, \
-		__builtin_choose_expr(z__type_isequal(T, z__mat4), 		50, \
+		__builtin_choose_expr(z__type_isequal(T, z__Mint2), 40, \
+		__builtin_choose_expr(z__type_isequal(T, z__Mint3), 41, \
+		__builtin_choose_expr(z__type_isequal(T, z__Mint4), 42, \
+			\
+		__builtin_choose_expr(z__type_isequal(T, z__ivec2), 	51, \
+		__builtin_choose_expr(z__type_isequal(T, z__ivec3), 	52, \
+		__builtin_choose_expr(z__type_isequal(T, z__ivec4), 	53, \
+		__builtin_choose_expr(z__type_isequal(T, z__vec2), 		54, \
+		__builtin_choose_expr(z__type_isequal(T, z__vec3), 		55, \
+		__builtin_choose_expr(z__type_isequal(T, z__vec4), 		56, \
+		__builtin_choose_expr(z__type_isequal(T, z__versor), 	57, \
+		__builtin_choose_expr(z__type_isequal(T, z__mat2), 		58, \
+		__builtin_choose_expr(z__type_isequal(T, z__mat3), 		59, \
+		__builtin_choose_expr(z__type_isequal(T, z__mat4), 		60, \
+		\
 		__builtin_choose_expr(sizeof(T) == 1, 19, \
 		__builtin_choose_expr(sizeof(T) == 2, 1, \
-		(0)  )))))))))))))))))))))))))))))))))))))))))))))))) // wtf? just no
+		(0)  )))))))))))))))))))))))))))))))))))))))))))))))))))))))) // wtf? just no
 
 #endif
 
