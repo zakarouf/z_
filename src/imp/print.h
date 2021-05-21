@@ -169,6 +169,14 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
             dy.comment ,dy.typeID, dy.size, dy.lenUsed, dy.len, dy.data);\
     }
 
+void z__fprint_str_list(FILE *fp, char const *strl[], z__u32 len)
+{
+    for (int i = 0; i < len; i++) {
+        fputs(strl[i], fp);
+        fputc(' ', fp);
+    }
+}
+
 void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_data[], ...)
 {
     va_list args;
@@ -191,7 +199,7 @@ void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_data[], .
             fputs( Z___IMP__PRINT_COLOR__RESET "]", fp);
 
         } else if (type == 20) {
-            fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, z__String).data);
+            fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, z__String).str);
         } else if (type == 25) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, char*));
 
