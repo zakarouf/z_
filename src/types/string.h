@@ -7,46 +7,45 @@ typedef char z__char;
 
 typedef struct ZINT_STRING
 {
-    z__char * data;
-    int size;
+    z__char * str;
+    int len;
     int used;
 
 }z__String;
 
 typedef struct
 {
-    z__char **data;
-    unsigned int *sizeofString;
-    unsigned int lines;
-    unsigned linesUsed;
-}z__StringLines;
+    z__char **str_list;
+    unsigned int *str_lens;
+    unsigned int list_len;
+    unsigned ll_used;
+}z__StringList;
 
 typedef struct
 {
-    z__StringLines *Sldata;
-    int size;
+    z__StringList *Sldata;
+    int len;
     int used;
-}z__StringLinesArr;
+}z__StringListArr;
 
 
 #define z__fillString_MF(String, val)\
-    {memset(String.str, (val), String.size)}
+    {memset(String.str, (val), String.len)}
 
-#define z__String_getData(String)   (String).data
-#define z__String_getLen(String)    (String).size
+#define z__String_getData(String)   (String).str
+#define z__String_getLen(String)    (String).len
 #define z__String_getUsed(String)   (String).used
 
-#define z__StringLines_getUsed(ln)          (ln).linesUsed
-#define z__StringLines_getLen(ln)           (ln).lines
-#define z__StringLines_getStringLen(ln, l)  (ln).sizeofString[l]
-#define z__StringLines_getLineData(ln, l)   (ln).data[l]
-#define z__StringLines_getData(ln)          (ln).data
+#define z__StringList_getUsed(ln)          (ln).line_used
+#define z__StringList_getLen(ln)           (ln).line_len
+#define z__StringList_getStringLen(ln, l)  (ln).str_lens[l]
+#define z__StringList_getLineData(ln, l)   (ln).line[l]
+#define z__StringList_getData(ln)          (ln).line
 
-#define z__StringLinesArr_getLen(lns)           (lns).size
-#define z__StringLinesArr_getUsed(lns)          (lns).used
-#define z__StringLinesArr_getData(lns)          (lns).data
-#define z__StringLinesArr_getDataLines(lns, l)  (lns).data[l]
-
+#define z__StringListArr_getLen(lns)           (lns).size
+#define z__StringListArr_getUsed(lns)          (lns).used
+#define z__StringListArr_getData(lns)          (lns).Sldata
+#define z__StringListArr_getDataLine(lns, l)  (lns).Sldata[l]
 
 
 z__String z__String_new(int size);
@@ -64,22 +63,22 @@ z__String z__String_newFromFile(char filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
 void z__String_delChar(z__String *dest, int pos);
 
-z__StringLines z__StringLines_new(unsigned int base_lines_count);
-void z__StringLines_delete(z__StringLines *strLines);
+z__StringList z__StringList_new(unsigned int base_lines_count);
+void z__StringList_delete(z__StringList *strList);
 
-z__StringLines z__StringLines_newFrom(z__StringLines const *ln);
-void z__StringLines_pushString(z__StringLines *ln ,z__String str);
-void z__StringLines_push(z__StringLines *ln , char const * st, int len);
-void z__StringLines_pop(z__StringLines *ln);
+z__StringList z__StringList_newFrom(z__StringList const *ln);
+void z__StringList_pushString(z__StringList *ln ,z__String str);
+void z__StringList_push(z__StringList *ln , char const * st, int len);
+void z__StringList_pop(z__StringList *ln);
 
-z__StringLines z__String_splitTok(z__String str, char const * seperator);
-z__StringLines z__String_splitTok_raw(char const * stri, int len, char const * seperator);
-z__StringLines z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
+z__StringList z__String_splitTok(z__String str, char const * seperator);
+z__StringList z__String_splitTok_raw(char const * stri, int len, char const * seperator);
+z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
 
 
-z__StringLinesArr z__StringLinesArr_new(int size, int x, int y);
-void z__StringLinesArr_delete(z__StringLinesArr *lns);
-void z__StringLinesArr_resize(z__StringLinesArr *lns, int newsize);
+z__StringListArr z__StringListArr_new(int size, int x, int y);
+void z__StringListArr_delete(z__StringListArr *lns);
+void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 
 
 

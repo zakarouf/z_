@@ -12,44 +12,44 @@
     {
         return (z__String){
 
-            .data = calloc(sizeof(z__char) , size),
-            .size = size,
+            .str = calloc(sizeof(z__char) , size),
+            .len = size,
             .used = 0
         };
     }
 
     inline void z__String_delete(z__String * s)
     {
-        free(s->data);
-        s->size = 0;
+        free(s->str);
+        s->len = 0;
         s->used = 0;
     }
 
     inline void z__String_resize(z__String *str, int newsize)
     {
-        str->size = newsize;
-        str->data = z__mem_safe_realloc(str->data, newsize);
+        str->len = newsize;
+        str->str = z__mem_safe_realloc(str->str, newsize);
     }
 
     void z__String_Copy(z__String *dest, const z__String val)
     {
-        if (dest->size < val.size )
+        if (dest->len < val.len )
         {
-            z__String_resize(dest, val.size);
+            z__String_resize(dest, val.len);
         }
-        memcpy(dest->data, val.data, val.size);
+        memcpy(dest->str, val.str, val.len);
     }
 
     z__String z__String_MakeCopy(const z__String str)
     {
 
         z__String str2 = {
-            .data = calloc(sizeof(z__char) , str.size),
-            .size = str.size,
+            .str = calloc(sizeof(z__char) , str.len),
+            .len = str.len,
             .used = str.used
         };
 
-        memcpy(str2.data, str.data, str.size);
+        memcpy(str2.str, str.str, str.len);
 
         return str2;
     }
@@ -58,11 +58,11 @@
     {
         if (length > 0)
         {
-            if ((str->size-str->used) > length){
+            if ((str->len-str->used) > length){
                 memcpy(&str[str->used], src, length);
 
             } else {
-                z__String_resize(str, length+str->size);
+                z__String_resize(str, length+str->len);
             }
             str->used += length;
         }
@@ -73,29 +73,29 @@
         if (len == -1) {
             len = strlen(st);
         }
-        if (len > s->size) {
+        if (len > s->len) {
             z__String_resize(s, len+1);
         }
 
-        memcpy(s->data, st, s->size);
+        memcpy(s->str, st, s->len);
         s->used = len;
     }
 
     inline void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace)
     {
-        dest->size = dest->size + src->used + extraSpace;
-        dest->data = reallocf(dest->data, dest->size);
+        dest->len = dest->len + src->used + extraSpace;
+        dest->str = reallocf(dest->str, dest->len);
 
-        memcpy(&dest[dest->used], src->data, src->used);
+        memcpy(&dest[dest->used], src->str, src->used);
     }
 
     void z__String_pushChar(z__String *dest, z__char ch)
     {
-        if(dest->size <= dest->used) {
-            z__String_resize(dest, dest->size + 8);
+        if(dest->len <= dest->used) {
+            z__String_resize(dest, dest->len + 8);
         }
 
-        dest->data[dest->used] = ch;
+        dest->str[dest->used] = ch;
         dest->used += 1;
     }
 
@@ -105,15 +105,15 @@
             return;
         }
         
-        if (dest->size <= dest->used) {
-            z__String_resize(dest, dest->size +8);
+        if (dest->len <= dest->used) {
+            z__String_resize(dest, dest->len +8);
         }
 
         z__char
-            tmpchar = dest->data[pos],
-            *buff = &dest->data[dest->used];
-        dest->data[pos] = ch;
-        dest->data[dest->used + 1] = 0;
+            tmpchar = dest->str[pos],
+            *buff = &dest->str[dest->used];
+        dest->str[pos] = ch;
+        dest->str[dest->used + 1] = 0;
 
         int splen = dest->used - pos;
 
@@ -121,7 +121,7 @@
             *buff = *(buff-1);
             buff--;
         }
-        dest->data[pos +1] = tmpchar;
+        dest->str[pos +1] = tmpchar;
 
         dest->used += 1;
     }
@@ -133,7 +133,7 @@
         }
 
         int splen = dest->used - pos;
-        z__char *buff = &dest->data[pos];
+        z__char *buff = &dest->str[pos];
 
         for (int i = 0; i < splen; ++i)
         {
@@ -148,7 +148,7 @@
         if(pos >= dest->used && pos < 0) {
             return;
         }
-        dest->data[pos] = ch;
+        dest->str[pos] = ch;
     }
 
     
@@ -173,107 +173,107 @@
 
         string[fsize] = 0;
         return (z__String){
-             .data = string
-            ,.size = fsize +1
+             .str = string
+            ,.len = fsize +1
             ,.used = fsize +1
         };
     }
        
 
-    z__StringLines z__StringLines_new(unsigned int base_lines_count)
+    z__StringList z__StringList_new(unsigned int base_lines_count)
     {
-        z__StringLines ln = {
-            .data = calloc(base_lines_count, sizeof(*ln.data)),
-            .lines = base_lines_count,
-            .linesUsed = 0
+        z__StringList ln = {
+            .str_list = calloc(base_lines_count, sizeof(*ln.str_lens)),
+            .list_len = base_lines_count,
+            .ll_used = 0
         };
-        ln.sizeofString = calloc(base_lines_count, sizeof(*ln.sizeofString));
+        ln.str_lens = calloc(base_lines_count, sizeof(*ln.str_lens));
 
         return ln;
     }
 
-    void z__StringLines_delete(z__StringLines *ln)
+    void z__StringList_delete(z__StringList *ln)
     {
-        for (int i = 0; i < ln->linesUsed; ++i)
+        for (int i = 0; i < ln->ll_used; ++i)
         {
-            free(ln->data[i]);
+            free(ln->str_list[i]);
         }
-        free(ln->data);
-        free(ln->sizeofString);
+        free(ln->str_list);
+        free(ln->str_lens);
 
-        ln->lines = 0;
-        ln->linesUsed = 0;
+        ln->list_len = 0;
+        ln->ll_used = 0;
     }
 
-    void z__StringLines_pushString(z__StringLines *ln ,z__String str)
+    void z__StringList_pushString(z__StringList *ln ,z__String str)
     {
-        if(ln->linesUsed >= ln->lines) {
-            ln->lines += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
-            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
+        if(ln->ll_used >= ln->list_len) {
+            ln->list_len += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->str_list = z__mem_safe_realloc(ln->str_list, sizeof(*ln->str_list) *ln->list_len);
         }
 
-        ln->data[ln->linesUsed] = calloc(str.used+1, sizeof(**ln->data));
-        memcpy(ln->data[ln->linesUsed], str.data, str.used * sizeof(*str.data));
-        ln->sizeofString[ln->linesUsed] = str.used;
-        ln->linesUsed += 1;
+        ln->str_list[ln->ll_used] = calloc(str.used+1, sizeof(**ln->str_list));
+        memcpy(ln->str_list[ln->ll_used], str.str, str.used * sizeof(*str.str));
+        ln->str_lens[ln->ll_used] = str.used;
+        ln->ll_used += 1;
     }
 
-    void z__StringLines_push(z__StringLines *ln , char const * st, int len)
+    void z__StringList_push(z__StringList *ln , char const * st, int len)
     {
-        if(ln->linesUsed >= ln->lines) {
-            ln->lines += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
-            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
-            ln->sizeofString = z__mem_safe_realloc(ln->sizeofString, sizeof(*ln->sizeofString) *ln->lines);
+        if(ln->ll_used >= ln->list_len) {
+            ln->list_len += Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->str_list = z__mem_safe_realloc(ln->str_list, sizeof(*ln->str_list) *ln->list_len);
+            ln->str_lens = z__mem_safe_realloc(ln->str_lens, sizeof(*ln->str_lens) *ln->list_len);
         }
 
         if (len == -1) {
             len = strlen(st);
         }
 
-        ln->data[ln->linesUsed] = calloc(len, sizeof(**ln->data));
-        memcpy(ln->data[ln->linesUsed], st, len * sizeof(*st));
-        ln->sizeofString[ln->linesUsed] = len;
-        ln->linesUsed += 1;
+        ln->str_list[ln->ll_used] = calloc(len, sizeof(**ln->str_list));
+        memcpy(ln->str_list[ln->ll_used], st, len * sizeof(*st));
+        ln->str_lens[ln->ll_used] = len;
+        ln->ll_used += 1;
     }
 
-    void z__StringLines_pop(z__StringLines *ln)
+    void z__StringList_pop(z__StringList *ln)
     {
-        free(ln->data[ln->linesUsed-1]);
-        ln->linesUsed -= 1;
+        free(ln->str_list[ln->ll_used-1]);
+        ln->ll_used -= 1;
         /*
-        if (ln->lines - ln->linesUsed >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+        if (ln->list_len - ln->ll_used >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
         {
-            ln->lines -= Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
-            ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->lines);
-            ln->sizeofString = z__mem_safe_realloc(ln->sizeofString, sizeof(*ln->sizeofString) *ln->lines);
+            ln->list_len -= Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+            ln->str_list = z__mem_safe_realloc(ln->str_list, sizeof(*ln->str_list) *ln->list_len);
+            ln->str_lens = z__mem_safe_realloc(ln->str_lens, sizeof(*ln->str_lens) *ln->list_len);
         }
         */
     }
 
-    z__StringLines z__StringLines_newFrom(z__StringLines const *ln)
+    z__StringList z__StringList_newFrom(z__StringList const *ln)
     {
-        z__StringLines newln = {
-            .lines = ln->lines,
-            .linesUsed = ln->linesUsed
+        z__StringList newln = {
+            .list_len = ln->list_len,
+            .ll_used = ln->ll_used
         };
 
-        newln.sizeofString = malloc(sizeof(*newln.sizeofString) * newln.lines);
-        memcpy(newln.sizeofString, ln->sizeofString, sizeof(*newln.sizeofString)*newln.lines);
+        newln.str_lens = malloc(sizeof(*newln.str_lens) * newln.list_len);
+        memcpy(newln.str_lens, ln->str_lens, sizeof(*newln.str_lens)*newln.list_len);
 
-        newln.data = malloc(sizeof(*newln.data) * newln.lines);
+        newln.str_list = malloc(sizeof(*newln.str_list) * newln.list_len);
 
-        for (int i = 0; i < newln.linesUsed; ++i) {
-            newln.data[i] = malloc(sizeof(**newln.data) * newln.sizeofString[i]);
-            memcpy(newln.data[i], ln->data[i], newln.sizeofString[i]);
+        for (int i = 0; i < newln.ll_used; ++i) {
+            newln.str_list[i] = malloc(sizeof(**newln.str_list) * newln.str_lens[i]);
+            memcpy(newln.str_list[i], ln->str_list[i], newln.str_lens[i]);
         }
 
         return newln;
     }
 
-    z__StringLines z__String_splitTok(z__String str, char const *restrict seperator)
+    z__StringList z__String_splitTok(z__String str, char const *restrict seperator)
     {
         z__String tmp = z__String_MakeCopy(str);
-        char *lastbuff = tmp.data;
+        char *lastbuff = tmp.str;
         char *token = strtok_r(lastbuff, seperator, &lastbuff);
 
         /*Count*/
@@ -287,20 +287,20 @@
         z__String_delete(&tmp);
         tmp = z__String_MakeCopy(str);
 
-        lastbuff = tmp.data;
+        lastbuff = tmp.str;
         token = strtok_r(lastbuff, seperator, &lastbuff);
 
-        z__StringLines ln = z__StringLines_new(linesCount);
+        z__StringList ln = z__StringList_new(linesCount);
 
         while(token) {
-            z__StringLines_push(&ln, token, -1);
+            z__StringList_push(&ln, token, -1);
             token = strtok_r(lastbuff, seperator, &lastbuff);
         }
 
         return ln;
     }
 
-    z__StringLines z__String_splitTok_raw(char const *restrict stri, int len, char const *restrict seperator)
+    z__StringList z__String_splitTok_raw(char const *restrict stri, int len, char const *restrict seperator)
     {
         if (len == -1)
         {
@@ -329,17 +329,17 @@
 
         token = strtok_r(lastbuff, seperator, &lastbuff);
 
-        z__StringLines ln = z__StringLines_new(linesCount);
+        z__StringList ln = z__StringList_new(linesCount);
 
         while(token) {
-            z__StringLines_push(&ln, token, -1);
+            z__StringList_push(&ln, token, -1);
             token = strtok_r(lastbuff, seperator, &lastbuff);
         }
 
         return ln;
     }
 
-    z__StringLines z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len)
+    z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len)
     {
         if (str_len == -1)
         {
@@ -362,20 +362,20 @@
         }
 
         strst = tmp_mainStr;
-        z__StringLines ln = z__StringLines_new(8);
+        z__StringList ln = z__StringList_new(8);
 
         int i = 0, len = 0;
         if (*strst)
         {
             i = strlen(strst);
-            z__StringLines_push(&ln, strst, i);
+            z__StringList_push(&ln, strst, i);
             strst += i + str_len;
         }
 
         while(i <= mainStrLen) {
 
             len = strnlen(strst, mainStrLen-i);
-            z__StringLines_push(&ln, strst, len);
+            z__StringList_push(&ln, strst, len);
 
             i += len+str_len;
             strst += len + str_len;
@@ -384,51 +384,51 @@
         return ln;
     }
 
-    z__StringLinesArr z__StringLinesArr_new(int size, int x, int y)
+    z__StringListArr z__StringListArr_new(int size, int x, int y)
     {
-        z__StringLinesArr lns = {
-            .Sldata = calloc(sizeof(z__StringLines), size),
-            .size = size,
+        z__StringListArr lns = {
+            .Sldata = calloc(sizeof(z__StringList), size),
+            .len = size,
             .used = 0
         };
 
-        for (int i = 0; i < lns.size; ++i)
+        for (int i = 0; i < lns.len; ++i)
         {
-            lns.Sldata[i] = z__StringLines_new(x);
+            lns.Sldata[i] = z__StringList_new(x);
         }
 
         return lns;
     }
 
-    void z__StringLinesArr_delete(z__StringLinesArr *lns)
+    void z__StringListArr_delete(z__StringListArr *lns)
     {
-        for (int i = 0; i < lns->size; ++i)
+        for (int i = 0; i < lns->len; ++i)
         {
-            z__StringLines_delete(&lns->Sldata[i]);
+            z__StringList_delete(&lns->Sldata[i]);
         }
         free(lns->Sldata);
         lns->Sldata = NULL;
-        lns->size = 0;
+        lns->len = 0;
     }
 
-    void z__StringLinesArr_resize(z__StringLinesArr *lns, int newsize)
+    void z__StringListArr_resize(z__StringListArr *lns, int newsize)
     {
-        if (newsize < lns->size)
+        if (newsize < lns->len)
         {
-            for (int i = newsize; i < lns->size; ++i)
+            for (int i = newsize; i < lns->len; ++i)
             {
-                z__StringLines_delete(&lns->Sldata[i]);
+                z__StringList_delete(&lns->Sldata[i]);
             }
-            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
-            lns->size = newsize;
+            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringList) * newsize);
+            lns->len = newsize;
         }
-        else if (newsize > lns->size)
+        else if (newsize > lns->len)
         {
-            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringLines) * newsize);
-            lns->size = newsize;
-            for (int i = lns->size; i < newsize; ++i)
+            lns->Sldata = z__mem_safe_realloc(lns->Sldata, sizeof(z__StringList) * newsize);
+            lns->len = newsize;
+            for (int i = lns->len; i < newsize; ++i)
             {
-                lns->Sldata[i] = z__StringLines_new(lns->Sldata[0].lines);
+                lns->Sldata[i] = z__StringList_new(lns->Sldata[0].list_len);
             }
         }
     }
