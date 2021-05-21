@@ -5,7 +5,7 @@
 #define ZAKAROUF__Z__IMP_VERSION_MINOR 1
 #define ZAKAROUF__Z__IMP_VERSION_PATCH 1
 
-#include "imp/io.h"
+#include "imp/fio.h"
 #include "imp/ext.h"
 #include "imp/sys.h"
 #include "imp/time.h"
