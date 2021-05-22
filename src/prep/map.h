@@ -34,8 +34,8 @@
  */
 #define zpp__PRIV__MAP_LIST(f, ...) zpp__PRIV__EVAL(zpp__PRIV__MAP_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
-#define zpp__maplist(f, ...) zpp__PRIV__MAP_LIST(f, __VA_ARGS__)
-#define zpp__map(f, ...) zpp__PRIV__MAP(f, __VA_ARGS__)
+#define zpp__Args_maplist(f, ...) zpp__PRIV__MAP_LIST(f, __VA_ARGS__)
+#define zpp__Args_map(f, ...) zpp__PRIV__MAP(f, __VA_ARGS__)
 
 
 #endif

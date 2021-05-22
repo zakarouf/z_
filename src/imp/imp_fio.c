@@ -54,10 +54,10 @@ z__Dynt z__io_Dynt_readFile(char const filename[], z__size const subDiv, char co
 
 }
 
-z__StringLines z__io_getfnames(char const path[])
+z__StringList z__io_getfnames(char const path[])
 {
     DIR * drip = opendir(path);
-    if(drip == NULL) return (z__StringLines){0};
+    if(drip == NULL) return (z__StringList){0};
     struct dirent* dp;
     int items = 0;
 
@@ -68,11 +68,11 @@ z__StringLines z__io_getfnames(char const path[])
     closedir(drip);
     drip = opendir(path);
 
-    z__StringLines fnames = z__StringLines_new(32);
+    z__StringList fnames = z__StringList_new(32);
 
     while((dp = readdir(drip)) != NULL)
     {
-        z__StringLines_push(&fnames, dp->d_name, dp->d_namlen);
+        z__StringList_push(&fnames, dp->d_name, dp->d_namlen);
     }
     closedir(drip);
 

@@ -48,6 +48,7 @@ typedef struct
 #define z__StringListArr_getDataLine(lns, l)  (lns).Sldata[l]
 
 
+/* String */
 z__String z__String_new(int size);
 void z__String_delete(z__String * s);
 
@@ -63,6 +64,7 @@ z__String z__String_newFromFile(char filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
 void z__String_delChar(z__String *dest, int pos);
 
+/* String List */
 z__StringList z__StringList_new(unsigned int base_lines_count);
 void z__StringList_delete(z__StringList *strList);
 
@@ -75,11 +77,24 @@ z__StringList z__String_splitTok(z__String str, char const * seperator);
 z__StringList z__String_splitTok_raw(char const * stri, int len, char const * seperator);
 z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
 
-
+/* String List Array */
 z__StringListArr z__StringListArr_new(int size, int x, int y);
 void z__StringListArr_delete(z__StringListArr *lns);
 void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 
+
+// Macros
+
+
+#define z__StringList__PRIV_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
+#define z__StringList_pushstr(...) zpp__Args_map(z__StringList__PRIV_tmp_pushstr, __VA_ARGS__)
+
+#define z__StringList_initstr(...)\
+({\
+    z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);\
+    z__StringList_pushstr(__VA_ARGS__);\
+    tmp;\
+})
 
 
 #endif
