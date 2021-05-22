@@ -222,38 +222,24 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
                     && type < 19) {
 
             z__voidArr tmparr = va_arg(args, z__voidArr);
-            fputs("[ ", fp);
-            z__imp_print__PRIV_print_func_arr[type-9](fp, tmparr.data, tmparr.lenUsed);
-            fputs( Z___IMP__PRINT_COLOR__RESET "]", fp);
+            z__fprint_BaseArr(fp, tmparr.data, tmparr.len, type);
 
         } else if (type == 20) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, z__String).str);
         } else if (type == 25) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, char*));
 
-        } else if (type == 31 ) {
-            z__Vector2 t = va_arg(args, z__Vector2);
-            fprintf(fp, "(" Z___IMP__PRINT_COLOR_FLOAT "%f, %f" Z___IMP__PRINT_COLOR__RESET")", t.x, t.y);
+        } else if (type == 21) {
+            z__StringList ls = va_arg(args, z__StringList);
+            z__fprint_str_list(fp, ls.str_list, ls.ll_used);
 
-        } else if (type == 32 ) {
-            z__Vector3 t = va_arg(args, z__Vector3);
-            fprintf(fp, "("Z___IMP__PRINT_COLOR_FLOAT"%f, %f, %f"Z___IMP__PRINT_COLOR__RESET")", t.x, t.y, t.z);
+        } else if (type < 30
+                   && type > 34 ) {
+            z__fprint_Vector_float(fp, va_arg(args, float*), type-29);
 
-        } else if (type == 33 ) {
-            z__Vector4 t = va_arg(args, z__Vector4);
-            fprintf(fp, "("Z___IMP__PRINT_COLOR_FLOAT"%f, %f, %f, %f"Z___IMP__PRINT_COLOR__RESET")", t.x, t.y, t.z, t.w);
-
-        } else if (type == 34 ) {
-            z__Vint2 t = va_arg(args, z__Vint2);
-            fprintf(fp, "(" Z___IMP__PRINT_COLOR_INT " %i, %i " Z___IMP__PRINT_COLOR__RESET ")", t.x, t.y);
-
-        } else if (type == 35 ) {
-            z__Vint3 t = va_arg(args, z__Vint3);
-            fprintf(fp, "(" Z___IMP__PRINT_COLOR_INT "%i, %i, %i" Z___IMP__PRINT_COLOR__RESET ")", t.x, t.y, t.z);
-
-        } else if (type == 36 ) {
-            z__Vint4 t = va_arg(args, z__Vint4);
-            fprintf(fp, "(" Z___IMP__PRINT_COLOR_INT "%i, %i, %i, %i" Z___IMP__PRINT_COLOR__RESET ")", t.x, t.y, t.z, t.w);
+        } else if (type < 33
+                   && type > 37) {
+            z__fprint_Vector_int(fp, va_arg(args, int*), type-32);
         } 
 
         else if (type == 23) {
@@ -290,6 +276,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
             fp, zpp__Args_Count(__VA_ARGS__), ptr, __VA_ARGS__);            \
         z__FREE(ptr);                                                       \
     }
+
 
 #define z__print(...) z__imp_print__PRIV__gen_print(stdout, __VA_ARGS__)
 #define z__fprint(fp, ...) z__imp_print__PRIV__gen_print(fp, __VA_ARGS__)
