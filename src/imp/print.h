@@ -7,6 +7,7 @@
 #include "../types.h"
 
 #define Z___IMP__PRINT_DEFAULT_SEPERATOR " "
+#define Z___IMP__PRINT_DEFAULT_END "\n"
 #define Z___IMP__PRINT_CONFIG_COLOR_ENABLE
 
 #if defined (Z___IMP__PRINT_CONFIG_COLOR_ENABLE)
@@ -29,26 +30,26 @@
 
 #else
 
-#define Z___IMP__PRINT_COLOR_INT      
+#define Z___IMP__PRINT_COLOR_INT  ""      
 
-#define Z___IMP__PRINT_COLOR_STRING
+#define Z___IMP__PRINT_COLOR_STRING  ""
 
-#define Z___IMP__PRINT_COLOR_FLOAT
+#define Z___IMP__PRINT_COLOR_FLOAT  ""
 
-#define Z___IMP__PRINT_COLOR_VEC
+#define Z___IMP__PRINT_COLOR_VEC  ""
 
-#define Z___IMP__PRINT_COLOR_POINTER
+#define Z___IMP__PRINT_COLOR_POINTER  ""
 
-#define Z___IMP__PRINT_COLOR_OBJECT
+#define Z___IMP__PRINT_COLOR_OBJECT  ""
 
-#define Z___IMP__PRINT_COLOR_SPECIAL
+#define Z___IMP__PRINT_COLOR_SPECIAL  ""
 
-#define Z___IMP__PRINT_COLOR__RESET
+#define Z___IMP__PRINT_COLOR__RESET  ""
 
 #endif
 
 
-void z__imp_print__PRIV__print_func__i8_ptr(FILE *fp , z__i8 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__i8_ptr(FILE *fp , z__i8 *ptr, z__u32 len)
 {
 
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
