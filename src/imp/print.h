@@ -178,19 +178,38 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
             dy.comment ,dy.typeID, dy.size, dy.lenUsed, dy.len, dy.data);\
     }
 
-void z__fprint_str_list(FILE *fp, char const *strl[], z__u32 len)
+static void z__fprint_str_list(FILE *fp, char * const strl[], z__u32 len)
 {
+    fputs("[ " Z___IMP__PRINT_COLOR_STRING, fp);
     for (int i = 0; i < len; i++) {
+        fputc('"', fp);
         fputs(strl[i], fp);
+        fputc('"', fp);
         fputc(' ', fp);
     }
+    fputs(Z___IMP__PRINT_COLOR__RESET "]", fp);
 }
 
-void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_data[], ...)
+#define z__fprint_Vector_float(fp, vec_raw, len)\
+    {\
+        fputs("( ", fp );\
+        z__imp_print__PRIV__print_func__f32_ptr(fp, vec_raw, len);\
+        fputs(")", fp);\
+    }\
+
+#define z__fprint_Vector_int(fp, vint_raw, len)\
+    {\
+        fputs("( ", fp );\
+        z__imp_print__PRIV__print_func__i32_ptr(fp, vint_raw, len);\
+        fputs(")", fp);\
+    }\
+
+static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_data[], ...)
 {
     va_list args;
     va_start(args, types_data);
 
+    fputc(' ', fp);
     for (int i = 0; i < count; ++i) {
         char type = types_data[i];
         if (type > 0
