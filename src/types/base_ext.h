@@ -41,20 +41,14 @@
 			\
 		__builtin_choose_expr(z__type_isequal(T, z__char), 19, \
 		__builtin_choose_expr(z__type_isequal(T, z__String), 20, \
-		__builtin_choose_expr(z__type_isequal(T, z__StringLines), 21, \
-		__builtin_choose_expr(z__type_isequal(T, z__StringLinesArr), 22, \
+		__builtin_choose_expr(z__type_isequal(T, z__StringList), 21, \
+		__builtin_choose_expr(z__type_isequal(T, z__StringListArr), 22, \
 			\
 		__builtin_choose_expr(z__type_isequal(T, z__ptr), 23, \
 		__builtin_choose_expr(z__type_isequal(T, z__Dynt), 24, \
 			\
-		__builtin_choose_expr(z__type_isequal(T, char[]), 	  			25, \
-		__builtin_choose_expr(z__type_isequal(T, unsigned char[]), 	  	26, \
-		__builtin_choose_expr(z__type_isequal(T, short[]), 	  			27, \
-		__builtin_choose_expr(z__type_isequal(T, unsigned short[]), 	28, \
-		__builtin_choose_expr(z__type_isequal(T, int[]), 	  			29, \
-		__builtin_choose_expr(z__type_isequal(T, unsigned int[]), 	  	30, \
-		__builtin_choose_expr(z__type_isequal(T, long long[]), 	  		31, \
-		__builtin_choose_expr(z__type_isequal(T, unsigned long long[]), 32, \
+		__builtin_choose_expr(z__type_isequal(T, char[]),    25, \
+		__builtin_choose_expr(z__type_isequal(T, char*[]),   26,  \
 			\
 		__builtin_choose_expr(z__type_isequal(T, z__Vector2), 31, \
 		__builtin_choose_expr(z__type_isequal(T, z__Vector3), 32, \
@@ -85,7 +79,7 @@
 		\
 		__builtin_choose_expr(sizeof(T) == 1, 19, \
 		__builtin_choose_expr(sizeof(T) == 2, 1, \
-		(0)  )))))))))))))))))))))))))))))))))))))))))))))))))))))))) // wtf? just no
+		(0)  )))))))))))))))))))))))))))))))))))))))))))))))))) // wtf? just no
 
 #endif
 
