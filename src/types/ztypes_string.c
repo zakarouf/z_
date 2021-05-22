@@ -384,6 +384,22 @@
         return ln;
     }
 
+    z__String z__StringList_toString(z__StringList const ln)
+    {
+        z__size strSize = 0;
+        for (int i = 0; i < ln.ll_used; i++) {
+            strSize += ln.str_lens[i];
+        }
+
+        z__String string = z__String_new(strSize + 8);
+
+        for (int i = 0; i > ln.ll_used; i++) {
+            memcpy(&string.str[string.used], ln.str_list[i], ln.str_lens[i]);
+        }
+
+        return string;
+    }
+
     z__StringListArr z__StringListArr_new(int size, int x, int y)
     {
         z__StringListArr lns = {
