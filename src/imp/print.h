@@ -59,8 +59,7 @@ static inline void z__imp_print__PRIV__print_func__i8_ptr(FILE *fp , z__i8 *ptr,
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__i16_ptr(FILE *fp , z__i16 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__i16_ptr(FILE *fp , z__i16 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -69,8 +68,7 @@ void z__imp_print__PRIV__print_func__i16_ptr(FILE *fp , z__i16 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__i32_ptr(FILE *fp , z__i32 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__i32_ptr(FILE *fp , z__i32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -79,8 +77,7 @@ void z__imp_print__PRIV__print_func__i32_ptr(FILE *fp , z__i32 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__i64_ptr(FILE *fp , z__i64 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__i64_ptr(FILE *fp , z__i64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -89,8 +86,7 @@ void z__imp_print__PRIV__print_func__i64_ptr(FILE *fp , z__i64 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__u8_ptr(FILE *fp , z__u8 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__u8_ptr(FILE *fp , z__u8 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -99,8 +95,7 @@ void z__imp_print__PRIV__print_func__u8_ptr(FILE *fp , z__u8 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__u16_ptr(FILE *fp , z__u16 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__u16_ptr(FILE *fp , z__u16 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -109,8 +104,7 @@ void z__imp_print__PRIV__print_func__u16_ptr(FILE *fp , z__u16 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__u32_ptr(FILE *fp , z__u32 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__u32_ptr(FILE *fp , z__u32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -119,8 +113,7 @@ void z__imp_print__PRIV__print_func__u32_ptr(FILE *fp , z__u32 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__u64_ptr(FILE *fp , z__u64 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__u64_ptr(FILE *fp , z__u64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
     for (int i = 0; i < len; ++i)
@@ -129,8 +122,7 @@ void z__imp_print__PRIV__print_func__u64_ptr(FILE *fp , z__u64 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__f32_ptr(FILE *fp , z__f32 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__f32_ptr(FILE *fp , z__f32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_FLOAT, fp);
     for (int i = 0; i < len; ++i)
@@ -139,8 +131,7 @@ void z__imp_print__PRIV__print_func__f32_ptr(FILE *fp , z__f32 *ptr, z__u32 len)
         ptr++;
     }
 }
-
-void z__imp_print__PRIV__print_func__f64_ptr(FILE *fp , z__f64 *ptr, z__u32 len)
+static inline void z__imp_print__PRIV__print_func__f64_ptr(FILE *fp , z__f64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_FLOAT, fp);
     for (int i = 0; i < len; ++i)
