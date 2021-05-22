@@ -233,7 +233,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
         } else if (type == 21) {
             z__StringList ls = va_arg(args, z__StringList);
             z__fprint_str_list(fp, ls.str_list, ls.ll_used);
-            
+
         } else if (type > 30
                    && type < 34 ) {
             z__fprint_Vector_float(fp, va_arg(args, z__Vector2).raw, type-29);
@@ -276,7 +276,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
         z__imp_print__PRIV__print_func(                                     \
             fp, zpp__Args_Count(__VA_ARGS__), ptr, __VA_ARGS__);            \
         z__FREE(ptr);                                                       \
-        fputs(zpp__PRIV__MAP_GET_END, fp);                                  \
+        fputs(Z___IMP__PRINT_DEFAULT_END, fp);                              \
     }
 
 
