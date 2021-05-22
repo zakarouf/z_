@@ -150,6 +150,23 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
     z__imp_print__PRIV__print_func__f32_ptr, z__imp_print__PRIV__print_func__f64_ptr
 };
 
+
+#define z__fprint_BaseArr(fp, array, len, typeID)\
+{\
+    fputs("[ ", fp);                                           \
+    z__imp_print__PRIV_print_func_arr[typeID-9](fp, array, len); \
+    fputs( Z___IMP__PRINT_COLOR__RESET "]", fp);               \
+}
+
+#define z__fprint_Arr(fp, Arr)\
+    {                           \
+        fprintf(fp, Z___IMP__PRINT_COLOR_OBJECT"<Arr>[" #Arr "]"\
+            Z___IMP__PRINT_COLOR_OBJECT"{" Z___IMP__PRINT_COLOR__RESET\
+            "len:" Z___IMP__PRINT_COLOR_INT "%u|%u " Z___IMP__PRINT_COLOR__RESET\
+            "*p:"  Z___IMP__PRINT_COLOR_POINTER "%p" Z___IMP__PRINT_COLOR_OBJECT "}" Z___IMP__PRINT_COLOR__RESET,\
+            (Arr).lenUsed, (Arr).len, (Arr).data);\
+    }
+
 #define z__fprint_Dynt(fp, dy)\
     {\
         fprintf(fp, Z___IMP__PRINT_COLOR_OBJECT "<Dynt>("Z___IMP__PRINT_COLOR_STRING"#%s"Z___IMP__PRINT_COLOR_OBJECT"){"\
