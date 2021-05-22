@@ -278,7 +278,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
         ++z__imp_print__PRIV__ptr_eval_type__var__ptr;\
     };
 
-#define z__imp_print__PRIV__wrappt(...) zpp__map(z__imp_print__PRIV__ptr_eval_type, __VA_ARGS__)
+#define z__imp_print__PRIV__wrappt(...) zpp__Args_map(z__imp_print__PRIV__ptr_eval_type, __VA_ARGS__)
 
 #define z__imp_print__PRIV__gen_print(fp, ...)\
     {                                                                       \
