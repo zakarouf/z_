@@ -223,7 +223,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
                     && type < 19) {
 
             z__voidArr tmparr = va_arg(args, z__voidArr);
-            z__fprint_BaseArr(fp, tmparr.data, tmparr.len, type);
+            z__fprint_BaseArr(fp, tmparr.data, tmparr.lenUsed, type);
 
         } else if (type == 20) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, z__String).str);
@@ -250,7 +250,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
             z__fprint_Dynt(fp, tmpd);
         }
         else {
-            fputs(Z___IMP__PRINT_COLOR_SPECIAL "<Unknown>", fp);
+            fputs(Z___IMP__PRINT_COLOR_SPECIAL "<Unknown>", fp); va_arg(args, void*);
         }
 
         fputs(Z___IMP__PRINT_COLOR__RESET Z___IMP__PRINT_DEFAULT_SEPERATOR "", fp);

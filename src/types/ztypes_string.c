@@ -250,7 +250,7 @@
         */
     }
 
-    z__StringList z__StringList_newFrom(z__StringList const *ln)
+    z__StringList z__StringList_clone(z__StringList const *ln)
     {
         z__StringList newln = {
             .list_len = ln->list_len,
@@ -393,8 +393,9 @@
 
         z__String string = z__String_new(strSize + 8);
 
-        for (int i = 0; i > ln.ll_used; i++) {
+        for (int i = 0; i < ln.ll_used; i++) {
             memcpy(&string.str[string.used], ln.str_list[i], ln.str_lens[i]);
+            string.used += ln.str_lens[i];
         }
 
         return string;

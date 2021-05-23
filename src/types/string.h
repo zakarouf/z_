@@ -68,10 +68,11 @@ void z__String_delChar(z__String *dest, int pos);
 z__StringList z__StringList_new(unsigned int base_lines_count);
 void z__StringList_delete(z__StringList *strList);
 
-z__StringList z__StringList_newFrom(z__StringList const *ln);
+z__StringList z__StringList_clone(z__StringList const *ln);
 void z__StringList_pushString(z__StringList *ln ,z__String str);
 void z__StringList_push(z__StringList *ln , char const * st, int len);
 void z__StringList_pop(z__StringList *ln);
+z__String z__StringList_toString(z__StringList const ln);
 
 z__StringList z__String_splitTok(z__String str, char const * seperator);
 z__StringList z__String_splitTok_raw(char const * stri, int len, char const * seperator);
