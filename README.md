@@ -34,8 +34,8 @@ _[See Overview](docs/overview.md)_
 For Metaprograming
 
 ### Multi Threading?
-The Development just had started with OpenMP, [Docs Here](docs/in-depth/omp.md).
-And with Pthreads impletation pending for the future.
+The Development just had started with OpenMP, [Docs Here](docs/in-depth/omp.md). <br>
+Pthreads impletation has also started with its [base](src/proc/pt_base.h).
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
