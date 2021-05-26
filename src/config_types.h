@@ -63,13 +63,21 @@
 #define Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
 #define Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
 
+/* Use Enum Type */
+//#define Z___TYPE_CONFIG__USE_ENUM_PRIMITIVE
+#define Z___TYPE_CONFIG__USE_ENUM
+
+/* Use Tuple Type */
+#define Z___TYPE_CONFIG__USE_TUPLE
+
+
 /* Memory Management */
 //#define Z___TYPE_CONFIG__USE_MEM   /* Custom Mem is always included, this config is useless */
 	//#define Z___TYPE_CONFIG__USE_MEM__VTRACK
 	//#define Z___TYPE_CONFIG__USE_MEM__TRACK
 	//#define Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
 
-/* Array Types, Use Vectors? */
+/* Use Vectors and stuff */
 #define Z___TYPE_CONFIG__USE_GMATHTYPE						
 	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR_AND_MATRIX			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array
 	#define Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR_AND_MATRIX
