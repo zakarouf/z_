@@ -74,7 +74,7 @@
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1)\
             switch((z__tmp__enum)->_in_use)\
 
-#define z__Enum_slot(M, ...) break; case M: { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__)
+#define z__Enum_slot(M, ...) break; case M: { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 #define z__Enum_unslot }
 
 #endif
