@@ -227,7 +227,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
 
         } else if (type == 20) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, z__String).str);
-        } else if (type == 25) {
+        } else if (type == 25 || type == 26) {
             fprintf(fp, Z___IMP__PRINT_COLOR_STRING "%s", va_arg(args, char*));
 
         } else if (type == 21) {

@@ -48,7 +48,7 @@
 		__builtin_choose_expr(z__type_isequal(T, z__Dynt), 24, \
 			\
 		__builtin_choose_expr(z__type_isequal(T, char[]),    25, \
-		__builtin_choose_expr(z__type_isequal(T, char*[]),   26,  \
+		__builtin_choose_expr(z__type_isequal(T, const char*),   26,  \
 			\
 		__builtin_choose_expr(z__type_isequal(T, z__Vector2), 31, \
 		__builtin_choose_expr(z__type_isequal(T, z__Vector3), 32, \
