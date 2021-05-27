@@ -12,16 +12,18 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 ### Types
 
 - [Primitive Types](./docs/in-depth/primitive_types.md)
+- Dyanmic Array Types
+  - [Generic](./docs/in-depth/Arr.md)
+  - Unknown Type
+  - Unknown Objects
+- Tuples
+- Enums
 - String
 - StringLines
 - StringLines Array
-- [Dyanmic Array Types](./docs/in-depth/Arr.md)
-  - Generic
-  - Unknown Type
-  - Unknown Object
 - Fixed Length Arrays
   - Struct
-  - Bare
+  - Primitive
 - Vector Types
   - Struct
   - Array
