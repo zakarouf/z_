@@ -66,6 +66,7 @@
 /* Use Enum Type */
 //#define Z___TYPE_CONFIG__USE_ENUM_PRIMITIVE
 #define Z___TYPE_CONFIG__USE_ENUM
+	#define Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
 
 /* Use Tuple Type */
 #define Z___TYPE_CONFIG__USE_TUPLE

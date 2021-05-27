@@ -77,4 +77,11 @@
 #define z__Enum_slot(M, ...) break; case M: { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 #define z__Enum_unslot }
 
+#endif#ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
+
+    #define match(En) z__Enum_match(En)
+    #define slot(Tup, ...) z__Enum_slot(Tup, __VA_ARGS__)
+    #define unslot z__Enum_unslot
+
+
 #endif
