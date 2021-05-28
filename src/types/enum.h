@@ -54,14 +54,14 @@
             z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
         } data;                                         \
         z__i16 _in_use;                                 \
-    }
+    };\
     /* Assign Funtions */\
-    //z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
+    z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
     
     
 #define z__Enum_chip(En, sl, ...)                 \
     {                                               \
-        (En)->_in_use = e##sl;                    \
+        (En)->_in_use = zpp__CAT(e, sl);             \
         z__Tuple_assign(&(En)->data.sl, __VA_ARGS__); \
     }
 
@@ -99,13 +99,30 @@
 #define z__Enum__PRIV__Apply_Functions_parameter_if(...)\
     zpp__CAT(z__Enum__PRIV__Apply_Functions_parameter_if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
 
+
+#define z__Enum__PRIV__Apply_fn__isProto_empty_1(...) _0
+#define z__Enum__PRIV__Apply_fn__isProto_empty_0(...) __VA_ARGS__
+
+#define z__Enum__PRIV__Apply_fn__isProto_empty(...)\
+    zpp__CAT(z__Enum__PRIV__Apply_fn__isProto_empty_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
+
 #define z__Enum__PRIV__Apply_Functions_map(x)\
-    zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_Functions_parameter_if x )\
+    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_Functions_parameter_if x )\
     {\
-        z__typeof(zpp__PRIV__Args_get_1 x (zpp__PRIV__Args_getupto_(zpp__Args_Count x), zpp__num_underscore158_asc())) \
+        z__typeof(zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_fn__isProto_empty(\
+            zpp__Args_getupto(\
+            zpp__PRIV__DEC(zpp__Args_Count x)\
+            , zpp__num_underscore158_asc())))) result;\
+        \
+        z__Enum_chip(&result, z__Enum__PRIV__Args_get_1()x,z__Enum__PRIV__Apply_fn__isProto_empty(\
+            zpp__Args_getupto(\
+            zpp__PRIV__DEC(zpp__Args_Count x)\
+            , zpp__num_underscore158_asc())));\
+        return result;\
     }
 
-#define z__Enum__PRIV__Apply_Functions(EnumType, ...) zpp__PRIV__Args_map__fn_Pattern(z__Enum__PRIV__Apply_Functions_map, EnumType, , __VA_ARGS__);
+#define z__Enum__PRIV__Apply_Functions(EnumType, ...)\
+    zpp__PRIV__Args_map__fn_Pattern(z__Enum__PRIV__Apply_Functions_map, EnumType, , __VA_ARGS__);
 
 //#define z__Enum__PRIV__Apply_Functions(EnumType, ...) zpp__Args_map(z__Enum__PRIV__Apply_Functions_map, __VA_ARGS__)
 
