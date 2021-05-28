@@ -20,7 +20,8 @@
 #define z__Enum__PRIV__FirstArgof_Param(x)\
     z__Enum__PRIV__Args_get_1()x
 
-#define z__Enum__PRIV__mapTupleArg_to_C_Enum(...) enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, e, , __VA_ARGS__)}
+#define z__Enum__PRIV__mapTupleArg_to_C_Enum(...)\
+    enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, , zpp__Args_skip_1(__VA_ARGS__))}
     //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
 
 /* More Powerful Enum Type Using Tuples
@@ -47,13 +48,13 @@
     This Not Valid, Will reuslt in a error
  */
 #define z__Enum(Name, ...)\
-    z__Enum__PRIV__mapTupleArg_to_C_Enum(__VA_ARGS__);  \
+    typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
     typedef struct Name Name;                           \
     struct Name {                                       \
         union {                                         \
             z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
         } data;                                         \
-        z__i16 _in_use;                                 \
+        Name##Tags _in_use;                             \
     };\
     /* Assign Funtions */\
     z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
@@ -61,7 +62,7 @@
     
 #define z__Enum_chip(En, sl, ...)                 \
     {                                               \
-        (En)->_in_use = zpp__CAT(e, sl);             \
+        (En)->_in_use = zpp__CAT(ENUM_TAG__, sl);     \
         z__Tuple_assign(&(En)->data.sl, __VA_ARGS__); \
     }
 
@@ -77,7 +78,7 @@
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1) \
             switch((z__tmp__enum)->_in_use)                     \
 
-#define z__Enum_slot(M, ...) break; case e##M: { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+#define z__Enum_slot(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 #define z__Enum_unslot }
 
 #ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT

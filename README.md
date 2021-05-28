@@ -10,7 +10,7 @@
 This library provides Core Functionality built upon the C language for the C language. Inspired and taken from Modern Languages such as Python, Rust etc. Sub-divided into Five major portions.
 
 1. Memory Tracker
-2. Data type
+2. Type
 3. Pre-Processing/Meta-Programming.
 4. Multi-Threading
 5. Standard Functions
@@ -24,33 +24,37 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 * Evaluation of Total allocation and free, helps to combat memory leaks and such
 
 
-### Data Types (types)
+### Types (types)
 
-Data Types to allow more stable/systamatic programming procedure, no more impletate this basic functionaity 10 different ways in 10 different programs.
+Types to allow more stable/systamatic programming procedure, no more impletate this basic functionaity 10 different ways in 10 different programs.
 
-- [Primitive Types](./docs/in-depth/primitive_types.md): Basic Data Types.
+- [Primitive Types](https://en.wikipedia.org/wiki/Primitive_data_type)
 - [Algebraic data type](https://en.wikipedia.org/wiki/Algebraic_data_type)
-  - [Tuples](): Basic Tuples.
-  - [Enums](): Sum Types.
-- [String](./docs/in-depth/strings.md): Safe String Type
-- [String List](): List of Strings.
-- [String List Array](): Array of String List.
-- [Dyanmic Array Types]()
-  - [Generic](./docs/in-depth/Arr.md): Type Safe Array
-  - [Unknown Type](./docs/in-depth/Dynt.md): Array of Raw Data Stream
-  - [Unknown Objects](./docs/in-depth/Irrg.md): Array of Raw Data Stream but each subsection of data can be of unequal size.
-- [Fixed Length Arrays]()
-  - [Struct](): Fixed Length Array wrapped around a structure similar to Generic Dynamic Array.
-  - [Primitive](): Primitive C's fixed array.
-- [Vector Types]()
-  - [Struct](): Vectors Wrapped Around a structure. Can be accessed with members
-  - [Raw Array](): Primitive C's fixed array, accessed with indexing.
-- [Matrices]()
-  - [Struct](): Matrix Wrapped Around a structure. Can be accessed with members
-  - [Raw Array](): Primitive C's 2D fixed array, accessed with indexing.
-- [Linked List](./docs/in-depth/Linklist.md)
+  - [Tuples](https://en.wikipedia.org/wiki/Tuple)
+  - [Sum Types](https://en.wikipedia.org/wiki/Tagged_union)
+- [String](https://en.wikipedia.org/wiki/String_(computer_science))
+- [String List]()
+- [String List Array]()
+- [Arrays](https://en.wikipedia.org/wiki/Array_data_structure)
+  - [Dyanmic Array Types](https://en.wikipedia.org/wiki/Dynamic_array)
+    - [Generic](https://en.wikipedia.org/wiki/Generic_programming)
+    - [Void Type](https://en.wikipedia.org/wiki/Void_type)
+    - [Void Objects](./docs/in-depth/Irrg.md)
+  - [Fixed Length Arrays]()
+    - [Using Record]()
+    - [Using Raw Array]()
+- [Vector Types](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics))
+  - [Using Record]()
+  - [Using Raw Array]()
+- [Matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics))
+  - [Using Record]()
+  - [Using Raw Array]()
+- [Linked List](https://en.wikipedia.org/wiki/Linked_list)
 
-_[See Overview](docs/overview.md)_
+#### Resources
+
+* [Documentation]()
+* [Overview](docs/overview.md)
 
 ### Pre-Processing (PreP)
 
