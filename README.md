@@ -2,12 +2,12 @@
   <img src="docs/imgs/ztypes_preview0.png" width="400"/>
   <h1>z_</h1>
 
-  Intuitive System Module with datatypes, memory tracker, and _more_.
+  Core Language Module with datatypes, memory tracker, and _more_.
 </div>
 
-## Highlights
+## About 
 
-This library provides Core Functionality built upon the C language for the C language. Inspired and taken from Modern Languages such as Python, Rust etc. Which itself is divided into Five major portions.
+This library provides Core Functionality built upon the C language for the C language. Inspired and taken from Modern Languages such as Python, Rust etc. Sub-divided into Five major portions.
 
 1. Memory Tracker
 2. Data type
@@ -77,29 +77,23 @@ for `z__u32` and `mem.h` for memory allocation definations.
 
 ### Installing
 
-#### Method 1: Git Clone
+#### Method 1: Local Integration
 
-Inorder to integrated `z_` in your project
+Inorder to integrated `z_` in your project only
 ```sh
 git clone --depth=1 git://github.com/zakarouf/z_.git
-cp -R z_/src /to/your/project/source/z_
+sh make-lib.sh
 ```
-Then include the header by
-```c
-#include "z_/z_.h"
-```
-Make sure to include the source files (*.c) from *z_* in your build script
 
-#### Method 2: Extracting Headers and Creating Library
-
-We can Create A library to link your program with
-In that case, do
-```sh
-./make-lib.sh
-```
 Will result a library libzkcollection.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
 
-#### Method 3: Full Installation
+Copy the `z_` folder onto your `include` directory. And copy the `libzkcollection.a` to the `lib` directory and link it against the executable and we are good to go.
+
+```c
+#include <z_/z_.h>
+```
+
+#### Method 2: Global Installation
 
 Run the `install.sh` script. <br>
 ```sh
@@ -148,7 +142,7 @@ This will load on top of your syntax highlighting for every .c file.
 
 <div align="center">
   <b> Enums </b>
-  <img src="docs/imgs/example/example_1.png">
+  <img src="docs/imgs/enums/enum_preview1_fn.png">
 </div>
 
 <div align="center">
@@ -165,6 +159,18 @@ This will load on top of your syntax highlighting for every .c file.
   <b>Creating a Map with Pthread</b>
   <img src="docs/imgs/example/pt_pre_900px.gif">
 </div>
+
+
+---
+
+## Reffrences & Credit
+
+* [Awesome C Preprocessor](https://github.com/Hirrolot/awesome-c-preprocessor)
+* [Generic-Print](https://github.com/exebook/generic-print)
+* [P99](https://gitlab.inria.fr/gustedt/p99)
+* [Cloak](https://github.com/pfultz2/Cloak)
+* [Metatlang99](https://github.com/Hirrolot/metalang99)
+* [Datatype99](https://github.com/Hirrolot/datatype99)
 
 ---
 
