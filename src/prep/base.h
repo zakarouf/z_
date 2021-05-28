@@ -49,8 +49,8 @@
 #define zpp__DETECT_paren_probe(...) zpp__DETECT_probe(~)
 #define zpp__DETECT_paren(x) zpp__DETECT_check(zpp__DETECT_paren x)
 
-#define zpp__IS_PAREN(x) zpp__DETECT_check(zpp__IS_PAREN_PROBE x)
 #define zpp__IS_PAREN_PROBE(...) zpp__DETECT_probe(~)
+#define zpp__IS_PAREN(x) zpp__DETECT_check(zpp__IS_PAREN_PROBE x)
 
 
 #define zpp__From(...) ({ __VA_ARGS__  })
