@@ -4,26 +4,6 @@
 #include "tuple.h"
 #include "../prep/map.h"
 
-#define z__Enum__PRIV__Args_get_1() zpp__PRIV__Args_get_1
-#define z__Enum__PRIV__Args_skip_1() zpp__Args_skip_1
-#define z__Enum__PRIV__Args_HAS_COMMA() zpp__Args_HAS_COMMA
-
-#define z__Enum__PRIV__Arg_ToTuple_1(x)\
-    z__TTuple(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
-#define z__Enum__PRIV__Arg_ToTuple_0(x) struct { int _0; } x;
-
-#define z__Enum__PRIV__Arg_ToTuple(x)\
-    zpp__CAT(z__Enum__PRIV__Arg_ToTuple_, z__Enum__PRIV__Args_HAS_COMMA()x)(x)\
-
-#define z__Enum__PRIV__TupleArgmap(...) zpp__Args_map(z__Enum__PRIV__Arg_ToTuple, __VA_ARGS__)
-
-#define z__Enum__PRIV__FirstArgof_Param(x)\
-    z__Enum__PRIV__Args_get_1()x
-
-#define z__Enum__PRIV__mapTupleArg_to_C_Enum(...)\
-    enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, , zpp__Args_skip_1(__VA_ARGS__))}
-    //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
-
 /* More Powerful Enum Type Using Tuples
  * Usage:
  *    z__Enum(
@@ -54,16 +34,34 @@
         union {                                         \
             z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
         } data;                                         \
-        Name##Tags _in_use;                             \
+        Name##Tags tag;                             \
     };\
     /* Assign Funtions */\
     z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
+
+
+/* Without the Function Generation, Rest are same */
+#define z__EnumSt(Name, ...)\
+    typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
+    typedef struct Name Name;                           \
+    struct Name {                                       \
+        union {                                         \
+            z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
+        } data;                                         \
+        Name##Tags tag;                             \
+    }
+
+#define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
+
+#define z__Enum__PRIV__chip__if_0(...) z__Tuple_assign(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
+#define z__Enum__PRIV__chip__if_1(...)
+#define z__Enum__PRIV__chip__if(...)\
+    zpp__CAT(z__Enum__PRIV__chip__if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
     
-    
-#define z__Enum_chip(En, sl, ...)                 \
-    {                                               \
-        (En)->_in_use = zpp__CAT(ENUM_TAG__, sl);     \
-        z__Tuple_assign(&(En)->data.sl, __VA_ARGS__); \
+#define z__Enum_chip(En, sl, ...)                     \
+    {                                                 \
+        (En)->tag = zpp__CAT(ENUM_TAG__, sl);     \
+        z__Enum__PRIV__chip__if(&(En)->data.sl, __VA_ARGS__); \
     }
 
 #define z__Enum_grave(En, sl, ...)\
@@ -76,10 +74,17 @@
 #define z__Enum_match(en)                                       \
         for(int keep = 1; keep; keep = 0)                       \
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1) \
-            switch((z__tmp__enum)->_in_use)                     \
+            switch((z__tmp__enum)->tag)                     \
 
 #define z__Enum_slot(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+#define z__Enum_empty break; default:
 #define z__Enum_unslot }
+
+#define z__Enum_ifSlot(En, Tup, ...)\
+        if(z__Enum_mtag(Tup) == (En).tag )\
+            for(int keep = 1; keep; keep = 0)\
+                for(({ z__Tuple__toReference(En.data.Tup, __VA_ARGS__) });keep; keep ^= 1)\
+        
 
 #ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
 
@@ -87,21 +92,44 @@
     #define slot(Tup, ...) z__Enum_slot(Tup, __VA_ARGS__)
     #define unslot z__Enum_unslot
 
+    #define ifSlot(En, Tup, ...) z__Enum_ifSlot(En, Tup, __VA_ARGS__)
+
 
 #endif
 
 
-/*/* DEPRECATED */
+/* Enum Generation */
+
+#define z__Enum__PRIV__Args_get_1() zpp__PRIV__Args_get_1
+#define z__Enum__PRIV__Args_skip_1() zpp__Args_skip_1
+#define z__Enum__PRIV__Args_HAS_COMMA() zpp__Args_HAS_COMMA
+
+#define z__Enum__PRIV__Arg_ToTuple_1(x)\
+    z__TTuple(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
+#define z__Enum__PRIV__Arg_ToTuple_0(x) char x;
+
+#define z__Enum__PRIV__Arg_ToTuple(x)\
+    zpp__CAT(z__Enum__PRIV__Arg_ToTuple_, z__Enum__PRIV__Args_HAS_COMMA()x)(x)\
+
+#define z__Enum__PRIV__TupleArgmap(...) zpp__Args_map(z__Enum__PRIV__Arg_ToTuple, __VA_ARGS__)
+
+#define z__Enum__PRIV__FirstArgof_Param(x)\
+    z__Enum__PRIV__Args_get_1()x
+
+#define z__Enum__PRIV__mapTupleArg_to_C_Enum(...)\
+    enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, , zpp__Args_skip_1(__VA_ARGS__))}
+    //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
+
 
 /* Apply Function for each type of enum */
-#define z__Enum__PRIV__Apply_Functions_parameter_if_1(...) int _0
+#define z__Enum__PRIV__Apply_Functions_parameter_if_1(...)
 #define z__Enum__PRIV__Apply_Functions_parameter_if_0(...) z__Tuple___createMemberList(zpp__Args_skip_1(__VA_ARGS__))
 
 #define z__Enum__PRIV__Apply_Functions_parameter_if(...)\
     zpp__CAT(z__Enum__PRIV__Apply_Functions_parameter_if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
 
 
-#define z__Enum__PRIV__Apply_fn__isProto_empty_1(...) _0
+#define z__Enum__PRIV__Apply_fn__isProto_empty_1(...)
 #define z__Enum__PRIV__Apply_fn__isProto_empty_0(...) __VA_ARGS__
 
 #define z__Enum__PRIV__Apply_fn__isProto_empty(...)\
