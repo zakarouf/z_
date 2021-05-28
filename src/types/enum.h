@@ -77,7 +77,7 @@
             switch((z__tmp__enum)->tag)                     \
 
 #define z__Enum_slot(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
-#define z__Enum_empty break; default:
+#define z__Enum_emptyslot break; default:
 #define z__Enum_unslot }
 
 #define z__Enum_ifSlot(En, Tup, ...)\
@@ -92,6 +92,7 @@
     #define slot(Tup, ...) z__Enum_slot(Tup, __VA_ARGS__)
     #define unslot z__Enum_unslot
 
+    #define emptyslot z__Enum_emptyslot
     #define ifSlot(En, Tup, ...) z__Enum_ifSlot(En, Tup, __VA_ARGS__)
 
 

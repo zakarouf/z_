@@ -2,7 +2,7 @@
 #define ZAKAROUF_Z_IMP_H
 
 #define ZAKAROUF__Z__IMP_VERSION_MAJOR 0
-#define ZAKAROUF__Z__IMP_VERSION_MINOR 1
+#define ZAKAROUF__Z__IMP_VERSION_MINOR 2
 #define ZAKAROUF__Z__IMP_VERSION_PATCH 1
 
 #include "imp/fio.h"
