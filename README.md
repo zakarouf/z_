@@ -5,39 +5,68 @@
   Intuitive System Module with datatypes, memory tracker, and _more_.
 </div>
 
-## Contents
+## Highlights
+
+This library provides Core Functionality built upon the C language for the C language. Inspired and taken from Modern Languages such as Python, Rust etc. Which itself is divided into Five major portions.
+
+1. Memory Tracker
+2. Data type
+3. Pre-Processing/Meta-Programming.
+4. Multi-Threading
+5. Standard Functions
+
 ### Memory Tracker
+
 A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 
-### Types
+* A wrapper around malloc, calloc, realloc, free. z__MALLOC, z__CALLOC, z__REALLOC, z__FREE.
+* Logging memory allocation and de-allocation that can output in any file-stream including stdout.
+* Evaluation of Total allocation and free, helps to combat memory leaks and such
 
-- [Primitive Types](./docs/in-depth/primitive_types.md)
-- Dyanmic Array Types
-  - [Generic](./docs/in-depth/Arr.md)
-  - Unknown Type
-  - Unknown Objects
-- Tuples
-- Enums
-- String
-- StringLines
-- StringLines Array
-- Fixed Length Arrays
-  - Struct
-  - Primitive
-- Vector Types
-  - Struct
-  - Array
-- Matrices
+
+### Data Types (types)
+
+Data Types to allow more stable/systamatic programming procedure, no more impletate this basic functionaity 10 different ways in 10 different programs.
+
+- [Primitive Types](./docs/in-depth/primitive_types.md): Basic Data Types.
+- [Algebraic data type](https://en.wikipedia.org/wiki/Algebraic_data_type)
+  - [Tuples](): Basic Tuples.
+  - [Enums](): Sum Types.
+- [String](./docs/in-depth/strings.md): Safe String Type
+- [String List](): List of Strings.
+- [String List Array](): Array of String List.
+- [Dyanmic Array Types]()
+  - [Generic](./docs/in-depth/Arr.md): Type Safe Array
+  - [Unknown Type](./docs/in-depth/Dynt.md): Array of Raw Data Stream
+  - [Unknown Objects](./docs/in-depth/Irrg.md): Array of Raw Data Stream but each subsection of data can be of unequal size.
+- [Fixed Length Arrays]()
+  - [Struct](): Fixed Length Array wrapped around a structure similar to Generic Dynamic Array.
+  - [Primitive](): Primitive C's fixed array.
+- [Vector Types]()
+  - [Struct](): Vectors Wrapped Around a structure. Can be accessed with members
+  - [Raw Array](): Primitive C's fixed array, accessed with indexing.
+- [Matrices]()
+  - [Struct](): Matrix Wrapped Around a structure. Can be accessed with members
+  - [Raw Array](): Primitive C's 2D fixed array, accessed with indexing.
 - [Linked List](./docs/in-depth/Linklist.md)
 
 _[See Overview](docs/overview.md)_
 
-### PreP
-For Metaprograming
+### Pre-Processing (PreP)
 
-### Multi Threading?
-The Development just had started with OpenMP, [Docs Here](docs/in-depth/omp.md). <br>
+Meta-programming using C-preprocessor.
+
+### Multi Threading (Proc)
+
+Multi-Threading wrapper arround both OpenMP and Pthread with C11 `<threads.h>` considered for the future.
+
+The Development has started with OpenMP.   <br>
 Pthreads impletation has also started with its [base](src/proc/pt_base.h).
+
+### Standard Functions (IMPs)
+
+Lastly `z_` Also Provides Basic day-to-day set of functions revolving around Time, File IO, System, Logging and many more.
+
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
@@ -118,7 +147,7 @@ This will load on top of your syntax highlighting for every .c file.
 </div>
 
 <div align="center">
-  <b> Array Init </b>
+  <b> Enums </b>
   <img src="docs/imgs/example/example_1.png">
 </div>
 
