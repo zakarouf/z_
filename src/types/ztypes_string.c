@@ -18,6 +18,20 @@
         };
     }
 
+    z__String z__String_newfrom(const char *st, int size)
+    {
+        if (size == -1)
+        {
+            size = strnlen(st, 1024);
+        }
+
+        z__String str = z__String_new(size + 8);
+        memcpy(str.str, st, sizeof(*st) * size);
+        str.used = size;
+
+        return str;
+    }
+
     inline void z__String_delete(z__String * s)
     {
         free(s->str);
