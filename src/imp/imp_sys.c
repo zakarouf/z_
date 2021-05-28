@@ -13,7 +13,7 @@ long z__sys_getRamUsage(void)
     return usage.ru_maxrss;
 }
 
-void z__log_basic(void * fileStream ,const char * restrict format, ...)
+void z__logfile_basic(void * fileStream ,const char * restrict format, ...)
 {
     va_list args;
 
@@ -27,12 +27,12 @@ void z__log_basic(void * fileStream ,const char * restrict format, ...)
 
 void z__panic(char const *str_msg)
 {
-    z__log_basic(stdout, "%s", str_msg);
+    z__logfile_basic(stdout, "%s", str_msg);
 }
 
 void z__die(char const *str_msg, int code)
 {
-    z__log_basic(stdout, "%s\n", str_msg);
-    z__log_basic(stdout, "EXITING\n", str_msg);
+    z__logfile_basic(stdout, "%s\n", str_msg);
+    z__logfile_basic(stdout, "EXITING\n", str_msg);
     exit(code);
 }
