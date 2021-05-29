@@ -76,7 +76,17 @@
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1) \
             switch((z__tmp__enum)->tag)                     \
 
-#define z__Enum_slot(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+
+#define z__Enum__PRIV__slot__if_0(M, ...)\
+    break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+
+#define z__Enum__PRIV__slot__if_1(M, ...)\
+    break; default: {
+
+#define z__Enum__PRIV__slot__if(...)\
+    zpp__CAT(z__Enum__PRIV__slot__if_, zpp__Args_IS_EMPTY(__VA_ARGS__))(__VA_ARGS__)
+
+#define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
 #define z__Enum_emptyslot break; default:
 #define z__Enum_unslot }
 
@@ -89,7 +99,7 @@
 #ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
 
     #define match(En) z__Enum_match(En)
-    #define slot(Tup, ...) z__Enum_slot(Tup, __VA_ARGS__)
+    #define slot(...) z__Enum_slot(__VA_ARGS__)
     #define unslot z__Enum_unslot
 
     #define emptyslot z__Enum_emptyslot
@@ -131,7 +141,7 @@
 
 
 #define z__Enum__PRIV__Apply_fn__isProto_empty_1(...)
-#define z__Enum__PRIV__Apply_fn__isProto_empty_0(...) __VA_ARGS__
+#define z__Enum__PRIV__Apply_fn__isProto_empty_0(...) zpp__Args_skip_1(__VA_ARGS__)
 
 #define z__Enum__PRIV__Apply_fn__isProto_empty(...)\
     zpp__CAT(z__Enum__PRIV__Apply_fn__isProto_empty_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
@@ -141,12 +151,12 @@
     {\
         z__typeof(zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_fn__isProto_empty(\
             zpp__Args_getupto(\
-            zpp__PRIV__DEC(zpp__Args_Count x)\
+            zpp__Args_Count x\
             , zpp__num_underscore158_asc())))) result;\
         \
         z__Enum_chip(&result, z__Enum__PRIV__Args_get_1()x,z__Enum__PRIV__Apply_fn__isProto_empty(\
             zpp__Args_getupto(\
-            zpp__PRIV__DEC(zpp__Args_Count x)\
+            zpp__Args_Count x\
             , zpp__num_underscore158_asc())));\
         return result;\
     }
