@@ -2,6 +2,7 @@
 #define ZAKAROUF__ZTYPES_TYPES__ARR_H
 
 #include "../config_types.h"
+#include "base.h"
 #include "mem.h"
 
 /* Known Type-safe arrays */
@@ -341,7 +342,6 @@
 
 #ifdef Z___TYPE_CONFIG__USE_TYPE_ARR_PREDEFINED
 	
-	#include "base.h"
 
     // Signed
     typedef z__Arr(z__i8)  z__i8Arr;

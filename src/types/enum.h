@@ -14,34 +14,28 @@
         );
  * Pitfall: Dont have the last member have a comma
  * Example
+ * The below Code is Valid
  * z__Enum(
         Result,
             (Ok),
             (Err, char *) // <== No Comma
         );
-    This is Valid
+    
+  Whilst This Code below is not.
  * z__Enum(
         Result,
             (Ok),
-            (Err, char *), // <== Comma
+            (Err, char *), // <== Comma, Will result in Error
         );
-    This Not Valid, Will reuslt in a error
  */
 #define z__Enum(Name, ...)\
-    typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
-    typedef struct Name Name;                           \
-    struct Name {                                       \
-        union {                                         \
-            z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
-        } data;                                         \
-        Name##Tags tag;                             \
-    };\
+    z__EnumType(Name, __VA_ARGS__);\
     /* Assign Funtions */\
     z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
 
 
 /* Without the Function Generation, Rest are same */
-#define z__EnumSt(Name, ...)\
+#define z__EnumType(Name, ...)\
     typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
     typedef struct Name Name;                           \
     struct Name {                                       \
