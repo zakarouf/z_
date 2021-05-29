@@ -145,8 +145,8 @@ This will load on top of your syntax highlighting for every .c file.
 </div>
 
 <div align="center">
-  <b> Enums </b>
-  <img src="docs/imgs/enums/enum_preview1_fn.png">
+  <b> Binary tree & Enums </b>
+  <img src="docs/imgs/example/enum_binary_tree.png">
 </div>
 
 <div align="center">
