@@ -33,6 +33,26 @@ typedef pthread_t z__pt_Thread;
 
 #define z__pt_ArgArr(TagN) z__Arr(z__pt_ArgContext(TagN))
 
+
+// Shared Data Context //
+
+#define z__pt_SharedContext_Tag(TagN, ...)\
+    struct z__pt_SharedContext_Tag__##TagN {\
+        __VA_ARGS__;\
+    }
+
+#define z__pt_SharedContext(TagN) struct z__pt_SharedContext_Tag__##TagN
+
+
+// Context  //
+
+#define z__pt_Context(ArgTag, SharedTag)\
+    struct {                                    \
+        z__pt_ArgContext(ArgTag) Args;          \
+        z__pt_SharedContext(SharedTag) Shared;  \
+    }
+
+
 //* Similar Jobs *//
 
 #define z__pt_Job(ArgContext, ...)\
@@ -47,9 +67,9 @@ typedef pthread_t z__pt_Thread;
 #define z__pt_Job_new(Job, n)\
     {                                                                               \
         (Job)->Thread_Num = n;                                                      \
-        (Job)->Args = z__MALLOC(sizeof(*(Job)->Args) * (Job)->Thread_Num);                 \
+        (Job)->Args = z__MALLOC(sizeof(*(Job)->Args) * (Job)->Thread_Num);          \
         (Job)->fn = z__MALLOC(sizeof(*(Job)->fn) * (Job)->Thread_Num);              \
-        (Job)->Threads = z__CALLOC(sizeof(*(Job)->Threads), (Job)->Thread_Num);    \
+        (Job)->Threads = z__CALLOC(sizeof(*(Job)->Threads), (Job)->Thread_Num);     \
     }
 
 #define z__pt_Job_bind_Arg(Job, ArgContext, of) \
