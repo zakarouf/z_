@@ -7,13 +7,13 @@
 
 ## About 
 
-This library provides Core Functionality built upon the C language for the C language. Inspired and taken from Modern Languages such as Python, Rust etc. Sub-divided into Five major portions.
+This library provides Core Functionality built upon the C language. Inspired and taken from Modern Languages such as Python, Rust etc.
 
-1. Memory Tracker
-2. Type
-3. Pre-Processing/Meta-Programming.
-4. Multi-Threading
-5. Standard Functions
+* **Memory Management.** Minimal Memory Tracker for logging memory, Autofree that can act as a build-in deconstructor.
+* **Type & Data Structures.** Clean Systematic Data types and Structures with feature-full fuctionality.
+* **Meta-Programming.** A abuse of C-preprocessor.
+* **Multi-Threading.** A more elegant way to handle concurrency.
+* **Standard Functions.** Did you wanted stuff like logging, better File IO, Generic Printing, Error Handling similar to try catch. Yes we got those.
 
 ### Memory Tracker
 
@@ -23,15 +23,15 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 * Logging memory allocation and de-allocation that can output in any file-stream including stdout.
 * Evaluation of Total allocation and free, helps to combat memory leaks and such
 
-
 ### Types (types)
 
-Types to allow more stable/systamatic programming procedure, no more impletate this basic functionaity 10 different ways in 10 different programs.
+Types to allow more stable/systamatic programming procedure with type-safe generic Data-types and Data-Structures, say no more to "Implement this basic functionaity 10 different ways in 10 different programs". Whilst some types are compatible with other libraries too! <br> Vectors and Matrix in particular are totally compatible with the [cglm](https://github.com/recp/cglm) library.
 
 - [Primitive Types](https://en.wikipedia.org/wiki/Primitive_data_type)
-- [Algebraic data type](https://en.wikipedia.org/wiki/Algebraic_data_type)
-  - [Tuples](https://en.wikipedia.org/wiki/Tuple)
-  - [Sum Types](https://en.wikipedia.org/wiki/Tagged_union)
+- [Algebraic Data Type](https://en.wikipedia.org/wiki/Algebraic_data_type)
+  - [Tuple](https://en.wikipedia.org/wiki/Tuple)
+  - [Record](https://en.wikipedia.org/wiki/Record_(computer_science))
+  - [Sum Type](https://en.wikipedia.org/wiki/Tagged_union)
 - [String](https://en.wikipedia.org/wiki/String_(computer_science))
 - [String List]()
 - [String List Array]()
@@ -58,14 +58,18 @@ Types to allow more stable/systamatic programming procedure, no more impletate t
 
 ### Pre-Processing (PreP)
 
-Meta-programming using C-preprocessor.
+Meta-programming using C-preprocessor. [Source Code](./src/prep)
 
 ### Multi Threading (Proc)
 
-Multi-Threading wrapper arround both OpenMP and Pthread with C11 `<threads.h>` considered for the future.
+Multi-Threading wrapper arround both OpenMP and Pthread with C11 `<threads.h>` considered for the future. <br>
 
 The Development has started with OpenMP.   <br>
-Pthreads impletation has also started with its [base](src/proc/pt_base.h).
+Pthreads impletation has also started with its [base](src/proc/pt_base.h). <br>
+
+Benchmark Report of the performance achieved with OpenMP, Pthread compared to its single threaded counter-part is in the works.
+> Currently I'm using Macbook Air 2012-mid with 4 Threads for the benchmark.
+- 2D 10000x10000 Terain Map Generation with Perlin Noise. **64% Faster**. [Source code](./examples/gen_perlin2D)<br>
 
 ### Standard Functions (IMPs)
 
@@ -78,6 +82,8 @@ it doesnt even include standard library except `stddef.h`, `stdint.h` and `stdbo
 declaration **but** they still require the bare minimum `base` for to be working properly such
 as, `z_/types/types/arr.h` can be included in itself but it still require `base.h` of `types`
 for `z__u32` and `mem.h` for memory allocation definations.
+
+Therefore, You need to explicitly include the `<stdlib.h>`, `<string.h>`.
 
 ### Installing
 
@@ -137,25 +143,66 @@ To add it into your project, either copy the contents of the `c.vim` file or put
 `c.vim` into your `after/syntax` folder, such as `~/.config/vim/after/syntax/` directory.
 This will load on top of your syntax highlighting for every .c file.
 
+
+## FAQs
+
+### Why did I create this library? || History behind z_.
+
+`z_` had a humble beginning as a single header for defining primitive types in [ztorg](https://github.com/zakarouf/ztorg) project.<br>
+Later on I added more quality of life stuff such as Type-Generic Dyanmic Arrays etc. It was then I decided to move its development to a separate repo with more than just a "Data Type Library". I wanted to created a core, standard-library that I can just use anywhere as a starting point.
+
+### Why heavy use of macros?
+
+Bloat. Creating such library that I can use anywhere, I wanted to have as less bloated binary wise as posible, while also having to combat the non-type generic nature of the C language. <br>
+If by any case, I dont want use a bare macro. I would wrap it up inside of a function.
+
+```c
+#define my_macro_functions(a, b) { ... }
+
+void my_function(int a, int b)
+{
+    my_macro_functions(a, b);
+}
+```
+
+### Who is this for?
+
+Me. Or you if you stumble upon my stuff and found it cool. But as of writting this I created this for myself. This repo is so I can easily maintain and access the code and or share it with my friends. **I am not a Programmer by a long shot**, I just like when my computer goes beep-boop.
+
+### Whom I owe this to?
+
+It takes many features from other libraries and projects. Whilst also some Reffrences and books.
+
+#### Types
+
+##### Sum Types :: z__Enum
+
+[Hirrolot](https://github.com/Hirrolot)'s [Datatype99](https://github.com/Hirrolot/datatype99). For my own implementation of Sum Types. The actual impletation is dis-similar to them. My implementation of [z__Enum](./src/types/enum.h) is no where near as elegant as Datatype99.
+
+##### Misc
+
+[Awesome C Preprocessor](https://github.com/Hirrolot/awesome-c-preprocessor) Helped to study on the C's magical Preprocessor.
+
+
 ## Previews & Example
 
 <div align="center">
-  <b> Getting Sum Of an Integer Array </b>
+  <b> Sum of an Integer Array </b>
   <img src="docs/imgs/example/example_2.png">
 </div>
 
 <div align="center">
-  <b> Binary tree & Enums </b>
-  <img src="docs/imgs/example/enum_binary_tree.png">
-</div>
-
-<div align="center">
-  <b>Array of Functions</b>
+  <b> Intializing an Array of Functions in a single line </b>
   <img src="docs/imgs/example/fnptr_arr.png">
 </div>
 
 <div align="center">
-  <b>Fill Up an array with OpenMP</b>
+  <b> Sum of Binary tree using Enum </b>
+  <img src="docs/imgs/example/enum_binary_tree.png">
+</div>
+
+<div align="center">
+  <b> Fill Up an array of Vector2 with OpenMP </b>
   <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
 </div>
 
@@ -167,7 +214,7 @@ This will load on top of your syntax highlighting for every .c file.
 
 ---
 
-## Reffrences & Credit
+## See Also
 
 * [Awesome C Preprocessor](https://github.com/Hirrolot/awesome-c-preprocessor)
 * [Generic-Print](https://github.com/exebook/generic-print)
@@ -180,6 +227,6 @@ This will load on top of your syntax highlighting for every .c file.
 
 ## Ending Note
 
-This library is not perfect and I know there are many others like it, but this one is mine.
+This library is not perfect and I know there are many others like it, but this one is mine <3.
 
 ---
