@@ -4,7 +4,7 @@
 #include "../prep/base.h"
 #include "../prep/args.h"
 
-#define z__TTuple(...)\
+#define z__Tuple(...)\
     struct {                                 \
         z__Tuple___createMember(__VA_ARGS__) \
     }
@@ -14,7 +14,7 @@
         z__Tuple___createMember(__VA_ARGS__) \
     }
 
-#define z__Tuple(TagName) struct z__Tuple__PRIV__Tag__##TagName
+#define z__Tuple_ofTag(TagName) struct z__Tuple__PRIV__Tag__##TagName
 
 /* Access A value from Tuple using indexing */
 #define z__Tuple_get(tup, n) zpp__CAT(tup._, n)

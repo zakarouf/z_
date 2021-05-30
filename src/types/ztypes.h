@@ -15,12 +15,24 @@
 /* Vectors And Matrices For Graphical Maths */
 #ifdef Z___TYPE_CONFIG__USE_GMATHTYPE
     #include "gmath.h"
-#endif //#ifdef Z___TYPE_CONFIG__USE_GMATHTYPE
+#endif 
+
 
 /* Generic Array Type */
 #ifdef Z___TYPE_CONFIG__USE_ARR_ARRAYTYPE
 	#include "arr.h"
 #endif
+
+/* Irregular Type */
+#ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
+    #include "irrg.h"
+#endif
+
+/* Void Array Type */
+#ifdef Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
+    #include "dynt.h"
+#endif
+
 
 /* Tuple Type */
 #ifdef Z___TYPE_CONFIG__USE_TUPLE
@@ -37,15 +49,11 @@
     #include "enum.h"
 #endif
 
-/* Irregular Type */
-#ifdef Z___TYPE_CONFIG__USE_IRREGULAR_ARRAYTYPE
-    #include "irrg.h"
+/* Record Type */
+#ifdef Z___TYPE_CONFIG__USE_RECORD
+    #include "record.h"
 #endif
 
-/* Void Array Type */
-#ifdef Z___TYPE_CONFIG__USE_DYNT_ARRAYTYPE
-    #include "dynt.h"
-#endif
 
 /* Linked Lists */
 #ifdef Z___TYPE_CONFIG__USE_TYPE_LINKEDLIST
@@ -61,3 +69,4 @@
 #endif
 
 #endif
+

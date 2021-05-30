@@ -71,6 +71,8 @@
 /* Use Tuple Type */
 #define Z___TYPE_CONFIG__USE_TUPLE
 
+/* Use Record Type */
+#define Z___TYPE_CONFIG__USE_RECORD
 
 /* Memory Management */
 //#define Z___TYPE_CONFIG__USE_MEM   /* Custom Mem is always included, this config is useless */
@@ -101,3 +103,4 @@
 #endif
 
 #endif
+
