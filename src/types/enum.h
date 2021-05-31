@@ -46,12 +46,12 @@
 /* Without the Function Generation, Rest are same */
 #define z__EnumType(Name, ...)\
     typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
-    typedef struct Name Name;                           \
-    struct Name {                                       \
-        union {                                         \
-           z__Enum__PRIV__Apply__memberMap_map(__VA_ARGS__)    \
-        } data;                                         \
-        Name##Tags tag;                             \
+    typedef struct Name Name;                               \
+    struct Name {                                           \
+        union {                                             \
+           z__Enum__PRIV__Apply__memberMap_map(__VA_ARGS__) \
+        } data;                                             \
+        Name##Tags tag;                                     \
     }
 
 #define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
@@ -66,23 +66,23 @@
 #define z__Enum__PRIV__chip__if(...)\
     zpp__CAT(z__Enum__PRIV__chip__if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
 
-#define z__Enum_chip(En, sl, ...)                \
-    {                                               \
-        (En)->tag = zpp__CAT(ENUM_TAG__, sl);       \
+#define z__Enum_chip(En, sl, ...)                           \
+    {                                                       \
+        (En)->tag = zpp__CAT(ENUM_TAG__, sl);               \
         z__Enum__PRIV__chip__if(&(En)->data.sl, __VA_ARGS__); \
     }
 
 #define z__Enum_grave(En, sl, ...)\
-    zpp__From(                                                      \
-        z__typeof(En) z__Enum_grave__var__tmp;                    \
-        z__Enum_chip(&z__Enum_grave__var__tmp, sl, __VA_ARGS__);  \
-        z__Enum_grave__var__tmp;                                    \
+    zpp__From(                                                  \
+        z__typeof(En) z__Enum_grave__var__tmp;                  \
+        z__Enum_chip(&z__Enum_grave__var__tmp, sl, __VA_ARGS__);\
+        z__Enum_grave__var__tmp;                                \
     )
 
 #define z__Enum_match(en)                                       \
         for(int keep = 1; keep; keep = 0)                       \
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1) \
-            switch((z__tmp__enum)->tag)                     \
+            switch((z__tmp__enum)->tag)                         \
 
 
 #define z__Enum__PRIV__slot__Apply_if_0(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
@@ -101,6 +101,9 @@
 #define z__Enum__PRIV__slot__if(...)\
     zpp__CAT(z__Enum__PRIV__slot__if_, zpp__Args_IS_EMPTY(__VA_ARGS__))(__VA_ARGS__)
 
+// FIXME: z__Enum_slot(en, (), x, y) <= Gets Evaluated as Record instead of tuple. Due
+//      The first Argument being Parenthesis, Add a second evalution after IS_PAREN, to check if
+//      its emply too. If yes, It's a tuple, Else its a record.
 #define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
 
 #define z__Enum_emptyslot break; default:
@@ -188,34 +191,38 @@
 
 #define z__Enum__PRIV__GEN__fn__Record(x)\
     Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x))\
-    z__Record__PRIV__forEnum_createMembers(zpp__Args_skip_1 x)\
-    {\
-        z__typeof(zpp__PRIV__Args_get_1 x (z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x)) ) result;\
-        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x, zpp__Args_toDuplicateParenList( z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x) ));\
-        return result;\
+    z__Record__PRIV__forEnum_createMembers(zpp__Args_skip_1 x)  \
+    {                                                           \
+        z__typeof(zpp__PRIV__Args_get_1 x (                     \
+                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x)) ) result;\
+                                                                                                    \
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x,                                              \
+                zpp__Args_toDuplicateParenList(                                                     \
+                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x) ));       \
+        return result;                                                                              \
     }
 
 #define z__Enum__PRIV__GEN__fn__Tuple(x)\
     Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Tuple___createMemberList(zpp__Args_skip_1 x))\
-    {\
-        z__typeof( zpp__PRIV__Args_get_1 x (\
-                    zpp__Args_getupto(\
-                        zpp__PRIV__DEC(zpp__Args_Count x),\
+    {                                                           \
+        z__typeof( zpp__PRIV__Args_get_1 x (                    \
+                    zpp__Args_getupto(                          \
+                        zpp__PRIV__DEC(zpp__Args_Count x),      \
                         zpp__num_underscore158_asc()) )) result;\
-        \
-        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x,\
-                zpp__Args_getupto(\
-                    zpp__PRIV__DEC(zpp__Args_Count x),\
-                    zpp__num_underscore158_asc()));  \
-        return result;\
+                                                                \
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x,          \
+                zpp__Args_getupto(                              \
+                    zpp__PRIV__DEC(zpp__Args_Count x),          \
+                    zpp__num_underscore158_asc()));             \
+        return result;                                          \
     }
 
 #define z__Enum__PRIV__GEN__fn__Unit(x)\
-    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x ()\
-    {\
-        z__typeof(zpp__PRIV__Args_get_1 x () ) result;\
-        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x);\
-        return result;\
+    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x () \
+    {                                                           \
+        z__typeof(zpp__PRIV__Args_get_1 x () ) result;          \
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x);         \
+        return result;                                          \
     }
 
 #define z__Enum__PRIV__GEN__fn__either_record_or_tuple_if_0(x) z__Enum__PRIV__GEN__fn__Tuple(x)
@@ -223,7 +230,6 @@
 
 #define z__Enum__PRIV__GEN__fn__either_record_or_tuple_if(x)\
     zpp__CAT(z__Enum__PRIV__GEN__fn__either_record_or_tuple_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_2 x))(x)
-
 
 
 #define z__Enum__PRIV__Apply_Functions_check_if_0(x) z__Enum__PRIV__GEN__fn__Unit(x)
