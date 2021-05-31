@@ -56,14 +56,19 @@
 
 #define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
 
-#define z__Enum__PRIV__chip__if_0(...) z__Tuple_assign(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
+#define z__Enum__PRIV__chip_Apply_if_0(...) z__Tuple_assign(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
+#define z__Enum__PRIV__chip_Apply_if_1(...) z__Record_assign(zpp__PRIV__Args_get_1(__VA_ARGS__), zpp__Args_skip_1(__VA_ARGS__))
+
+#define z__Enum__PRIV__chip_Apply_if(...) zpp__CAT(z__Enum__PRIV__chip_Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_2(__VA_ARGS__)))(__VA_ARGS__)
+
+#define z__Enum__PRIV__chip__if_0(...) z__Enum__PRIV__chip_Apply_if(__VA_ARGS__) 
 #define z__Enum__PRIV__chip__if_1(...)
 #define z__Enum__PRIV__chip__if(...)\
     zpp__CAT(z__Enum__PRIV__chip__if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
-    
-#define z__Enum_chip(En, sl, ...)                     \
-    {                                                 \
-        (En)->tag = zpp__CAT(ENUM_TAG__, sl);     \
+
+#define z__Enum_chip(En, sl, ...)                \
+    {                                               \
+        (En)->tag = zpp__CAT(ENUM_TAG__, sl);       \
         z__Enum__PRIV__chip__if(&(En)->data.sl, __VA_ARGS__); \
     }
 
@@ -80,8 +85,15 @@
             switch((z__tmp__enum)->tag)                     \
 
 
+#define z__Enum__PRIV__slot__Apply_if_0(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+
+#define z__Enum__PRIV__slot__Apply_if_1(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Record_toReffrence(&(z__tmp__enum)->data.M, __VA_ARGS__);
+
+#define z__Enum__PRIV__slot__Apply_if(M, ...)\
+        zpp__CAT(z__Enum__PRIV__slot__Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(M, __VA_ARGS__)
+
 #define z__Enum__PRIV__slot__if_0(M, ...)\
-    break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+   z__Enum__PRIV__slot__Apply_if(M, __VA_ARGS__)
 
 #define z__Enum__PRIV__slot__if_1(M, ...)\
     break; default: {
@@ -90,6 +102,10 @@
     zpp__CAT(z__Enum__PRIV__slot__if_, zpp__Args_IS_EMPTY(__VA_ARGS__))(__VA_ARGS__)
 
 #define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
+
+
+
+
 #define z__Enum_emptyslot break; default:
 #define z__Enum_unslot }
 
