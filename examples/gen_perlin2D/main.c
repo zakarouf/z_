@@ -31,7 +31,7 @@ static void printmap(z__u32Arr *map, z__Vint2 dimen)
 {
     for (int i = 0; i < dimen.y; ++i) {
         for (int j = 0; j < dimen.x; ++j) {
-            z__log_cl256_full(0 ,color[map->data[j + (i*dimen.x)]] , " ");
+            z__logfile_cl256_full(stdout, 0, color[map->data[j + (i*dimen.x)]] , " ");
         }
         putc('\n', stdout);
     }

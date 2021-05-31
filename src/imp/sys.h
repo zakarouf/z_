@@ -17,7 +17,7 @@ void z__logfile_basic(void * fileStream ,const char *format, ...);
     z__logfile_basic(file_ptr, "\x1b[38;5;%dm" format "\x1b[0m", color, ##__VA_ARGS__ )
 
 #define z__logfile_cl256_full(file_ptr , colorb, colorf, format, ...)\
-    z__logfile_cl256(file_ptr, colorf, "\x1b[48;5;%dm" format, colorb, ##__VA_ARGS__ )
+    z__logfile_cl256(file_ptr, colorf, "\x1b[48;5;%dm" format, colorb, ##__VA_ARGS__)
 
 #define z__logfile_cl256_verbose(file_ptr , color, format, ...)\
     z__logfile_cl256(file_ptr, color, "%s:%u @ %s(): " format, __FILE__, __LINE__, __func__, ##__VA_ARGS__)
@@ -49,26 +49,26 @@ void z__logfile_basic(void * fileStream ,const char *format, ...);
     z__logfile_basic(stdout, color, format, __VA_ARGS__ )
 
 #define z__log_cl256_full(colorb, colorf, format, ...)\
-    z__log_basic(stdout, colorb, colorf, format, __VA_ARGS__ )
+    z__logfile_cl256_full(stdout, colorb, colorf, format, __VA_ARGS__ )
 
 #define z__log_cl256_verbose(color, format, ...)\
-    z__log_basic(stdout, color, format, __VA_ARGS__)
+    z__logfile_cl256_verbose(stdout, color, format, __VA_ARGS__)
 
 #define z__log_cl256_full_verbose(colorb, colorf, format, ...)\
-    z__log_basic(stdout, colorb, colorf, format, __VA_ARGS__)
+    z__logfile_cl256_full_verbose(stdout, colorb, colorf, format, __VA_ARGS__)
 
 #define z__log_clrgb(r, g, b, format, ...)\
-    z__log_basic(stdout, r, g, b, format, __VA_ARGS__)
+    z__logfile_clrgb(stdout, r, g, b, format, __VA_ARGS__)
 
 #define z__log_clrgb_verbose(r, g, b, format, ...)\
-    z__log_basic(stdout, r, g, b, format, ##__VA_ARGS__)
+    z__logfile_clrgb_verbose(stdout, r, g, b, format, ##__VA_ARGS__)
 
 
 #define z__log_clrgb_full(r, g, b, fr, fg, fb, format, ...)\
-    z__log_basic(stdout, r, g, b, fr, fg, fb, format, __VA_ARGS__)
+    z__logfile_clrgb_full(stdout, r, g, b, fr, fg, fb, format, __VA_ARGS__)
 
 #define z__log_clrgb_full_verbose(r, g, b, fr, fg, fb, format, ...)\
-    z__log_basic(stdout, r, g, b, fr, fg, fb, format, __VA_ARGS__)    
+    z__logfile_clrgb_full_verbose(stdout, r, g, b, fr, fg, fb, format, __VA_ARGS__)    
 
 
 #endif
