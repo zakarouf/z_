@@ -169,20 +169,19 @@ void my_function(int a, int b)
 
 Me. Or you if you stumble upon my stuff and found it cool. But as of writting this I created this for myself. This repo is so I can easily maintain and access the code and or share it with my friends. **I am not a Programmer by a long shot**, I just like when my computer goes beep-boop.
 
-### Whom I owe this to?
+## Credit & Reffrences
 
 It takes many features from other libraries and projects. Whilst also some Reffrences and books.
 
-#### Types
+### Types
 
-##### Sum Types :: z__Enum
+#### Sum Types :: z__Enum
 
 [Hirrolot](https://github.com/Hirrolot)'s [Datatype99](https://github.com/Hirrolot/datatype99). For my own implementation of Sum Types. The actual impletation is dis-similar to them. My implementation of [z__Enum](./src/types/enum.h) is no where near as elegant as Datatype99.
 
-##### Misc
+#### Misc
 
 [Awesome C Preprocessor](https://github.com/Hirrolot/awesome-c-preprocessor) Helped to study on the C's magical Preprocessor.
-
 
 ## Previews & Example
 
