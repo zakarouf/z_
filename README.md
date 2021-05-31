@@ -201,6 +201,11 @@ It takes many features from other libraries and projects. Whilst also some Reffr
 </div>
 
 <div align="center">
+  <b> Web Event with Enums </b>
+  <img src="docs/imgs/example/enum_webevent.png">
+</div>
+
+<div align="center">
   <b> Fill Up an array of Vector2 with OpenMP </b>
   <img src="docs/imgs/example/ex3_omp_arr_fill.gif">
 </div>
