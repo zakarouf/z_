@@ -40,7 +40,7 @@
     typedef struct Name Name;                           \
     struct Name {                                       \
         union {                                         \
-            z__Enum__PRIV__TupleArgmap(__VA_ARGS__)     \
+           z__Enum__PRIV__Apply__memberMap_map(__VA_ARGS__)    \
         } data;                                         \
         Name##Tags tag;                             \
     }
@@ -72,7 +72,7 @@
 
 
 #define z__Enum__PRIV__slot__if_0(M, ...)\
-    break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple__toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+    break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 
 #define z__Enum__PRIV__slot__if_1(M, ...)\
     break; default: {
@@ -110,13 +110,41 @@
 #define z__Enum__PRIV__Args_HAS_COMMA() zpp__Args_HAS_COMMA
 
 #define z__Enum__PRIV__Arg_ToTuple_1(x)\
-    z__TTuple(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
+    z__Tuple(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
 #define z__Enum__PRIV__Arg_ToTuple_0(x) char x;
 
 #define z__Enum__PRIV__Arg_ToTuple(x)\
     zpp__CAT(z__Enum__PRIV__Arg_ToTuple_, z__Enum__PRIV__Args_HAS_COMMA()x)(x)\
 
 #define z__Enum__PRIV__TupleArgmap(...) zpp__Args_map(z__Enum__PRIV__Arg_ToTuple, __VA_ARGS__)
+
+
+#define z__Enum__PRIV__Arg_ToRecord_1__expand(...)\
+    z__Record__PRIV__forEnum(__VA_ARGS__)
+
+#define z__Enum__PRIV__Arg_ToRecord_1(x)\
+    z__Enum__PRIV__Arg_ToRecord_1__expand(zpp__EXPAND x)
+
+#define z__Enum__PRIV__Arg_ToRecord_0(x) char x;
+
+#define z__Enum__PRIV__Arg_ToRecord(x)\
+    zpp__CAT(z__Enum__PRIV__Arg_ToRecord_, z__Enum__PRIV__Args_HAS_COMMA()x)(x)\
+
+
+
+#define z__Enum__PRIV__memberMap_of_if(x) zpp__CAT(z__Enum__PRIV__memberMap_of_if_ ,zpp__IS_PAREN(zpp__PRIV__Args_get_2 x))(x)
+
+#define z__Enum__PRIV__memberMap_of_if_0(x) z__Enum__PRIV__Arg_ToTuple(x);
+#define z__Enum__PRIV__memberMap_of_if_1(x) z__Enum__PRIV__Arg_ToRecord(x)
+
+
+#define z__Enum__PRIV__Apply__memberMap_of_if(x) zpp__CAT(z__Enum__PRIV__Apply__memberMap_of_if_, zpp__Args_HAS_COMMA x)(x)
+
+#define z__Enum__PRIV__Apply__memberMap_of_if_0(x) char x;
+#define z__Enum__PRIV__Apply__memberMap_of_if_1(x) z__Enum__PRIV__memberMap_of_if(x)
+
+#define z__Enum__PRIV__Apply__memberMap_map(...) zpp__Args_map(z__Enum__PRIV__Apply__memberMap_of_if, __VA_ARGS__)
+
 
 #define z__Enum__PRIV__FirstArgof_Param(x)\
     z__Enum__PRIV__Args_get_1()x
