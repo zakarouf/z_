@@ -6,12 +6,19 @@
 
 /* More Powerful Enum Type Using Tuples
  * Usage:
- *    z__Enum(
-            RawData,
-                (floatData, int, float *),
-                (IntData, int, int *),
-                (Exception, char *)
-        );
+ * z__Enum(
+    WebEvent,
+        // An unit-like
+        (PageLoad),
+        (PageUnload),
+
+        // Like Tuple Struct
+        (KeyPressed, char),
+        (Paste, char *, int),
+
+        // Or Records (Structures)
+        (Click, (int, x, y))
+    );
  * Pitfall: Dont have the last member have a comma
  * Example
  * The below Code is Valid
@@ -27,6 +34,8 @@
             (Ok),
             (Err, char *), // <== Comma, Will result in Error
         );
+
+
  */
 #define z__Enum(Name, ...)\
     z__EnumType(Name, __VA_ARGS__);\
