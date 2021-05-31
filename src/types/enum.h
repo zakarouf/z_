@@ -179,39 +179,62 @@
     //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
 
 
+
+
 /* Apply Function for each type of enum */
-#define z__Enum__PRIV__Apply_Functions_parameter_if_1(...)
-#define z__Enum__PRIV__Apply_Functions_parameter_if_0(...) z__Tuple___createMemberList(zpp__Args_skip_1(__VA_ARGS__))
 
-#define z__Enum__PRIV__Apply_Functions_parameter_if(...)\
-    zpp__CAT(z__Enum__PRIV__Apply_Functions_parameter_if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
+#define z__Enum__PRIV__GEN__fn__Record__createArgList(x) zpp__Args_skip_1 x
+#define z__Enum__PRIV__GEN__fn__Record__createArgList_map(...) zpp__Args_maplist(z__Enum__PRIV__GEN__fn__Record__createArgList, __VA_ARGS__)
 
-
-#define z__Enum__PRIV__Apply_fn__isProto_empty_1(...)
-#define z__Enum__PRIV__Apply_fn__isProto_empty_0(...) zpp__Args_skip_1(__VA_ARGS__)
-
-#define z__Enum__PRIV__Apply_fn__isProto_empty(...)\
-    zpp__CAT(z__Enum__PRIV__Apply_fn__isProto_empty_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
-
-#define z__Enum__PRIV__Apply_Functions_map(x)\
-    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_Functions_parameter_if x )\
+#define z__Enum__PRIV__GEN__fn__Record(x)\
+    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x))\
+    z__Record__PRIV__forEnum_createMembers(zpp__Args_skip_1 x)\
     {\
-        z__typeof(zpp__PRIV__Args_get_1 x (z__Enum__PRIV__Apply_fn__isProto_empty(\
-            zpp__Args_getupto(\
-            zpp__Args_Count x\
-            , zpp__num_underscore158_asc())))) result;\
-        \
-        z__Enum_chip(&result, z__Enum__PRIV__Args_get_1()x,z__Enum__PRIV__Apply_fn__isProto_empty(\
-            zpp__Args_getupto(\
-            zpp__Args_Count x\
-            , zpp__num_underscore158_asc())));\
+        z__typeof(zpp__PRIV__Args_get_1 x (z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x)) ) result;\
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x, zpp__Args_toDuplicateParenList( z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x) ));\
         return result;\
     }
 
-#define z__Enum__PRIV__Apply_Functions(EnumType, ...)\
-    zpp__PRIV__Args_map__fn_Pattern(z__Enum__PRIV__Apply_Functions_map, EnumType, , __VA_ARGS__);
+#define z__Enum__PRIV__GEN__fn__Tuple(x)\
+    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Tuple___createMemberList(zpp__Args_skip_1 x))\
+    {\
+        z__typeof( zpp__PRIV__Args_get_1 x (\
+                    zpp__Args_getupto(\
+                        zpp__PRIV__DEC(zpp__Args_Count x),\
+                        zpp__num_underscore158_asc()) )) result;\
+        \
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x,\
+                zpp__Args_getupto(\
+                    zpp__PRIV__DEC(zpp__Args_Count x),\
+                    zpp__num_underscore158_asc()));  \
+        return result;\
+    }
 
-//#define z__Enum__PRIV__Apply_Functions(EnumType, ...) zpp__Args_map(z__Enum__PRIV__Apply_Functions_map, __VA_ARGS__)
+#define z__Enum__PRIV__GEN__fn__Unit(x)\
+    Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x ()\
+    {\
+        z__typeof(zpp__PRIV__Args_get_1 x () ) result;\
+        z__Enum_chip(&result, zpp__PRIV__Args_get_1 x);\
+        return result;\
+    }
+
+#define z__Enum__PRIV__GEN__fn__either_record_or_tuple_if_0(x) z__Enum__PRIV__GEN__fn__Tuple(x)
+#define z__Enum__PRIV__GEN__fn__either_record_or_tuple_if_1(x) z__Enum__PRIV__GEN__fn__Record(x)
+
+#define z__Enum__PRIV__GEN__fn__either_record_or_tuple_if(x)\
+    zpp__CAT(z__Enum__PRIV__GEN__fn__either_record_or_tuple_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_2 x))(x)
+
+
+
+#define z__Enum__PRIV__Apply_Functions_check_if_0(x) z__Enum__PRIV__GEN__fn__Unit(x)
+#define z__Enum__PRIV__Apply_Functions_check_if_1(x) z__Enum__PRIV__GEN__fn__either_record_or_tuple_if(x)
+
+#define z__Enum__PRIV__Apply_Functions_check_if(x)\
+    zpp__CAT(z__Enum__PRIV__Apply_Functions_check_if_, zpp__Args_HAS_COMMA x)(x)
+ 
+#define z__Enum__PRIV__Apply_Functions(EnumType, ...)\
+    zpp__PRIV__Args_map__fn_Pattern(z__Enum__PRIV__Apply_Functions_check_if, EnumType, , __VA_ARGS__);
+
 
 
 #endif
