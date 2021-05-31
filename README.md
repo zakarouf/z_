@@ -80,7 +80,7 @@ Lastly `z_` Also Provides Basic day-to-day set of functions revolving around Tim
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
 it doesnt even include standard library except `stddef.h`, `stdint.h` and `stdbool.h` for type
 declaration **but** they still require the bare minimum `base` for to be working properly such
-as, `z_/types/types/arr.h` can be included in itself but it still require `base.h` of `types`
+as, `z_/types/arr.h` can be included in itself but it still require `base.h` of `types`
 for `z__u32` and `mem.h` for memory allocation definations.
 
 Therefore, You need to explicitly include the `<stdlib.h>`, `<string.h>`.
@@ -132,7 +132,7 @@ This particular config tells to include the Linked List type and its functionait
 > Will result in a error
 This forces to you to include linked list type manually.
 ```c
-#include "z_/types/types/llist.h"
+#include <z_/types/llist.h>
 ```
 Now this will work as it should.
 
