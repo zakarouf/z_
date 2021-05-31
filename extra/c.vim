@@ -44,7 +44,7 @@ syn keyword cStructure z__Vector z__Arr z__Martix z__VectorSt
 syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI z__ArrSxT
 syn keyword cStructure z__Link z__LList z__LinkDef
 
-syn keyword cStructure z__Tuple z__Tuple_Tag z__TTuple z__Enum z__EnumType
+syn keyword cStructure z__Tuple z__Tuple_Tag z__Record z__Enum z__EnumType
 syn keyword cStatement z__Enum_match z__Enum_slot z__Enum_unslot z__Enum_ifSlot z__Enum_emptyslot
 syn keyword cStatement match slot unslot ifSlot emptyslot
 

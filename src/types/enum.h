@@ -103,17 +103,16 @@
 
 #define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
 
-
-
-
 #define z__Enum_emptyslot break; default:
 #define z__Enum_unslot }
 
-#define z__Enum_ifSlot(En, Tup, ...)\
-        if(z__Enum_mtag(Tup) == (En).tag )\
+#define z__Enum_ifSlot(En, M, ...)\
+        if(z__Enum_mtag(M) == (En).tag )\
             for(int keep = 1; keep; keep = 0)\
-                for(({ z__Tuple__toReference(En.data.Tup, __VA_ARGS__) });keep; keep ^= 1)\
+                for(({ z__Enum__PRIV__slot__if(__VA_ARGS__) });keep; keep ^= 1)\
         
+
+#define z__Enum_matches(En, M) (z__Enum_mtag(M) == (En).tag)
 
 #ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
 
@@ -123,6 +122,7 @@
 
     #define emptyslot z__Enum_emptyslot
     #define ifSlot(En, Tup, ...) z__Enum_ifSlot(En, Tup, __VA_ARGS__)
+
 
 
 #endif
