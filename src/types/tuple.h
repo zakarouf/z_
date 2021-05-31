@@ -63,7 +63,7 @@
 #define z__Tuple__PRIV__toReference(TupleName, ...)\
     zpp__CAT(z__Tuple__PRIV__toReference_Empty_, zpp__Args_IS_EMPTY(__VA_ARGS__))(TupleName, __VA_ARGS__)
 
-#define z__Tuple__toReference(TupleName, ...)  z__Tuple__PRIV__toReference(TupleName, __VA_ARGS__)
+#define z__Tuple_toReference(TupleName, ...)  z__Tuple__PRIV__toReference(TupleName, __VA_ARGS__)
 
 
 /* Assingment Of Tuple */
