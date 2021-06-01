@@ -151,6 +151,13 @@ This will load on top of your syntax highlighting for every .c file.
 `z_` had a humble beginning as a single header for defining primitive types in [ztorg](https://github.com/zakarouf/ztorg) project.<br>
 Later on I added more quality of life stuff such as Type-Generic Dyanmic Arrays etc. It was then I decided to move its development to a separate repo with more than just a "Data Type Library". I wanted to created a core, standard-library that I can just use anywhere as a starting point.
 
+### Os & Compiler Support?
+
+Linux and MacOS is fully supported while, with Windows your mileage might vary. <br>
+
+As for Compiler GCC or Clang is recommended.
+
+
 ### Why heavy use of macros?
 
 Bloat. Creating such library that I can use anywhere, I wanted to have as less bloated binary wise as posible, while also having to combat the non-type generic nature of the C language. <br>
