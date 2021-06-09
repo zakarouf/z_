@@ -18,7 +18,10 @@
 
 #define zpp__PRIV_TO_STRING(...) #__VA_ARGS__
 
+#define zpp__TO_STRING(...) zpp__PRIV_TO_STRING(__VA_ARGS__)
+
 #define zpp__PRIV_COMMA(...) ,
+#define zpp__PRIV__SEMI_COLON(...) ;
 #define zpp__IGNORE(...)
 #define zpp__EXPAND(...) __VA_ARGS__
 #define zpp__EMPTY
