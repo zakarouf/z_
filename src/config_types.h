@@ -28,11 +28,18 @@
 /*------------------------------------------*/
 
 /* General */
+/* Pretty self Explanatory, Edit them with Caution */
 #define Z___TYPE_REALLOC_RESIZE_BY_DEFAULT 8
+
+#define Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__NUM 8
+#define Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__OPERATOR +
+#define Z___TYPE_CONFIG__ARR__SHRINK_FACTOR__NUM 8
+
 #define Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT 8
 
 /*
  * Used Dollar-sign at the end of macros to explicitly tell they are indeed macros
+ * Currently not all macros are aliased sadly.
  * z__Arr_new$() <- is a macros
  */
 //#define Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
