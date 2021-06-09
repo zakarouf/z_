@@ -241,7 +241,7 @@
         }
 
         if (len == -1) {
-            len = strlen(st);
+            len = strnlen(st, 1024);
         }
 
         ln->str_list[ln->ll_used] = calloc(len, sizeof(**ln->str_list));
@@ -321,7 +321,7 @@
             len = strlen(stri);
         }
         
-        char *tmp_stri = malloc(len * sizeof(*tmp_stri));
+        char *tmp_stri = z__New0(*tmp_stri, len);
         memcpy(tmp_stri, stri, len);
 
         char *lastbuff = tmp_stri;
