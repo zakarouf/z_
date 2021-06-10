@@ -7,11 +7,11 @@
 typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 {
     z__ptr data;
+    char *comment;
     z__size size;
-    z__u8  typeID;
     z__u32 len;
     z__u32 lenUsed;
-    char *comment;
+    z__u8  typeID;
 
 }z__Dynt;
 
