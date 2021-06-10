@@ -7,7 +7,8 @@ long z__sys_getRamUsage(void);
 
 
 /* Log */
-void z__logfile_basic(void * fileStream ,const char *format, ...);
+void z__logfile_basic(void * fileStream ,const char *format, ...)
+    __attribute__ ((format (printf, 2, 3)));;
 
 #define z__logfile_verbose(file_ptr , format, ...)\
     z__logfile_basic(file_ptr, "%s:%u @ %s(): " format, __FILE__, __LINE__, __func__, __VA_ARGS__)
