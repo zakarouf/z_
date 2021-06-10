@@ -138,7 +138,7 @@
 #define z__Enum__PRIV__Args_HAS_COMMA() zpp__Args_HAS_COMMA
 
 #define z__Enum__PRIV__Arg_ToTuple_1(x)\
-    z__Tuple(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
+    z__TupleX(z__Enum__PRIV__Args_skip_1()x) z__Enum__PRIV__Args_get_1()x;
 #define z__Enum__PRIV__Arg_ToTuple_0(x) char x;
 
 #define z__Enum__PRIV__Arg_ToTuple(x)\

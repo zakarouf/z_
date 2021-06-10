@@ -4,17 +4,15 @@
 #include "../prep/base.h"
 #include "../prep/args.h"
 
-#define z__Tuple(...)\
+#define z__TupleX(...)\
     struct {                                 \
         z__Tuple___createMember(__VA_ARGS__) \
     }
 
-#define z__Tuple_Tag(TagName, ...)\
-    struct z__Tuple__PRIV__Tag__##TagName {  \
+#define z__Tuple(Name, ...)\
+    struct Name {  \
         z__Tuple___createMember(__VA_ARGS__) \
     }
-
-#define z__Tuple_ofTag(TagName) struct z__Tuple__PRIV__Tag__##TagName
 
 /* Access A value from Tuple using indexing */
 #define z__Tuple_get(tup, n) zpp__CAT(tup._, n)
