@@ -24,10 +24,19 @@
 #define z__ANSIFMT__PRIV__FMT__C__italic(...)     "3"
 #define z__ANSIFMT__PRIV__FMT__C__underline(...)  "4"
 #define z__ANSIFMT__PRIV__FMT__C__reverse(...)    "7"
+#define z__ANSIFMT__PRIV__FMT__C__lit(...)         __VA_ARGS__
 
 #define z__ANSIFMT__PRIV__FMT__C__no(...) "2" zpp__CAT(z__ANSIFMT__PRIV__FMT__C__, zpp__PRIV__Args_get_1(__VA_ARGS__))("")
 
-#define z__ANSIFMT__PRIV__FMT__C__cl256(...)       "38;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) ";48;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(zpp__Args_skip_1(__VA_ARGS__)))
+#define z__ANSIFMT__PRIV__FMT__C__cl256(...)\
+    "38;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) ";"\
+    "48;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(zpp__Args_skip_1(__VA_ARGS__)))
+
+#define z__ANSIFMT__PRIV__FMT__C__cl256_fg(...)\
+    "38;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__))
+
+#define z__ANSIFMT__PRIV__FMT__C__cl256_bg(...)\
+    "48;5;" zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__))
 
 #define z__ANSIFMT__PRIV__FMT__C__clrgb(...)\
     "38;2;" zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) ";"\
