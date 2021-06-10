@@ -6,17 +6,19 @@
 #include "../prep/args.h"
 
 
-#define z__Record(...)\
+#define z__RecordX(...)\
     struct {\
         z__Record__PRIV__createMembers(__VA_ARGS__)\
     }\
 
-#define z__Record_Tag(TagName, ...)\
-    struct z__Record__PRIV__Tag__##TagName {\
+#define z__Record(Name, ...)\
+    struct Name {\
         z__Record__PRIV__createMembers(__VA_ARGS__)\
-    }
+    }\
 
-#define z__Record_ofTag(TagName) struct z__Record__PRIV__Tag__##TagName
+#define record struct
+
+
 
 #define z__Record__PRIV__forEnum(...)\
     struct {\
@@ -49,9 +51,14 @@
 
 // Generation  //
 
-#define z__Record__PRIV__createMembers_map(x) zpp__Args_get(1, zpp__EXPAND x) zpp__Args_skip_1 x;
-#define z__Record__PRIV__createMembers(...) zpp__Args_map(z__Record__PRIV__createMembers_map, __VA_ARGS__)
+#define z__Record__PRIV__create_bitf(...) zpp__CAT(z__Record__PRIV__create_bitf__step_, zpp__DEC(zpp__Args_Count(__VA_ARGS__)))(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
 
+#define z__Record__PRIV__checkbit_1(x) z__Record__PRIV__create_bitf x
+#define z__Record__PRIV__checkbit_0(...) __VA_ARGS__
+#define z__Record__PRIV__checkbit(...) zpp__CAT(z__Record__PRIV__checkbit_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(__VA_ARGS__)
+
+#define z__Record__PRIV__createMembers_map(x) zpp__Args_get(1, zpp__EXPAND x) z__Record__PRIV__checkbit(zpp__Args_skip_1 x);
+#define z__Record__PRIV__createMembers(...) zpp__Args_map(z__Record__PRIV__createMembers_map, __VA_ARGS__)
 
 //* Auto *//
 
@@ -541,6 +548,171 @@
 #define z__Record__PRIV__forEnum_createMembers__2(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__Record__PRIV__forEnum_createMembers__1(__VA_ARGS__)
 #define z__Record__PRIV__forEnum_createMembers__1(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__Record__PRIV__forEnum_createMembers__0(__VA_ARGS__)
 #define z__Record__PRIV__forEnum_createMembers__0(x, ...) 
+
+
+// Apply Bit Declaration
+
+#define z__Record__PRIV__create_bitf__step_159(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_158(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_158(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_157(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_157(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_156(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_156(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_155(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_155(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_154(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_154(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_153(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_153(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_152(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_152(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_151(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_151(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_150(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_150(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_149(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_149(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_148(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_148(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_147(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_147(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_146(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_146(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_145(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_145(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_144(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_144(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_143(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_143(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_142(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_142(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_141(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_141(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_140(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_140(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_139(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_139(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_138(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_138(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_137(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_137(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_136(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_136(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_135(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_135(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_134(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_134(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_133(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_133(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_132(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_132(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_131(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_131(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_130(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_130(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_129(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_129(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_128(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_128(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_127(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_127(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_126(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_126(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_125(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_125(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_124(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_124(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_123(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_123(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_122(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_122(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_121(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_121(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_120(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_120(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_119(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_119(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_118(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_118(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_117(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_117(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_116(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_116(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_115(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_115(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_114(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_114(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_113(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_113(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_112(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_112(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_111(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_111(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_110(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_110(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_109(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_109(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_108(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_108(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_107(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_107(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_106(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_106(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_105(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_105(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_104(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_104(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_103(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_103(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_102(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_102(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_101(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_101(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_100(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_100(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_99(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_99(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_98(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_98(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_97(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_97(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_96(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_96(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_95(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_95(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_94(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_94(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_93(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_93(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_92(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_92(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_91(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_91(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_90(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_90(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_89(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_89(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_88(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_88(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_87(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_87(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_86(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_86(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_85(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_85(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_84(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_84(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_83(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_83(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_82(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_82(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_81(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_81(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_80(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_80(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_79(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_79(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_78(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_78(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_77(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_77(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_76(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_76(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_75(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_75(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_74(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_74(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_73(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_73(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_72(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_72(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_71(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_71(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_70(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_70(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_69(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_69(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_68(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_68(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_67(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_67(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_66(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_66(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_65(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_65(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_64(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_64(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_63(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_63(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_62(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_62(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_61(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_61(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_60(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_60(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_59(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_59(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_58(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_58(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_57(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_57(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_56(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_56(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_55(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_55(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_54(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_54(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_53(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_53(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_52(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_52(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_51(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_51(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_50(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_50(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_49(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_49(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_48(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_48(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_47(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_47(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_46(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_46(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_45(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_45(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_44(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_44(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_43(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_43(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_42(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_42(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_41(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_41(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_40(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_40(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_39(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_39(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_38(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_38(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_37(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_37(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_36(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_36(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_35(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_35(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_34(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_34(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_33(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_33(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_32(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_32(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_31(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_31(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_30(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_30(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_29(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_29(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_28(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_28(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_27(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_27(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_26(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_26(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_25(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_25(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_24(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_24(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_23(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_23(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_22(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_22(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_21(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_21(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_20(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_20(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_19(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_19(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_18(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_18(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_17(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_17(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_16(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_16(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_15(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_15(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_14(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_14(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_13(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_13(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_12(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_12(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_11(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_11(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_10(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_10(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_9(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_9(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_8(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_8(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_7(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_7(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_6(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_6(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_5(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_5(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_4(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_4(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_3(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_3(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_2(x, zpp__Args_skip_1(__VA_ARGS__)) 
+#define z__Record__PRIV__create_bitf__step_2(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_1(x, zpp__Args_skip_1(__VA_ARGS__))
+#define z__Record__PRIV__create_bitf__step_1(x, ...) zpp__PRIV__Args_get_1(__VA_ARGS__) : x, z__Record__PRIV__create_bitf__step_0(x, zpp__Args_skip_1(__VA_ARGS__))
+
+#define z__Record__PRIV__create_bitf__step_0(x, ...) :0
 
 #endif
 
