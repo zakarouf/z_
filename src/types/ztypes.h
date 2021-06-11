@@ -3,9 +3,11 @@
 
 #include "../config_types.h"
 #include "base.h"
+#include "base_util.h"
 #include "typeof.h"
 #include "mem.h"
 
+#include "bitf.h"
 
 /* CGLM */
 #ifdef Z___TYPE_INCLUED_CGLM
