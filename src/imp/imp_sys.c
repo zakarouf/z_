@@ -32,7 +32,6 @@ void z__panic(char const *str_msg)
 
 void z__die(char const *str_msg, int code)
 {
-    z__logfile_basic(stdout, "%s\n", str_msg);
-    z__logfile_basic(stdout, "EXITING\n", str_msg);
+    z__logfile_basic(stdout, "FORCE EXIT %s\n", str_msg);
     exit(code);
 }

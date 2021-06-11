@@ -34,7 +34,7 @@ z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, const cha
     FILE *fp;
     if((fp = fopen(filepath, "rb")) == NULL)
     {
-        return (z__Dynt){NULL, 0, 0, 0, 0, NULL};
+        return (z__Dynt){NULL, NULL, 0, 0, 0, 0};
     }
 
     fseek(fp, 0, SEEK_END);
