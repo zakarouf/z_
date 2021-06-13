@@ -95,34 +95,53 @@
             switch((z__tmp__enum)->tag)                         \
 
 
+
+
+// Syntax, slot(x, (), a) <= For Tuple
+// Syntax, slot(x, (a, b), (t, d))  <= For Record
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0_0(Memb, ...) z__Record_toReffrence(& Memb, __VA_ARGS__);
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0_1(Memb, ...) z__Tuple_toReference(Memb, __VA_ARGS__)
+
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0_check(Memb, a, ...) zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_0_,  zpp__Args_IS_EMPTY a )(Memb, __VA_ARGS__)
+
+// Has None Nested Paren, Either Record or Tuple with a ignore first element.
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0(Memb, ...) z__Enum__PRIV__slot__Apply_if_1__record_apply_0_check(Memb, zpp__PRIV__Args_get_1(__VA_ARGS__), __VA_ARGS__)
+
+// Create Bare Refference
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_BareReff(Memb, x) z__typeof(Memb) * zpp__PRIV__Args_get_1 x = &Memb;
+
+// Has One Nested Paren, Create Bare Refference
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_1(Memb, ...) z__Enum__PRIV__slot__Apply_if_1__record_apply_BareReff(Memb, zpp__PRIV__Args_get_1(__VA_ARGS__)) 
+
+// Check How many nested paren is there
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_check(x) zpp__IS_PAREN(zpp__PRIV__Args_get_1 x)
+
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply(Memb, ...) zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_, z__Enum__PRIV__slot__Apply_if_1__record_apply_check(zpp__PRIV__Args_get_1(__VA_ARGS__))) (Memb, __VA_ARGS__)
+
+// For If not Tuples, i.e. Record or Bare
+#define z__Enum__PRIV__slot__Apply_if_1(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Enum__PRIV__slot__Apply_if_1__record_apply((z__tmp__enum)->data.M, __VA_ARGS__);
+
+
 // For Tuples
 #define z__Enum__PRIV__slot__Apply_if_0(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 
 
-#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0(M, ...) __VA_ARGS__ 0
-#define z__Enum__PRIV__slot__Apply_if_1__record_apply_1(M, ...) __VA_ARGS__ 1
-
-#define z__Enum__PRIV__slot__Apply_if_1__record_apply(M, ...) zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_, zpp__Args_HAS_COMMA(zpp__EXPAND zpp__PRIV__Args_get_1(__VA_ARGS__)) )(M, zpp__EXPAND zpp__PRIV__Args_get_1(__VA_ARGS__))
-
-// For Records
-#define z__Enum__PRIV__slot__Apply_if_1(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Record_toReffrence(&(z__tmp__enum)->data.M, __VA_ARGS__);
-
-
+// Check if It has paren, if not its a typle
 #define z__Enum__PRIV__slot__Apply_if(M, ...)\
         zpp__CAT(z__Enum__PRIV__slot__Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(M, __VA_ARGS__)
 
+// Something is Here, not Empty, check for tuple or record or Bare data.
 #define z__Enum__PRIV__slot__if_0(M, ...)\
    z__Enum__PRIV__slot__Apply_if(M, __VA_ARGS__)
 
+// Slot emply
 #define z__Enum__PRIV__slot__if_1(M, ...)\
     break; default: {
 
+// Check slot is emply or not
 #define z__Enum__PRIV__slot__if(...)\
     zpp__CAT(z__Enum__PRIV__slot__if_, zpp__Args_IS_EMPTY(__VA_ARGS__))(__VA_ARGS__)
 
-// FIXME: z__Enum_slot(en, (), x, y) <= Gets Evaluated as Record instead of tuple. Due
-//      The first Argument being Parenthesis, Add a second evalution after IS_PAREN, to check if
-//      its emply too. If yes, It's a tuple, Else its a record.
 #define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
 
 #define z__Enum_emptyslot break; default:
