@@ -38,14 +38,14 @@
 
  */
 #define z__Enum(Name, ...)\
-    z__EnumType(Name, __VA_ARGS__);\
+    z__EnumDef(Name, __VA_ARGS__);\
     /* Assign Funtions */\
     z__Enum__PRIV__Apply_Functions(Name, __VA_ARGS__)
 
 
 /* Without the Function Generation, Rest are same */
-#define z__EnumType(Name, ...)\
-    typedef z__Enum__PRIV__mapTupleArg_to_C_Enum(Name ,__VA_ARGS__) Name##Tags;  \
+#define z__EnumDef(Name, ...)\
+    typedef z__Enum__PRIV__mapArgGlobal_to_C_Enum(__VA_ARGS__) Name##Tags;  \
     typedef struct Name Name;                               \
     struct Name {                                           \
         union {                                             \
@@ -53,6 +53,16 @@
         } data;                                             \
         Name##Tags tag;                                     \
     }
+
+#define z__Enum__PRIV__onlytype(Name, tag_T , ...)\
+    typedef struct Name Name;                               \
+    struct Name {                                           \
+        union {                                             \
+           z__Enum__PRIV__Apply__memberMap_map(__VA_ARGS__) \
+        } data;                                             \
+        tag_T tag;                                     \
+    }
+
 
 #define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
 
@@ -85,9 +95,18 @@
             switch((z__tmp__enum)->tag)                         \
 
 
+// For Tuples
 #define z__Enum__PRIV__slot__Apply_if_0(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
 
+
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_0(M, ...) __VA_ARGS__ 0
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply_1(M, ...) __VA_ARGS__ 1
+
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply(M, ...) zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_, zpp__Args_HAS_COMMA(zpp__EXPAND zpp__PRIV__Args_get_1(__VA_ARGS__)) )(M, zpp__EXPAND zpp__PRIV__Args_get_1(__VA_ARGS__))
+
+// For Records
 #define z__Enum__PRIV__slot__Apply_if_1(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Record_toReffrence(&(z__tmp__enum)->data.M, __VA_ARGS__);
+
 
 #define z__Enum__PRIV__slot__Apply_if(M, ...)\
         zpp__CAT(z__Enum__PRIV__slot__Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(M, __VA_ARGS__)
@@ -177,8 +196,8 @@
 #define z__Enum__PRIV__FirstArgof_Param(x)\
     z__Enum__PRIV__Args_get_1()x
 
-#define z__Enum__PRIV__mapTupleArg_to_C_Enum(...)\
-    enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, , zpp__Args_skip_1(__VA_ARGS__))}
+#define z__Enum__PRIV__mapArgGlobal_to_C_Enum(...)\
+    enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, ,__VA_ARGS__)}
     //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
 
 
