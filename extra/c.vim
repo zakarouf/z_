@@ -44,7 +44,7 @@ syn keyword cStructure z__Vector z__Arr z__Martix z__VectorSt
 syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI z__ArrSxT
 syn keyword cStructure z__Link z__LList z__LinkDef
 
-syn keyword cStructure z__Tuple z__TupleX z__Record z__RecordX z__Enum z__EnumType
+syn keyword cStructure z__Tuple z__TupleX z__Record z__RecordX z__Enum z__EnumDef
 syn keyword cStatement match slot unslot ifSlot emptyslot
 
 syn keyword cOperator z__typeof z__sizeof z__typeID
@@ -61,6 +61,10 @@ syn keyword cStatement z__omp z__omp_parallel z__omp_for
 
 syn keyword cType z__pt_VarJob z__pt_Thread
 syn keyword cStructure z__pt_Job z__pt_ArgContext_Tag z__pt_ArgContext z__pt_ArgArr
+
+"Misc
+
+syn keyword cStatement zpp__pragma
 
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>[^()]*)("me=e-2
 "syn match cFunction "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1 
