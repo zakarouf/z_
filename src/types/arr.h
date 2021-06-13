@@ -8,7 +8,7 @@
 /* Known Type-safe arrays */
 
 //-------------------- Fixed-size Array ---------------------//
-#define z__ArrFx(T, sz, N) T N[sz]
+#define z__ArrFx(T, N) z__typeof(T [N])
 
 #define z__ArrSxDef(T, sz, tagName)\
     struct  _z__SxArr_deftag_ ## tagName	\
