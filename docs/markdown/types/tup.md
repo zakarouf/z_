@@ -87,6 +87,6 @@ z__Tuple_toVarProto(types_tmp, (), message2, size2);
 ---
 
 Thats it!! You can also see other Algebraic Types below:
-* [Records]()
-* [Sum Types]()
+* [Records](./rec.md)
+* [Sum Types](./enum.md)
 
