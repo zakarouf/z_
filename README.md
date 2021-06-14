@@ -51,11 +51,6 @@ Types to allow more stable/systamatic programming procedure with type-safe gener
   - [Using Raw Array]()
 - [Linked List](https://en.wikipedia.org/wiki/Linked_list)
 
-#### Resources
-
-* [Documentation]()
-* [Overview](docs/overview.md)
-
 ### Pre-Processing (PreP)
 
 Meta-programming using C-preprocessor. [Source Code](./src/prep)
@@ -137,12 +132,17 @@ This forces to you to include linked list type manually.
 Now this will work as it should.
 
 ### Adding Syntax Highlighting (Vim)
+
 Additional syntax Highlighting for types and such are include in the extra/c.vim.
 
 To add it into your project, either copy the contents of the `c.vim` file or put
 `c.vim` into your `after/syntax` folder, such as `~/.config/vim/after/syntax/` directory.
 This will load on top of your syntax highlighting for every .c file.
 
+## Documentation
+
+* [Documentation](./docs/markdown/index.md)
+* [Overview](./docs/overview.md)
 
 ## FAQs
 
