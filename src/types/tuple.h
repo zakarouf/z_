@@ -35,7 +35,7 @@
 #define z__Tuple__PRIV__toVar(TupleName, ...)\
     zpp__CAT(z__Tuple__PRIV__toVar_Empty_, zpp__Args_IS_EMPTY(__VA_ARGS__))(TupleName, __VA_ARGS__)
 
-#define z__Tuple__toVar(TupleName, ...)  z__Tuple__PRIV__toVar(TupleName, __VA_ARGS__)
+#define z__Tuple_toVarProto(TupleName, ...)  z__Tuple__PRIV__toVar(TupleName, __VA_ARGS__)
 
 /* Create Members of Tuple */
 #define z__Tuple__PRIV__createMember(...) zpp__CAT(z__Tuple__PRIV__createMember_, zpp__Args_Count(__VA_ARGS__))(0 ,__VA_ARGS__)
