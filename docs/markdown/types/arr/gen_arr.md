@@ -1,5 +1,5 @@
 # Generic Array Type
-*ztypes* provides a generic arrays, similar to vectors in C++. This a in-depth explanation of `z__Arr`.
+*z_* provides type generic arrays, similar to vectors in C++. This is an in-depth explanation of `z__Arr`.
 
 ## About
 Generic arrays are totally constructed with macros and macro functions, however
@@ -21,9 +21,11 @@ myvar.lenUsed   // The Total space already in use.
 typedef z__Arr(int) myarrtype; 
 myarrtype myvar; // We can also create a typedef for multiple usecase
 ```
+
 ### Pre-requisites
 * If `len` is 0, then that means Array is not initialized.
-* If `len` is 0 and `lenUsed` is > 0 then its presumed the z__Arr is soft copy; Linked with some other array.
+* If `len` is 0 and `lenUsed` is > 0 then its assumed the z__Arr is soft copy; Linked with some other array.
+
 
 ## Constructing an Array
 We have created our array but before we start using it, we have to initialize it first.
@@ -33,8 +35,7 @@ z__Arr_new(myvar, space);
 // @var: Variable name
 // @space: The amount of space to be initialized at start.
 ```
-
-Thats it, Now we can use we our Array.
+> Thats it, Now we can use we our Array.
 
 There are multiple ways to access and add or delete values from the array.
 Like the Direct Spartan way.
@@ -42,6 +43,7 @@ Like the Direct Spartan way.
 myvar.data[myvar.lenUsed] = 23;
 myvar.lenUsed++;
 ```
+
 Now this is bit dirty so there is a function to it in a more clean manner.
 ```c
 z__Arr_push(&myvar, 23);
@@ -64,14 +66,18 @@ z__Arr_push(&Px, p1);                       // Pushing At Top index[1].
 ```
 
 ## Popping & Deleting
+
+### Popping
+
 Popping funtion for z__Arr is pretty straight forward.
 ```c
-z__Arr_pop(&Px); // Delete the last pushed value.
+z__Arr_pop(&Px); // Deletes the last pushed value.
 ```
 It also checks if too many unused memory is allocated, if yes it'll resize it,
 leaving enough spaces determined by a threshold.
 
 ### Deletion
+
 Remember `z__Arr` is allocated on heap, so we have to manually delete the variable we have created.
 
 ```c
@@ -79,9 +85,10 @@ z__Arr_delete(&Px); // Free up allocated memory and set len & lenUsed to 0.
 ```
 This Cleans up your array.
 
+
 ## Previews
 <div align="center">
-    <img src="../imgs/Arr_preview0.png">
+    <img src="../../../imgs/Arr_preview0.png">
     <h2>Output</h2>
-    <img src="../imgs/Arr_preview0_op.png">
+    <img src="../../../imgs/Arr_preview0_op.png">
 </div>
