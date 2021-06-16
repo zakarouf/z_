@@ -1,4 +1,7 @@
 # Generic Array Type
+
+**`#include <z_/types/arr.h>`**
+
 *z_* provides type generic arrays, similar to vectors in C++. This is an in-depth explanation of `z__Arr`.
 
 ## About

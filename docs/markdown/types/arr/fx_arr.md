@@ -1,3 +1,0 @@
-# Fixed Size Arrays
-
-

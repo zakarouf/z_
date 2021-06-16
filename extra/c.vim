@@ -42,7 +42,7 @@ syn keyword cType z__Mint2 z__Mint3 z__Mint4
 
 syn keyword cStructure z__Vector z__Arr z__Martix z__VectorSt
 syn keyword cStructure z__ArrFx z__ArrSx z__ArrSxDef z__ArrSxI z__ArrSxT
-syn keyword cStructure z__Link z__LList z__LinkDef
+syn keyword cStructure z__Link z__LinkType z__LList
 
 syn keyword cStructure z__Tuple z__TupleX z__Record z__RecordX z__Enum z__EnumDef
 syn keyword cStatement match slot unslot ifSlot emptyslot

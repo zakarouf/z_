@@ -1,4 +1,7 @@
 # Primitive Types And Basics
+
+**`#include <z_/types/base.h>`**
+
 `ztypes` includes type defination of primitive types (a basic wrapper around what standard library provides).
 
 ## Showcase

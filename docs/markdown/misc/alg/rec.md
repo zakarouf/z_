@@ -1,5 +1,7 @@
 # Records
 
+**`#include <z_/types/record.h>`**
+
 Create a Record using `z__Record(...)`
 ```c
 z__Record(

@@ -1,5 +1,7 @@
 # Sum Types
 
+**`#include <z_/types/enum.h>`**
+
 Sum Types are DataType that can hold value of several but fixed types. Only one type can be used at a time.
 The C language already something similar called `unions` but in unions themselves never declare which type is being used. Thus, it is called a `untaged-union`.
 
