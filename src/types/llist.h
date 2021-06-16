@@ -3,22 +3,22 @@
 
 #include "mem.h"
 
-#define z__Link(NEWTAG, DT, ...)\
-    struct _z__linkLs##NEWTAG {              \
-        DT data;                             \
-        __VA_ARGS__;                         \
-        struct _z__linkLs##NEWTAG  *next;    \
-        struct _z__linkLs##NEWTAG  *prev;    \
-    }
-
-#define z__LinkDef(TAG)\
+#define z__LinkType(TAG)\
     struct _z__linkLs##TAG
+
+#define z__Link(NEWTAG, DT, ...)\
+    z__LinkType(NEWTAG) {              \
+        DT data;                       \
+        __VA_ARGS__;                   \
+        z__LinkType(NEWTAG)  *next;    \
+        z__LinkType(NEWTAG)  *prev;    \
+    }
 
 #define z__LList(TAG, ...)\
     struct {                       \
-        z__LinkDef(TAG)  *head;    \
-        z__LinkDef(TAG)  *tail;    \
-        z__LinkDef(TAG)  *cursor;  \
+        z__LinkType(TAG)  *head;    \
+        z__LinkType(TAG)  *tail;    \
+        z__LinkType(TAG)  *cursor;  \
                      \
         __VA_ARGS__;        /* Additialnal members for the the user*/\
     }
