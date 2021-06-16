@@ -116,26 +116,27 @@
 // Check How many nested paren is there
 #define z__Enum__PRIV__slot__Apply_if_1__record_apply_check(x) zpp__IS_PAREN(zpp__PRIV__Args_get_1 x)
 
-#define z__Enum__PRIV__slot__Apply_if_1__record_apply(Memb, ...) zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_, z__Enum__PRIV__slot__Apply_if_1__record_apply_check(zpp__PRIV__Args_get_1(__VA_ARGS__))) (Memb, __VA_ARGS__)
+#define z__Enum__PRIV__slot__Apply_if_1__record_apply(Memb, ...)\
+    zpp__CAT(z__Enum__PRIV__slot__Apply_if_1__record_apply_, z__Enum__PRIV__slot__Apply_if_1__record_apply_check(zpp__PRIV__Args_get_1(__VA_ARGS__))) (Memb, __VA_ARGS__)
 
 // For If not Tuples, i.e. Record or Bare
-#define z__Enum__PRIV__slot__Apply_if_1(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Enum__PRIV__slot__Apply_if_1__record_apply((z__tmp__enum)->data.M, __VA_ARGS__);
-
+#define z__Enum__PRIV__slot__Apply_if_1(En_M, ...)   z__Enum__PRIV__slot__Apply_if_1__record_apply(En_M, __VA_ARGS__);
 
 // For Tuples
-#define z__Enum__PRIV__slot__Apply_if_0(M, ...) break; case zpp__CAT(ENUM_TAG__, M): { z__Tuple_toReference((z__tmp__enum)->data.M, __VA_ARGS__);
+#define z__Enum__PRIV__slot__Apply_if_0(En_M, ...)   z__Tuple_toReference(En_M, __VA_ARGS__);
 
 
 // Check if It has paren, if not its a typle
-#define z__Enum__PRIV__slot__Apply_if(M, ...)\
-        zpp__CAT(z__Enum__PRIV__slot__Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(M, __VA_ARGS__)
+#define z__Enum__PRIV__slot__Apply_if(En_M, ...)\
+    zpp__CAT(z__Enum__PRIV__slot__Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_1(__VA_ARGS__)))(En_M, __VA_ARGS__)
+
 
 // Something is Here, not Empty, check for tuple or record or Bare data.
 #define z__Enum__PRIV__slot__if_0(M, ...)\
-   z__Enum__PRIV__slot__Apply_if(M, __VA_ARGS__)
+    break; case zpp__CAT(ENUM_TAG__, M): { z__Enum__PRIV__slot__Apply_if((z__tmp__enum)->data.M, __VA_ARGS__)
 
 // Slot emply
-#define z__Enum__PRIV__slot__if_1(M, ...)\
+#define z__Enum__PRIV__slot__if_1(...)\
     break; default: {
 
 // Check slot is emply or not
@@ -148,10 +149,8 @@
 #define z__Enum_unslot }
 
 #define z__Enum_ifSlot(En, M, ...)\
-        if(z__Enum_mtag(M) == (En).tag )\
-            for(int keep = 1; keep; keep = 0)\
-                for(({ z__Enum__PRIV__slot__if(__VA_ARGS__) });keep; keep ^= 1)\
-        
+        if(z__Enum_matches(En, M))\
+        { z__Enum__PRIV__slot__Apply_if((&En)->data.M, __VA_ARGS__)
 
 #define z__Enum_matches(En, M) (z__Enum_mtag(M) == (En).tag)
 
@@ -162,9 +161,9 @@
     #define unslot z__Enum_unslot
 
     #define emptyslot z__Enum_emptyslot
-    #define ifSlot(En, Tup, ...) z__Enum_ifSlot(En, Tup, __VA_ARGS__)
+    #define ifSlot(En, M, ...) z__Enum_ifSlot(En, M, __VA_ARGS__)
 
-
+    #define matches(En, M) z__Enum_matches(En, M)
 
 #endif
 
