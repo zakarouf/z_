@@ -4,7 +4,8 @@
 #include "tuple.h"
 #include "../prep/map.h"
 
-/* More Powerful Enum Type Using Tuples
+/**
+ * More Powerful Enum Type Using Tuples
  * Usage:
  * z__Enum(
     WebEvent,

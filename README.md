@@ -11,7 +11,7 @@ This library provides Core Functionality built upon the C language. Inspired and
 
 * **Memory Management.** Minimal Memory Tracker for logging memory, Autofree that can act as a build-in deconstructor.
 * **Type & Data Structures.** Clean Systematic Data types and Structures with feature-full fuctionality.
-* **Meta-Programming.** A abuse of C-preprocessor.
+* **Meta-Programming.** An absolute abuse of C-preprocessor.
 * **Multi-Threading.** A more elegant way to handle concurrency.
 * **Standard Functions.** Did you wanted stuff like logging, better File IO, Generic Printing, Error Handling similar to try catch. Yes we got those.
 
