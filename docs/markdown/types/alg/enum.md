@@ -26,7 +26,7 @@ z__Enum(
 
 Example:
 <div align="center">
-  <img src="../../imgs/example/enum_webevent.png">
+  <img src="../../../imgs/example/enum_webevent.png">
 </div>
 
 Each `variant` is also generates a function of the same name, which can be used to initiazed a Sum Type. As shown in the Example.
