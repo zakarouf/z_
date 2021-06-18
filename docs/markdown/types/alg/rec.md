@@ -100,6 +100,6 @@ printf("%d %d", *h, *w);
 ---
 
 Move on to:
-* [Sum Types](./enum.h)
+* [Sum Types](./enum.md)
 * [Tuples](./tup.md)
 
