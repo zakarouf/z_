@@ -35,7 +35,7 @@ Each `variant` is also generates a function of the same name, which can be used 
 
 If we do not want to use a function we have `z__Enum_chip(&en, sl, ...)` & `z__Enum_grave(Enum_T, sl, ...)` macros which do the same with out calling a function. In fact all the variant function themselves have `z__Enum_chip()` in them.
 
-##### `z__Enum_chip`
+##### With Function Calling
 
 ```c
 z__Enum(
@@ -44,12 +44,19 @@ z__Enum(
     (Err, char *)
 );
 
-Result result;
+Result safe_malloc(size_t len) {
+    void *data = malloc(len);
+    Result result;
+    if (data) {
+        return Ok(data, len);
+    } else {
+        return Err("Out of Memory!!");
+    }
+}
 
-z__Enum_chip(&result, Err, "Cannot Get any data");
 ```
 
-##### `z__Enum_grave`
+##### Using `z__Enum_chip`
 
 ```c
 z__Enum(
@@ -58,8 +65,46 @@ z__Enum(
     (Err, char *)
 );
 
-Result result = z__Enum_grave(Result, Err, "Cannot Get any data");
+Result safe_malloc(size_t len) {
+    void *data = malloc(len);
+    Result result;
+    if (data) {
+        z__Enum_chip(&result, Ok, data, len);
+    } else {
+        z__Enum_chip(&result, Err, "Out of Memory!!");
+    }
+
+    return result;
+}
+
 ```
+
+##### Using `z__Enum_grave`
+
+```c
+z__Enum(
+    Result,
+    (Ok, void *, size_t),
+    (Err, char *)
+);
+
+Result safe_malloc(size_t len) {
+    void *data = malloc(len);
+    if (data) {
+        return z__Enum_grave(Result, Ok, data, len);
+    } else {
+        return z__Enum_grave(Result, Err, "Out of Memory!!");
+    }
+}
+
+```
+
+#### Advantages 
+
+* `z__Enum_grave` & `z__Enum_chip` does not do any function call.
+* Paired with `z__EnumDef` which does not create/generate any variant-related function. Makes a useful versatile and light-weight alternative to the bloated `z__Enum`.
+
+Using this I've able to create new types such as [result.h](../../../../src/types/result.h) and [option.h](../../../../src/types/option.h).
 
 #### Match Statement
 
@@ -89,12 +134,12 @@ You can read about them from [here](./alg.md).
 ---
 
 Here is a quick run-down for using `slot`:
-- First argument of `slot()` is the variant name, Followed the reffernce names.
+- First argument of `slot()` is the variant name, Followed by the reffernce names.
 - Reffrences are created exactly how `z__Tuple_toRefernces` & `z__Record_toRefernces` does.
 - `slot()`; empty slot acts as the `default` case. i.e If none of the variants are matched, default case is used.
 - `slot(var, _x, _y)` is used for Tuple Variants
 - `slot(var, (_x, member1), (_y, member2))` for Record Variants
-- `slot(var, ((reff)))` Creates a Reffernce to the entires Tuple or Record Variant
+- `slot(var, ((reff)))` Creates a Reffernce to the Tuple or Record Variant
 - `()` can be used to skip the members in for tuple variants, such as `slot(var, _x, (), _z)`
 
 
