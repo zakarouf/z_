@@ -10,12 +10,16 @@
 #define zpp__assert_not_construct(exp, exception_method_fn, ...)\
     ( (void)( (exp) ? exception_method_fn(__VA_ARGS__) : ((void)0) ))
 
-#define zpp__assert_eq_ptr(x, y) ( x==y?true:false )
-#define zpp__assert_ptr_checkNULL(x) (x==NULL?true:false)
+#define zpp__assert_eq_ptr(x, y) ( x==y )
+#define zpp__assert_nullptr(x) (x==NULL)
           
 // Panic
 
 #define zpp__panicif_construct(condition, panic_call, ...) zpp__assert_not_construct(condition, panic_call, __VA_ARGS__)
 
+#define zpp__static_assert_msg(exp, msg) _Static_assert(exp, msg)
+
+#define zpp__static_assert(exp) _Static_assert(exp, #exp)
 
 #endif
+
