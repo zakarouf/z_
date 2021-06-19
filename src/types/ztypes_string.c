@@ -123,20 +123,8 @@
             z__String_resize(dest, dest->len +8);
         }
 
-        z__char
-            tmpchar = dest->str[pos],
-            *buff = &dest->str[dest->used];
+        memmove(&dest->str[pos+1], &dest->str[pos], (dest->used - pos) * sizeof(*dest->str));
         dest->str[pos] = ch;
-        dest->str[dest->used + 1] = 0;
-
-        int splen = dest->used - pos;
-
-        for (int i = 0; i < splen; i++) {
-            *buff = *(buff-1);
-            buff--;
-        }
-        dest->str[pos +1] = tmpchar;
-
         dest->used += 1;
     }
 
@@ -146,15 +134,9 @@
             return;
         }
 
-        int splen = dest->used - pos;
-        z__char *buff = &dest->str[pos];
-
-        for (int i = 0; i < splen; ++i)
-        {
-            *buff = *(buff+1);
-            buff++;
-        }
+        memmove(&dest->str[pos], &dest->str[pos+1], (dest->used - pos) * sizeof(*dest->str));
         dest->used -= 1;
+        dest->str[dest->used] = '\0';
     }
 
     void z__String_replaceChar(z__String *dest, z__char ch, z__i32 pos)
