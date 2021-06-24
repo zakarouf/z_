@@ -4,11 +4,11 @@
 #include "enum.h"
 
 typedef z__Enum__PRIV__mapArgGlobal_to_C_Enum((Some), (None)) Option__Tags;
-#define z__Option(Name, T)\
+#define z__Option(Name, ...)\
     z__Enum__PRIV__onlytype(\
         Option__##Name,\
         Option__Tags,\
-            (Some, T),\
+            (Some, __VA_ARGS__),\
             (None)\
         )
 
