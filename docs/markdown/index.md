@@ -14,6 +14,7 @@ Guide & Documentation for `z_` Library
     - [Algebraic Types](./types/alg/alg.md)
     - [Geometric Types]()
     - [Data Structues]()
+    - [Miscellaneous](./types/misc/index.md)
 - **Proc**
     - [Pthread]()
     - [Threads]()
