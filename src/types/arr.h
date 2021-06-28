@@ -70,14 +70,14 @@
     z__Arr(T) arr_n; z__Arr_new(&arr_n, 8)
 
 #define z__Arr_init(arr_T, ...)\
-    ({                                                                                  \
-        arr_T temp_arr;                      \
-        z__Arr_new(&temp_arr, zpp__Args_Count(__VA_ARGS__));                            \
-        z__typeof(temp_arr.data) itr = temp_arr.data;                                   \
-        z__typeof(itr) testa = (z__typeof(*testa)[]){__VA_ARGS__};                      \
-        memcpy(itr, testa, sizeof(*itr) * zpp__Args_Count(__VA_ARGS__));                \
-        temp_arr.lenUsed = temp_arr.len;                                                \
-        temp_arr;                                                                       \
+    ({                                                                  \
+        z__typeof(arr_T) temp_arr;                                      \
+        z__Arr_new(&temp_arr, zpp__Args_Count(__VA_ARGS__));            \
+        z__typeof(temp_arr.data) itr = temp_arr.data;                   \
+        z__typeof(itr) testa = (z__typeof(*testa)[]){__VA_ARGS__};      \
+        memcpy(itr, testa, sizeof(*itr) * zpp__Args_Count(__VA_ARGS__));\
+        temp_arr.lenUsed = temp_arr.len;                                \
+        temp_arr;                                                       \
     })
 
 #define z__Arr_newFromPtr(arr, src, srclen)\
