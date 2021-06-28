@@ -47,7 +47,11 @@ syn keyword cStructure z__Link z__LinkType z__LList
 syn keyword cStructure z__Tuple z__TupleX z__Record z__RecordX z__Enum z__EnumDef
 syn keyword cStatement match slot unslot ifSlot emptyslot
 
+syn keyword cStructure z__Result z__Option
+
+syn keyword cType z__auto
 syn keyword cOperator z__typeof z__sizeof z__typeID
+
 
 "Mem
 

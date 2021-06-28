@@ -5,7 +5,7 @@
 #include "../prep/map.h"
 
 /**
- * More Powerful Enum Type Using Tuples
+ * Powerful Sum Type Using Tuples & Records
  * Usage:
  * z__Enum(
     WebEvent,
@@ -63,6 +63,9 @@
         } data;                                             \
         tag_T tag;                                     \
     }
+
+#define z__EnumBare(Name, Tag_T, ...)\
+    z__Enum__PRIV__onlytype(Name, Tag_T, __VA_ARGS__)
 
 
 #define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
@@ -219,7 +222,8 @@
     enum{ zpp__Args_maplist_fn_Pattern(z__Enum__PRIV__FirstArgof_Param, ENUM_TAG__, ,__VA_ARGS__)}
     //zpp__Args_maplist(z__Enum__PRIV__FirstArgof_Param, ) }
 
-
+#define z__Enum_createTags(...)\
+    enum {   }
 
 
 /* Apply Function for each type of enum */

@@ -27,4 +27,5 @@
             NODE(NODE(LEAF(1), 2, NODE(LEAF(3), 4, LEAF(5))), 6, LEAF(7));
 
         printf("%d\n", sum(tree)); // 28 
-    } 
+    }
+
