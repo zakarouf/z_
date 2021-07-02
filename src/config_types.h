@@ -47,9 +47,8 @@
 
 /* CGLM LIBRARY for graphics maths */
 //#define Z___TYPE_INCLUED_CGLM
-	//#define Z___TYPE_USE_CGLM_FOR_TYPES
-	//#define Z___TYPE_CONFIG__CGLM_ALIAS_TYPE_ARR_VECTOR_AND_MATRIX
-	//#define Z___TYPE_CONFIG__CGLM_ALIAS_TYPE_STRUCT_VECTOR_AND_MATRIX
+	//#define Z___TYPE_CONFIG__CGLM_ALIAS_TYPE_VECTOR
+	//#define Z___TYPE_CONFIG__CGLM_ALIAS_TYPE_MATRIX
 
 /* Used String Type */
 #define Z___TYPE_CONFIG__USE_STRING
@@ -89,8 +88,6 @@
 
 /* Use Vectors and stuff */
 #define Z___TYPE_CONFIG__USE_GMATHTYPE						
-	#define Z___TYPE_CONFIG__USE_TYPE_ARR_VECTOR_AND_MATRIX			// Also include array for vectors defination, z__Vector2 is struct and z__vec2 is a Array
-	#define Z___TYPE_CONFIG__USE_TYPE_STRUCT_VECTOR_AND_MATRIX
 		//#define Z___TYPE_CONFIG__USE_f64_FOR_VECTOR_STRUCT
 		//#define Z___TYPE_CONFIG__USE_i64_FOR_INT_VECTOR_STRUCT
 
