@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{bussproofs}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[standard,thmmarks]{ntheorem}
+\usepackage{biblatex}
+\usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage[english]{babel}
+
+\theoremstyle{break}
+\newtheorem{notation}{Notation}
+
+\addbibresource{references.bib}
+
+\floatstyle{boxed}
+\restylefloat{figure}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{z\_ Module Specification (v1.59.0)}
+\data{\today}
+\author{Zakarouf \\ e-mail: \href{mailto:zak.d.official@gmail.com}{zak.d.official@gmail.com}}
+\maketitle
+
+\begin{abstract}
+    This paper formally describes the syntax and semantics of various submodules of Types, Meta-Programs & Functions written in z\_. A super-sect of the C Standard Library that aims to bring user-friendly high-level abstraction and functions to C. To learn about and have a overview on z\_, please see the official repository \cite{z_}.
+\end{abstract}
+
+\tableofcontents
+
+\newpage
+
+\section{EBNF Grammer}
+\begin{figure}[H]
+    \caption{Grammer Rules}
+
+\begin{minted}{ebnf}
+    <enum> ::= "z__Enum(" <Enum-name> { "," <variant>  }+ ")" ;
+
+    <variant> ::= "(" <variant-name> { "," <composite-type> }* ")" ;
+    <Enum-name> ::= <ident> ;
+    <variant-name> ::= <ident> ;
+
+    <composite-type> ::= [ <tuple> | <record> ] ;
+    <tuple> ::= <type> ;
+    <record> ::= "(" <record-sub-name> { "," <type> } ")" ;
+    <record-sub-name> ::= <ident> ;
+
+    <match> ::= ["match(" | "z__Enum_match(" ] <lvalue> ")" { <arm> }+ ;
+    <matches> ::= ["matches(" | "z__Enum_matches(" ] <"expr"> "," <ident> ")" ;
+    <if-slot> :: ["ifSlot(" | "z__Enum_ifSlot(" ] <lvalue> "," <variant-name> ")";>
+\end{minted}
+\end{figure}
+\end{document}
