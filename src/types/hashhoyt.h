@@ -29,6 +29,20 @@
         }                                                   \
     }
 
+#define z__HashHoyt_new_to_hold(ht, n)\
+    {\
+        z__size z__HashHoyt_new_to_hold__priv__n = n;\
+        z__HashHoyt_new_to_hold__priv__n *= 2;\
+        int z__HashHoyt_new_to_hold__priv__i = 0;\
+        for(; z__HashHoyt_new_to_hold__priv__i<<1 < z__HashHoyt_new_to_hold__priv__n; z__HashHoyt_new_to_hold__priv__i++){\
+        }\
+        (ht)->len = z__HashHoyt_new_to_hold__priv__i;       \
+        (ht)->used = 0;                                     \
+        (ht)->entries = z__New0(*(ht)->entries, (ht)->len); \
+        if ((ht)->entries == NULL) {                        \
+            (ht)->len = 0;                                  \
+        }                                                   \
+    }
 
 #define z__HashHoyt_delete(ht)\
     {                                       \
