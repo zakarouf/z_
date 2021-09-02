@@ -26,7 +26,7 @@ syn keyword cType z__i8Arr z__i16Arr z__i32Arr z__i64Arr
 syn keyword cType z__u8Arr z__u16Arr z__u32Arr z__u64Arr
 syn keyword cType z__ptrArr z__boolArr z__f32Arr z__f64Arr
 
-syn keyword cType z__char z__String z__StringLines z__StringLinesArr
+syn keyword cType z__char z__String z__StringList z__StringListArr
 
 " Types
 syn keyword cType z__ivec2 z__ivec3 z__ivec4
