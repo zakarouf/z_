@@ -7,6 +7,6 @@ sh make-lib.sh
 
 mv -ni build/lib/libzkcollection.a "$LIB_DIR"
 
-cp -Rfi build/include/z_ "$INCLUDE_DIR"
+cp -Rf build/include/z_ "$INCLUDE_DIR"
 
 rm -rf build/include/z_
