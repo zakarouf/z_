@@ -66,9 +66,6 @@
 	#include "string.h"
 #endif
 
-#ifdef Z___TYPE_CONFIG__USE_EXTENDED_FEATURES
-    #include "base_ext.h"
-#endif
 
 #endif
 

@@ -1,19 +1,8 @@
-#ifndef ZAKAROUF__ZTYPES_EXTENDED_H
-#define ZAKAROUF__ZTYPES_EXTENDED_H
+#ifndef ZAKAROUF__ZTYPES_TYPEID_H
+#define ZAKAROUF__ZTYPES_TYPEID_H
 
-#include "../config_types.h"
 #include "ztypes.h"
-	
-#define z__offsetof(T, M) ((size_t) &((T *)0)->M)
 
-#define z__contof(ptr, T, M) ({ \
-   	const z__typeof(((T *)0)->M) * __mptr = (ptr); \
-   	(T *)((char *)__mptr - offsetof(T, M)); })
-
-#define z__type_isequal(val, T) __builtin_types_compatible_p(z__typeof(val), T)
-#define z__type_issame(T1, T2) 	__builtin_types_compatible_p(T1, T2)
-
-#ifdef Z___TYPE_CONFIG__USE_TYPE_IDENTIFIER
 	#define __builtin_choose_expr __builtin_choose_expr
 	#define z__typeID(T) \
 		__builtin_choose_expr(z__type_isequal(T, z__i16), 1, \
@@ -81,6 +70,6 @@
 		__builtin_choose_expr(sizeof(T) == 2, 1, \
 		(0)  )))))))))))))))))))))))))))))))))))))))))))))))))) // wtf? just no
 
-#endif
 
 #endif
+
