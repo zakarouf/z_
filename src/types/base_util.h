@@ -18,7 +18,8 @@
      })
 
 
-
+#define z__util_max_unsafe(x, y) (x > y? x : y)
+#define z__util_min_unsafe(x, y) (x > y? y : x)
 
 #endif
 
