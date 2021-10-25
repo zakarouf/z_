@@ -6,7 +6,7 @@
 
 #include "fio.h"
 
-z__i8Arr z__io_readFile(char const  filename[])
+z__i8Arr z__fio_readFile(char const  filename[])
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -29,7 +29,7 @@ z__i8Arr z__io_readFile(char const  filename[])
     };
 }
 
-z__Dynt z__io_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
+z__Dynt z__fio_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
@@ -54,7 +54,7 @@ z__Dynt z__io_Dynt_readFile(char const filename[], z__size const subDiv, char co
 
 }
 
-z__StringList z__io_getfnames(char const path[])
+z__StringList z__fio_getfnames(char const path[])
 {
     DIR * drip = opendir(path);
     if(drip == NULL) return (z__StringList){0};

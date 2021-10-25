@@ -7,9 +7,9 @@
 
 
 /* File */
-z__i8Arr z__io_readFile(char const filename[]);
-z__Dynt z__io_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen);
-z__StringList z__io_getfnames(char const path[]);
+z__i8Arr z__fio_readFile(char const filename[]);
+z__Dynt z__fio_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen);
+z__StringList z__fio_getfnames(char const path[]);
 
 
 #endif
