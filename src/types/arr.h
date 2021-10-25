@@ -370,12 +370,12 @@
 #endif
 
 
-#define z__Arr_getLen(arr)          arr.len
-#define z__Arr_getUsed(arr)         arr.lenUsed
-#define z__Arr_getData(arr)         arr.data
-#define z__Arr_getVal(arr, index)   arr.data[index]
-#define z__Arr_getTop(arr)          arr.data[arr.lenUsed-1]
-#define z__Arr_getTopEmpty(arr)     arr.data[arr.lenUsed]
+#define z__Arr_getLen(arr)          (arr).len
+#define z__Arr_getUsed(arr)         (arr).lenUsed
+#define z__Arr_getData(arr)         (arr).data
+#define z__Arr_getVal(arr, index)   (arr).data[index]
+#define z__Arr_getTop(arr)          (arr).data[arr.lenUsed-1]
+#define z__Arr_getTopEmpty(arr)     (arr).data[arr.lenUsed]
 
 
 #ifdef Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
