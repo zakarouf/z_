@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "../types.h"
+#include "../types/typeid.h"
 
 #define Z___IMP__PRINT_DEFAULT_SEPERATOR " "
 #define Z___IMP__PRINT_DEFAULT_END "\n"
