@@ -42,7 +42,7 @@
             #define __vecDefType z__f32
         #endif
 
-            typedef z__Vector(__vecDefType, x, y, g) z__Vector2;
+            typedef z__Vector(__vecDefType, x, y) z__Vector2;
             typedef z__Vector(__vecDefType, x, y, z) z__Vector3;
             typedef z__Vector(__vecDefType, x, y, z, w) z__Vector4;
             typedef union {
