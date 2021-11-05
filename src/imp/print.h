@@ -177,7 +177,7 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
                 Z___IMP__PRINT_COLOR__RESET " len:"     Z___IMP__PRINT_COLOR_INT "%u|%u"\
                 Z___IMP__PRINT_COLOR__RESET " *p:"      Z___IMP__PRINT_COLOR_POINTER"%p"\
              Z___IMP__PRINT_COLOR_OBJECT "}",\
-            dy.comment ,dy.typeID, dy.size, dy.lenUsed, dy.len, dy.data);\
+            dy.comment ,dy.typeID, dy.unitsize, dy.lenUsed, dy.len, dy.data);\
     }
 
 static void z__fprint_str_list(FILE *fp, char * const strl[], z__u32 len)
