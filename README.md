@@ -28,6 +28,7 @@ A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
 Types to allow more stable/systamatic programming procedure with type-safe generic Data-types and Data-Structures, say no more to "Implement this basic functionaity 10 different ways in 10 different programs". Whilst some types are compatible with other libraries too! <br> Vectors and Matrix in particular are totally compatible with the [cglm](https://github.com/recp/cglm) library.
 
 - [Primitive Types](https://en.wikipedia.org/wiki/Primitive_data_type)
+- [Type System]() & [Typesets]()
 - [Algebraic Data Type](https://en.wikipedia.org/wiki/Algebraic_data_type)
   - [Tuple](https://en.wikipedia.org/wiki/Tuple)
   - [Record](https://en.wikipedia.org/wiki/Record_(computer_science))
@@ -57,7 +58,7 @@ Meta-programming using C-preprocessor. [Source Code](./src/prep)
 
 ### Multi Threading (Proc)
 
-Multi-Threading wrapper arround both OpenMP and Pthread with C11 `<threads.h>` considered for the future. <br>
+Multi-Threading wrapper arrund both OpenMP and Pthread with C11 `<threads.h>` considered for the future. <br>
 
 The Development has started with OpenMP.   <br>
 Pthreads impletation has also started with its [base](src/proc/pt_base.h). <br>
@@ -73,10 +74,10 @@ Lastly `z_` Also Provides Basic day-to-day set of functions revolving around Tim
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
-it doesnt even include standard library except `stddef.h`, `stdint.h` and `stdbool.h` for type
+it doesn't even include standard library except `stddef.h`, `stdint.h` and `stdbool.h` for type
 declaration **but** they still require the bare minimum `base` for to be working properly such
 as, `z_/types/arr.h` can be included in itself but it still require `base.h` of `types`
-for `z__u32` and `mem.h` for memory allocation definations.
+for `z__u32` and `mem.h` for memory allocation definitions.
 
 Therefore, You need to explicitly include the `<stdlib.h>`, `<string.h>`.
 
@@ -176,7 +177,7 @@ void my_function(int a, int b)
 
 Me. Or you if you stumble upon my stuff and found it cool. But as of writting this I created this for myself. This repo is so I can easily maintain and access the code and or share it with my friends. **I am not a Programmer by a long shot**, I just like when my computer goes beep-boop.
 
-## Credit & Reffrences
+## Credit & References
 
 It takes many features from other libraries and projects. Whilst also some Reffrences and books.
 
