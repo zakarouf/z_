@@ -373,6 +373,9 @@
 #define z__Arr_getLen(arr)          (arr).len
 #define z__Arr_getUsed(arr)         (arr).lenUsed
 #define z__Arr_getData(arr)         (arr).data
+#define z__Arr_getUnitSize(arr)     sizeof(*(arr).data)
+#define z__Arr_getSize(arr)         (z__Arr_getUnitSize(arr) * z__Arr_getLen(arr))
+#define z__Arr_getSizeUsed(arr)     (z__Arr_getUnitSize(arr) * z__Arr_getUsed(arr))
 #define z__Arr_getVal(arr, index)   (arr).data[index]
 #define z__Arr_getTop(arr)          (arr).data[arr.lenUsed-1]
 #define z__Arr_getTopEmpty(arr)     (arr).data[arr.lenUsed]
