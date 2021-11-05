@@ -6,30 +6,68 @@
 
 #include "fio.h"
 
-z__i8Arr z__fio_readFile(char const  filename[])
+void *z__fio_newFromFile(char const filename[], z__size unitsize, z__size *len)
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
     {
-        return (z__i8Arr){NULL, -1, -1};
+        return NULL;
     }
 
     fseek(fp, 0, SEEK_END);
-    long fsize = ftell(fp);
+    z__size fsize = ftell(fp);
+    *len = fsize;
     fseek(fp, 0, SEEK_SET);  /* same as rewind(f); */
 
-    void *data = z__MALLOC(fsize + 1);
+    z__size extra = fsize/unitsize;
+
+    void *data = z__MALLOC(fsize * extra);
     fread(data, 1, fsize, fp);
     fclose(fp);
 
-    return (z__i8Arr) {
-        .data = data,
-        .len = fsize +1,
-        .lenUsed = fsize +1
-    };
+    return data;
 }
 
-z__Dynt z__fio_Dynt_readFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
+void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp)
+{
+    fread(&obj->typeID, sizeof(obj->typeID), 1, fp);
+
+    fread(&obj->unitsize, sizeof(obj->unitsize), 1, fp);
+    fread(&obj->lenUsed, sizeof(obj->lenUsed), 1, fp);
+    obj->len = obj->lenUsed;
+
+    fread(&obj->commentLen, sizeof(obj->commentLen), 1, fp);
+
+    if(obj->commentLen > 0) {
+        obj->comment = z__MALLOC(sizeof(*obj->comment) * obj->commentLen);
+        fread(obj->comment, sizeof(*obj->comment), obj->commentLen, fp);
+    }
+
+    if((obj->unitsize * obj->lenUsed) > 0){
+        obj->data = z__MALLOC(sizeof(*obj->data) * obj->lenUsed * obj->unitsize);
+        fread(obj->data, sizeof(*obj->data), obj->unitsize * obj->lenUsed, fp);
+    }
+}
+
+void z__fio_Dynt_dump(z__Dynt *obj, FILE *fp)
+{
+    fwrite(&obj->typeID, sizeof(obj->typeID), 1, fp);
+
+    fwrite(&obj->unitsize, sizeof(obj->unitsize), 1, fp);
+    fwrite(&obj->lenUsed, sizeof(obj->lenUsed), 1, fp);
+
+    fwrite(&obj->commentLen, sizeof(obj->commentLen), 1, fp);
+
+    if(obj->commentLen > 0) {
+        fwrite(obj->comment, sizeof(*obj->comment), obj->commentLen, fp);
+    }
+
+    if((obj->unitsize * obj->lenUsed) > 0){
+        fwrite(obj->data, sizeof(*obj->data), obj->unitsize * obj->lenUsed, fp);
+    }
+}
+
+z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL)
