@@ -47,7 +47,7 @@ void z__logfile_basic(void * fileStream ,const char *format, ...)
     z__logfile_verbose(stdout, format, ##__VA_ARGS__)
 
 #define z__log_cl256(color, format, ...)\
-    z__logfile_basic(stdout, color, format, ##__VA_ARGS__ )
+    z__logfile_cl256(stdout, color, format, ##__VA_ARGS__ )
 
 #define z__log_cl256_full(colorb, colorf, format, ...)\
     z__logfile_cl256_full(stdout, colorb, colorf, format, ##__VA_ARGS__ )
