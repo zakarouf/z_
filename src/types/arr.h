@@ -89,9 +89,10 @@
     }
 
 #define z__Arr_initFromPtr(arrT, src, srclen)\
-    ({\
-        arr_T z__Arr_initFromPtr__var__temp_arr;\
-        z__Arr_newFromPtr(&z__Arr_initFromPtr__var__temp_arr, src, srclen)\
+    ({                                                                      \
+        arr_T z__Arr_initFromPtr__var__temp_arr;                            \
+        z__Arr_newFromPtr(&z__Arr_initFromPtr__var__temp_arr, src, srclen); \
+        z__Arr_initFromPtr__var__temp_arr;                                  \
     })
 
 #define z__Arr_newCopy(arr, arr_src)\
