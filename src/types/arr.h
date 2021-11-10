@@ -243,7 +243,7 @@
     if ((arr).lenUsed > (dest)->len) {                                                          \
         z__Arr_resize(dest, (arr).lenUsed);                                                     \
     }                                                                                           \
-    int j = 0, i = (arr).lenUsed-from, _upto = (((arr).lenUsed-from > 0)?(arr).lenUsed-from:0);   \
+    int j = 0, i = (arr).lenUsed-from, _upto = (((arr).lenUsed-from > 0)?(arr).lenUsed-from:0); \
     for (; i > _upto; i -= step, j++) {                                                         \
         (dest)->data[j] = (arr).data[i];                                                        \
     }                                                                                           \
