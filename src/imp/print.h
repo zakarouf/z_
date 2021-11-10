@@ -171,7 +171,7 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
 
 #define z__fprint_Dynt(fp, dy)\
     {\
-        fprintf(fp, Z___IMP__PRINT_COLOR_OBJECT "<Dynt>("Z___IMP__PRINT_COLOR_STRING"#%s"Z___IMP__PRINT_COLOR_OBJECT"){"\
+        fprintf(fp, Z___IMP__PRINT_COLOR_OBJECT "<Dynt>(" Z___IMP__PRINT_COLOR_STRING "#%s" Z___IMP__PRINT_COLOR_OBJECT "){"\
                 Z___IMP__PRINT_COLOR__RESET  "ID:"      Z___IMP__PRINT_COLOR_INT "%hhu"\
                 Z___IMP__PRINT_COLOR__RESET " size:"    Z___IMP__PRINT_COLOR_INT "%lu"\
                 Z___IMP__PRINT_COLOR__RESET " len:"     Z___IMP__PRINT_COLOR_INT "%u|%u"\
