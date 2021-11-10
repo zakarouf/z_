@@ -17,9 +17,8 @@
 
 #define zpp__panicif_construct(condition, panic_call, ...) zpp__assert_not_construct(condition, panic_call, __VA_ARGS__)
 
-#define zpp__static_assert_msg(exp, msg) _Static_assert(exp, msg)
-
 #define zpp__static_assert(exp) _Static_assert(exp, #exp)
+#define zpp__static_assert_msg(exp, msg) _Static_assert(exp, #exp ":" msg)
 
 #endif
 
