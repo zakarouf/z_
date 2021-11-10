@@ -16,13 +16,25 @@ typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
 }z__Dynt;
 
 
-z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID);
-z__Dynt z__Dynt_newFromFile(const char filepath[], z__size unitsize, const char *comment, z__i32 commentLength, z__u8 typeID);
+z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, z__u8 typeID, const char *comment, z__i32 commentLength);
+void z__Dynt_newFromRaw(z__Dynt *obj, void const *ptr, z__size unitsize, z__size len, z__u8 typeID, char const *comment, z__i32 commentLen);
+z__Dynt z__Dynt_newFromFile(const char filepath[], z__size unitsize, z__u8 typeID, const char *comment, z__i32 commentLength);
+
 void z__Dynt_delete(z__Dynt *arrt);
 void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
 void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
 z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
+
+#define z__Dynt_newFromArr(arrt, arr, id, comment, commentLen)\
+        z__Dynt_newFromRaw(             \
+                arrt                    \
+              , (arr).data              \
+              , sizeof(*(arr).data)     \
+              , (arr).lenUsed           \
+              , id                      \
+              , comment, commentLen);   \
+
 
 #define z__Dynt_getUnitSize(arr)            ((arr).unitsize)
 #define z__Dynt_getRawData(arr)             ((arr).data)

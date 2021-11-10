@@ -7,7 +7,7 @@
 #include "mem.h"
 
     
-z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, const char *comment, z__i32 commentLength, z__u8 typeID)
+z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, z__u8 typeID, const char *comment, z__i32 commentLength)
 {
     z__Dynt arrt = {
         .data = z__MALLOC(unitsize * len),
@@ -21,21 +21,25 @@ z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, const char *comment, z__i32 co
         arrt.comment = NULL;
         arrt.commentLen = commentLength;
     } else if (commentLength == -1) {
-        arrt.comment = malloc(sizeof(char) * strnlen(comment, 1024));
+        arrt.comment = z__MALLOC(sizeof(char) * strnlen(comment, 1024));
         snprintf(arrt.comment, 1024, "%s", comment);
         arrt.commentLen = 1024;
     } else {
-        arrt.comment = malloc(sizeof(char) * commentLength);
+        arrt.comment = z__MALLOC(sizeof(char) * commentLength);
         memcpy(arrt.comment, comment, commentLength);
         arrt.commentLen = commentLength;
     }
 
-
     return arrt;
 }
 
+void z__Dynt_newFromRaw(z__Dynt *obj, void *ptr, z__size unitsize, z__size len, z__u8 typeID, char const *comment, z__i32 commentLen)
+{
+    *obj = z__Dynt_new(unitsize, len, typeID, comment, commentLen);
+    memcpy(obj->data, ptr, unitsize * len);
+}
 
-z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, const char *comment, z__i32 commentLength, z__u8 typeID)
+z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, z__u8 typeID, const char *comment, z__i32 commentLength)
 {
     FILE *fp;
     if((fp = fopen(filepath, "rb")) == NULL)
@@ -51,7 +55,7 @@ z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, const cha
     z__u64 len = fsz/sizePerVal;
     
     z__Dynt arrt = z__Dynt_new(
-            sizePerVal, fsz, comment, commentLength, typeID);
+            sizePerVal, fsz, typeID, comment, commentLength);
     
     fread(arrt.data, 1, fsz-1, fp);
     fclose(fp);
