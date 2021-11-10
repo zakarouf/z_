@@ -33,7 +33,7 @@ z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, z__u8 typeID, const char *comm
     return arrt;
 }
 
-void z__Dynt_newFromRaw(z__Dynt *obj, void *ptr, z__size unitsize, z__size len, z__u8 typeID, char const *comment, z__i32 commentLen)
+void z__Dynt_newFromRaw(z__Dynt *obj, void const *ptr, z__size unitsize, z__size len, z__u8 typeID, char const *comment, z__i32 commentLen)
 {
     *obj = z__Dynt_new(unitsize, len, typeID, comment, commentLen);
     memcpy(obj->data, ptr, unitsize * len);
