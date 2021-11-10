@@ -2,13 +2,20 @@
 #define ZAKAROUF__ZPREP_NM_CONDITIONAL_H
 
 // Condtionals
-#define zpp__doif_construct_pre(condition, method, ...)\
+#define zpp__doif_construct_onlypre(condition, method, ...)\
     if(condition)\
         for(int keep = 1 ; keep?({ method(__VA_ARGS__); 1; }):0 ; keep ^= 1)
 
-#define zpp__doif_construct_post(condition, method, ...)\
+#define zpp__doif_construct_onlypost(condition, method, ...)\
     if(condition)\
         for(int keep = 1; keep; keep ^= 1, method(__VA_ARGS__) )
+
+#include "../call.h"
+
+#define zpp__doif_construct(condition, methodandArgs1, methodandArgs2)\
+    if(condition)\
+        for(int keep = 1 ; keep?({ zpp__call_raw methodandArgs1; 1; }):0 ; keep ^= 1, zpp__call_raw methodandArgs2)
+
 
 #define zpp__ter__if(exp)   (exp)?
 #define zpp__ter__elif(exp) :(exp)?
