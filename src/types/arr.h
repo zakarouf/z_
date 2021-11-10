@@ -95,6 +95,17 @@
         z__Arr_initFromPtr__var__temp_arr;                                  \
     })
 
+#define z__Arr_newExtractFrom_StructArrPtr(arr, s_ptr, member, len)\
+    {                                                                   \
+        z__Arr_new(arr, len);                                           \
+        z__ptr src_in = &s_ptr->member;                                 \
+                                                                        \
+        for(z__size i = 0; i < len; i++){                               \
+            z__Arr_push_nocheckMC(arr, src_in);                         \
+            src_in += sizeof(*s_ptr);                                   \
+        }                                                               \
+    }
+
 #define z__Arr_newCopy(arr, arr_src)\
     {                                                                       \
         z__Arr_new(arr, arr_src.len);                                       \
