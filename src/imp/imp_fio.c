@@ -81,7 +81,7 @@ z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, cha
 
     fseek(fp, 0, SEEK_SET);  /* same as rewind(f); */
 
-    z__Dynt Object = z__Dynt_new(subDiv, fsize/subDiv, comment, commentLen, 0);
+    z__Dynt Object = z__Dynt_new(subDiv, fsize/subDiv, 0, comment, commentLen);
     memset(Object.data, 0, fsize);
 
     fread(Object.data, 1, (fsize-1), fp);
