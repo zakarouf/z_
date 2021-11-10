@@ -28,6 +28,38 @@ void *z__fio_newFromFile(char const filename[], z__size unitsize, z__size *len)
     return data;
 }
 
+void z__fio_ptr_dump(void const *ptr, z__size const unitsize, z__size const len, FILE *fp)
+{
+    if(unitsize <= 0 || len <= 0 ) return;
+
+    fwrite(&unitsize, sizeof(unitsize), 1, fp);
+    fwrite(&len, sizeof(len), 1, fp);
+    fwrite(ptr, unitsize * len, 1, fp);
+}
+
+void* z__fio_ptr_newLoad(z__size *unitsize, z__size *len, FILE *fp)
+{
+    z__size _l, _unit;
+    void *ptr;
+
+    fread(&_unit, sizeof(_unit), 1, fp);
+    fread(&_l, sizeof(_l), 1, fp);
+
+    ptr = z__MALLOC(_unit * _l);
+    fread(ptr, _unit * _l, 1, fp);
+
+    if(unitsize){
+        *unitsize = _unit;
+    }
+
+    if(len){
+        *len = _l;
+    }
+
+    return ptr;
+}
+
+
 void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp)
 {
     fread(&obj->typeID, sizeof(obj->typeID), 1, fp);
