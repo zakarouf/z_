@@ -7,9 +7,9 @@ typedef char z__char;
 
 typedef struct ZINT_STRING
 {
-    z__char * str;
+    z__char * data;
     int len;
-    int used;
+    int lenUsed;
 
 }z__String;
 
@@ -18,12 +18,12 @@ typedef struct
     z__char **str_list;
     unsigned int *str_lens;
     unsigned int list_len;
-    unsigned ll_used;
+    unsigned int list_lenUsed;
 }z__StringList;
 
 typedef struct
 {
-    z__StringList *Sldata;
+    z__StringList *data;
     int len;
     int used;
 }z__StringListArr;
