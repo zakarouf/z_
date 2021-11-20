@@ -131,14 +131,13 @@ z__StringList z__fio_getfnames(char const path[])
     struct dirent* dp;
     int items = 0;
 
-    while((dp = readdir(drip)) != NULL)
-    {
+    while((dp = readdir(drip)) != NULL) {
         items++;
     }
     closedir(drip);
-    drip = opendir(path);
 
-    z__StringList fnames = z__StringList_new(32);
+    drip = opendir(path);
+    z__StringList fnames = z__StringList_new(items);
 
     while((dp = readdir(drip)) != NULL)
     {
