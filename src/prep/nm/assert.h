@@ -1,6 +1,8 @@
 #ifndef ZAKAROUF__ZPREP_NM_ASSERT_H
 #define ZAKAROUF__ZPREP_NM_ASSERT_H
 
+#include "../base.h"
+
 #define zpp__assert_exp(exp)\
     ((void) ((exp) ? 1 : 0)
 
@@ -17,6 +19,10 @@
 
 #define zpp__panicif_construct(condition, panic_call, ...) zpp__assert_not_construct(condition, panic_call, __VA_ARGS__)
 
+#define zpp__static_assert_primitive(exp, msg)\
+     typedef struct {\
+        char static_assert__##msg[(exp)?1:-1];\
+     } zpp__CAT(line__, __LINE__)
 #define zpp__static_assert(exp) _Static_assert(exp, #exp)
 #define zpp__static_assert_msg(exp, msg) _Static_assert(exp, #exp ":" msg)
 
