@@ -55,7 +55,7 @@ z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, z__u8 typ
     z__u64 len = fsz/sizePerVal;
     
     z__Dynt arrt = z__Dynt_new(
-            sizePerVal, fsz, typeID, comment, commentLength);
+            sizePerVal, len, typeID, comment, commentLength);
     
     fread(arrt.data, 1, fsz-1, fp);
     fclose(fp);
@@ -94,13 +94,6 @@ inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
     }
 
     arrt->data = z__REALLOC_SAFE(arrt->data, arrt->unitsize * (arrt->len));
-}
-
-void z__Dynt_read(z__Dynt const arrt, void *dest, z__size const from, z__size const size, z__size const unitsize)
-{
-    if((arrt.unitsize - ((size * unitsize) + from)) > 0) {
-        memcpy(&arrt.data[from], dest, size * unitsize);
-    }
 }
 
 z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
