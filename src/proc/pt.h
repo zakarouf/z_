@@ -1,6 +1,7 @@
 #ifndef ZAKAROUF__Z__PROC_PT_H
 #define ZAKAROUF__Z__PROC_PT_H
 
-#include "pt_base.h"
+#include "pt/base.h"
+#include "pt/coroutine.h"
 
 #endif
