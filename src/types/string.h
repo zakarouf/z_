@@ -25,7 +25,7 @@ typedef struct
 {
     z__StringList *data;
     int len;
-    int used;
+    int lenUsed;
 }z__StringListArr;
 
 
