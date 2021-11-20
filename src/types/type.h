@@ -24,13 +24,13 @@
 #define z__PRIV__typeset_segment_unwrap_first(x)\
     z__PRIV__typeset_segment_first(x)
 
-#define z__typeset_new(T, defaultVal, ...)\
+#define z__typeset_def(T, defaultVal, ...)\
     z__PRIV__typeset_map(T, defaultVal, __VA_ARGS__)
 
-#define z__typeset_new_nonuni(defaultVal, ...)\
+#define z__typeset_def_nonuni(defaultVal, ...)\
     z__PRIV__typeset_nonuni_map(defaultVal, __VA_ARGS__)
 
-//#define z__typeset_method_new(T, defaultMethod, ...)\
+//#define z__typeset_method_new(T, defaultMethod, ...
 
 
 
