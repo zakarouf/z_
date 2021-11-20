@@ -40,7 +40,7 @@ z__bool z__pt_coroutine_is_thread_active(z__u32 id);
   z__pt_coroutine_set_tstatus_done((arg)->unique.id)
 
 #define z__pt_coroutine_waitfor_tstatus(st, id)\
-  while(!zpp__CAT(z__pt_coroutine_tstatus_, st)(id) || z__pt_coroutine_is_thread_active(id))
+  while(!zpp__CAT(z__pt_coroutine_tstatus_, st)(id) && z__pt_coroutine_is_thread_active(id))
 
 #define z__pt_coroutine_waitfor_thread_inactive(id)\
   while(z__pt_coroutine_is_thread_active(id))
