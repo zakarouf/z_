@@ -74,9 +74,23 @@ z__u32 z__pt_coroutine_run_raw(z__u32 *id, z__pt_Thread_Attr *attr, void *(*fn) 
         z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
     z__pt(mutex_unlock, &thread_counter_lock);
 
-
-
     return *id;
+}
+
+void z__pt_coroutine_run_setid_raw(
+    z__u32 inp_id, z__u32 *id
+  , z__pt_Thread_Attr *attr, void *(*fn)(void *), void *arg
+  , const char *name, z__u32 name_size)
+{
+    z__pt(mutex_lock, &thread_counter_lock);
+        *id = inp_id;
+        if(inp_id > z__Arr_getLen(_g_threads)){
+            z__Arr_resize(&_g_threads, inp_id);
+        }
+        _z__pt_coroutine_thread_enable(&z__Arr_getVal(_g_threads, inp_id), inp_id, name, name_size);
+        z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
+    z__pt(mutex_unlock, &thread_counter_lock);
+
 }
 
 void z__pt_coroutine_join_raw(z__u32 id)
