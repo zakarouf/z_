@@ -4,12 +4,10 @@
 #include "../config_types.h"
 #include "../prep/map.h"
 #include "../prep/args.h"
-
+#include "typeof.h"
 
 #define z__RecordX(...)\
-    struct {\
-        z__PRIV__Record__createMembers(__VA_ARGS__)\
-    }\
+    z__Record(,__VA_ARGS__)
 
 /**
  * Create a Record Type
@@ -21,9 +19,9 @@
  *          => Different/Varied 
  */
 #define z__Record(Name, ...)\
-    struct Name {\
-        z__PRIV__Record__createMembers(__VA_ARGS__)\
-    }\
+    z__typeof(struct Name {\
+        z__PRIV__Record__createMembers_redirect(__VA_ARGS__)\
+    })\
 
 /**
  * Call Record
@@ -85,6 +83,8 @@
 
 #define z__PRIV__Record__createMembers_map(x) zpp__Args_get(1, zpp__EXPAND x) z__PRIV__Record__createMembers__apply(zpp__Args_skip_1 x);
 #define z__PRIV__Record__createMembers(...) zpp__Args_map(z__PRIV__Record__createMembers_map, __VA_ARGS__)
+
+#define z__PRIV__Record__createMembers_redirect(...) z__PRIV__Record__createMembers(__VA_ARGS__)
 
 //* Auto *//
 
