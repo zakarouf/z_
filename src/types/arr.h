@@ -1,6 +1,13 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__ARR_H
 #define ZAKAROUF__ZTYPES_TYPES__ARR_H
 
+/** @file arr.h
+ *  @brief Type Generic Dynamic Arrays
+ *
+ *  Type Generic Dynamic Arrays using C-macros,
+ *  this file provides all the required definations and functions to use it.
+ */
+
 #include "../config_types.h"
 #include "base.h"
 #include "mem.h"
@@ -43,7 +50,14 @@
         };                      \
     }
 
-//-------------------- Dynamic Array ---------------------//
+/*-------------------- Dynamic Array ---------------------*/
+
+/**
+ * @def z__Arr(T)
+ * @brief Define an Anonymous struct type of unit-type \a T.
+ *
+ * @param T Type of the units.
+ */
 #define z__Arr(T)\
     struct              \
     {                   \
@@ -52,13 +66,26 @@
         z__i32 lenUsed; \
     }
 
+/**
+ * @def z__Arr_new(arr, size)
+ * @brief Initializes array by allocting memory and setting up the size.
+ *
+ * @param arr Array
+ * @param sz Initial length of the array.
+ */
 #define z__Arr_new(arr, sz)\
-    {                                                   \
-        (arr)->data = malloc(sizeof(*(arr)->data)*sz);  \
-        (arr)->len = sz;                                \
-        (arr)->lenUsed = 0;                             \
+    {                                                       \
+        (arr)->data = z__MALLOC(sizeof(*(arr)->data)*sz);   \
+        (arr)->len = sz;                                    \
+        (arr)->lenUsed = 0;                                 \
     }
 
+/**
+ * @def z__Arr_delete(arr)
+ * @brief Deletes the array and frees memory.
+ *
+ * @param arr Array
+ */
 #define z__Arr_delete(arr)\
     {                          \
         (arr)->len = 0;        \
@@ -69,6 +96,13 @@
 #define z__Arr_I(T, arr_n)\
     z__Arr(T) arr_n; z__Arr_new(&arr_n, 8)
 
+/**
+ * @def z__Arr_init(arr_T, ...)
+ * @brief Initialize an array, and return it as rvalue.
+ *
+ * @param arr_T Either Array Type or lvalue whose type-array will be returned.
+ * @param ... List of arrguments that will be copied into the initialize array.
+ */
 #define z__Arr_init(arr_T, ...)\
     ({                                                                  \
         z__typeof(arr_T) temp_arr;                                      \
@@ -80,6 +114,14 @@
         temp_arr;                                                       \
     })
 
+/**
+ * @def z__Arr_newFromPtr(arr, src, srclen)
+ * @brief Initialize array, copy pointer data from \a src to arr data.
+ *
+ * @param arr Array
+ * @param src Pointer to the data to make copy from.
+ * @param srclen Number of units inside \a src.
+ */
 #define z__Arr_newFromPtr(arr, src, srclen)\
     {                                                           \
         z__Arr_new(arr, srclen);                                \
@@ -88,6 +130,13 @@
         (arr)->lenUsed = srclen;                                \
     }
 
+/**
+ * @def z__Arr_initFromPtr(arrT, src, srclen)
+ * @brief Initializes the array, copys the pointer src, return the array as rvalue.
+ *
+ * @param arrT Either the Array Type or the Array var \a lvalue.
+ * @
+ */
 #define z__Arr_initFromPtr(arrT, src, srclen)\
     ({                                                                      \
         arr_T z__Arr_initFromPtr__var__temp_arr;                            \
@@ -133,9 +182,8 @@
 
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
-        if ((arr)->lenUsed > newSize)                                               \
-        {                                                                           \
-           ( arr)->lenUsed = newSize;                                               \
+        if ((arr)->lenUsed > newSize) {                                             \
+           (arr)->lenUsed = newSize;                                                \
         }                                                                           \
         (arr)->data = z__REALLOC_SAFE((arr)->data, newSize * sizeof(*(arr)->data)); \
         (arr)->len = newSize;                                                       \
@@ -145,7 +193,7 @@
     {                                                                                           \
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
-            (arr)->len += Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__NUM;                                   \
+            (arr)->len += Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__NUM;                             \
             (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
         (arr)->data[(arr)->lenUsed] = val;                                                      \
@@ -192,13 +240,15 @@
 #define z__Arr_join(dest, from)\
     {                                                                                                   \
         z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);   \
-        if (totalLength > (dest)->len)                                                                  \
-        {                                                                                               \
+        if (totalLength > (dest)->len){                                                                 \
             z__Arr_resize(dest, totalLength+1)                                                          \
         }                                                                                               \
         memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
 
+/**
+ *
+ */
 #define z__Arr_isdataequal(arr1, arr2)\
     (\
         zpp__ter__if((arr1).lenUsed * sizeof(*(arr1).data)      \
