@@ -15,40 +15,15 @@
 /* Known Type-safe arrays */
 
 //-------------------- Fixed-size Array ---------------------//
+
+/**
+ * @def z__ArrFx(T, N)
+ * @brief Create A stact allocated Fixed sized array.
+ *
+ * @param T Type
+ * @param N Length
+ */
 #define z__ArrFx(T, N) z__typeof(T [N])
-
-#define z__ArrSxDef(T, sz, tagName)\
-    struct  _z__SxArr_deftag_ ## tagName	\
-    {                           		\
-        T data[sz];             		\
-        const z__i32 len;       		\
-        z__i32 lenUsed;         		\
-    }
-
-#define z__ArrSx(SDeftag, N)\
-    struct _z__SxArr_deftag_ ## SDeftag N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
-
-#define z__ArrSxT(T, N)\
-    T N = {.len = sizeof(N.data)/sizeof(N.data[0]), .lenUsed = 0}
-
-#define z__ArrSxI(T, sz, N)\
-    z__ArrSxDef(T, sz, N) N = {.len = sz, .lenUsed = 0}; N
-
-#define z__ArrSx_push(arr, val...)\
-    {                                           \
-        if((arr)->lenUsed < (arr->len))         \
-        {                                       \
-            (arr)->data[(arr)->lenUsed] = val;  \
-            (arr)->lenUsed += 1;                \
-        };                                      \
-    }
-#define z__ArrSx_pop(arr)\
-    {                           \
-        if((arr)->lenUsed >= 0) \
-        {                       \
-            (arr)->lenUsed -= 1;\
-        };                      \
-    }
 
 /*-------------------- Dynamic Array ---------------------*/
 
@@ -90,11 +65,8 @@
     {                          \
         (arr)->len = 0;        \
         (arr)->lenUsed = 0;    \
-        free((arr)->data);     \
+        z__FREE((arr)->data);  \
     }
-
-#define z__Arr_I(T, arr_n)\
-    z__Arr(T) arr_n; z__Arr_new(&arr_n, 8)
 
 /**
  * @def z__Arr_init(arr_T, ...)
@@ -135,7 +107,8 @@
  * @brief Initializes the array, copys the pointer src, return the array as rvalue.
  *
  * @param arrT Either the Array Type or the Array var \a lvalue.
- * @
+ * @param src Pointer
+ * @param srclen Length of the pointer data
  */
 #define z__Arr_initFromPtr(arrT, src, srclen)\
     ({                                                                      \
@@ -144,10 +117,19 @@
         z__Arr_initFromPtr__var__temp_arr;                                  \
     })
 
+/**
+ * @def z__Arr_newExtractFrom_StructArrPtr(arr, s_ptr, member, len)
+ * @brief Initialize the array, with a pointer to struct array's member.
+ *
+ * @param arr Array
+ * @param s_ptr Struct array pointer
+ * @param member The struct member to fish out
+ * @param len Length of the \a s_ptr.
+ */
 #define z__Arr_newExtractFrom_StructArrPtr(arr, s_ptr, member, len)\
     {                                                                   \
         z__Arr_new(arr, len);                                           \
-        z__ptr src_in = &s_ptr->member;                                 \
+        z__ptr src_in = &(s_ptr)->member;                               \
                                                                         \
         for(z__size i = 0; i < len; i++){                               \
             z__Arr_push_nocheckMC(arr, src_in);                         \
