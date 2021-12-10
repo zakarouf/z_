@@ -260,7 +260,7 @@
     }
 
 /**
- *
+ * Returns True if equal
  */
 #define z__Arr_isdataequal(arr1, arr2)\
     (\
@@ -293,11 +293,12 @@
         int z__Arr_slice__var__upto = upto > (arr).lenUsed? (arr).lenUsed : upto;   \
                                                                                     \
         memcpy((dest)->data, (arr).data[z__Arr_slice__var__from], (z__Arr_slice__var__upto - z__Arr_slice__var__from) * sizeof(*(arr).data))\
+        (dest)->lenUsed = z__Arr_slice__var__upto - z__Arr_slice__var__from;\
     }
 
 //#define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
 #define z__Arr_slice_3(arr, dest, from) z__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
-#define z__Arr_slice_2(arr, dest) z__Arr_slice_4(arr, dest, 0, (arr).lenUsed-1)
+#define z__Arr_slice_2(arr, dest) z__Arr_slice_3(arr, dest, 0)
 #define z__Arr_slice(...) zpp__Args_Overload(z__Arr_slice_, __VA_ARGS__)
 
 
@@ -306,10 +307,12 @@
     {\
         z__size _from = from    \
             ,   _upto = upto    \
+            ,   _step = step    \
             ,   _j = 0;         \
-        z__Arr_new(dest, ((_upto - _from)/step) +1);\
-        for(;_from < _upto; _from += step, _j++){   \
-            (dest)->data[j] = (arr).data[_from];    \
+        z__Arr_new(dest, ((_upto - _from)/_step) +1);\
+        for(;_from < _upto; _from += _step){        \
+            (dest)->data[_j] = (arr).data[_from];   \
+            _j += 1;                                \
         }                                           \
         (dest)->lenUsed = _j;                       \
     }
@@ -317,9 +320,10 @@
 #define z__Arr_newSlice_4(dest, arr, from, upto)\
     {\
         z__size _len = upto - from;                         \
+        z__size _from = from;                               \
         z__Arr_new(dest, _len);                             \
         z__typeof((arr).data) _data = (dest)->data;         \
-        memcpy(_data, (arr).data, sizeof(*_data) * _len);   \
+        memcpy(_data, &(arr).data[_from], sizeof(*_data) * _len);\
         (dest)->lenUsed = _len;                             \
     }
 
