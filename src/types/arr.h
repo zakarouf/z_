@@ -170,6 +170,15 @@
         temp_arr;                                   \
     })
 
+#define z__Arr_copy(dest_arr, arr)\
+    {\
+        if((dest_arr)->len <= (arr).lenUsed) {\
+            (dest_arr)->data = z__REALLOC_SAFE((dest_arr)->data, (arr).lenUsed * sizeof(*(arr).data));  \
+            (dest_arr)->len = (arr).lenUsed;                                                            \
+        }                                                                                               \
+        memcpy((dest_arr)->data, (arr).data, (arr).lenUsed * sizeof(*(arr).data));                      \
+        (dest_arr)->lenUsed = (arr).lenUsed;                                                            \
+    }
 
 #define z__Arr_resize(arr, newSize)\
     {                                                                               \
