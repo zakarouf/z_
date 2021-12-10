@@ -4,7 +4,7 @@
 
 #include "../z__exp.h"
 #include "../types/typeof.h"
-#include "../types/base_ext.h"
+#include "../types/type.h"
 #include "../types/mem.h"
 #include "../prep/base.h"
 
