@@ -189,26 +189,39 @@
         (arr)->len = newSize;                                                       \
     }
 
-#define z__Arr_push(arr, val...)\
-    {                                                                                           \
+#define z__Arr_resize_pack(arr)\
+    {                                                                                       \
+        (arr)->data = z__REALLOC_SAFE((arr)->data, (arr)->lenUsed * sizeof(*(arr)->data));  \
+        (arr)->len = (arr)->lenUsed;                                                        \
+    }
+
+#define z__Arr_check_and_expand(arr)\
+    {\
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
             (arr)->len += Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__NUM;                             \
             (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
+    }
+
+#define z__Arr_push(arr, val...)\
+    {                                                                                           \
+        z__Arr_check_and_expand(arr)                                                            \
         (arr)->data[(arr)->lenUsed] = val;                                                      \
         (arr)->lenUsed += 1;                                                                    \
     }
 
 #define z__Arr_pushMC(arr, val...)\
     {                                                                                           \
-        if ((arr)->lenUsed >= (arr)->len)                                                       \
-        {                                                                                       \
-            (arr)->len += Z___TYPE_CONFIG__ARR__GROWTH_FACTOR__NUM;                                   \
-            (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
-        }                                                                                       \
+        z__Arr_check_and_expand(arr)                                                            \
         memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                      \
         (arr)->lenUsed += 1;                                                                    \
+    }
+
+#define z__Arr_pushInc(arr)\
+    {                                   \
+        z__Arr_check_and_expand(arr);   \
+        (arr)->lenUsed += 1;            \
     }
 
 #define z__Arr_push_nocheck(arr, val...)\
@@ -234,7 +247,7 @@
 
 #define z__Arr_pop_nocheck(arr)\
     {                                                                               \
-        (arr)->lenUsed -= 1;                                                        \                                                                          \
+        (arr)->lenUsed -= 1;                                                        \
     }
 
 #define z__Arr_join(dest, from)\
