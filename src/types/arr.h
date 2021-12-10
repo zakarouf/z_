@@ -270,6 +270,35 @@
 #define z__Arr_slice(...) zpp__Args_Overload(z__Arr_slice_, __VA_ARGS__)
 
 
+
+#define z__Arr_newSlice_5(dest, arr, from, upto, step)\
+    {\
+        z__size _from = from    \
+            ,   _upto = upto    \
+            ,   _j = 0;         \
+        z__Arr_new(dest, ((_upto - _from)/step) +1);\
+        for(;_from < _upto; _from += step, _j++){   \
+            (dest)->data[j] = (arr).data[_from];    \
+        }                                           \
+        (dest)->lenUsed = _j;                       \
+    }
+
+#define z__Arr_newSlice_4(dest, arr, from, upto)\
+    {\
+        z__size _len = upto - from;                         \
+        z__Arr_new(dest, _len);                             \
+        z__typeof((arr).data) _data = (dest)->data;         \
+        memcpy(_data, (arr).data, sizeof(*_data) * _len);   \
+        (dest)->lenUsed = _len;                             \
+    }
+
+#define z__Arr_newSlice_3(dest, arr, from) z__Arr_newSlice_4(dest, arr, from, (arr).lenUsed-1)
+#define z__Arr_newSlice_2(dest, arr) z__Arr_newCopy(dest, arr)
+#define z__Arr_newSlice_1(arr) z__Arr_clone(arr)
+#define z__Arr_newSlice(...) zpp__Args_Overload(z__Arr_newSlice_, __VA_ARGS__)
+
+
+
 #define z__Arr_sliceR_5(arr, dest, from, upto, step)\
 {                                                                                               \
     if ((arr).lenUsed > (dest)->len) {                                                          \
