@@ -42,6 +42,15 @@
     }
 
 /**
+ * @def z__Arrq(T, ...)
+ * @brief Define an Anonymous struct type of unit-size \a T and extra params
+ *
+ * @param (...1) (List) of aliases for data pointer.
+ * @param (...2) (Record) of misc struct members
+ */
+
+
+/**
  * @def z__Arr_new(arr, size)
  * @brief Initializes array by allocting memory and setting up the size.
  *
