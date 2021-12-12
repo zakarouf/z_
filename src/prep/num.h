@@ -3,7 +3,6 @@
 
 #include "base.h"
 
-
 // Function
 #define zpp__PRIV__INC(x) zpp__CAT(zpp__PRIV__INC_, x)
 #define zpp__PRIV__DEC(x) zpp__CAT(zpp__PRIV__DEC_, x)
@@ -13,7 +12,7 @@
 
 
 #define zpp__PRIV__NUM_CHECK(...) zpp__Args_get(2, __VA_ARGS__, 0, ~)
-#define zpp__PRIV__NUM_IS_EQUAL(x, y) zpp__PRIV__NUM_CHECK(zpp__CAT4(EQUAL_, x, _, y))
+#define zpp__PRIV__NUM_IS_EQUAL(x, y) zpp__Args_HAS_COMMA(zpp__CAT4(zpp__PRIV__NUM_IS_EQUAL__, x, __, y))
 #define zpp__NUM_IS_EQUAL(x, y) zpp__PRIV__NUM_IS_EQUAL(x, y)
 
 
