@@ -547,6 +547,9 @@
 
 //
 
+
+
+#define zpp__PRIV__Args_maplist__Pattern__1(prefix, suffix, ...) zpp__CAT(prefix, zpp__PRIV__Args_get_1(__VA_ARGS__)) suffix
 #define zpp__PRIV__Args_maplist__Pattern__2(prefix, suffix, ...) zpp__CAT(prefix, zpp__PRIV__Args_get_1(__VA_ARGS__)) suffix zpp__PRIV_COMMA() zpp__PRIV__Args_map__Pattern__1(prefix, suffix, zpp__Args_skip_1(__VA_ARGS__))
 #define zpp__PRIV__Args_maplist__Pattern__3(prefix, suffix, ...) zpp__CAT(prefix, zpp__PRIV__Args_get_1(__VA_ARGS__)) suffix zpp__PRIV_COMMA() zpp__PRIV__Args_maplist__Pattern__2(prefix, suffix, zpp__Args_skip_1(__VA_ARGS__))
 #define zpp__PRIV__Args_maplist__Pattern__4(prefix, suffix, ...) zpp__CAT(prefix, zpp__PRIV__Args_get_1(__VA_ARGS__)) suffix zpp__PRIV_COMMA() zpp__PRIV__Args_maplist__Pattern__3(prefix, suffix, zpp__Args_skip_1(__VA_ARGS__))
