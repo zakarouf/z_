@@ -55,6 +55,8 @@
 #define zpp__IS_PAREN_PROBE(...) zpp__DETECT_probe(~)
 #define zpp__IS_PAREN(x) zpp__DETECT_check(zpp__IS_PAREN_PROBE x)
 
+#define zpp__UNPAREN(x) zpp__EXPAND x
+
 #define zpp__From(...) ({ __VA_ARGS__  })
 
 
