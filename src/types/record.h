@@ -570,7 +570,7 @@
 #define z__PRIV__Record__forEnum_createMembers__6(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__5(__VA_ARGS__)
 #define z__PRIV__Record__forEnum_createMembers__5(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__4(__VA_ARGS__)
 #define z__PRIV__Record__forEnum_createMembers__4(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__3(__VA_ARGS__)
-#define z__PRIV__Record__forEnum_createMembers__3(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__2(__VA_ARGS__).
+#define z__PRIV__Record__forEnum_createMembers__3(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__2(__VA_ARGS__)
 #define z__PRIV__Record__forEnum_createMembers__2(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__1(__VA_ARGS__)
 #define z__PRIV__Record__forEnum_createMembers__1(x, ...) zpp__PRIV__Args_get_1 x zpp__Args_skip_1 x; z__PRIV__Record__forEnum_createMembers__0(__VA_ARGS__)
 #define z__PRIV__Record__forEnum_createMembers__0(x, ...) 
