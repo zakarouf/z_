@@ -189,7 +189,7 @@
 
 
 #define z__Enum__PRIV__Arg_ToRecord_1__expand(...)\
-    z__Record__PRIV__forEnum(__VA_ARGS__)
+    z__PRIV__Record__forEnum(__VA_ARGS__)
 
 #define z__Enum__PRIV__Arg_ToRecord_1(x)\
     z__Enum__PRIV__Arg_ToRecord_1__expand(zpp__EXPAND x)
@@ -233,14 +233,14 @@
 
 #define z__Enum__PRIV__GEN__fn__Record(x)\
     Z__INLINE __attribute__((const)) zpp__PRIV__Args_get_1 x (z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x))\
-    z__Record__PRIV__forEnum_createMembers(zpp__Args_skip_1 x)  \
+    z__PRIV__Record__forEnum_createMembers(zpp__Args_skip_1 x)  \
     {                                                           \
         z__typeof(zpp__PRIV__Args_get_1 x (                     \
-                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x)) ) result;\
-                                                                                                    \
+                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(\
+                        zpp__Args_skip_1 x)) ) result;\
         z__Enum_chip(&result, zpp__PRIV__Args_get_1 x,                                              \
-                zpp__Args_toDuplicateParenList(                                                     \
-                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x) ));       \
+                zpp__Args_toDuplicateParenList( \
+                    z__Enum__PRIV__GEN__fn__Record__createArgList_map(zpp__Args_skip_1 x) ));\
         return result;                                                                              \
     }
 
