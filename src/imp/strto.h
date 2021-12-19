@@ -20,6 +20,12 @@
               ), v)
 
 
+#define z__String_to(str, v)\
+    {\
+        if(str.len)\
+            z__strto(str.data, v);\
+    }
+
 
 #endif
 
