@@ -15,12 +15,12 @@
 /* New type declarator, Vector and Maxtrix */
 #define z__VectorSt(T, ...)\
     struct {            \
-        T __VA_ARGS__;  \
+        z__typeof(T) __VA_ARGS__;  \
     }
 
 #define z__Vector(T, ...)\
     union {                                 \
-        T raw[zpp__Args_Count(__VA_ARGS__)];\
+        z__typeof(T) raw[zpp__Args_Count(__VA_ARGS__)];\
         z__VectorSt(T, __VA_ARGS__);        \
     }
 
