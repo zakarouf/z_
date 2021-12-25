@@ -18,7 +18,6 @@ typedef struct z__Dynt
 
 z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, z__u8 typeID, const char *comment, z__i32 commentLength);
 void z__Dynt_newFromRaw(z__Dynt *obj, void const *ptr, z__size unitsize, z__size len, z__u8 typeID, char const *comment, z__i32 commentLen);
-z__Dynt z__Dynt_newFromFile(const char filepath[], z__size unitsize, z__u8 typeID, const char *comment, z__i32 commentLength);
 
 void z__Dynt_delete(z__Dynt *arrt);
 void z__Dynt_push( z__Dynt *arrt, void *val);

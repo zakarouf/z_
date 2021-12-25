@@ -39,29 +39,6 @@ void z__Dynt_newFromRaw(z__Dynt *obj, void const *ptr, z__size unitsize, z__size
     memcpy(obj->data, ptr, unitsize * len);
 }
 
-z__Dynt z__Dynt_newFromFile(const char filepath[], z__size sizePerVal, z__u8 typeID, const char *comment, z__i32 commentLength)
-{
-    FILE *fp;
-    if((fp = fopen(filepath, "rb")) == NULL)
-    {
-        return (z__Dynt){0};
-    }
-
-    fseek(fp, 0, SEEK_END);
-    long fsz = ftell(fp);
-    fsz += 1;
-    fseek(fp, 0, SEEK_SET);  /* same as rewind(fp); */
-
-    z__u64 len = fsz/sizePerVal;
-    
-    z__Dynt arrt = z__Dynt_new(
-            sizePerVal, len, typeID, comment, commentLength);
-    
-    fread(arrt.data, 1, fsz-1, fp);
-    fclose(fp);
-    
-    return arrt;
-}
 void z__Dynt_push( z__Dynt *arrt, void *val)
 {
     if (arrt->lenUsed >= arrt->len)
