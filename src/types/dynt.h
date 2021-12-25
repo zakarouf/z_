@@ -4,7 +4,7 @@
 #include "base.h"
 
 /* Unknown Similar size Unsafe type Arrays */
-typedef struct __ZAKAROUF__SIMPARR_TYPE_STRUCT
+typedef struct z__Dynt
 {
     z__ptr data;
     char *comment;
