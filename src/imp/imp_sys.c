@@ -27,7 +27,7 @@ void z__logfile_basic(void * fileStream ,const char * restrict format, ...)
 
 void z__panic(char const *str_msg)
 {
-    z__logfile_basic(stdout, "%s", str_msg);
+    z__logfile_basic(stderr, "%s", str_msg);
 }
 
 void z__die(char const *str_msg, int code)
