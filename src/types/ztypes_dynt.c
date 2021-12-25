@@ -99,7 +99,7 @@ inline void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize)
 z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
 {
     z__Dynt arrtCopy = {
-        .data = malloc(arrt.len * arrt.unitsize),
+        .data = z__MALLOC(arrt.len * arrt.unitsize),
         .len = arrt.len,
         .lenUsed = arrt.lenUsed,
         .unitsize = arrt.unitsize,
@@ -109,7 +109,7 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
     z__u32 namelen = arrt.commentLen;
     if (namelen > 0)
     {
-        arrtCopy.comment = malloc(sizeof(char) * namelen);
+        arrtCopy.comment = z__MALLOC(sizeof(char) * namelen);
         memcpy(arrtCopy.comment, arrt.comment, namelen);
     } else {
         arrtCopy.comment = NULL;
