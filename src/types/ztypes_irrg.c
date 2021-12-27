@@ -25,7 +25,7 @@
         irgt->typeID = z__REALLOC_SAFE(irgt->typeID, sizeof(z__u8)*newsize);
 
         // Free memory if _resize is not called from _push or pop
-        for (int i = irgt->lenUsed; i > newsize; --i)
+        for (z__size i = irgt->lenUsed; i > newsize; --i)
         {
             //printf("==%d\n", i);
             free(irgt->data[i]);
