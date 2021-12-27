@@ -373,7 +373,7 @@
  *          }
  */
 #define z__Arr_PRIV_foreach_5(item, arr, from, upto, step)\
-    for(  int _z_Arr_foreach_var_iterator = from   \
+    for(  z__u32 _z_Arr_foreach_var_iterator = from   \
         , _z_Arr_foreach_var_iterator_keep = 1     \
             ; _z_Arr_foreach_var_iterator < upto   \
             ; _z_Arr_foreach_var_iterator += step, _z_Arr_foreach_var_iterator_keep ^= 1) \
