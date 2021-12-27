@@ -148,7 +148,7 @@
     }
 
     
-    z__String z__String_newFromFile(char filename[])
+    z__String z__String_newFromFile(char const filename[])
     {
         FILE *f;
 
