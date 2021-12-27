@@ -32,12 +32,12 @@
  * Link list defination is complete;
  */
 
-#define z__LList_new(zls, D...)\
+#define z__LList_new(zls, ...)\
     {                                                   \
         (zls)->head = z__MALLOC(sizeof(*(zls)->head));  \
         (zls)->head->next = NULL;                       \
         (zls)->head->prev = NULL;                       \
-        (zls)->head->data = D;                          \
+        (zls)->head->data = __VA_ARGS__;                \
         (zls)->cursor = (zls)->head;                    \
         (zls)->tail = (zls)->head;                      \
     }
