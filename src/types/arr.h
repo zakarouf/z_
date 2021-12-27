@@ -204,17 +204,17 @@
         }                                                                                       \
     }
 
-#define z__Arr_push(arr, val...)\
+#define z__Arr_push(arr, ...)\
     {                                                                                           \
         z__Arr_check_and_expand(arr)                                                            \
-        (arr)->data[(arr)->lenUsed] = val;                                                      \
+        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;                                              \
         (arr)->lenUsed += 1;                                                                    \
     }
 
-#define z__Arr_pushMC(arr, val...)\
+#define z__Arr_pushMC(arr, ...)\
     {                                                                                           \
         z__Arr_check_and_expand(arr)                                                            \
-        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));                      \
+        memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));                      \
         (arr)->lenUsed += 1;                                                                    \
     }
 
@@ -224,15 +224,15 @@
         (arr)->lenUsed += 1;            \
     }
 
-#define z__Arr_push_nocheck(arr, val...)\
+#define z__Arr_push_nocheck(arr, ...)\
     {                                           \
-        (arr)->data[(arr)->lenUsed] = val;      \
+        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;\
         (arr)->lenUsed += 1;                    \
     }
 
-#define z__Arr_push_nocheckMC(arr, val...)\
+#define z__Arr_push_nocheckMC(arr, ...)\
     {                                                                       \
-        memcpy(&(arr)->data[(arr)->lenUsed], (val), sizeof(*(arr)->data));  \
+        memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));  \
         (arr)->lenUsed += 1;                                                \
     }
 
