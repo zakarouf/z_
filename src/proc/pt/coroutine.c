@@ -26,7 +26,7 @@ enum {
     , z__pt_thread_status_name(CAUGHT_ERROR) = 1 << 1
 };
 
-inline static void _z__pt_coroutine_thread_enable(struct Thread *thread, z__u32 id, const char *name, z__u32 name_size)
+inline static void _z__pt_coroutine_thread_enable(struct Thread *thread, const char *name, z__i32 name_size)
 {
     thread->_is_active = 1;
     if(name){
@@ -69,7 +69,7 @@ z__u32 z__pt_coroutine_run_raw(z__u32 *id, z__pt_Thread_Attr *attr, void *(*fn) 
     z__pt(mutex_lock, &thread_counter_lock);
         *id = z__Arr_getUsed(_g_threads);
         struct Thread tmp_t;
-        _z__pt_coroutine_thread_enable(&tmp_t, z__Arr_getUsed(_g_threads), name, name_size);
+        _z__pt_coroutine_thread_enable(&tmp_t, name, name_size);
         z__Arr_push(&_g_threads, tmp_t);
         z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
     z__pt(mutex_unlock, &thread_counter_lock);
@@ -87,7 +87,7 @@ void z__pt_coroutine_run_setid_raw(
         if(inp_id > z__Arr_getLen(_g_threads)){
             z__Arr_resize(&_g_threads, inp_id);
         }
-        _z__pt_coroutine_thread_enable(&z__Arr_getVal(_g_threads, inp_id), inp_id, name, name_size);
+        _z__pt_coroutine_thread_enable(&z__Arr_getVal(_g_threads, inp_id), name, name_size);
         z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
     z__pt(mutex_unlock, &thread_counter_lock);
 
