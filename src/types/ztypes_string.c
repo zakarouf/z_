@@ -190,7 +190,7 @@
 
     void z__StringList_delete(z__StringList *ln)
     {
-        for (int i = 0; i < ln->list_lenUsed; ++i)
+        for (z__u32 i = 0; i < ln->list_lenUsed; ++i)
         {
             free(ln->str_list[i]);
         }
@@ -258,7 +258,7 @@
 
         newln.str_list = malloc(sizeof(*newln.str_list) * newln.list_len);
 
-        for (int i = 0; i < newln.list_lenUsed; ++i) {
+        for (z__u32 i = 0; i < newln.list_lenUsed; ++i) {
             newln.str_list[i] = malloc(sizeof(**newln.str_list) * newln.str_lens[i]);
             memcpy(newln.str_list[i], ln->str_list[i], newln.str_lens[i]);
         }
@@ -310,7 +310,7 @@
         char *token = strtok_r(lastbuff, seperator, &lastbuff);
 
         /*Count*/
-        int linesCount = 0;
+        z__u32 linesCount = 0;
         while(token) {
 
             linesCount += 1;
@@ -360,7 +360,7 @@
         strst = tmp_mainStr;
         z__StringList ln = z__StringList_new(8);
 
-        int i = 0, len = 0;
+        z__i32 i = 0, len = 0;
         if (*strst)
         {
             i = strlen(strst);
@@ -383,13 +383,13 @@
     z__String z__StringList_toString(z__StringList const ln)
     {
         z__size strSize = 0;
-        for (int i = 0; i < ln.list_lenUsed; i++) {
+        for (z__u32 i = 0; i < ln.list_lenUsed; i++) {
             strSize += ln.str_lens[i];
         }
 
         z__String string = z__String_new(strSize + 8);
 
-        for (int i = 0; i < ln.list_lenUsed; i++) {
+        for (z__u32 i = 0; i < ln.list_lenUsed; i++) {
             memcpy(&string.data[string.lenUsed], ln.str_list[i], ln.str_lens[i]);
             string.lenUsed += ln.str_lens[i];
         }
