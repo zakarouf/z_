@@ -2,6 +2,7 @@
 #define ZAKAROUF__Z_TYPE_STRING_H
 
 #include "../config_types.h"
+#include "base.h"
 
 typedef char z__char;
 
@@ -81,7 +82,7 @@ z__StringList z__String_splitTok_raw(char const * stri, int len, char const * se
 z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
 
 /* String List Array */
-z__StringListArr z__StringListArr_new(int size, int x, int y);
+z__StringListArr z__StringListArr_new(z__u32 len, z__u32 linecount);
 void z__StringListArr_delete(z__StringListArr *lns);
 void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 

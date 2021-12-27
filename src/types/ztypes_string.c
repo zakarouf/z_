@@ -397,7 +397,7 @@
         return string;
     }
 
-    z__StringListArr z__StringListArr_new(int size, int x, int y)
+    z__StringListArr z__StringListArr_new(z__u32 size, z__u32 x)
     {
         z__StringListArr lns = {
             .data = calloc(sizeof(z__StringList), size),
