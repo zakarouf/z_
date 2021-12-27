@@ -37,8 +37,8 @@
     struct              \
     {                   \
         T* data;        \
-        z__i32 len;     \
-        z__i32 lenUsed; \
+        z__u32 len;     \
+        z__u32 lenUsed; \
     }
 
 /**
