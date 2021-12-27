@@ -114,10 +114,12 @@ char *z__pt_coroutine_get_name_of_tid(z__u32 tid)
     }
 }
 
+#if 0
 z__i32 z__pt_coroutine_search_tid_from_name(char const *name)
 {
     return -1;
 }
+#endif
 
 //-------------------------------//
 z__u32 z__pt_coroutine_tstatus_is_done(z__u32 id)
