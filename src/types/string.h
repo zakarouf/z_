@@ -6,7 +6,7 @@
 
 typedef char z__char;
 
-typedef struct ZINT_STRING
+typedef struct z__String
 {
     z__char * data;
     int len;
@@ -14,7 +14,7 @@ typedef struct ZINT_STRING
 
 }z__String;
 
-typedef struct
+typedef struct z__StringList
 {
     z__char **str_list;
     unsigned int *str_lens;
@@ -22,7 +22,7 @@ typedef struct
     unsigned int list_lenUsed;
 }z__StringList;
 
-typedef struct
+typedef struct z__StringListArr
 {
     z__StringList *data;
     int len;
