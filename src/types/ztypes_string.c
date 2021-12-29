@@ -31,6 +31,29 @@
         return str;
     }
 
+    z__String z__String_newFrom(char const * __restrict format, ...)
+    {
+        va_list args, args_final;
+        va_start(args, format);
+        va_copy(args_final, args);
+
+        z__size len = vsnprintf(NULL, 0, format, args);
+        va_end(args);
+
+        z__String str = z__String_new(len + 1);
+        str.lenUsed = vsnprintf(str.data, str.len, format, args_final);
+        
+        va_end(args_final);
+        
+        return str;
+    }
+
+    int z__String_cmp(z__String const *s1, z__String const *s2)
+    {
+        if(s1->lenUsed != s2->lenUsed) return false;
+        return !memcpy(s1->data, s2->data, s1->len * sizeof(*s1->data));
+    }
+
     inline void z__String_delete(z__String * s)
     {
         free(s->data);
