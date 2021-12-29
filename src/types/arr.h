@@ -250,6 +250,12 @@
         (arr)->lenUsed -= 1;                                                        \
     }
 
+#define z__Arr_pop_getval(arr, v)\
+    {                                   \
+        *(v) = z__Arr_getTop((*arr));   \
+        z__Arr_pop(arr);                \
+    }
+
 #define z__Arr_join(dest, from)\
     {                                                                                                   \
         z__i32 totalLength = (dest)->lenUsed*sizeof(*(dest)->data) + from.lenUsed*sizeof(*from.data);   \
