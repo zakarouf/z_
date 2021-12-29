@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #include "mem.h"
 #include "string.h"
@@ -168,7 +169,6 @@
         }
         dest->data[pos] = ch;
     }
-
     
     z__String z__String_newFromFile(char const filename[])
     {
@@ -245,7 +245,7 @@
         }
 
         if (len == -1) {
-            len = strnlen(st, 1024);
+            len = strlen(st);
         }
 
         ln->str_list[ln->list_lenUsed] = calloc(len, sizeof(**ln->str_list));
