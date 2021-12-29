@@ -18,11 +18,10 @@
         };
     }
 
-    z__String z__String_newfrom(const char *st, int size)
+    z__String z__String_newFromStr(const char *st, int size)
     {
-        if (size == -1)
-        {
-            size = strnlen(st, 1024);
+        if (size == -1) {
+            size = strlen(st);
         }
 
         z__String str = z__String_new(size + 8);
