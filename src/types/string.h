@@ -58,7 +58,6 @@ void z__String_resize(z__String *str, int newsize);
 void z__String_write(z__String *s, const z__char *st, int len);
 void z__String_Copy(z__String *str, const z__String val);
 z__String z__String_MakeCopy(const z__String str);
-z__String z__String_newfrom(const char *st, int size);
 
 void z__Strint_append(z__String *str, const z__char* src, int length);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
@@ -66,6 +65,8 @@ z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
 void z__String_delChar(z__String *dest, int pos);
 
+z__String z__String_newFromStr(const char *st, int size);
+z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
 
 /* String List */
 z__StringList z__StringList_new(unsigned int base_lines_count);
