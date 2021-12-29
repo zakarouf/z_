@@ -61,7 +61,7 @@
         union {                                             \
            z__Enum__PRIV__Apply__memberMap_map(__VA_ARGS__) \
         } data;                                             \
-        tag_T tag;                                     \
+        tag_T tag;                                          \
     }
 
 #define z__EnumBare(Name, Tag_T, ...)\
