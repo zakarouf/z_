@@ -91,14 +91,13 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 // Macros
 
 
-
 #define z__StringList__PRIV_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
-#define z__StringList_pushstr(...) zpp__Args_map(z__StringList__PRIV_tmp_pushstr, __VA_ARGS__)
+#define z__StringList__PRIV_pushstr(...) zpp__Args_map(z__StringList__PRIV_tmp_pushstr, __VA_ARGS__)
 
 #define z__StringList_init(...)\
 ({\
     z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);\
-    z__StringList_pushstr(__VA_ARGS__);\
+    z__StringList__PRIV_pushstr(__VA_ARGS__);\
     tmp;\
 })
 
