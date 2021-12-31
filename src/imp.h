@@ -6,7 +6,6 @@
 #define ZAKAROUF__Z__IMP_VERSION_PATCH 0
 
 #include "imp/fio.h"
-#include "imp/ext.h"
 #include "imp/sys.h"
 #include "imp/time.h"
 #include "imp/ansi.h"
