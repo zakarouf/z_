@@ -70,8 +70,9 @@ z__size z__mem_memshift_right_nocheck(void *ori, z__u32 sz, z__u32 n ,z__size fr
 #define z__New(T, n) z__MALLOC(sizeof(T) * n)
 #define z__New0(T, n) z__CALLOC(sizeof(T), n)
 
+#define z__AutoFree(F) __attribute__((cleanup(F)))
+
 #define z__Arrfree __attribute__((cleanup(z__mem_Arr_clean)))
 #define z__autofree __attribute__((cleanup(z__mem_free)))
-
 
 #endif
