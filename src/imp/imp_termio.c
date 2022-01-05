@@ -67,21 +67,8 @@ int z__termio_kbhit(void)
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
-void z__termio_add_history(z__String const * const str)
+void z__termio_putString(z__String const * const str)
 {
-    add_history(str->data);
+    fwrite(str->data, sizeof *str->data, str->len, stdout); 
 }
-
-z__String z__termio_readline(const char *msg)
-{
-    z__String str = {
-      .data = readline(msg)
-    };
-
-    str.len = strlen(str.data);
-    str.lenUsed = str.len;
-
-    return str;
-}
-
 

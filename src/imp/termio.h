@@ -14,8 +14,5 @@ void z__termio_block(void);
 void z__termio_putchar(z__char c);
 void z__termio_putString(const z__String * _Nonnull str);
 
-z__String z__termio_readline(const char * _Nonnull msg);
-void z__termio_add_history(z__String const * _Nonnull const str);
-
 #endif
 
