@@ -26,7 +26,7 @@ z__Enum(
 
 Example:
 <div align="center">
-  <img src="../../../imgs/example/enum_webevent.png">
+  <img src="./enum_webevent.png">
 </div>
 
 Each `variant` is also generates a function of the same name, which can be used to initiazed a Sum Type. As shown in the Example.
@@ -104,7 +104,7 @@ Result safe_malloc(size_t len) {
 * `z__Enum_grave` & `z__Enum_chip` does not do any function call.
 * Paired with `z__EnumDef` which does not create/generate any variant-related function. Makes a useful versatile and light-weight alternative to the bloated `z__Enum`.
 
-Using this I've able to create new types such as [result.h](../../../../src/types/result.h) and [option.h](../../../../src/types/option.h).
+Using this I've able to create new types such as [result.h](../../src/types/result.h) and [option.h](../../src/types/option.h).
 
 #### Match Statement
 

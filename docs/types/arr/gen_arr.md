@@ -91,7 +91,7 @@ This Cleans up your array.
 
 ## Previews
 <div align="center">
-    <img src="../../../imgs/Arr_preview0.png">
+    <img src="Arr_preview0.png">
     <h2>Output</h2>
-    <img src="../../../imgs/Arr_preview0_op.png">
+    <img src="Arr_preview0_op.png">
 </div>

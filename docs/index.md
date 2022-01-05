@@ -1,4 +1,4 @@
-# z_
+# z_ 
 
 Guide & Documentation for `z_` Library
 
@@ -7,14 +7,14 @@ Guide & Documentation for `z_` Library
 ## Table of Contents
 
 - **Types**
-    - [Primitive Types & Base Utils](./types/base/base.md)
+    - [Primitive Types & Base Utils](types/base/base.md)
     - [Memory]()
     - [String Types]()
-    - [Array Types](./types/arr/index.md)
-    - [Algebraic Types](./types/alg/alg.md)
+    - [Array Types](types/arr/index.md)
+    - [Algebraic Types](types/alg/alg.md)
     - [Geometric Types]()
     - [Data Structues]()
-    - [Miscellaneous](./types/misc/index.md)
+    - [Miscellaneous](types/misc/index.md)
 - **Proc**
     - [Pthread]()
     - [Threads]()
