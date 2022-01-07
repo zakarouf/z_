@@ -235,6 +235,21 @@
         ln->str_lens[ln->list_lenUsed] = str.lenUsed;
         ln->list_lenUsed += 1;
     }
+    
+    int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int len)
+    {
+        if(idx >= ln->list_lenUsed) {
+            return -1;
+        }
+        if(len == -1) len = strlen(st);
+        if(len > ln->str_lens[idx]) {
+            ln->str_lens[idx] = len;
+            z__FREE(ln->str_list[idx]);
+            ln->str_list[idx] = z__CALLOC(sizeof(**ln->str_list), len);
+        }
+        memcpy(ln->str_list[idx], st, len);
+        return 1;
+    }
 
     void z__StringList_push(z__StringList *ln , char const * st, int len)
     {
