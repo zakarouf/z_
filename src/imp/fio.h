@@ -38,7 +38,7 @@ void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp);
 	})
 
 #define z__fio_Arr_dump(arr, fp)\
-	z__fio_ptr_dump((arr)->data, sizeof(*(arr)->data), (arr)->lenUsed)
+	z__fio_ptr_dump((arr)->data, sizeof(*(arr)->data), (arr)->lenUsed, fp)
 
 #endif
 
