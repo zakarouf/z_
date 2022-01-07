@@ -47,7 +47,7 @@
 #define z__HashHoyt_delete(ht)\
     {                                       \
         for(z__size i; i < (ht)->len; i++) {\
-            z__FREE((ht)->entries[i].key);  \
+            z__FREE((void *)(ht)->entries[i].key); \
         }                                   \
         z__FREE((ht)->entries);             \
         (ht)->len = 0;                      \
