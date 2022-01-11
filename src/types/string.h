@@ -9,8 +9,8 @@ typedef char z__char;
 typedef struct z__String
 {
     z__char * data;
-    int len;
-    int lenUsed;
+    z__int len;
+    z__int lenUsed;
 
 }z__String;
 
@@ -63,6 +63,8 @@ int z__String_cmp(z__String const *s1, z__String const *s2);
 
 void z__Strint_append(z__String *str, const z__char* src, int length);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
+z__String z__String_bind(char *str, z__int sz);
+
 z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
 void z__String_delChar(z__String *dest, int pos);
@@ -84,6 +86,7 @@ z__String z__StringList_toString(z__StringList const ln);
 z__StringList z__String_splitTok(z__String str, char const * seperator);
 z__StringList z__String_splitTok_raw(char const * stri, int len, char const * seperator);
 z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
+int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int len);
 
 /* String List Array */
 z__StringListArr z__StringListArr_new(z__u32 len, z__u32 linecount);

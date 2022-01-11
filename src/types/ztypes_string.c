@@ -55,6 +55,19 @@
         return !memcpy(s1->data, s2->data, s1->len * sizeof(*s1->data));
     }
 
+
+    z__String z__String_bind(char *str, z__int sz)
+    {
+        if(sz == -1) {
+            sz = strlen(str);
+        }
+        return (z__String) {
+            .data = str,
+            .len = sz,
+            .lenUsed = sz
+        };
+    }
+
     inline void z__String_delete(z__String * s)
     {
         free(s->data);
