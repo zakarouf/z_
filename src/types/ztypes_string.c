@@ -49,6 +49,31 @@
         return str;
     }
 
+    void z__String_replace(z__String *str, char const * __restrict format, ...)
+    {
+        va_list args, args_final;
+        va_start(args, format);
+        va_copy(args_final, args);
+        
+        z__size len = vsnprintf(NULL, 0, format, args);
+        va_end(args);
+
+        if(len > str->len) {
+            z__String_resize(str, len + 4);
+        }
+
+        str->lenUsed = vsnprintf(str->data, str->len, format, args_final);
+        va_end(args_final);
+    }
+
+    void z__String_replaceStr(z__String *str, const char * s, int len)
+    {
+        if(len == -1) len = strlen(s);
+        if(len > str->len) z__String_resize(str, len + 1);
+        memcpy(str->data, s, sizeof(*s) * len);
+        str->lenUsed = len;
+    }
+
     int z__String_cmp(z__String const *s1, z__String const *s2)
     {
         if(s1->lenUsed != s2->lenUsed) return false;
@@ -104,7 +129,7 @@
         return str2;
     }
 
-    inline void z__Strint_append(z__String *str, const z__char *src, int length)
+    inline void z__Strint_appendStr(z__String *str, const z__char *src, int length)
     {
         if (length > 0)
         {
@@ -118,17 +143,22 @@
         }
     }
 
-    inline void z__String_write(z__String *s, const z__char *st, int len)
+    void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...)
     {
-        if (len == -1) {
-            len = strlen(st);
-        }
-        if (len > s->len) {
-            z__String_resize(s, len+1);
+        va_list args, args_final;
+        va_start(args, format);
+        va_copy(args_final, args);
+        
+        z__size len = vsnprintf(NULL, 0, format, args);
+        va_end(args);
+
+        if((len + pad) > str->len - str->lenUsed) {
+            z__String_resize(str, (len + pad + 4 + str->len));
         }
 
-        memcpy(s->data, st, s->len);
-        s->lenUsed = len;
+        memset(&str->data[str->lenUsed], padchar, pad * sizeof(*str->data));
+        str->lenUsed += vsnprintf(&str->data[str->lenUsed + pad], str->len - str->lenUsed, format, args_final) + pad;
+        va_end(args_final);
     }
 
     inline void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace)
@@ -284,6 +314,7 @@
 
     void z__StringList_pop(z__StringList *ln)
     {
+        if (ln->list_lenUsed <= 0) return;
         free(ln->str_list[ln->list_lenUsed-1]);
         ln->list_lenUsed -= 1;
         /*

@@ -61,9 +61,13 @@ z__String z__String_MakeCopy(const z__String str);
 
 int z__String_cmp(z__String const *s1, z__String const *s2);
 
-void z__Strint_append(z__String *str, const z__char* src, int length);
+void z__Strint_appendStr(z__String *str, const z__char* src, int length);
+void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __printflike(4, 5);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
 z__String z__String_bind(char *str, z__int sz);
+
+void z__String_replaceStr(z__String *str, const char * s, int len);
+void z__String_replace(z__String *str, char const * __restrict format, ...) __printflike(2, 3);
 
 z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
