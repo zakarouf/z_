@@ -145,7 +145,13 @@
             src_in += sizeof(*s_ptr);                                   \
         }                                                               \
     }
-
+/**
+* @def z__Arr_newCopy(arr, arr_src)
+* @brief Create a new Array that is a copy of \a arr_src
+* 
+* @param arr The Array
+* @param arr_src The Source Array
+*/
 #define z__Arr_newCopy(arr, arr_src)\
     {                                                                       \
         z__Arr_new(arr, (arr_src).len);                                     \
@@ -195,7 +201,7 @@
         (arr)->len = (arr)->lenUsed;                                                        \
     }
 
-#define z__Arr_check_and_expand(arr)\
+#define z__Arr_expand_ifThreadhold(arr)\
     {\
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
@@ -204,45 +210,72 @@
         }                                                                                       \
     }
 
+#define z__Arr_expand(arr, by)\
+    {                                                                                   \
+        (arr)->len += by;                                                               \
+        (arr)->data = z__REALLOC_SAFE((arr)->data, sizeof(*(arr)->data) * ((arr)->len));\
+    }
+
+#define z__Arr_expand_set0(arr, by)\
+    {                                                               \
+        z__Arr_expand(arr, by);                                     \
+        memset(                                                     \
+            &(arr)->data[(arr)->lenUsed]                            \
+            , 0                                                     \
+            , sizeof(*(arr)->data) * ((arr)->len - (arr)->lenUsed));\
+    }
+
 #define z__Arr_push(arr, ...)\
-    {                                                                                           \
-        z__Arr_check_and_expand(arr)                                                            \
-        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;                                              \
-        (arr)->lenUsed += 1;                                                                    \
+    {                                                   \
+        z__Arr_expand_ifThreadhold(arr)                 \
+        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;      \
+        (arr)->lenUsed += 1;                            \
     }
 
 #define z__Arr_pushMC(arr, ...)\
-    {                                                                                           \
-        z__Arr_check_and_expand(arr)                                                            \
-        memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));                      \
-        (arr)->lenUsed += 1;                                                                    \
+    {                                                                               \
+        z__Arr_expand_ifThreadhold(arr)                                             \
+        memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));  \
+        (arr)->lenUsed += 1;                                                        \
     }
 
 #define z__Arr_pushInc(arr)\
     {                                   \
-        z__Arr_check_and_expand(arr);   \
+        z__Arr_expand_ifThreadhold(arr);\
         (arr)->lenUsed += 1;            \
     }
 
 #define z__Arr_push_nocheck(arr, ...)\
-    {                                           \
-        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;\
-        (arr)->lenUsed += 1;                    \
+    {                                               \
+        (arr)->data[(arr)->lenUsed] = __VA_ARGS__;  \
+        (arr)->lenUsed += 1;                        \
     }
 
 #define z__Arr_push_nocheckMC(arr, ...)\
-    {                                                                       \
+    {                                                                               \
         memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));  \
-        (arr)->lenUsed += 1;                                                \
+        (arr)->lenUsed += 1;                                                        \
+    }
+
+#define z__Arr_push_cons(arr, cons, ...)\
+    {                               \
+        z__Arr_pushInc(arr);        \
+        cons(&z__Arr_getTop((*arr)) ,##__VA_ARGS__);   \
+    }
+
+#define z__Arr_push_cons_nocheck(arr, cons, ...)\
+    {                               \
+        (arr)->lenUsed += 1;        \
+        cons(&z__Arr_getTop((*arr)) ,##__VA_ARGS__);   \
     }
 
 #define z__Arr_pop(arr)\
-    {                                                                               \
-        (arr)->lenUsed -= 1;                                                        \
-        if (((arr)->len - (arr)->lenUsed) > Z___TYPE_CONFIG__ARR__SHRINK_FACTOR__NUM)     \
-        {                                                                           \
-            z__Arr_resize(arr, (arr)->len - Z___TYPE_CONFIG__ARR__SHRINK_FACTOR__NUM);    \
-        }                                                                           \
+    {                                                                                   \
+        (arr)->lenUsed -= 1;                                                            \
+        if (((arr)->len - (arr)->lenUsed) > Z___TYPE_CONFIG__ARR__SHRINK_FACTOR__NUM)   \
+        {                                                                               \
+            z__Arr_resize(arr, (arr)->len - Z___TYPE_CONFIG__ARR__SHRINK_FACTOR__NUM);  \
+        }                                                                               \
     }
 
 #define z__Arr_pop_nocheck(arr)\
