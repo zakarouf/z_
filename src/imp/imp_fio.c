@@ -59,7 +59,6 @@ void* z__fio_ptr_newLoad(z__size *unitsize, z__size *len, FILE *fp)
     return ptr;
 }
 
-
 void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp)
 {
     fread(&obj->typeID, sizeof(obj->typeID), 1, fp);
@@ -102,17 +101,17 @@ void z__fio_Dynt_dump(z__Dynt *obj, FILE *fp)
 z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen)
 {
     FILE *fp;
-    if ((fp = fopen(filename, "rb")) == NULL)
-    {
+    if ((fp = fopen(filename, "rb")) == NULL) {
         return (z__Dynt){NULL};
     }
 
+    /* Take in File size */
     fseek(fp, 0, SEEK_END);
     long fsize = ftell(fp);
     fsize += 1;
 
     fseek(fp, 0, SEEK_SET);  /* same as rewind(f); */
-
+    /* Make an empty Dynr Object */
     z__Dynt Object = z__Dynt_new(subDiv, fsize/subDiv, 0, comment, commentLen);
     memset(Object.data, 0, fsize);
 
