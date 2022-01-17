@@ -7,6 +7,7 @@ void z__Bytes_new(z__Bytes *bt, z__u32 len)
     z__Arr_new(&bt->bytes, len);
     bt->cursor = 0;
     bt->cursor_last = 0;
+    
 }
 
 void z__Bytes_delete(z__Bytes *bt)
@@ -19,6 +20,7 @@ void z__Bytes_delete(z__Bytes *bt)
 void z__Bytes_push(z__Bytes *bt, z__u8 const val)
 {
     z__Arr_push(&bt->bytes, val);
+
 }
 
 void z__Bytes_pushStream(z__Bytes *bt, void const * const data, z__size data_size)
@@ -33,6 +35,7 @@ void z__Bytes_pushStream(z__Bytes *bt, void const * const data, z__size data_siz
     memcpy(&bt->bytes.data[bt->bytes.lenUsed], data, data_size);
     bt->bytes.lenUsed += data_size;
 }
+
 
 void z__Bytes_pop(z__Bytes *bt)
 {
