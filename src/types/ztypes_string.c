@@ -52,7 +52,7 @@
     int z__String_cmp(z__String const *s1, z__String const *s2)
     {
         if(s1->lenUsed != s2->lenUsed) return false;
-        return !memcpy(s1->data, s2->data, s1->len * sizeof(*s1->data));
+        return !memcmp(s1->data, s2->data, s1->len * sizeof(*s1->data));
     }
 
 
