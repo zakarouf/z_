@@ -1,3 +1,8 @@
+/**
+ * @file string.h
+ * @brief String Types
+ */
+
 #ifndef ZAKAROUF__Z_TYPE_STRING_H
 #define ZAKAROUF__Z_TYPE_STRING_H
 
@@ -17,16 +22,16 @@ typedef struct z__String
 typedef struct z__StringList
 {
     z__char **str_list;
-    unsigned int *str_lens;
-    unsigned int list_len;
-    unsigned int list_lenUsed;
+    z__u32 *str_lens;
+    z__u32 list_len;
+    z__u32 list_lenUsed;
 }z__StringList;
 
 typedef struct z__StringListArr
 {
     z__StringList *data;
-    int len;
-    int lenUsed;
+    z__u32 len;
+    z__u32 lenUsed;
 }z__StringListArr;
 
 
