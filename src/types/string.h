@@ -55,9 +55,31 @@ typedef struct z__StringListArr
 
 
 /* String */
-z__String z__String_new(int size);
-void z__String_delete(z__String * s);
 
+/**
+ * @def z__String_new(int size);
+ * @brief Create a new String Type 
+ * 
+ * @param size Length of the string
+ */
+z__String z__String_new(int size);
+
+/**
+ * @def z__String_delete(z__String *s);
+ * @brief Delete the allocated string type
+ * 
+ * @param str String type
+ */
+void z__String_delete(z__String *str);
+
+
+/**
+ * @def z__String_resize(z__String *str, int newsize)
+ * @brief Resizes the string
+ * 
+ * @param str String
+ * @param newsize Length of the string
+ */
 void z__String_resize(z__String *str, int newsize);
 
 void z__String_write(z__String *s, const z__char *st, int len);
@@ -118,4 +140,3 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 
 
 #endif
-
