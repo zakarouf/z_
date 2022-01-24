@@ -11,7 +11,7 @@
   typedef struct Name Name;                       \
   struct Name {                                   \
       z__RecordX(__VA_ARGS__) data;               \
-      union {                                                      \
+      union {                                                   \
         union {                                                 \
           Name *raw[zpp__Args_Count(zpp__UNPAREN(node_names))]; \
           struct {                                              \
