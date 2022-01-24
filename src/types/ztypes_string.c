@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 #include "mem.h"
 #include "string.h"
@@ -45,7 +46,7 @@
         str.lenUsed = vsnprintf(str.data, str.len, format, args_final);
         
         va_end(args_final);
-        
+         
         return str;
     }
 
@@ -72,6 +73,7 @@
         if(len > str->len) z__String_resize(str, len + 1);
         memcpy(str->data, s, sizeof(*s) * len);
         str->lenUsed = len;
+        str->data[str->lenUsed] = 0;
     }
 
     int z__String_cmp(z__String const *s1, z__String const *s2)
@@ -212,7 +214,135 @@
         }
         dest->data[pos] = ch;
     }
+   
+    int z__str_isalnum(char const *str, z__size len)
+    {
+        while(len > 0) {
+            if(!isalnum(*str)) return 0;
+            str++;
+            len--;
+        }
+        return 1;
+    }
+
+    int z__str_isalpha(char const *str, z__size len)
+    {
+        while(len > 0) {
+            if(!isalpha(*str)) return 0;
+            str++;
+            len--;
+        }
+        return 1;
+    }
+
+    int z__str_isradix(char const *str, z__size len)
+    {
+        while(len > 0) {
+            if(!isdigit(*str)) return 0;
+            str++;
+            len--;
+        }
+        return 1;
+    }
+
+    int z__str_isdecimal(char const *str, z__size len)
+    {
+        char dob = 0;
+
+        while(len > 0) {
+            if(!isdigit(*str)) {
+                if(*str == '.') {
+                    dob += 1;
+                    goto _L_skip_return;
+                }
+                return 0;
+            }
+
+            _L_skip_return:
+            str++;
+            len--;
+        }
+
+        return (dob == 1);
+    }
+
+    const char *z__str_findchar(const char ch, char const *str, z__size len)
+    {
+        while(len > 0) {
+            if(*str == ch) return str;
+            str++;
+            len--;
+        }
+        return NULL;
+    }
+
+    char const *z__str_skipget_ws(char const *str, int size)
+    {
+        while(size > 0
+            &&(*str != ' '
+              &&*str != '\n'
+              &&*str != '\t')) {
+            str++;
+            size--;
+
+        }
+        return str;
+    }
+
+    char const *z__str_skipget_nonws(char const *str, int size)
+    {
+        while(size > 0
+            &&(*str == ' '
+              ||*str == '\n'
+              ||*str == '\t')) {
+            str++;
+            size--;
+        }
+        return str;
+    }
+
+    char const *z__str_find_chars(char const *str, int size, char const * tab, const z__size tabsize)
+    {
+        while(size > 0){
+            for(z__size i = 0; i < tabsize; i++) {
+                if(*str == tab[i]) goto _L_return;
+            }
+            str++;
+            size--;
+        }
+
+        _L_return: {
+            return str;
+        }
+    }
     
+ 
+    const char *z__str_get_next_word(const char *ori, z__size len,char const *cursor)
+    {
+        if(cursor < ori && cursor >= (ori + len)) {
+            return NULL;
+        }
+        #define cursize(cursor) (len - (cursor - ori))
+        char const *ws = z__str_skipget_ws(cursor, cursize(cursor));
+        return z__str_skipget_nonws(ws, cursize(ws));
+
+        #undef cursize
+    }
+   
+
+    const char *z__String_get_next_word(const z__String *ori, char const *cursor)
+    {
+        if(cursor < ori->data && cursor >= (ori->data + ori->lenUsed)) {
+            return NULL;
+        }
+        #define cursize(cursor) (ori->lenUsed - (cursor - ori->data))
+        char const *ws = z__str_skipget_ws(cursor, cursize(cursor));
+        return z__str_skipget_nonws(ws, cursize(ws));
+
+        #undef cursize
+    }
+
+
     z__String z__String_newFromFile(char const filename[])
     {
         FILE *f;
@@ -349,7 +479,7 @@
 
     z__StringList z__String_splitTok(z__String str, char const *restrict seperator)
     {
-        z__String tmp = z__String_MakeCopy(str);
+        z__String tmp = z__String_newCopy(str);
         char *lastbuff = tmp.data;
         char *token = strtok_r(lastbuff, seperator, &lastbuff);
 
@@ -362,7 +492,7 @@
         }
 
         z__String_delete(&tmp);
-        tmp = z__String_MakeCopy(str);
+        tmp = z__String_newCopy(str);
 
         lastbuff = tmp.data;
         token = strtok_r(lastbuff, seperator, &lastbuff);

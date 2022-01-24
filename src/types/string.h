@@ -82,7 +82,6 @@ void z__String_delete(z__String *str);
  */
 void z__String_resize(z__String *str, int newsize);
 
-void z__String_write(z__String *s, const z__char *st, int len);
 
 /**
  * @def z__String_copy(z__String *str, const z__String val);
@@ -108,6 +107,17 @@ z__String z__String_newCopy(const z__String str);
  */
 int z__String_cmp(z__String const *s1, z__String const *s2);
 
+
+int z__str_isalnum(char const *str, z__size len);
+int z__str_isalpha(char const *str, z__size len);
+int z__str_isradix(char const *str, z__size len);
+int z__str_isdecimal(char const *str, z__size len);
+const char *z__str_findchar(const char ch, char const *str, z__size len);
+
+
+/**
+ *
+ */
 void z__Strint_appendStr(z__String *str, const z__char* src, int length);
 void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __printflike(4, 5);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
@@ -116,6 +126,13 @@ z__String z__String_bind(char *str, z__int sz);
 void z__String_replaceStr(z__String *str, const char * s, int len);
 void z__String_replace(z__String *str, char const * __restrict format, ...) __printflike(2, 3);
 
+char const *z__str_skipget_ws(char const *str, int size);
+char const *z__str_skipget_nonws(char const *str, int size);
+char const *z__str_find_chars(char const *str, int size, char const * tab, const z__size tabsize);
+const char *z__str_get_next_word(const char *ori, z__size len, char const *cursor);
+const char *z__String_get_next_word(const z__String *ori, char const *cursor);
+
+
 z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, int pos);
 void z__String_delChar(z__String *dest, int pos);
@@ -123,6 +140,8 @@ void z__String_pushChar(z__String *dest, z__char ch);
 
 z__String z__String_newFromStr(const char *st, int size);
 z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
+
+
 
 /* String List */
 z__StringList z__StringList_new(unsigned int base_lines_count);
