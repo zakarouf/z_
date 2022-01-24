@@ -83,9 +83,29 @@ void z__String_delete(z__String *str);
 void z__String_resize(z__String *str, int newsize);
 
 void z__String_write(z__String *s, const z__char *st, int len);
-void z__String_Copy(z__String *str, const z__String val);
-z__String z__String_MakeCopy(const z__String str);
 
+/**
+ * @def z__String_copy(z__String *str, const z__String val);
+ * @brief Copy the Data to / str from / val
+ * 
+ * @param str String
+ * @param val String to be copied
+ */
+void z__String_copy(z__String *str, const z__String val);
+
+
+/**
+ * @def z__String_newCopy(const z__String val);
+ * @brief Creates a new copy of string passed.
+ * 
+ * @param str String
+ * @param val String to be copied
+ */
+z__String z__String_newCopy(const z__String str);
+
+/**
+ * @def z__String_cmp(z__String const *s1, z__String const *s2);
+ */
 int z__String_cmp(z__String const *s1, z__String const *s2);
 
 void z__Strint_appendStr(z__String *str, const z__char* src, int length);
@@ -140,3 +160,4 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 
 
 #endif
+
