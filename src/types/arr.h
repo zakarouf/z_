@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__ARR_H
 #define ZAKAROUF__ZTYPES_TYPES__ARR_H
 
-/** @file arr.h
+/**@file arr.h
  *  @brief Type Generic Dynamic Arrays
  *
  *  Type Generic Dynamic Arrays using C-macros,
@@ -58,13 +58,13 @@
  * @param sz Initial length of the array.
  */
 #define z__Arr_new(arr, sz)\
-    {                                                       \
+   {                                                       \
         (arr)->data = z__MALLOC(sizeof(*(arr)->data)*sz);   \
         (arr)->len = sz;                                    \
         (arr)->lenUsed = 0;                                 \
     }
 
-/**
+/** 
  * @def z__Arr_delete(arr)
  * @brief Deletes the array and frees memory.
  *
@@ -302,7 +302,7 @@
  * Returns True if equal
  */
 #define z__Arr_isdataequal(arr1, arr2)\
-    (\
+    (                                                           \
         zpp__ter__if((arr1).lenUsed * sizeof(*(arr1).data)      \
             != (arr2).lenUsed * sizeof(*(arr2).data)) (         \
             false                                               \
@@ -473,7 +473,7 @@
     /* INCOMPLETE */
     #define z__Arr_FN(T, vT)                            \
         typedef z__Arr(vT) T;                           \
-        Z__INLINE T z__Arr_ ## T ## _new(z__u32 len)  \
+        Z__INLINE T z__Arr_##T##_new(z__u32 len)        \
         {                                               \
             return (T) {                                \
                 .data = malloc(sizeof (vT) * len),      \
@@ -528,7 +528,7 @@
 #define z__Arr_getTopEmpty(arr)     (arr).data[arr.lenUsed]
 
 
-#ifdef Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS
+#if defined(Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS) && 0
 
     //#define z__ArrSx$(SDeftag, N)           z__ArrSx(SDeftag, N)
     //#define z__ArrSxDef$(T, sz, tagName)    z__ArrSxDef(T, sz, tagName)
