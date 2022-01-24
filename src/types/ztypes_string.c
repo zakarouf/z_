@@ -106,7 +106,7 @@
         str->data = z__mem_safe_realloc(str->data, newsize);
     }
 
-    void z__String_Copy(z__String *dest, const z__String val)
+    void z__String_copy(z__String *dest, const z__String val)
     {
         if (dest->len < val.len )
         {
@@ -115,7 +115,7 @@
         memcpy(dest->data, val.data, val.len);
     }
 
-    z__String z__String_MakeCopy(const z__String str)
+    z__String z__String_newCopy(const z__String str)
     {
 
         z__String str2 = {
