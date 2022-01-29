@@ -147,3 +147,9 @@ z__StringList z__fio_getfnames(char const path[])
     return fnames;
 }
 
+
+int z__fio_mkdir(const char *p, z__size mode)
+{
+    mkdir(p, mode);
+    return 1;
+}

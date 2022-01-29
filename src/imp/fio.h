@@ -20,6 +20,7 @@ z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, cha
 void z__fio_Dynt_dump(z__Dynt *obj, FILE *fp);
 void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp);
 
+int z__fio_mkdir(const char *p, z__size mode);
 
 #define z__fio_Arr_newFromFile(arr, filepath)\
 	{																		\
@@ -41,4 +42,3 @@ void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp);
 	z__fio_ptr_dump((arr)->data, sizeof(*(arr)->data), (arr)->lenUsed, fp)
 
 #endif
-
