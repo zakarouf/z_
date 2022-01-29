@@ -23,6 +23,8 @@ void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp);
 int z__fio_mkdir(const char *p, z__size mode);
 
 int z__fio_fileExist(const char *p);
+int z__fio_directoryExist(const char *p);
+
 #define z__fio_Arr_newFromFile(arr, filepath)\
 	{																		\
 		(arr)->data =														\
@@ -43,3 +45,4 @@ int z__fio_fileExist(const char *p);
 	z__fio_ptr_dump((arr)->data, sizeof(*(arr)->data), (arr)->lenUsed, fp)
 
 #endif
+

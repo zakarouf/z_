@@ -155,8 +155,15 @@ int z__fio_fileExist(const char *p)
     return 1;
 }
 
+int z__fio_directoryExist(const char *p)
+{
+    struct stat sb;
+    return stat(p, &sb) == 0 && S_ISDIR(sb.st_mode);
+}
+
 int z__fio_mkdir(const char *p, z__size mode)
 {
     mkdir(p, mode);
     return 1;
 }
+
