@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <sys/stat.h>
 #include <dirent.h>
 
 #include "fio.h"
@@ -147,6 +147,13 @@ z__StringList z__fio_getfnames(char const path[])
     return fnames;
 }
 
+int z__fio_fileExist(const char *p)
+{
+    FILE *fp = fopen(p, "rb");
+    if(fp == NULL) return 0;
+    fclose(fp);
+    return 1;
+}
 
 int z__fio_mkdir(const char *p, z__size mode)
 {
