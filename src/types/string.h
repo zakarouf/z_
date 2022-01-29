@@ -150,6 +150,7 @@ void z__StringList_delete(z__StringList *strList);
 z__StringList z__StringList_clone(z__StringList const *ln);
 void z__StringList_pushString(z__StringList *ln ,z__String str);
 void z__StringList_push(z__StringList *ln , char const * st, int len);
+const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict format, ...) __printflike(2, 3);
 void z__StringList_pop(z__StringList *ln);
 z__String z__StringList_toString(z__StringList const ln);
 
