@@ -1,15 +1,13 @@
-#include "coroutine.h"
-#include "../../types/arr.h"
-#include "base.h"
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
+#include "../../types/arr.h"
+#include "impl.h"
 
 struct Thread {
     char *name;
-    z__pt_Thread thread;
+    z__Thread thread;
     z__bool _is_active;
     z__u32 status_flags;
 };
@@ -26,7 +24,7 @@ enum {
     , z__pt_thread_status_name(CAUGHT_ERROR) = 1 << 1
 };
 
-inline static void _z__pt_coroutine_thread_enable(struct Thread *thread, const char *name, z__i32 name_size)
+inline static void _z__thread_thread_enable(struct Thread *thread, const char *name, z__i32 name_size)
 {
     thread->_is_active = 1;
     if(name){
@@ -42,7 +40,7 @@ inline static void _z__pt_coroutine_thread_enable(struct Thread *thread, const c
     thread->status_flags = 0;
 }
 
-inline static void _z__pt_coroutine_thread_disable(struct Thread *thread)
+inline static void _z__thread_thread_disable(struct Thread *thread)
 {
     z__FREE(thread->name);
     thread->name = NULL;
@@ -50,26 +48,26 @@ inline static void _z__pt_coroutine_thread_disable(struct Thread *thread)
     thread->_is_active = 0;
 }
 
-void z__pt_coroutine_start(void)
+void z__thread_start(void)
 {
     z__Arr_new(&_g_threads, 8);
     z__Arr_mapnum(&_g_threads);
 }
 
-void z__pt_coroutine_end(void)
+void z__thread_end(void)
 {
     z__Arr_foreach(struct Thread *i, _g_threads){
-        _z__pt_coroutine_thread_disable(i);
+        _z__thread_thread_disable(i);
     }
     z__Arr_delete(&_g_threads);
 }
 
-z__u32 z__pt_coroutine_run_raw(z__u32 *id, z__pt_Thread_Attr *attr, void *(*fn) (void *), void *arg, char const *name, z__u32 name_size)
+z__u32 z__thread_run_raw(z__u32 *id, z__Thread_Attr *attr, void *(*fn) (void *), void *arg, char const *name, z__u32 name_size)
 {
     z__pt(mutex_lock, &thread_counter_lock);
         *id = z__Arr_getUsed(_g_threads);
         struct Thread tmp_t;
-        _z__pt_coroutine_thread_enable(&tmp_t, name, name_size);
+        _z__thread_thread_enable(&tmp_t, name, name_size);
         z__Arr_push(&_g_threads, tmp_t);
         z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
     z__pt(mutex_unlock, &thread_counter_lock);
@@ -77,9 +75,9 @@ z__u32 z__pt_coroutine_run_raw(z__u32 *id, z__pt_Thread_Attr *attr, void *(*fn) 
     return *id;
 }
 
-void z__pt_coroutine_run_setid_raw(
+void z__thread_run_setid_raw(
     z__u32 inp_id, z__u32 *id
-  , z__pt_Thread_Attr *attr, void *(*fn)(void *), void *arg
+  , z__Thread_Attr *attr, void *(*fn)(void *), void *arg
   , const char *name, z__u32 name_size)
 {
     z__pt(mutex_lock, &thread_counter_lock);
@@ -87,25 +85,25 @@ void z__pt_coroutine_run_setid_raw(
         if(inp_id > z__Arr_getLen(_g_threads)){
             z__Arr_resize(&_g_threads, inp_id);
         }
-        _z__pt_coroutine_thread_enable(&z__Arr_getVal(_g_threads, inp_id), name, name_size);
+        _z__thread_thread_enable(&z__Arr_getVal(_g_threads, inp_id), name, name_size);
         z__pt(create, &z__Arr_getTop(_g_threads).thread, attr, fn, arg);
     z__pt(mutex_unlock, &thread_counter_lock);
 
 }
 
-void z__pt_coroutine_join_raw(z__u32 id)
+void z__thread_join_raw(z__u32 id)
 {
     struct Thread *tmp = &z__Arr_getVal(_g_threads, id);
     //`printf("%s\n", tmp->name);
     if(tmp->_is_active) {
         z__pt(join, tmp->thread, NULL);
 //        z__pt(mutex_lock, &thread_counter_lock);
-            _z__pt_coroutine_thread_disable(tmp);
+            _z__thread_thread_disable(tmp);
 //        z__pt(mutex_unlock, &thread_counter_lock);
     }
 }
 
-char *z__pt_coroutine_get_name_of_tid(z__u32 tid)
+char *z__thread_get_name_of_tid(z__u32 tid)
 {
     if(tid < z__Arr_getUsed(_g_threads)){
         return z__Arr_getVal(_g_threads, tid).name;
@@ -115,24 +113,24 @@ char *z__pt_coroutine_get_name_of_tid(z__u32 tid)
 }
 
 #if 0
-z__i32 z__pt_coroutine_search_tid_from_name(char const *name)
+z__i32 z__thread_search_tid_from_name(char const *name)
 {
     return -1;
 }
 #endif
 
 //-------------------------------//
-z__u32 z__pt_coroutine_tstatus_is_done(z__u32 id)
+z__u32 z__thread_tstatus_is_done(z__u32 id)
 {
     return z__Arr_getVal(_g_threads, id).status_flags & z__pt_thread_status_name(DONE);
 }
 
-void z__pt_coroutine_set_tstatus_done(z__u32 id)
+void z__thread_set_tstatus_done(z__u32 id)
 {
     _g_threads.data[id].status_flags |= z__pt_thread_status_name(DONE);
 }
 
-z__bool z__pt_coroutine_is_thread_active(z__u32 id)
+z__bool z__thread_is_thread_active(z__u32 id)
 {
     return z__Arr_getVal(_g_threads, id)._is_active;
 }
