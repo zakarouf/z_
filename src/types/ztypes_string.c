@@ -105,10 +105,13 @@ void z__String_expand(z__String *str, z__size by)
     str->len += by;
     str->data = z__mem_safe_realloc(str->data, str->len);
 }
+
 inline void z__String_resize(z__String *str, int newsize)
 {
-    str->len = newsize;
+    str->len = newsize+1;
     str->data = z__mem_safe_realloc(str->data, newsize);
+    str->data[newsize] = 0;
+    if(str->lenUsed > str->len) str->lenUsed = str->len;
 }
 
 void z__String_copy(z__String *dest, const z__String val)
