@@ -6,6 +6,44 @@
 
 #include "termio.h"
 
+inline void z__termio_nonblock(void)
+{
+    struct termios ttystate;
+
+    //get the terminal state
+    tcgetattr(STDIN_FILENO, &ttystate);
+        //turn off canonical mode
+        ttystate.c_lflag &= ~ICANON;
+        //minimum of number input read.
+        ttystate.c_cc[VMIN] = 1;
+
+    //set the terminal attributes.
+    tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
+}
+inline void z__termio_block(void)
+{
+    struct termios ttystate;
+
+    //get the terminal state
+    tcgetattr(STDIN_FILENO, &ttystate);
+        //turn on canonical mode
+        ttystate.c_lflag |= ICANON;
+    //set the terminal attributes.
+    tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
+}
+
+int z__termio_kbhit(void)
+{
+    struct timeval tv;
+    fd_set fds;
+    tv.tv_sec = 0;
+    tv.tv_usec = 0;
+    FD_ZERO(&fds);
+    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
+    select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
+    return FD_ISSET(STDIN_FILENO, &fds);
+}
+
 z__u8 z__termio_getkey(void)
 {
     char buf = 0;
@@ -28,8 +66,7 @@ z__u8 z__termio_getkey(void)
     return buf;
 }
 
-
-void z__termio_nonblock(void)
+z__u8 z__termio_getkey_nowait(void)
 {
     struct termios ttystate;
 
@@ -42,10 +79,11 @@ void z__termio_nonblock(void)
 
     //set the terminal attributes.
     tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
-}
-void z__termio_block(void)
-{
-    struct termios ttystate;
+
+    z__u8 c = 0;
+    if(z__termio_kbhit()) {
+        c = fgetc(stdin);
+    }
 
     //get the terminal state
     tcgetattr(STDIN_FILENO, &ttystate);
@@ -53,18 +91,8 @@ void z__termio_block(void)
         ttystate.c_lflag |= ICANON;
     //set the terminal attributes.
     tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
-}
 
-int z__termio_kbhit(void)
-{
-    struct timeval tv;
-    fd_set fds;
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
-    FD_ZERO(&fds);
-    FD_SET(STDIN_FILENO, &fds); //STDIN_FILENO is 0
-    select(STDIN_FILENO+1, &fds, NULL, NULL, &tv);
-    return FD_ISSET(STDIN_FILENO, &fds);
+    return c;
 }
 
 void z__termio_putString(z__String const * const str)
