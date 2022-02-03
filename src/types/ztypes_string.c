@@ -2,17 +2,16 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "mem.h"
 #include "string.h"
-
-#include <string.h>
 
 z__String z__String_new(int size)
 {
     return (z__String){
 
-       .data= calloc(sizeof(z__char) , size),
+       .data= z__CALLOC(sizeof(z__char) , size),
         .len = size,
         .lenUsed = 0
     };
@@ -95,7 +94,7 @@ z__String z__String_bind(char *str, z__int sz)
 
 inline void z__String_delete(z__String * s)
 {
-    free(s->data);
+    z__FREE(s->data);
     s->len = 0;
     s->lenUsed = 0;
 }
@@ -127,7 +126,7 @@ z__String z__String_newCopy(const z__String str)
 {
 
     z__String str2 = {
-       .data= calloc(sizeof(z__char) , str.len),
+       .data= z__CALLOC(sizeof(z__char) , str.len),
         .len = str.len,
         .lenUsed = str.lenUsed
     };
@@ -363,7 +362,7 @@ z__String z__String_newFromFile(char const filename[])
     long fsize = ftell(f);
     fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
 
-    z__char *string = malloc(fsize + 1);
+    z__char *string = z__MALLOC(fsize + 1);
     fread(string, 1, fsize, f);
     fclose(f);
 
@@ -379,11 +378,11 @@ z__String z__String_newFromFile(char const filename[])
 z__StringList z__StringList_new(unsigned int base_lines_count)
 {
     z__StringList ln = {
-        .str_list = calloc(base_lines_count, sizeof(*ln.str_lens)),
         .list_len = base_lines_count,
         .list_lenUsed = 0
     };
-    ln.str_lens = calloc(base_lines_count, sizeof(*ln.str_lens));
+    ln.str_lens = z__CALLOC(base_lines_count, sizeof(*ln.str_lens));
+    ln.str_list = z__CALLOC(base_lines_count, sizeof(*ln.str_list));
 
     return ln;
 }
@@ -392,10 +391,10 @@ void z__StringList_delete(z__StringList *ln)
 {
     for (z__u32 i = 0; i < ln->list_lenUsed; ++i)
     {
-        free(ln->str_list[i]);
+        z__FREE(ln->str_list[i]);
     }
-    free(ln->str_list);
-    free(ln->str_lens);
+    z__FREE(ln->str_list);
+    z__FREE(ln->str_lens);
 
     ln->list_len = 0;
     ln->list_lenUsed = 0;
@@ -414,7 +413,7 @@ void z__StringList_pushString(z__StringList *ln ,z__String str)
 {
     _z__StringList_expandif(ln);
 
-    ln->str_list[ln->list_lenUsed] = calloc(str.lenUsed+1, sizeof(**ln->str_list));
+    ln->str_list[ln->list_lenUsed] = z__CALLOC(str.lenUsed+1, sizeof(**ln->str_list));
     memcpy(ln->str_list[ln->list_lenUsed], str.data, str.lenUsed * sizeof(*str.data));
     ln->str_lens[ln->list_lenUsed] = str.lenUsed;
     ln->list_lenUsed += 1;
@@ -428,7 +427,7 @@ void z__StringList_push(z__StringList *ln , char const * st, int len)
         len = strlen(st);
     }
 
-    ln->str_list[ln->list_lenUsed] = calloc(len, sizeof(**ln->str_list));
+    ln->str_list[ln->list_lenUsed] = z__CALLOC(len, sizeof(**ln->str_list));
 
     memcpy(ln->str_list[ln->list_lenUsed], st, len * sizeof(*st));
     ln->str_lens[ln->list_lenUsed] = len;
@@ -458,7 +457,7 @@ const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict for
 void z__StringList_pop(z__StringList *ln)
 {
     if (ln->list_lenUsed <= 0) return;
-    free(ln->str_list[ln->list_lenUsed-1]);
+    z__FREE(ln->str_list[ln->list_lenUsed-1]);
     ln->list_lenUsed -= 1;
     /*
     if (ln->list_len - ln->list_lenUsed >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
@@ -492,13 +491,13 @@ z__StringList z__StringList_clone(z__StringList const *ln)
         .list_lenUsed = ln->list_lenUsed
     };
 
-    newln.str_lens = malloc(sizeof(*newln.str_lens) * newln.list_len);
+    newln.str_lens = z__MALLOC(sizeof(*newln.str_lens) * newln.list_len);
     memcpy(newln.str_lens, ln->str_lens, sizeof(*newln.str_lens)*newln.list_len);
 
-    newln.str_list = malloc(sizeof(*newln.str_list) * newln.list_len);
+    newln.str_list = z__MALLOC(sizeof(*newln.str_list) * newln.list_len);
 
     for (z__u32 i = 0; i < newln.list_lenUsed; ++i) {
-        newln.str_list[i] = malloc(sizeof(**newln.str_list) * newln.str_lens[i]);
+        newln.str_list[i] = z__MALLOC(sizeof(**newln.str_list) * newln.str_lens[i]);
         memcpy(newln.str_list[i], ln->str_list[i], newln.str_lens[i]);
     }
 
@@ -556,8 +555,8 @@ z__StringList z__String_splitTok_raw(char const *restrict stri, int len, char co
         token = strtok_r(lastbuff, seperator, &lastbuff);
     }
 
-    free(tmp_stri);
-    tmp_stri = malloc(len * sizeof(*tmp_stri));
+    z__FREE(tmp_stri);
+    tmp_stri = z__MALLOC(len * sizeof(*tmp_stri));
     memcpy(tmp_stri, stri, len);
 
     lastbuff = tmp_stri;
@@ -576,16 +575,14 @@ z__StringList z__String_splitTok_raw(char const *restrict stri, int len, char co
 
 z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len)
 {
-    if (str_len == -1)
-    {
+    if (str_len == -1) {
         str_len = strlen(str);
     }
-    if (mainStrLen == -1)
-    {
+    if (mainStrLen == -1) {
         mainStrLen = strlen(mainStr);
     }
 
-    char *tmp_mainStr = malloc(sizeof(*tmp_mainStr) * mainStrLen);
+    char *tmp_mainStr = z__MALLOC(sizeof(*tmp_mainStr) * mainStrLen);
     memcpy(tmp_mainStr, mainStr, mainStrLen);
 
     char *strst = strnstr(tmp_mainStr, str, mainStrLen);
@@ -600,8 +597,7 @@ z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char cons
     z__StringList ln = z__StringList_new(8);
 
     z__i32 i = 0, len = 0;
-    if (*strst)
-    {
+    if (*strst) {
         i = strlen(strst);
         z__StringList_push(&ln, strst, i);
         strst += i + str_len;
@@ -639,7 +635,7 @@ z__String z__StringList_toString(z__StringList const ln)
 z__StringListArr z__StringListArr_new(z__u32 size, z__u32 x)
 {
     z__StringListArr lns = {
-        .data = calloc(sizeof(z__StringList), size),
+        .data = z__CALLOC(sizeof(z__StringList), size),
         .len = size,
         .lenUsed = 0
     };
@@ -658,7 +654,7 @@ void z__StringListArr_delete(z__StringListArr *lns)
     {
         z__StringList_delete(&lns->data[i]);
     }
-    free(lns->data);
+    z__FREE(lns->data);
    lns->data = NULL;
     lns->len = 0;
 }
@@ -686,3 +682,4 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize)
 }
 
 // String END
+
