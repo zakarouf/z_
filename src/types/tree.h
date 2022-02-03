@@ -63,7 +63,7 @@
       "Of :: " #t);                                                             \
 }
 
-#define z__Tree_changeto_leaf(t) {                          \
+#define z__Tree_changeto_leaf(t) {                 \
   (t)->nodesUsed = 0;                                       \
   for(z__size i = 0; i < z__Tree_get_nodeCount(t); i += 1) {\
     (t)->nodes.raw[i] = NULL;                               \
