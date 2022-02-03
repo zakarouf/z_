@@ -100,6 +100,11 @@ inline void z__String_delete(z__String * s)
     s->lenUsed = 0;
 }
 
+void z__String_expand(z__String *str, z__size by)
+{
+    str->len += by;
+    str->data = z__mem_safe_realloc(str->data, str->len);
+}
 inline void z__String_resize(z__String *str, int newsize)
 {
     str->len = newsize;
@@ -678,4 +683,3 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize)
 }
 
 // String END
-
