@@ -22,9 +22,9 @@ z__u32 z__Bytes_setCur_next(z__Bytes *bt, z__size by);
 #define z__Bytes_getCurL(T, Bytes) (*(T *)(&(Bytes)->bytes.data[(Bytes)->cursor_last]))
 #define z__Bytes_getTop(T, Bytes) (*(T *)(&(Bytes)->bytes.data[(Bytes)->bytes.lenUsed-1]))
 
-#define z__Bytes_getCur_setnext(T, Bytes) ({ \
-    z__Bytes_setCur_next(Bytes, sizeof(T)); \
-    z__Bytes_getCurL(T, Bytes);\
+#define z__Bytes_getCur_setnext(T, Bytes) ({    \
+    z__Bytes_setCur_next(Bytes, sizeof(T));     \
+    z__Bytes_getCurL(T, Bytes);                 \
 })
 
 #define z__Bytes_resetCur(Bytes)\
