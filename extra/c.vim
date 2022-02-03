@@ -63,8 +63,8 @@ syn keyword cStatement z__omp z__omp_parallel z__omp_for
 
 "Pthread
 
-syn keyword cType z__pt_Thread z__pt_MetaData z__pt_UniqueData z__pt_Thread_Attr
-syn keyword cStructure z__pt_DataContext z__pt_DataContextType 
+"syn keyword cType z__pt_Thread z__pt_MetaData z__pt_UniqueData z__pt_Thread_Attr
+"syn keyword cStructure z__pt_DataContext z__pt_DataContextType 
 "Misc
 
 syn keyword cStatement zpp__pragma
