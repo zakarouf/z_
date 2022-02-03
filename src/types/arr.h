@@ -507,6 +507,9 @@
     typedef z__Arr(z__f32) z__f32Arr;
     typedef z__Arr(z__f64) z__f64Arr;
 
+    // Bytes
+    typedef z__Arr(z__byte) z__byteArr;
+
     // Boolean
     typedef z__Arr(z__bool) z__boolArr;
 
