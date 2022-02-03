@@ -34,8 +34,7 @@
         z__size z__HashHoyt_new_to_hold__priv__n = n;\
         z__HashHoyt_new_to_hold__priv__n *= 2;\
         int z__HashHoyt_new_to_hold__priv__i = 0;\
-        for(; z__HashHoyt_new_to_hold__priv__i<<1 < z__HashHoyt_new_to_hold__priv__n; z__HashHoyt_new_to_hold__priv__i++){\
-        }\
+        for(; z__HashHoyt_new_to_hold__priv__i<<1 < z__HashHoyt_new_to_hold__priv__n; z__HashHoyt_new_to_hold__priv__i++){}\
         (ht)->len = z__HashHoyt_new_to_hold__priv__i;       \
         (ht)->used = 0;                                     \
         (ht)->entries = z__New0(*(ht)->entries, (ht)->len); \
@@ -47,7 +46,7 @@
 #define z__HashHoyt_delete(ht)\
     {                                       \
         for(z__size i = 0; i < (ht)->len; i++) {\
-            z__FREE((void *)(ht)->entries[i].key); \
+            z__FREE((ht)->entries[i].key); \
         }                                   \
         z__FREE((ht)->entries);             \
         (ht)->len = 0;                      \
@@ -94,9 +93,9 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
                 (ht)->entries[idx].value = val;\
                 break;\
             }\
-            idx += 1;                   \
-            if (idx > (ht)->len) {   \
-                idx = 0;                \
+            idx += 1;               \
+            if (idx > (ht)->len) {  \
+                idx = 0;            \
             }   \
         }       \
                 \
