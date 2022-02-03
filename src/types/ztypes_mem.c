@@ -55,7 +55,7 @@ void z__mem_free(void * ptr)
 
 #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 	/* TODO: Create Unique Sorting & Accesing Algorithm For Storing All tracked memory*/
-	z__Arr(z__ptr) _z__mem_memlist;
+	static z__Arr(z__ptr) _z__mem_memlist;
 
 	z__u32 z__mem_checkfor_usedMemory(void)
 	{
@@ -146,7 +146,7 @@ void z__mem_free(void * ptr)
 			return ptr;
 		}
 
-		void * (*_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *) = _Z__MEM_LOG_FN_PTR_DEFAULT;
+		void * (const *_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *) = _Z__MEM_LOG_FN_PTR_DEFAULT;
 		void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *))
 		{
 		 	return (_Z__MEM_LOG_FN_PTR_ = newfnptr);
