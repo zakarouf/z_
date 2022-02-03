@@ -28,7 +28,7 @@ z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_muc
 
     #ifdef Z___TYPE_CONFIG__USE_MEM__VTRACK
 
-        extern void * (*_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *);
+        extern void * (const *_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *);
         void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *));
 
         #define z__tvMALLOC(s)      _Z__MEM_LOG_FN_PTR_("Malloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(s));
