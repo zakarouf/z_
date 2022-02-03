@@ -28,6 +28,18 @@ z__size z__mem_memshift_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_mu
     return diff;
 }
 
+z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto)
+{
+    char *dest = ori+ ((from + how_much) * unit_size);
+    char *src = ori+ (from * unit_size);
+
+    z__size diff = upto - from;
+    memmove(dest, src, unit_size * diff);
+
+    return diff;
+}
+
+
 #include "arr.h"
 void z__mem_Arr_clean(void * arr)
 {
