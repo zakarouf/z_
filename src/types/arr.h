@@ -11,6 +11,7 @@
 #include "../config_types.h"
 #include "base.h"
 #include "mem.h"
+#include "../prep/args.h"
 
 /* Known Type-safe arrays */
 
