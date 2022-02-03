@@ -16,14 +16,14 @@ void *z__mem_safe_realloc(void * data, size_t size)
     return data;
 }
 
-z__size z__mem_memshift_right_nocheck(void *ori, z__u32 sz, z__u32 n ,z__size from, z__u32 upto)
+z__size z__mem_memshift_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto)
 {
-    char *dest = ori+ ((from+n) * sz);
-    char *src = ori+ (from * sz);
+    char *dest = ori+ ((from + how_much) * unit_size);
+    char *src = ori+ (from * unit_size);
 
     z__size diff = upto - from;
-    memmove(dest, src, sz * diff);
-    memset(src, 0, sz * n);
+    memmove(dest, src, unit_size * diff);
+    memset(src, 0, unit_size * unit_size);
 
     return diff;
 }
