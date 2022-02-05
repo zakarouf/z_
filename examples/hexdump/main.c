@@ -18,6 +18,7 @@
 
 struct Config {
     z__size width;
+    z__size from;
     z__String filename;
 };
 
@@ -51,16 +52,22 @@ void print_hex_line(
 
 int main (int argc, char *argv[])
 {
-    struct Config config = {0x10, NULL};
+    struct Config config = {
+        .width = 0x10
+      , .filename = NULL
+      , .from = 0
+    };
 
     z__argp_start(argv, 1, argc) {
         z__argp_ifarg(&config.width, "-w");
+        z__argp_ifarg(&config.from, "-s");
         z__argp_ifarg_custom("-f") {
             z__argp_next();
             config.filename = z__String_newFromStr(z__argp_get(), -1);
         }
     }
-    if(config.width <= 0) config.width = 0x10;
+
+    if(config.width == 0) config.width = 0x10;
     if(config.filename.data == NULL) {
         perror("File name not specified, please use the " "-f" "flags to do so.");
         return 0;
@@ -76,7 +83,7 @@ int main (int argc, char *argv[])
 
     printf("%s %ubytes\n", config.filename.data, filedata.lenUsed);
 
-    z__size i = 0;
+    z__size i = config.from;
     for (; i < filedata.lenUsed; i += config.width) {
         print_hex_line(i
             , filedata.data
