@@ -167,16 +167,47 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 // Macros
 
-
-#define z__StringList__PRIV_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
-#define z__StringList__PRIV_pushstr(...) zpp__Args_map(z__StringList__PRIV_tmp_pushstr, __VA_ARGS__)
+#define z__String(...) ({\
+        z__String _tmp = z__String_newFrom(zpp__Args_map(z__PRIV__String_sformat, __VA_ARGS__),\
+      zpp__Args_maplist_fn_Pattern(z__PRIV__typegen_primlist, ,, __VA_ARGS__));   \
+        z__String str_out = z__String_newFrom(_tmp.data, __VA_ARGS__);\
+        z__String_delete(&_tmp);\
+        str_out;\
+    })
 
 #define z__StringList_init(...)\
-({\
-    z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);\
-    z__StringList__PRIV_pushstr(__VA_ARGS__);\
-    tmp;\
-})
+    ({\
+        z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);\
+        z__PRIV__StringList_pushstr(__VA_ARGS__);\
+        tmp;\
+    })
+
+
+
+// Private stuff
+
+#define z__PRIV__typegen_primlist(v) z__typegen_def((v), "",\
+                , (z__i16, "%hi")    \
+                , (z__u16, "%hu")    \
+                , (z__i32, "%i")     \
+                , (z__u32, "%u")     \
+                , (z__i64, "%lli")   \
+                , (z__u64, "%llu")   \
+                \
+                , (z__f32, "%f")    \
+                , (z__f64, "%lF")   \
+                \
+                , (z__size, "%zu")   \
+                \
+                , (char, "%c")   \
+                , (char *, "%s")   \
+              ) 
+#define z__PRIV__String_sformat(...) "%s "
+
+
+#define z__PRIV__StringList_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
+#define z__PRIV__StringList_pushstr(...) zpp__Args_map(z__PRIV__StringList_tmp_pushstr, __VA_ARGS__)
 
 
 #endif
+
