@@ -55,7 +55,7 @@ static inline void z__imp_print__PRIV__print_func__i8_ptr(FILE *fp , z__i8 *ptr,
 {
 
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%hhi ", *ptr);
         ptr++;
@@ -64,7 +64,7 @@ static inline void z__imp_print__PRIV__print_func__i8_ptr(FILE *fp , z__i8 *ptr,
 static inline void z__imp_print__PRIV__print_func__i16_ptr(FILE *fp , z__i16 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%hi ", *ptr);
         ptr++;
@@ -73,7 +73,7 @@ static inline void z__imp_print__PRIV__print_func__i16_ptr(FILE *fp , z__i16 *pt
 static inline void z__imp_print__PRIV__print_func__i32_ptr(FILE *fp , z__i32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%i ", *ptr);
         ptr++;
@@ -82,7 +82,7 @@ static inline void z__imp_print__PRIV__print_func__i32_ptr(FILE *fp , z__i32 *pt
 static inline void z__imp_print__PRIV__print_func__i64_ptr(FILE *fp , z__i64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%lli ", *ptr);
         ptr++;
@@ -91,7 +91,7 @@ static inline void z__imp_print__PRIV__print_func__i64_ptr(FILE *fp , z__i64 *pt
 static inline void z__imp_print__PRIV__print_func__u8_ptr(FILE *fp , z__u8 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%hhu ", *ptr);
         ptr++;
@@ -100,7 +100,7 @@ static inline void z__imp_print__PRIV__print_func__u8_ptr(FILE *fp , z__u8 *ptr,
 static inline void z__imp_print__PRIV__print_func__u16_ptr(FILE *fp , z__u16 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%hu ", *ptr);
         ptr++;
@@ -109,7 +109,7 @@ static inline void z__imp_print__PRIV__print_func__u16_ptr(FILE *fp , z__u16 *pt
 static inline void z__imp_print__PRIV__print_func__u32_ptr(FILE *fp , z__u32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%u ", *ptr);
         ptr++;
@@ -118,7 +118,7 @@ static inline void z__imp_print__PRIV__print_func__u32_ptr(FILE *fp , z__u32 *pt
 static inline void z__imp_print__PRIV__print_func__u64_ptr(FILE *fp , z__u64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_INT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%lld ", *ptr);
         ptr++;
@@ -127,7 +127,7 @@ static inline void z__imp_print__PRIV__print_func__u64_ptr(FILE *fp , z__u64 *pt
 static inline void z__imp_print__PRIV__print_func__f32_ptr(FILE *fp , z__f32 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_FLOAT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%f ", *ptr);
         ptr++;
@@ -136,7 +136,7 @@ static inline void z__imp_print__PRIV__print_func__f32_ptr(FILE *fp , z__f32 *pt
 static inline void z__imp_print__PRIV__print_func__f64_ptr(FILE *fp , z__f64 *ptr, z__u32 len)
 {
     fputs(Z___IMP__PRINT_COLOR_FLOAT, fp);
-    for (int i = 0; i < len; ++i)
+    for (z__u32 i = 0; i < len; ++i)
     {
         fprintf(fp, "%f ", *ptr);
         ptr++;
@@ -183,7 +183,7 @@ z__fnptr(const z__imp_print__PRIV_print_func_arr[10], void) = {
 static void z__fprint_str_list(FILE *fp, char * const strl[], z__u32 len)
 {
     fputs("[ " Z___IMP__PRINT_COLOR_STRING, fp);
-    for (int i = 0; i < len; i++) {
+    for (z__u32 i = 0; i < len; i++) {
         fputc('"', fp);
         fputs(strl[i], fp);
         fputc('"', fp);
@@ -212,7 +212,7 @@ static void z__imp_print__PRIV__print_func(FILE *fp, z__u32 count, char types_da
     va_start(args, types_data);
 
     fputc(' ', fp);
-    for (int i = 0; i < count; ++i) {
+    for (z__u32 i = 0; i < count; ++i) {
         char type = types_data[i];
         if (type > 0
             && type < 7){
