@@ -67,7 +67,7 @@ void z__String_replace(z__String *str, char const * __restrict format, ...)
 void z__String_replaceStr(z__String *str, const char * s, int len)
 {
     if(len == -1) len = strlen(s);
-    if(len > str->len) z__String_resize(str, len + 1);
+    if((z__u32)len > str->len) z__String_resize(str, len + 1);
     memcpy(str->data, s, sizeof(*s) * len);
     str->lenUsed = len;
     str->data[str->lenUsed] = 0;
@@ -136,18 +136,15 @@ z__String z__String_newCopy(const z__String str)
     return str2;
 }
 
-inline void z__Strint_appendStr(z__String *str, const z__char *src, int length)
+inline void z__Strint_appendStr(z__String *str, const z__char *src, z__u32 length)
 {
-    if (length > 0)
-    {
-        if ((str->len-str->lenUsed) > length){
-            memcpy(&str->data[str->lenUsed], src, length);
+    if ((str->len-str->lenUsed) > length){
+        memcpy(&str->data[str->lenUsed], src, length);
 
-        } else {
-            z__String_resize(str, length+str->len);
-        }
-        str->lenUsed += length;
+    } else {
+        z__String_resize(str, length+str->len);
     }
+    str->lenUsed += length;
 }
 
 void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...)
@@ -186,9 +183,9 @@ void z__String_pushChar(z__String *dest, z__char ch)
     dest->lenUsed += 1;
 }
 
-void z__String_insertChar(z__String *dest, z__char ch, z__i32 pos)
+void z__String_insertChar(z__String *dest, z__char ch, z__u32 pos)
 {
-    if(pos >= dest->lenUsed && pos < 0) {
+    if(pos >= dest->lenUsed) {
         return;
     }
     
@@ -201,9 +198,9 @@ void z__String_insertChar(z__String *dest, z__char ch, z__i32 pos)
     dest->lenUsed += 1;
 }
 
-void z__String_delChar(z__String *dest, z__i32 pos)
+void z__String_delChar(z__String *dest, z__u32 pos)
 {
-    if(pos >= dest->lenUsed && pos < 0) {
+    if(pos >= dest->lenUsed) {
         return;
     }
 
@@ -212,9 +209,9 @@ void z__String_delChar(z__String *dest, z__i32 pos)
     dest->data[dest->lenUsed] = '\0';
 }
 
-void z__String_replaceChar(z__String *dest, z__char ch, z__i32 pos)
+void z__String_replaceChar(z__String *dest, z__char ch, z__u32 pos)
 {
-    if(pos >= dest->lenUsed && pos < 0) {
+    if(pos >= dest->lenUsed) {
         return;
     }
     dest->data[pos] = ch;
@@ -281,7 +278,7 @@ const char *z__str_findchar(const char ch, char const *str, z__size len)
     return NULL;
 }
 
-char const *z__str_skipget_ws(char const *str, int size)
+char const *z__str_skipget_ws(char const *str, z__u32 size)
 {
     while(size > 0
         &&(*str != ' '
@@ -294,7 +291,7 @@ char const *z__str_skipget_ws(char const *str, int size)
     return str;
 }
 
-char const *z__str_skipget_nonws(char const *str, int size)
+char const *z__str_skipget_nonws(char const *str, z__u32 size)
 {
     while(size > 0
         &&(*str == ' '
@@ -306,7 +303,7 @@ char const *z__str_skipget_nonws(char const *str, int size)
     return str;
 }
 
-char const *z__str_find_chars(char const *str, int size, char const * tab, const z__size tabsize)
+char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize)
 {
     while(size > 0){
         for(z__size i = 0; i < tabsize; i++) {
@@ -322,7 +319,7 @@ char const *z__str_find_chars(char const *str, int size, char const * tab, const
 }
 
 
-const char *z__str_get_next_word(const char *ori, z__size len,char const *cursor)
+const char *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor)
 {
     if(cursor < ori && cursor >= (ori + len)) {
         return NULL;
@@ -351,8 +348,7 @@ z__String z__String_newFromFile(char const filename[])
 {
     FILE *f;
 
-    if ((f = fopen(filename, "rb")) == NULL)
-    {
+    if ((f = fopen(filename, "rb")) == NULL) {
         return (z__String) {
             NULL, 0, 0
         };
@@ -389,8 +385,7 @@ z__StringList z__StringList_new(unsigned int base_lines_count)
 
 void z__StringList_delete(z__StringList *ln)
 {
-    for (z__u32 i = 0; i < ln->list_lenUsed; ++i)
-    {
+    for (z__u32 i = 0; i < ln->list_lenUsed; ++i) {
         z__FREE(ln->str_list[i]);
     }
     z__FREE(ln->str_list);
@@ -419,12 +414,15 @@ void z__StringList_pushString(z__StringList *ln ,z__String str)
     ln->list_lenUsed += 1;
 }
 
-void z__StringList_push(z__StringList *ln , char const * st, int len)
+void z__StringList_push(z__StringList *ln , char const * st, int st_len)
 {
     _z__StringList_expandif(ln);
 
-    if (len == -1) {
+    z__size len;
+    if (st_len <= -1) {
         len = strlen(st);
+    } else {
+        len = st_len;
     }
 
     ln->str_list[ln->list_lenUsed] = z__CALLOC(len, sizeof(**ln->str_list));
@@ -469,12 +467,16 @@ void z__StringList_pop(z__StringList *ln)
     */
 }
 
-int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int len)
+int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int st_len)
 {
     if(idx >= ln->list_lenUsed) {
         return -1;
     }
-    if(len == -1) len = strlen(st);
+
+    z__size len;
+    if(st_len == -1) len = strlen(st);
+    else len = st_len;
+
     if(len > ln->str_lens[idx]) {
         ln->str_lens[idx] = len;
         z__FREE(ln->str_list[idx]);
@@ -492,7 +494,9 @@ z__StringList z__StringList_clone(z__StringList const *ln)
     };
 
     newln.str_lens = z__MALLOC(sizeof(*newln.str_lens) * newln.list_len);
-    memcpy(newln.str_lens, ln->str_lens, sizeof(*newln.str_lens)*newln.list_len);
+    memcpy(newln.str_lens
+         , ln->str_lens
+         , sizeof(*newln.str_lens)*newln.list_len);
 
     newln.str_list = z__MALLOC(sizeof(*newln.str_list) * newln.list_len);
 
@@ -534,11 +538,13 @@ z__StringList z__String_splitTok(z__String str, char const *restrict seperator)
     return ln;
 }
 
-z__StringList z__String_splitTok_raw(char const *restrict stri, int len, char const *restrict seperator)
+z__StringList z__String_splitTok_raw(char const *restrict stri, int st_len, char const *restrict seperator)
 {
-    if (len == -1)
-    {
+    z__size len;
+    if (st_len == -1) {
         len = strlen(stri);
+    } else {
+        len = st_len;
     }
     
     char *tmp_stri = z__New0(*tmp_stri, len);
@@ -640,7 +646,7 @@ z__StringListArr z__StringListArr_new(z__u32 size, z__u32 x)
         .lenUsed = 0
     };
 
-    for (int i = 0; i < lns.len; ++i)
+    for (z__u32 i = 0; i < lns.len; ++i)
     {
         lns.data[i] = z__StringList_new(x);
     }
@@ -650,7 +656,7 @@ z__StringListArr z__StringListArr_new(z__u32 size, z__u32 x)
 
 void z__StringListArr_delete(z__StringListArr *lns)
 {
-    for (int i = 0; i < lns->len; ++i)
+    for (z__u32 i = 0; i < lns->len; ++i)
     {
         z__StringList_delete(&lns->data[i]);
     }
@@ -659,11 +665,11 @@ void z__StringListArr_delete(z__StringListArr *lns)
     lns->len = 0;
 }
 
-void z__StringListArr_resize(z__StringListArr *lns, int newsize)
+void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize)
 {
     if (newsize < lns->len)
     {
-        for (int i = newsize; i < lns->len; ++i)
+        for (z__u32 i = newsize; i < lns->len; ++i)
         {
             z__StringList_delete(&lns->data[i]);
         }
@@ -674,7 +680,7 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize)
     {
        lns->data = z__mem_safe_realloc(lns->data, sizeof(z__StringList) * newsize);
         lns->len = newsize;
-        for (int i = lns->len; i < newsize; ++i)
+        for (z__u32 i = lns->len; i < newsize; ++i)
         {
            lns->data[i] = z__StringList_new(lns->data[0].list_len);
         }

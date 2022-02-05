@@ -14,8 +14,8 @@ typedef char z__char;
 typedef struct z__String
 {
     z__char * data;
-    z__int len;
-    z__int lenUsed;
+    z__u32 len;
+    z__u32 lenUsed;
 
 }z__String;
 
@@ -118,7 +118,7 @@ const char *z__str_findchar(const char ch, char const *str, z__size len);
 /**
  *
  */
-void z__Strint_appendStr(z__String *str, const z__char* src, int length);
+void z__Strint_appendStr(z__String *str, const z__char* src, z__u32 length);
 void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __printflike(4, 5);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
 z__String z__String_bind(char *str, z__int sz);
@@ -126,16 +126,16 @@ z__String z__String_bind(char *str, z__int sz);
 void z__String_replaceStr(z__String *str, const char * s, int len);
 void z__String_replace(z__String *str, char const * __restrict format, ...) __printflike(2, 3);
 
-char const *z__str_skipget_ws(char const *str, int size);
-char const *z__str_skipget_nonws(char const *str, int size);
-char const *z__str_find_chars(char const *str, int size, char const * tab, const z__size tabsize);
-const char *z__str_get_next_word(const char *ori, z__size len, char const *cursor);
+char const *z__str_skipget_ws(char const *str, z__u32 size);
+char const *z__str_skipget_nonws(char const *str, z__u32 size);
+char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize);
+const char *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
 const char *z__String_get_next_word(const z__String *ori, char const *cursor);
 
 
 z__String z__String_newFromFile(char const filename[]);
-void z__String_insertChar(z__String *dest, z__char ch, int pos);
-void z__String_delChar(z__String *dest, int pos);
+void z__String_insertChar(z__String *dest, z__char ch, z__u32 pos);
+void z__String_delChar(z__String *dest, z__u32 pos);
 void z__String_pushChar(z__String *dest, z__char ch);
 
 z__String z__String_newFromStr(const char *st, int size);
@@ -162,7 +162,7 @@ int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int le
 /* String List Array */
 z__StringListArr z__StringListArr_new(z__u32 len, z__u32 linecount);
 void z__StringListArr_delete(z__StringListArr *lns);
-void z__StringListArr_resize(z__StringListArr *lns, int newsize);
+void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 
 // Macros
@@ -180,4 +180,3 @@ void z__StringListArr_resize(z__StringListArr *lns, int newsize);
 
 
 #endif
-
