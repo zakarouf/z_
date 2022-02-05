@@ -37,11 +37,13 @@ int z__fio_directoryExist(const char *p);
 	}
 
 #define z__fio_Arr_newLoad(arr, fp)\
-	({																			\
-		z__size unitsize;														\
-		(arr)->data = z__fio_ptr_newLoad(&unitsize, &(arr)->len, fp);			\
-		(arr)->lenUsed = (arr)->len;											\
-		unitsize;																\
+	({														\
+		z__size unitsize;						\
+		(arr)->data =								\
+				z__fio_ptr_newLoad(			\
+						&unitsize, &(arr)->len, fp);\
+		(arr)->lenUsed = (arr)->len;				\
+		unitsize;														\
 	})
 
 #define z__fio_Arr_dump(arr, fp)\
