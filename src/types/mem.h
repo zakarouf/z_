@@ -11,6 +11,9 @@ void *z__mem_safe_realloc(void * data, size_t size);
 z__size z__mem_memshift_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto);
 z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto);
 
+//#define Z___TYPE_CONFIG__USE_MEM__TRACK
+//#define Z___TYPE_CONFIG__USE_MEM__VTRACK
+//#define Z___TYPE_CONFIG__USE_MEM__TRACK_AS_DEFAULT
 
 #ifdef Z___TYPE_CONFIG__USE_MEM__TRACK
 
@@ -28,12 +31,12 @@ z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_muc
 
     #ifdef Z___TYPE_CONFIG__USE_MEM__VTRACK
 
-        extern void * (const *_Z__MEM_LOG_FN_PTR_)(char const *, char const *, char const *, int const, void *);
         void *z__mem_logSet(void * (*newfnptr)(char const *, char const *, char const *, int const, void *));
+		    void *z__mem_log(const char *msg ,const char *fl, const char *fn, const int l, void *ptr);
 
-        #define z__tvMALLOC(s)      _Z__MEM_LOG_FN_PTR_("Malloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(s));
-        #define z__tvCALLOC(c, s)   _Z__MEM_LOG_FN_PTR_("Calloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(c, s));
-        #define z__tvFREE(ptr)      _Z__MEM_LOG_FN_PTR_("Free:   " ,__FILE__, __func__, __LINE__, ptr); z__tFREE(ptr)
+        #define z__tvMALLOC(s)      z__mem_log("Malloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(s));
+        #define z__tvCALLOC(c, s)   z__mem_log("Calloc: " ,__FILE__, __func__, __LINE__, z__tMALLOC(c, s));
+        #define z__tvFREE(ptr)      z__mem_log("Free:   " ,__FILE__, __func__, __LINE__, ptr); z__tFREE(ptr)
 
     #endif
 
