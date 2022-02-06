@@ -7,6 +7,7 @@
 #define ZAKAROUF__Z_TYPE_STRING_H
 
 #include "../config_types.h"
+#include "../prep/nm/assert.h"
 #include "base.h"
 
 typedef char z__char;
@@ -168,11 +169,12 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 // Macros
 
 #define z__String(...) ({\
-        z__String _tmp = z__String_newFrom(zpp__Args_map(z__PRIV__String_sformat, __VA_ARGS__),\
-      zpp__Args_maplist_fn_Pattern(z__PRIV__typegen_primlist, ,, __VA_ARGS__));   \
-        z__String str_out = z__String_newFrom(_tmp.data, __VA_ARGS__);\
-        z__String_delete(&_tmp);\
-        str_out;\
+        zpp__Args_map_fn_Pattern(z__PRIV__String_checkformat,,,__VA_ARGS__);                            \
+        z__String _tmp = z__String_newFrom(zpp__Args_map(z__PRIV__String_sformat, __VA_ARGS__),         \
+                            zpp__Args_maplist_fn_Pattern(z__PRIV__typegen_primlist, ,, __VA_ARGS__));   \
+        z__String str_out = z__String_newFrom(_tmp.data, __VA_ARGS__);                                  \
+        z__String_delete(&_tmp);                                                                        \
+        str_out;                                                                                        \
     })
 
 #define z__StringList_init(...)\
@@ -187,6 +189,7 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 // Private stuff
 
 #define z__PRIV__typegen_primlist(v) z__typegen_def((v), "",\
+                , (char, "%c")   \
                 , (z__i16, "%hi")    \
                 , (z__u16, "%hu")    \
                 , (z__i32, "%i")     \
@@ -197,13 +200,15 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
                 , (z__f32, "%f")    \
                 , (z__f64, "%lF")   \
                 \
-                , (z__size, "%zu")   \
+                , (z__size, "%zu")  \
                 \
-                , (char, "%c")   \
-                , (char *, "%s")   \
+                , (char *, "%s")            \
+                , (const char *, "%s")      \
+                , (void *, "%p")            \
               ) 
 #define z__PRIV__String_sformat(...) "%s "
 
+#define z__PRIV__String_checkformat(v) _Static_assert(sizeof(z__PRIV__typegen_primlist(v)) > 1, "Generic Format for this type is applied yet");
 
 #define z__PRIV__StringList_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
 #define z__PRIV__StringList_pushstr(...) zpp__Args_map(z__PRIV__StringList_tmp_pushstr, __VA_ARGS__)
