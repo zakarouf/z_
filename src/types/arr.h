@@ -312,7 +312,7 @@
         )                                                       \
     )
 
-#define z__Arr_slice_5(arr, dest, from, upto, step)\
+#define z__PRIV__Arr_slice_5(arr, dest, from, upto, step)\
     {                                                       \
         if ((arr).lenUsed > (dest)->len) {                  \
             z__Arr_resize(dest, (arr).lenUsed);             \
@@ -324,7 +324,7 @@
         (dest)->lenUsed = (j)+1;                            \
     }
 
-#define z__Arr_slice_4(arr, dest, from, upto)\
+#define z__PRIV__Arr_slice_4(arr, dest, from, upto)\
     {\
         if ((arr).lenUsed > (dest)->len) {                  \
             z__Arr_resize(dest, (arr).lenUsed);             \
@@ -337,13 +337,13 @@
     }
 
 //#define z__Arr_slice_4(arr, dest, from, upto) z__Arr_slice_5(arr, dest, from, upto, 1)
-#define z__Arr_slice_3(arr, dest, from) z__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
-#define z__Arr_slice_2(arr, dest) z__Arr_slice_3(arr, dest, 0)
-#define z__Arr_slice(...) zpp__Args_Overload(z__Arr_slice_, __VA_ARGS__)
+#define z__PRIV__Arr_slice_3(arr, dest, from) z__PRIV__Arr_slice_4(arr, dest, from, (arr).lenUsed-1)
+#define z__PRIV__Arr_slice_2(arr, dest) z__PRIV__Arr_slice_3(arr, dest, 0)
+#define z__Arr_slice(...) zpp__Args_Overload(z__PRIV__Arr_slice_, __VA_ARGS__)
 
 
 
-#define z__Arr_newSlice_5(dest, arr, from, upto, step)\
+#define z__PRIV__Arr_newSlice_5(dest, arr, from, upto, step)\
     {\
         z__size _from = from    \
             ,   _upto = upto    \
@@ -357,7 +357,7 @@
         (dest)->lenUsed = _j;                       \
     }
 
-#define z__Arr_newSlice_4(dest, arr, from, upto)\
+#define z__PRIV__Arr_newSlice_4(dest, arr, from, upto)\
     {\
         z__size _len = upto - from;                         \
         z__size _from = from;                               \
@@ -367,14 +367,14 @@
         (dest)->lenUsed = _len;                             \
     }
 
-#define z__Arr_newSlice_3(dest, arr, from) z__Arr_newSlice_4(dest, arr, from, (arr).lenUsed-1)
-#define z__Arr_newSlice_2(dest, arr) z__Arr_newCopy(dest, arr)
-#define z__Arr_newSlice_1(arr) z__Arr_clone(arr)
-#define z__Arr_newSlice(...) zpp__Args_Overload(z__Arr_newSlice_, __VA_ARGS__)
+#define z__PRIV__Arr_newSlice_3(dest, arr, from) z__PRIV__Arr_newSlice_4(dest, arr, from, (arr).lenUsed-1)
+#define z__PRIV__Arr_newSlice_2(dest, arr) z__Arr_newCopy(dest, arr)
+#define z__PRIV__Arr_newSlice_1(arr) z__Arr_clone(arr)
+#define z__Arr_newSlice(...) zpp__Args_Overload(z__PRIV__Arr_newSlice_, __VA_ARGS__)
 
 
 
-#define z__Arr_sliceR_5(arr, dest, from, upto, step)\
+#define z__PRIV__Arr_sliceR_5(arr, dest, from, upto, step)\
 {                                                                                               \
     if ((arr).lenUsed > (dest)->len) {                                                          \
         z__Arr_resize(dest, (arr).lenUsed);                                                     \
@@ -386,25 +386,25 @@
     (dest)->lenUsed = (j)+1;                                                                    \
 }
 
-#define z__Arr_sliceR_4(arr, dest, from, upto) z__Arr_sliceR_5(arr, dest, from, upto, 1)
-#define z__Arr_sliceR_3(arr, dest, from) z__Arr_sliceR_4(arr, dest, from, (arr).lenUsed)
-#define z__Arr_sliceR_2(arr, dest) z__Arr_sliceR_4(arr, dest, 0, (arr).lenUsed)
-#define z__Arr_sliceR(...) zpp__Args_Overload(z__Arr_sliceR_, __VA_ARGS__)
+#define z__PRIV__Arr_sliceR_4(arr, dest, from, upto) z__PRIV__Arr_sliceR_5(arr, dest, from, upto, 1)
+#define z__PRIV__Arr_sliceR_3(arr, dest, from)       z__PRIV__Arr_sliceR_4(arr, dest, from, (arr).lenUsed)
+#define z__PRIV__Arr_sliceR_2(arr, dest)             z__PRIV__Arr_sliceR_4(arr, dest, 0, (arr).lenUsed)
+#define z__Arr_sliceR(...)                           zpp__Args_Overload(z__PRIV__Arr_sliceR_, __VA_ARGS__)
 
 
-#define z__Arr_mapnum_4(arr, mapValStep, mapValFrom, operator)                             \
-{                                                                                       \
-    z__typeof(*(arr)->data)z__Arr_map__TMP_DATA = mapValFrom;                           \
-    for(int i = 0; i < (arr)->len; i++, z__Arr_map__TMP_DATA operator##= mapValStep)    \
-    {                                                                                   \
-        (arr)->data[i] = z__Arr_map__TMP_DATA;                                          \
-    }; (arr)->lenUsed = (arr)->len;                                                     \
-}
+#define z__Arr_mapnum_4(arr, mapValStep, mapValFrom, operator)                          \
+    {                                                                                       \
+        z__typeof(*(arr)->data)z__Arr_map__TMP_DATA = mapValFrom;                           \
+        for(int i = 0; i < (arr)->len; i++, z__Arr_map__TMP_DATA operator##= mapValStep)    \
+        {                                                                                   \
+            (arr)->data[i] = z__Arr_map__TMP_DATA;                                          \
+        }; (arr)->lenUsed = (arr)->len;                                                     \
+    }
 
-#define z__Arr_mapnum_3(arr, mapValStep, mapValFrom)    z__Arr_mapnum_4(arr, mapValStep, mapValFrom, +)
-#define z__Arr_mapnum_2(arr, mapValStep)                z__Arr_mapnum_4(arr, mapValStep, 0, +)
-#define z__Arr_mapnum_1(arr) { memset((arr)->data, 0, (arr)->len * sizeof(*(arr)->data)); }
-#define z__Arr_mapnum(...) zpp__Args_Overload(z__Arr_mapnum_, __VA_ARGS__)
+#define z__PRIV__Arr_mapnum_3(arr, mapValStep, mapValFrom)  z__PRIV__Arr_mapnum_4(arr, mapValStep, mapValFrom, +)
+#define z__PRIV__Arr_mapnum_2(arr, mapValStep)              z__PRIV__Arr_mapnum_4(arr, mapValStep, 0, +)
+#define z__PRIV__Arr_mapnum_1(arr)                          { memset((arr)->data, 0, (arr)->len * sizeof(*(arr)->data)); }
+#define z__Arr_mapnum(...)                                  zpp__Args_Overload(z__PRIV__Arr_mapnum_, __VA_ARGS__)
 
 
 /* foreach loop variant for Arr 
@@ -412,7 +412,7 @@
  *              printf("%d\n", *i);
  *          }
  */
-#define z__Arr_PRIV_foreach_5(item, arr, from, upto, step)\
+#define z__PRIV__Arr_foreach_5(item, arr, from, upto, step)\
     for(  z__u32 _z_Arr_foreach_var_iterator = from   \
         , _z_Arr_foreach_var_iterator_keep = 1     \
             ; _z_Arr_foreach_var_iterator < upto   \
@@ -421,12 +421,12 @@
             ; _z_Arr_foreach_var_iterator_keep \
             ; _z_Arr_foreach_var_iterator_keep ^= 1)\
 
-#define z__Arr_PRIV_foreach_4(item, arr, from, upto)    z__Arr_PRIV_foreach_5(item, arr, from, upto, 1)
-#define z__Arr_PRIV_foreach_3(item, arr, from)          z__Arr_PRIV_foreach_5(item, arr, from, arr.lenUsed, 1)
-#define z__Arr_PRIV_foreach_2(item, arr)                z__Arr_PRIV_foreach_5(item, arr, 0, arr.lenUsed, 1)
-#define z__Arr_PRIV_foreach(...)                        zpp__Args_Overload(z__Arr_PRIV_foreach_, __VA_ARGS__)
+#define z__PRIV__Arr_foreach_4(item, arr, from, upto)    z__PRIV__Arr_foreach_5(item, arr, from, upto, 1)
+#define z__PRIV__Arr_foreach_3(item, arr, from)          z__PRIV__Arr_foreach_5(item, arr, from, arr.lenUsed, 1)
+#define z__PRIV__Arr_foreach_2(item, arr)                z__PRIV__Arr_foreach_5(item, arr, 0, arr.lenUsed, 1)
+#define z__PRIV__Arr_foreach(...)                        zpp__Args_Overload(z__PRIV__Arr_foreach_, __VA_ARGS__)
 
-#define z__Arr_foreach(iterator, arr, ...)              z__Arr_PRIV_foreach(iterator, arr, ##__VA_ARGS__)
+#define z__Arr_foreach(iterator, arr, ...)              z__PRIV__Arr_foreach(iterator, arr, ##__VA_ARGS__)
 
 
 
@@ -447,17 +447,17 @@
         }                                                                                           \
     }
 
-#define z__Arr_PRIV_shift_right_nocheck_4(arr, n, from, upto)\
+#define z__PRIV__Arr_shift_right_nocheck_4(arr, n, from, upto)\
     {\
             (arr)->lenUsed = z__mem_memshift_right_nocheck((arr)->data, sizeof(*(arr)->data), n,from, upto) + n;\
     }
 
-#define z__Arr_PRIV_shift_right_nocheck_3(arr, n, from)\
+#define z__PRIV__Arr_shift_right_nocheck_3(arr, n, from)\
     {\
         (arr)->lenUsed = z__mem_memshift_right_nocheck((arr)->data, sizeof(*(arr)->data), n, from, (arr)->lenUsed) + n;\
     }
 
-#define z__Arr_PRIV_shift_right_nocheck_2(arr, n)\
+#define z__PRIV__Arr_shift_right_nocheck_2(arr, n)\
     {                                                       \
         z__u32 sh_r_var___n = n;                            \
         if (sh_r_var___n + (arr)->lenUsed < (arr)->len) {   \
@@ -467,8 +467,8 @@
         }                                                                                   \
     }   
 
-#define z__Arr_PRIV_shift_right_nocheck(...)         zpp__Args_Overload(z__Arr_PRIV_shift_right_nocheck_, __VA_ARGS__)
-#define z__Arr_shift_right_nocheck(arr, n, ...)      z__Arr_PRIV_shift_right_nocheck(arr, n, ##__VA_ARGS__)
+#define z__PRIV__Arr_shift_right_nocheck(...)         zpp__Args_Overload(z__PRIV__Arr_shift_right_nocheck_, __VA_ARGS__)
+#define z__Arr_shift_right_nocheck(arr, n, ...)      z__PRIV__Arr_shift_right_nocheck(arr, n, ##__VA_ARGS__)
 
 #ifdef Z___TYPE_CONFIG__USE_ARR_FUNTION_GENERATION_TEMPLATE
     /* INCOMPLETE */
