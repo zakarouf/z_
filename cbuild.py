@@ -13,7 +13,17 @@ onlyTakePatternEnd = [".c"]
 
 CC="gcc"
 ERRFLAGS = ["-Wall", "-Wextra"]
-CFLAGS=["-std=c99", "-ggdb", "-ffunction-sections", "-fdata-sections", "-fopenmp", "-ftrack-macro-expansion=2", "-Os"] + ERRFLAGS
+CFLAGS=[
+      "-std=c99"
+    , "-ggdb"
+    , "-ffunction-sections"
+    , "-fdata-sections"
+    , "-fopenmp"
+    , "-ftrack-macro-expansion=2"
+    , "-fsanitize=address"
+    , "-Os"
+    , "-O3"] + ERRFLAGS
+
 LDFLAGS=["-lm", "-Wl,-rpath", "-Wl,/usr/local/lib", "-I/usr/local/include","-fopenmp"]
 OUTEXE="build/test"
 
