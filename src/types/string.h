@@ -22,10 +22,10 @@ typedef struct z__String
 
 typedef struct z__StringList
 {
-    z__char **str_list;
-    z__u32 *str_lens;
-    z__u32 list_len;
-    z__u32 list_lenUsed;
+    z__char **data;
+    z__u32 *slens;
+    z__u32 len;
+    z__u32 lenUsed;
 }z__StringList;
 
 typedef struct z__StringListArr
@@ -215,4 +215,3 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 
 #endif
-

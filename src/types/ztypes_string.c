@@ -401,33 +401,33 @@ z__String z__String_newFromFile(char const filename[])
 z__StringList z__StringList_new(unsigned int base_lines_count)
 {
     z__StringList ln = {
-        .list_len = base_lines_count,
-        .list_lenUsed = 0
+        .len = base_lines_count,
+        .lenUsed = 0
     };
-    ln.str_lens = z__CALLOC(base_lines_count, sizeof(*ln.str_lens));
-    ln.str_list = z__CALLOC(base_lines_count, sizeof(*ln.str_list));
+    ln.slens = z__CALLOC(base_lines_count, sizeof(*ln.slens));
+    ln.data = z__CALLOC(base_lines_count, sizeof(*ln.data));
 
     return ln;
 }
 
 void z__StringList_delete(z__StringList *ln)
 {
-    for (z__u32 i = 0; i < ln->list_lenUsed; ++i) {
-        z__FREE(ln->str_list[i]);
+    for (z__u32 i = 0; i < ln->lenUsed; ++i) {
+        z__FREE(ln->data[i]);
     }
-    z__FREE(ln->str_list);
-    z__FREE(ln->str_lens);
+    z__FREE(ln->data);
+    z__FREE(ln->slens);
 
-    ln->list_len = 0;
-    ln->list_lenUsed = 0;
+    ln->len = 0;
+    ln->lenUsed = 0;
 }
 
 #define _z__StringList_expandif(l) \
     {\
-        if((l)->list_lenUsed >= (l)->list_len) {\
-            (l)->list_len += (l)->list_len;\
-            (l)->str_list = z__REALLOC((l)->str_list, sizeof(*(l)->str_list) * (l)->list_len);\
-            (l)->str_lens = z__REALLOC((l)->str_lens, sizeof(*(l)->str_lens) * (l)->list_len);\
+        if((l)->lenUsed >= (l)->len) {\
+            (l)->len += (l)->len;\
+            (l)->data = z__REALLOC((l)->data, sizeof(*(l)->data) * (l)->len);\
+            (l)->slens = z__REALLOC((l)->slens, sizeof(*(l)->slens) * (l)->len);\
         }\
     }
 
@@ -435,10 +435,10 @@ void z__StringList_pushString(z__StringList *ln ,z__String str)
 {
     _z__StringList_expandif(ln);
 
-    ln->str_list[ln->list_lenUsed] = z__CALLOC(str.lenUsed+1, sizeof(**ln->str_list));
-    memcpy(ln->str_list[ln->list_lenUsed], str.data, str.lenUsed * sizeof(*str.data));
-    ln->str_lens[ln->list_lenUsed] = str.lenUsed;
-    ln->list_lenUsed += 1;
+    ln->data[ln->lenUsed] = z__CALLOC(str.lenUsed+1, sizeof(**ln->data));
+    memcpy(ln->data[ln->lenUsed], str.data, str.lenUsed * sizeof(*str.data));
+    ln->slens[ln->lenUsed] = str.lenUsed;
+    ln->lenUsed += 1;
 }
 
 void z__StringList_push(z__StringList *ln , char const * st, int st_len)
@@ -452,11 +452,12 @@ void z__StringList_push(z__StringList *ln , char const * st, int st_len)
         len = st_len;
     }
 
-    ln->str_list[ln->list_lenUsed] = z__CALLOC(len, sizeof(**ln->str_list));
+    ln->data[ln->lenUsed] = z__MALLOC((len+1) * sizeof(*st));
+    memcpy(ln->data[ln->lenUsed], st, len * sizeof(*st));
 
-    memcpy(ln->str_list[ln->list_lenUsed], st, len * sizeof(*st));
-    ln->str_lens[ln->list_lenUsed] = len;
-    ln->list_lenUsed += 1;
+    ln->slens[ln->lenUsed] = len;
+    ln->data[ln->lenUsed][len] = 0;
+    ln->lenUsed += 1;
 }
 
 const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict format, ...)
@@ -470,33 +471,33 @@ const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict for
     z__size len = vsnprintf(NULL, 0, format, args);
     va_end(args);
 
-    ln->str_list[ln->list_lenUsed] = z__MALLOC((len+1) * sizeof(**ln->str_list));
-    ln->str_lens[ln->list_lenUsed] = vsnprintf(ln->str_list[ln->list_lenUsed], len, format, args_final);
-    ln->list_lenUsed += 1;
+    ln->data[ln->lenUsed] = z__MALLOC((len+1) * sizeof(**ln->data));
+    ln->slens[ln->lenUsed] = vsnprintf(ln->data[ln->lenUsed], len, format, args_final);
+    ln->lenUsed += 1;
 
     va_end(args_final);
      
-    return ln->str_list[ln->list_lenUsed-1];
+    return ln->data[ln->lenUsed-1];
 }
 
 void z__StringList_pop(z__StringList *ln)
 {
-    if (ln->list_lenUsed <= 0) return;
-    z__FREE(ln->str_list[ln->list_lenUsed-1]);
-    ln->list_lenUsed -= 1;
+    if (ln->lenUsed <= 0) return;
+    z__FREE(ln->data[ln->lenUsed-1]);
+    ln->lenUsed -= 1;
     /*
-    if (ln->list_len - ln->list_lenUsed >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
+    if (ln->len - ln->lenUsed >= Z___TYPE_REALLOC_RESIZE_BY_DEFAULT)
     {
-        ln->list_len -= Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
-        ln->str_list = z__mem_safe_realloc(ln->str_list, sizeof(*ln->str_list) *ln->list_len);
-        ln->str_lens = z__mem_safe_realloc(ln->str_lens, sizeof(*ln->str_lens) *ln->list_len);
+        ln->len -= Z___TYPE_STRINGLINES_REALLOC_RESIZE_BY_DEFAULT;
+        ln->data = z__mem_safe_realloc(ln->data, sizeof(*ln->data) *ln->len);
+        ln->slens = z__mem_safe_realloc(ln->slens, sizeof(*ln->slens) *ln->len);
     }
     */
 }
 
 int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int st_len)
 {
-    if(idx >= ln->list_lenUsed) {
+    if(idx >= ln->lenUsed) {
         return -1;
     }
 
@@ -504,32 +505,32 @@ int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int st
     if(st_len == -1) len = strlen(st);
     else len = st_len;
 
-    if(len > ln->str_lens[idx]) {
-        ln->str_lens[idx] = len;
-        z__FREE(ln->str_list[idx]);
-        ln->str_list[idx] = z__CALLOC(sizeof(**ln->str_list), len);
+    if(len > ln->slens[idx]) {
+        ln->slens[idx] = len;
+        z__FREE(ln->data[idx]);
+        ln->data[idx] = z__CALLOC(sizeof(**ln->data), len);
     }
-    memcpy(ln->str_list[idx], st, len);
+    memcpy(ln->data[idx], st, len);
     return 1;
 }
 
 z__StringList z__StringList_clone(z__StringList const *ln)
 {
     z__StringList newln = {
-        .list_len = ln->list_len,
-        .list_lenUsed = ln->list_lenUsed
+        .len = ln->len,
+        .lenUsed = ln->lenUsed
     };
 
-    newln.str_lens = z__MALLOC(sizeof(*newln.str_lens) * newln.list_len);
-    memcpy(newln.str_lens
-         , ln->str_lens
-         , sizeof(*newln.str_lens)*newln.list_len);
+    newln.slens = z__MALLOC(sizeof(*newln.slens) * newln.len);
+    memcpy(newln.slens
+         , ln->slens
+         , sizeof(*newln.slens)*newln.len);
 
-    newln.str_list = z__MALLOC(sizeof(*newln.str_list) * newln.list_len);
+    newln.data = z__MALLOC(sizeof(*newln.data) * newln.len);
 
-    for (z__u32 i = 0; i < newln.list_lenUsed; ++i) {
-        newln.str_list[i] = z__MALLOC(sizeof(**newln.str_list) * newln.str_lens[i]);
-        memcpy(newln.str_list[i], ln->str_list[i], newln.str_lens[i]);
+    for (z__u32 i = 0; i < newln.lenUsed; ++i) {
+        newln.data[i] = z__MALLOC(sizeof(**newln.data) * newln.slens[i]);
+        memcpy(newln.data[i], ln->data[i], newln.slens[i]);
     }
 
     return newln;
@@ -651,15 +652,15 @@ z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char cons
 z__String z__StringList_toString(z__StringList const ln)
 {
     z__size strSize = 0;
-    for (z__u32 i = 0; i < ln.list_lenUsed; i++) {
-        strSize += ln.str_lens[i];
+    for (z__u32 i = 0; i < ln.lenUsed; i++) {
+        strSize += ln.slens[i];
     }
 
     z__String string = z__String_new(strSize + 8);
 
-    for (z__u32 i = 0; i < ln.list_lenUsed; i++) {
-        memcpy(&string.data[string.lenUsed], ln.str_list[i], ln.str_lens[i]);
-        string.lenUsed += ln.str_lens[i];
+    for (z__u32 i = 0; i < ln.lenUsed; i++) {
+        memcpy(&string.data[string.lenUsed], ln.data[i], ln.slens[i]);
+        string.lenUsed += ln.slens[i];
     }
 
     return string;
@@ -709,9 +710,10 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize)
         lns->len = newsize;
         for (z__u32 i = lns->len; i < newsize; ++i)
         {
-           lns->data[i] = z__StringList_new(lns->data[0].list_len);
+           lns->data[i] = z__StringList_new(lns->data[0].len);
         }
     }
 }
 
 // String END
+
