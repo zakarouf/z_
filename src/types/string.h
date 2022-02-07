@@ -17,8 +17,12 @@ typedef struct z__String
     z__char * data;
     z__u32 len;
     z__u32 lenUsed;
-
 }z__String;
+
+typedef struct z__Str {
+    z__char * data;
+    z__u32 len;
+}z__Str;
 
 typedef struct z__StringList
 {
