@@ -344,6 +344,13 @@ const char *z__String_get_next_word(const z__String *ori, char const *cursor)
     #undef cursize
 }
 
+int z__str_check_ifchar(char x, z__Str list)
+{
+    for (size_t i = 0; i < list.len; i++) {
+        if(x == list.data[i]) return 1;
+    }
+    return 0;
+}
 z__String z__String_newFromFile(char const filename[])
 {
     FILE *f;
@@ -688,4 +695,3 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize)
 }
 
 // String END
-
