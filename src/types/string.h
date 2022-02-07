@@ -159,9 +159,10 @@ const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict for
 void z__StringList_pop(z__StringList *ln);
 z__String z__StringList_toString(z__StringList const ln);
 
-z__StringList z__String_splitTok(z__String str, char const * seperator);
-z__StringList z__String_splitTok_raw(char const * stri, int len, char const * seperator);
-z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len);
+z__StringList z__String_splitTok(z__String str, z__Str seperator);
+z__StringList z__String_splitTok_raw(z__Str const str, z__Str const seperator);
+
+z__StringList z__String_split(z__String str, z__Str word);
 int z__StringList_replace(z__StringList *ln, z__u32 idx, char const * st, int len);
 
 /* String List Array */
@@ -180,6 +181,9 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
         z__String_delete(&_tmp);                                                                        \
         str_out;                                                                                        \
     })
+
+#define z__Str(str, l)\
+        ((z__Str){.data = str, .len = l})
 
 #define z__StringList_init(...)\
     ({\
@@ -219,3 +223,4 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 
 #endif
+
