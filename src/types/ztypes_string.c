@@ -536,114 +536,66 @@ z__StringList z__StringList_clone(z__StringList const *ln)
     return newln;
 }
 
-z__StringList z__String_splitTok(z__String str, char const *restrict seperator)
+
+z__StringList z__String_splitTok(z__String str, z__Str seperator)
 {
-    z__String tmp = z__String_newCopy(str);
-    char *lastbuff = tmp.data;
-    char *token = strtok_r(lastbuff, seperator, &lastbuff);
-
-    /*Count*/
-    int linesCount = 0;
-    while(token) {
-
-        linesCount += 1;
-        token = strtok_r(lastbuff, seperator, &lastbuff);
-    }
-
-    z__String_delete(&tmp);
-    tmp = z__String_newCopy(str);
-
-    lastbuff = tmp.data;
-    token = strtok_r(lastbuff, seperator, &lastbuff);
-
-    z__StringList ln = z__StringList_new(linesCount);
-
-    while(token) {
-        z__StringList_push(&ln, token, -1);
-        token = strtok_r(lastbuff, seperator, &lastbuff);
-    }
-
-    return ln;
-}
-
-z__StringList z__String_splitTok_raw(char const *restrict stri, int st_len, char const *restrict seperator)
-{
-    z__size len;
-    if (st_len == -1) {
-        len = strlen(stri);
-    } else {
-        len = st_len;
-    }
+    z__StringList ln = z__StringList_new(8);
     
-    char *tmp_stri = z__New0(*tmp_stri, len);
-    memcpy(tmp_stri, stri, len);
-
-    char *lastbuff = tmp_stri;
-    char *token = strtok_r(lastbuff, seperator, &lastbuff);
-
-    /*Count*/
-    z__u32 linesCount = 0;
-    while(token) {
-
-        linesCount += 1;
-        token = strtok_r(lastbuff, seperator, &lastbuff);
+    z__u32 start = 0;
+    for (register size_t i = 0; i < str.lenUsed; i++) {
+        for (register size_t j = 0; j < seperator.len; j++) {
+            if(str.data[i] == seperator.data[j]) {
+                z__StringList_push(&ln, &str.data[start], i - start);
+                i += 1; if(i >= str.lenUsed) goto _L_return;
+                while(z__str_check_ifchar(str.data[i], seperator)) {
+                    i += 1; if(i >= str.lenUsed) goto _L_return;
+                }
+                start = i;
+            }
+        }
     }
 
-    z__FREE(tmp_stri);
-    tmp_stri = z__MALLOC(len * sizeof(*tmp_stri));
-    memcpy(tmp_stri, stri, len);
-
-    lastbuff = tmp_stri;
-
-    token = strtok_r(lastbuff, seperator, &lastbuff);
-
-    z__StringList ln = z__StringList_new(linesCount);
-
-    while(token) {
-        z__StringList_push(&ln, token, -1);
-        token = strtok_r(lastbuff, seperator, &lastbuff);
+    if(start < str.lenUsed) {
+        z__StringList_push(&ln, &str.data[start], str.lenUsed - start);
     }
 
+    _L_return:
     return ln;
 }
 
-z__StringList z__String_split_raw(char const *mainStr, int mainStrLen, char const *str, int str_len)
+z__StringList z__String_splitTok_raw(z__Str const str, z__Str const seperator)
 {
-    if (str_len == -1) {
-        str_len = strlen(str);
-    }
-    if (mainStrLen == -1) {
-        mainStrLen = strlen(mainStr);
-    }
+    return z__String_splitTok(
+            (z__String){
+                .data = str.data,
+                .len = str.len,
+                .lenUsed = str.len
+            }
+            , seperator);
+}
 
-    char *tmp_mainStr = z__MALLOC(sizeof(*tmp_mainStr) * mainStrLen);
-    memcpy(tmp_mainStr, mainStr, mainStrLen);
-
-    char *strst = strnstr(tmp_mainStr, str, mainStrLen);
-
-    while(strst) {
-        memset(strst, 0, str_len);
-        strst += str_len;
-        strst = strstr(strst, str);
-    }
-
-    strst = tmp_mainStr;
+z__StringList z__String_split(z__String str, z__Str word)
+{
     z__StringList ln = z__StringList_new(8);
 
-    z__i32 i = 0, len = 0;
-    if (*strst) {
-        i = strlen(strst);
-        z__StringList_push(&ln, strst, i);
-        strst += i + str_len;
+    char *i = str.data;
+    char *prev = i;
+    char *endi = str.data + str.lenUsed;
+
+    i = strnstr(i, word.data, endi - i);
+    if(i == NULL) {
+        z__StringList_push(&ln, str.data, str.len);
+        return ln;
     }
 
-    while(i <= mainStrLen) {
-
-        len = strnlen(strst, mainStrLen-i);
-        z__StringList_push(&ln, strst, len);
-
-        i += len+str_len;
-        strst += len + str_len;
+    do {
+        z__StringList_push(&ln, prev, i - prev);
+        prev = i + word.len;
+        i = strnstr(prev, word.data, endi - i);
+    } while(i);
+    
+    if(prev < endi) {
+        z__StringList_push(&ln, prev, endi - prev);
     }
 
     return ln;
