@@ -510,6 +510,9 @@
     // Bytes
     typedef z__Arr(z__byte) z__byteArr;
 
+    // Size
+    typedef z__Arr(z__size) z__sizeArr;
+
     // Boolean
     typedef z__Arr(z__bool) z__boolArr;
 
