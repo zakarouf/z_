@@ -351,6 +351,26 @@ int z__str_check_ifchar(char x, z__Str list)
     }
     return 0;
 }
+
+z__u64 z__String_tok(z__String const str, z__u64 prevtok, z__Str seperator)
+{
+    register size_t i = prevtok;
+    register size_t j;
+    for (; i < str.lenUsed; i++) {
+        for (j = 0; j < seperator.len; j++) {
+            if(seperator.data[j] == str.data[i]) {
+                i += 1; if(i >= str.lenUsed) return i;
+                while(z__str_check_ifchar(str.data[i], seperator)) {
+                    i += 1; if(i >= str.lenUsed) return i;
+                }
+                return i;
+            }
+        }
+    }
+
+    return i;
+}
+
 z__String z__String_newFromFile(char const filename[])
 {
     FILE *f;
