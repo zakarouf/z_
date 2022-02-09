@@ -25,14 +25,25 @@
             zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) ){    \
             z__argp_next();                                                             \
             z__strto(*_priv_argp_chptr, v);                                             \
-            z__argp_next();                                                             \
         }
-    
+
+#define z__argp_elifarg(v, ...)\
+       else if(strcmp(zpp__PRIV__Args_get_1(__VA_ARGS__), *_priv_argp_chptr) == 0       \
+            zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) ){    \
+            z__argp_next();                                                             \
+            z__strto(*_priv_argp_chptr, v);                                             \
+        }
+
 
 #define z__argp_ifarg_custom(...)\
         if(strcmp(zpp__PRIV__Args_get_1(__VA_ARGS__), *_priv_argp_chptr) == 0 \
             zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) )
  
+#define z__argp_elifarg_custom(...)\
+        else if(strcmp(zpp__PRIV__Args_get_1(__VA_ARGS__), *_priv_argp_chptr) == 0 \
+            zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) )
+ 
+
 
 #endif
 
