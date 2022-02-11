@@ -136,7 +136,7 @@ char const *z__str_skipget_nonws(char const *str, z__u32 size);
 char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize);
 const char *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
 const char *z__String_get_next_word(const z__String *ori, char const *cursor);
-
+z__u64 z__String_tok(z__String const str, z__u64 prevtok, z__Str seperator);
 
 z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, z__u32 pos);
