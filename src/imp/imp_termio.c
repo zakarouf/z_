@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 #include <readline/readline.h>
 
 #include "termio.h"
