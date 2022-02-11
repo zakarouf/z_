@@ -24,6 +24,7 @@
         if(strcmp(zpp__PRIV__Args_get_1(__VA_ARGS__), *_priv_argp_chptr) == 0           \
             zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) ){    \
             z__argp_next();                                                             \
+            _Static_assert(sizeof(z__PRIV__strto_scan_typegen(v)) > 1, "Argparse: Strto Doesn't Support this type");\
             z__strto(*_priv_argp_chptr, v);                                             \
         }
 

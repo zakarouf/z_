@@ -3,8 +3,8 @@
 
 #include "../types/typegen.h"
 
-#define z__strto(str, v)\
-    sscanf(str, z__typegen_def(*(v), "",\
+#define z__PRIV__strto_scan_typegen(v)\
+        z__typegen_def(*(v), "",\
                 , (z__i16, "%hi")    \
                 , (z__u16, "%hu")    \
                 , (z__i32, "%i")     \
@@ -19,7 +19,10 @@
                 \
                 , (char, "%c")   \
                 , (char *, "%s")   \
-              ), v)
+              )
+
+#define z__strto(str, v)\
+    sscanf(str, z__PRIV__strto_scan_typegen(v), v)
 
 
 #define z__String_to(str, v)\
