@@ -32,6 +32,17 @@ inline void z__termio_block(void)
     tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
 }
 
+void z__termio_echo(int tog)
+{
+    struct termios ttystate;
+    tcgetattr(STDIN_FILENO, &ttystate);
+
+    if(tog) ttystate.c_lflag |= ECHO;
+    else    ttystate.c_lflag &= ~ECHO;
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
+}
+
 int z__termio_kbhit(void)
 {
     struct timeval tv;
@@ -93,6 +104,14 @@ z__u8 z__termio_getkey_nowait(void)
     tcsetattr(STDIN_FILENO, TCSANOW, &ttystate);
 
     return c;
+}
+
+void z__termio_get_term_size(z__u32 *x, z__u32 *y)
+{
+    struct winsize ws;
+    ioctl(1, TIOCGWINSZ, &ws);
+    *x = ws.ws_col;
+    *y = ws.ws_row;
 }
 
 void z__termio_putString(z__String const * const str)
