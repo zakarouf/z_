@@ -96,6 +96,20 @@ z__Dynt z__Dynt_makeCopy(const z__Dynt arrt)
 
 }
 
+int z__Dynt_isdataequal(const z__Dynt *d1, const z__Dynt *d2)
+{
+    if(d1->unitsize * d1->lenUsed != d2->unitsize * d2->lenUsed) return 0;
+    return !memcmp(d1->data, d2->data, d1->lenUsed * d1->unitsize);
+}
+
+int z__Dynt_isduplicate(const z__Dynt *d1, const z__Dynt *d2)
+{
+    if(d1->commentLen != d2->commentLen) return 0;
+    if(strncmp(d1->comment, d2->comment, d1->commentLen) != 0) return 0;
+    return z__Dynt_isdataequal(d1, d2);
+}
+
+
 inline void z__Dynt_delete(z__Dynt* arrt)
 {
     z__FREE(arrt->data);

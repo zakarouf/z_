@@ -24,6 +24,9 @@ void z__Dynt_push( z__Dynt *arrt, void *val);
 void z__Dynt_pop( z__Dynt *arrt);
 void z__Dynt_resize(z__Dynt *arrt, z__u32 newsize);
 z__Dynt z__Dynt_makeCopy(const z__Dynt arrt);
+int z__Dynt_isdataequal(const z__Dynt *d1, const z__Dynt *d2);
+int z__Dynt_isduplicate(const z__Dynt *d1, const z__Dynt *d2);
+
 
 #define z__Dynt_newFromArr(arrt, arr, id, comment, commentLen)\
         z__Dynt_newFromRaw(             \
