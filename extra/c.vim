@@ -21,7 +21,7 @@ syn keyword cType z__u8_f z__u16_f z__u32_f z__u64_f
 
 syn keyword cType z__f32 z__f64
 
-syn keyword cType z__Dynt z__Irrg z__voidArr z__byteArr
+syn keyword cType z__Bytes z__Dynt z__Irrg z__voidArr z__byteArr
 syn keyword cType z__i8Arr z__i16Arr z__i32Arr z__i64Arr
 syn keyword cType z__u8Arr z__u16Arr z__u32Arr z__u64Arr
 syn keyword cType z__ptrArr z__boolArr z__f32Arr z__f64Arr
