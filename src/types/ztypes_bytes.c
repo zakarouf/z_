@@ -36,6 +36,11 @@ void z__Bytes_pushStream(z__Bytes *bt, void const * const data, z__size data_siz
     bt->bytes.lenUsed += data_size;
 }
 
+int z__Bytes_isdataequal(z__Bytes *bt1, z__Bytes *bt2)
+{
+    if(bt1->bytes.lenUsed != bt2->bytes.lenUsed) return 0;
+    return !memcmp(bt1->bytes.data, bt2->bytes.data, bt1->bytes.lenUsed);
+}
 
 void z__Bytes_pop(z__Bytes *bt)
 {

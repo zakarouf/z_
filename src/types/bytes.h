@@ -15,6 +15,7 @@ void z__Bytes_pushStream(z__Bytes *, void const * const, z__size const);
 void z__Bytes_pop(z__Bytes *);
 void z__Bytes_popStream(z__Bytes *, z__size const);
 void z__Bytes_resize(z__Bytes *, z__size const);
+int z__Bytes_isdataequal(z__Bytes *bt1, z__Bytes *bt2);
 z__u32 z__Bytes_setCur_next(z__Bytes *bt, z__size by);
 
 #define z__Bytes_get(T, Bytes, i) (*(T *)(&(Bytes)->bytes.data[i]))
