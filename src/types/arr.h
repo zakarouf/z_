@@ -408,10 +408,15 @@
 
 
 /* foreach loop variant for Arr 
- * Example: z__Arr_foreach(int *i, arr){
+ * Example: z__Arr_foreach(i, arr){
  *              printf("%d\n", *i);
  *          }
+ *  FOR OLDER VERSIONS
+ *      z__Arr_foreach(int *i, arr){
+ *          printf("%d\n", *i);
+ *      }
  */
+#ifdef Z___TYPE_CONFIG__ARR__USE_OLD_FOREACH
 #define z__PRIV__Arr_foreach_5(item, arr, from, upto, step)\
     for(  z__u32 _z_Arr_foreach_var_iterator = from   \
         , _z_Arr_foreach_var_iterator_keep = 1     \
@@ -421,9 +426,16 @@
             ; _z_Arr_foreach_var_iterator_keep \
             ; _z_Arr_foreach_var_iterator_keep ^= 1)\
 
+#else
+#define z__PRIV__Arr_foreach_5(iterator, arr, from, upto, step) \
+    for(z__typeof((arr).data) iterator = (arr).data + from \
+       ;iterator < (arr).data + upto\
+       ;iterator += step)
+#endif
+
 #define z__PRIV__Arr_foreach_4(item, arr, from, upto)    z__PRIV__Arr_foreach_5(item, arr, from, upto, 1)
-#define z__PRIV__Arr_foreach_3(item, arr, from)          z__PRIV__Arr_foreach_5(item, arr, from, arr.lenUsed, 1)
-#define z__PRIV__Arr_foreach_2(item, arr)                z__PRIV__Arr_foreach_5(item, arr, 0, arr.lenUsed, 1)
+#define z__PRIV__Arr_foreach_3(item, arr, from)          z__PRIV__Arr_foreach_4(item, arr, from, arr.lenUsed)
+#define z__PRIV__Arr_foreach_2(item, arr)                z__PRIV__Arr_foreach_3(item, arr, 0)
 #define z__PRIV__Arr_foreach(...)                        zpp__Args_Overload(z__PRIV__Arr_foreach_, __VA_ARGS__)
 
 #define z__Arr_foreach(iterator, arr, ...)              z__PRIV__Arr_foreach(iterator, arr, ##__VA_ARGS__)
