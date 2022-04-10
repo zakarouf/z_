@@ -1,16 +1,20 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__TREE_H
 #define ZAKAROUF__ZTYPES_TYPES__TREE_H
 
+#include "../prep/base.h"
 #include "../prep/map.h"
+#include "../prep/args.h"
 #include "../prep/nm/assert.h"
 #include "arr.h"
+#include "record.h"
+#include "vector.h"
 
 #define z__PRIV__Tree_apply_pointer(x) *x
 
-#define z__Tree(Name, node_names, ...)            \
+#define z__Tree(Name, node_names, T)              \
   typedef struct Name Name;                       \
   struct Name {                                   \
-      z__RecordX(__VA_ARGS__) data;               \
+      T data;                                     \
       union {                                                   \
         union {                                                 \
           Name *raw[zpp__Args_Count(zpp__UNPAREN(node_names))]; \
@@ -32,26 +36,26 @@
 #define z__Tree_nodesUsed(t) (t)->nodesUsed
 #define z__Tree_get_nodeCount(t) (sizeof((t)->nodes.raw)/sizeof((t)->nodes.raw[0]))
 
-#define z__Tree_setas_leaf(t, ...) {            \
-  z__Record_assign((&(t)->data), __VA_ARGS__);   \
-  (t)->nodesUsed = 0;                           \
+#define z__Tree_setas_leaf(t, parent_node, ...) {           \
+  (t)->data = __VA_ARGS__;                                  \
+  (t)->nodesUsed = 0;                                       \
 }
 
-#define z__Tree_setas_node(t, nd, ...) {              \
+#define z__Tree_setas_node(t, parent_node, nd, ...) { \
   z__Record_assign((&(t)->nodes), zpp__UNPAREN(nd));  \
-  z__Record_assign((&(t)->data), __VA_ARGS__);         \
+  (t)->data = __VA_ARGS__;                            \
   (t)->nodesUsed = zpp__Args_Count(zpp__UNPAREN(nd)); \
   _Static_assert(zpp__Args_Count(zpp__UNPAREN(nd)) == z__Tree_get_nodeCount(t), \
       "Dangling/Unused nodes detected "\
       "Of :: " #t);\
 }
 
-#define z__Tree_setas_index_node(t, nd, ...) {            \
-  z__Record_assign((&(t)->index_nodes), zpp__UNPAREN(nd));  \
-  z__Record_assign((&(t)->data), __VA_ARGS__);         \
-  (t)->nodesUsed = zpp__Args_Count(zpp__UNPAREN(nd)); \
+#define z__Tree_setas_index_node(t, parent_node, nd, ...) {             \
+  z__Record_assign((&(t)->index_nodes), zpp__UNPAREN(nd));              \
+  (t)->data = __VA_ARGS__;                                              \
+  (t)->nodesUsed = zpp__Args_Count(zpp__UNPAREN(nd));                   \
   _Static_assert(zpp__Args_Count(zpp__UNPAREN(nd)) == z__Tree_get_nodeCount(t), \
-      "Dangling/Unused nodes detected "\
+      "Dangling/Unused nodes detected "                                         \
       "Of :: " #t);\
 }
 
