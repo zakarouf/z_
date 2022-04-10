@@ -8,7 +8,7 @@
 #define z__argp_breakcheck
 
 #define z__argp_start(argv, from, upto)\
-    for(char **_priv_argp_chptr = &argv[from]\
+    for(char const **_priv_argp_chptr = &argv[from]\
            , **_priv_argp_chptrEnd = &argv[upto];\
         _priv_argp_chptr < _priv_argp_chptrEnd;\
         _priv_argp_chptr += 1)
