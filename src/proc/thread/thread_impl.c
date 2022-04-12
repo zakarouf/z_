@@ -56,7 +56,7 @@ void z__thread_start(void)
 
 void z__thread_end(void)
 {
-    z__Arr_foreach(struct Thread *i, _g_threads){
+    z__Arr_foreach(i, _g_threads){
         _z__thread_thread_disable(i);
     }
     z__Arr_delete(&_g_threads);
