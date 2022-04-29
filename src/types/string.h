@@ -7,7 +7,10 @@
 #define ZAKAROUF__Z_TYPE_STRING_H
 
 #include "../config_types.h"
-#include "../prep/nm/assert.h"
+#include "../prep/map.h"
+#include "../prep/args.h"
+#include "typegen.h"
+
 #include "base.h"
 
 typedef char z__char;
@@ -69,6 +72,11 @@ typedef struct z__StringListArr
  */
 z__String z__String_new(int size);
 
+z__String z__String_newFromStr(const char *st, int size);
+z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
+z__String z__String_newFromFile(char const filename[]);
+z__String z__String_newCopy(const z__String str);
+
 /**
  * @def z__String_delete(z__String *s);
  * @brief Delete the allocated string type
@@ -86,6 +94,7 @@ void z__String_delete(z__String *str);
  * @param newsize Length of the string
  */
 void z__String_resize(z__String *str, int newsize);
+void z__String_expand(z__String *str, z__size by);
 
 
 /**
@@ -97,15 +106,6 @@ void z__String_resize(z__String *str, int newsize);
  */
 void z__String_copy(z__String *str, const z__String val);
 
-
-/**
- * @def z__String_newCopy(const z__String val);
- * @brief Creates a new copy of string passed.
- * 
- * @param str String
- * @param val String to be copied
- */
-z__String z__String_newCopy(const z__String str);
 
 /**
  * @def z__String_cmp(z__String const *s1, z__String const *s2);
@@ -123,28 +123,28 @@ const char *z__str_findchar(const char ch, char const *str, z__size len);
 /**
  *
  */
+z__String z__String_bind(char *str, z__int sz);
+
 void z__Strint_appendStr(z__String *str, const z__char* src, z__u32 length);
 void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __printflike(4, 5);
 void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
-z__String z__String_bind(char *str, z__int sz);
 
 void z__String_replaceStr(z__String *str, const char * s, int len);
 void z__String_replace(z__String *str, char const * __restrict format, ...) __printflike(2, 3);
+void z__String_replace_seg(z__String *str, z__size from, z__size len, char const * __restrict format, ...) __printflike(4, 5);
 
 char const *z__str_skipget_ws(char const *str, z__u32 size);
 char const *z__str_skipget_nonws(char const *str, z__u32 size);
 char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize);
-const char *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
-const char *z__String_get_next_word(const z__String *ori, char const *cursor);
+char const *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
+
+char const *z__String_get_next_word(const z__String *ori, char const *cursor);
 z__u64 z__String_tok(z__String const str, z__u64 prevtok, z__Str seperator);
 
-z__String z__String_newFromFile(char const filename[]);
 void z__String_insertChar(z__String *dest, z__char ch, z__u32 pos);
 void z__String_delChar(z__String *dest, z__u32 pos);
 void z__String_pushChar(z__String *dest, z__char ch);
 
-z__String z__String_newFromStr(const char *st, int size);
-z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
 
 
 

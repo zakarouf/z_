@@ -11,7 +11,7 @@ z__String z__String_new(int size)
 {
     return (z__String){
 
-       .data= z__CALLOC(sizeof(z__char) , size),
+       .data= z__CALLOC(sizeof(z__char) , size+ 1),
         .len = size,
         .lenUsed = 0
     };
@@ -23,7 +23,7 @@ z__String z__String_newFromStr(const char *st, int size)
         size = strlen(st);
     }
 
-    z__String str = z__String_new(size + 8);
+    z__String str = z__String_new(size);
     memcpy(str.data, st, sizeof(*st) * size);
     str.lenUsed = size;
 
@@ -47,30 +47,40 @@ z__String z__String_newFrom(char const * __restrict format, ...)
     return str;
 }
 
-void z__String_replace(z__String *str, char const * __restrict format, ...)
+z__String z__String_newCopy(const z__String str)
 {
-    va_list args, args_final;
-    va_start(args, format);
-    va_copy(args_final, args);
-    
-    z__size len = vsnprintf(NULL, 0, format, args);
-    va_end(args);
 
-    if(len > str->len) {
-        z__String_resize(str, len + 4);
-    }
+    z__String str2 = {
+       .data= z__CALLOC(sizeof(z__char) , str.len),
+        .len = str.len,
+        .lenUsed = str.lenUsed
+    };
 
-    str->lenUsed = vsnprintf(str->data, str->len, format, args_final);
-    va_end(args_final);
+    memcpy(str2.data, str.data, str.len);
+
+    return str2;
 }
 
-void z__String_replaceStr(z__String *str, const char * s, int len)
+inline void z__String_delete(z__String * s)
 {
-    if(len == -1) len = strlen(s);
-    if((z__u32)len > str->len) z__String_resize(str, len + 1);
-    memcpy(str->data, s, sizeof(*s) * len);
-    str->lenUsed = len;
-    str->data[str->lenUsed] = 0;
+    z__FREE(s->data);
+    s->len = 0;
+    s->lenUsed = 0;
+}
+
+void z__String_expand(z__String *str, z__size by)
+{
+    str->len += by;
+    str->data = z__mem_safe_realloc(str->data, str->len);
+}
+
+void z__String_copy(z__String *dest, const z__String val)
+{
+    if (dest->len < val.len )
+    {
+        z__String_resize(dest, val.len);
+    }
+    memcpy(dest->data, val.data, val.len);
 }
 
 int z__String_cmp(z__String const *s1, z__String const *s2)
@@ -92,19 +102,6 @@ z__String z__String_bind(char *str, z__int sz)
     };
 }
 
-inline void z__String_delete(z__String * s)
-{
-    z__FREE(s->data);
-    s->len = 0;
-    s->lenUsed = 0;
-}
-
-void z__String_expand(z__String *str, z__size by)
-{
-    str->len += by;
-    str->data = z__mem_safe_realloc(str->data, str->len);
-}
-
 inline void z__String_resize(z__String *str, int newsize)
 {
     str->len = newsize+1;
@@ -113,27 +110,60 @@ inline void z__String_resize(z__String *str, int newsize)
     if(str->lenUsed > str->len) str->lenUsed = str->len;
 }
 
-void z__String_copy(z__String *dest, const z__String val)
+
+void z__String_replace(z__String *str, char const * __restrict format, ...)
 {
-    if (dest->len < val.len )
-    {
-        z__String_resize(dest, val.len);
+    va_list args, args_final;
+    va_start(args, format);
+    va_copy(args_final, args);
+    
+    z__size len = vsnprintf(NULL, 0, format, args);
+    va_end(args);
+
+    if(len > str->len) {
+        z__String_expand(str, len - str->len + 2);
     }
-    memcpy(dest->data, val.data, val.len);
+
+    str->lenUsed = vsnprintf(str->data, str->len, format, args_final);
+    va_end(args_final);
 }
 
-z__String z__String_newCopy(const z__String str)
+void z__String_replace_seg(z__String *str, z__size from, z__size seg_len, char const * __restrict format, ...)
 {
+    if(from >= str->lenUsed) return;
 
-    z__String str2 = {
-       .data= z__CALLOC(sizeof(z__char) , str.len),
-        .len = str.len,
-        .lenUsed = str.lenUsed
-    };
+    va_list args, args_final;
+    va_start(args, format);
+    va_copy(args_final, args);
+    
+    if(seg_len + from > str->len) {
+        z__String_expand(str, seg_len);
+    }
+    
+    z__size len = vsnprintf(NULL, 0, format, args);
+    va_end(args);
 
-    memcpy(str2.data, str.data, str.len);
+    if(len > seg_len) {
+        len = seg_len;
+    }
 
-    return str2;
+    if(len + from > str->lenUsed) {
+        str->lenUsed = len + from;
+    }
+
+    z__char tmp = str->data[from + len];
+    vsnprintf(str->data + from, len+1, format, args_final);
+    va_end(args_final);
+    str->data[from + len] = tmp;
+}
+
+void z__String_replaceStr(z__String *str, const char * s, int len)
+{
+    if(len == -1) len = strlen(s);
+    if((z__u32)len > str->len) z__String_resize(str, len + 1);
+    memcpy(str->data, s, sizeof(*s) * len);
+    str->lenUsed = len;
+    str->data[str->lenUsed] = 0;
 }
 
 inline void z__Strint_appendStr(z__String *str, const z__char *src, z__u32 length)
