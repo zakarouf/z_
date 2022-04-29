@@ -84,7 +84,7 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
         }\
     }
 
-#define z__HashHoyt_set_entry(ht, hkey, val)\
+#define z__PRIV__HashHoyt_set_entry(ht, hkey, val)\
     {\
         z__u64 hash_k = z__HashHoyt_hashkey(hkey);\
         z__size idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1));\
@@ -107,12 +107,12 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
 #define z__HashHoyt_set(ht, key, val)\
     {\
         if((ht)->len/2 <= (ht)->used) {\
-            z__HashHoyt__PRIV__expand(ht);\
+            z__PRIV__HashHoyt__expand(ht);\
         }\
-        z__HashHoyt_set_entry(ht, key, val);\
+        z__PRIV__HashHoyt_set_entry(ht, key, val);\
     }
 
-#define z__HashHoyt__PRIV__expand(ht)\
+#define z__PRIV__HashHoyt__expand(ht)\
     {                                                       \
         z__size newsize = (ht)->len * 2;                    \
         z__typeof(*(ht)->entries)                           \
@@ -127,7 +127,7 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
             };                                              \
             for (z__size i = 0; i < (ht)->len; i++) {   \
                 if ((ht)->entries[i].key) {             \
-                    z__HashHoyt_set_entry(      \
+                    z__PRIV__HashHoyt_set_entry(      \
                         &htnew,                 \
                         (ht)->entries[i].key,   \
                         (ht)->entries[i].value);\
