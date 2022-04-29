@@ -395,10 +395,10 @@
 #define z__Arr_mapnum_4(arr, mapValStep, mapValFrom, operator)                          \
     {                                                                                       \
         z__typeof(*(arr)->data)z__Arr_map__TMP_DATA = mapValFrom;                           \
-        for(int i = 0; i < (arr)->len; i++, z__Arr_map__TMP_DATA operator##= mapValStep)    \
-        {                                                                                   \
+        for(int i = 0; i < (arr)->len; i++, z__Arr_map__TMP_DATA operator##= mapValStep){   \
             (arr)->data[i] = z__Arr_map__TMP_DATA;                                          \
-        }; (arr)->lenUsed = (arr)->len;                                                     \
+        };                                                                                  \
+        (arr)->lenUsed = (arr)->len;                                                        \
     }
 
 #define z__PRIV__Arr_mapnum_3(arr, mapValStep, mapValFrom)  z__PRIV__Arr_mapnum_4(arr, mapValStep, mapValFrom, +)
