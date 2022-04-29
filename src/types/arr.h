@@ -527,8 +527,8 @@
 #define z__Arr_getSize(arr)         (z__Arr_getUnitSize(arr) * z__Arr_getLen(arr))
 #define z__Arr_getSizeUsed(arr)     (z__Arr_getUnitSize(arr) * z__Arr_getUsed(arr))
 #define z__Arr_getVal(arr, index)   (arr).data[index]
-#define z__Arr_getTop(arr)          (arr).data[arr.lenUsed-1]
-#define z__Arr_getTopEmpty(arr)     (arr).data[arr.lenUsed]
+#define z__Arr_getTop(arr)          (arr).data[(arr).lenUsed-1]
+#define z__Arr_getTopEmpty(arr)     (arr).data[(arr).lenUsed]
 
 
 #if defined(Z___TYPE_CONFIG__ALIAS_DOLLARSIGN_FOR_MACROS) && 0
