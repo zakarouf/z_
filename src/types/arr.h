@@ -412,30 +412,35 @@
  *              printf("%d\n", *i);
  *          }
  *  FOR OLDER VERSIONS
- *      z__Arr_foreach(int *i, arr){
- *          printf("%d\n", *i);
- *      }
+ *  NOTE: OLDER VERSIONS ARE DEPRICATED
  */
-#ifdef Z___TYPE_CONFIG__ARR__USE_OLD_FOREACH
-#define z__PRIV__Arr_foreach_5(item, arr, from, upto, step)\
-    for(  z__u32 _z_Arr_foreach_var_iterator = from   \
-        , _z_Arr_foreach_var_iterator_keep = 1     \
-            ; _z_Arr_foreach_var_iterator < upto   \
-            ; _z_Arr_foreach_var_iterator += step, _z_Arr_foreach_var_iterator_keep ^= 1) \
-        for(item = &z__Arr_getVal(arr, _z_Arr_foreach_var_iterator)\
-            ; _z_Arr_foreach_var_iterator_keep \
-            ; _z_Arr_foreach_var_iterator_keep ^= 1)\
 
-#else
-#define z__PRIV__Arr_foreach_5(iterator, arr, from, upto, step) \
+#define z__PRIV__Arr_foreach_6(iterator, arr, comp, from, upto, step) \
     for(z__typeof((arr).data) iterator = (arr).data + from \
-       ;iterator < (arr).data + upto\
-       ;iterator += step)
-#endif
+       ;iterator zpp__CAT(z__PRIV__Arr_foreach__compas_, comp) (arr).data + upto\
+       ;iterator zpp__CAT(z__PRIV__Arr_foreach__compas_step_, comp) step)
 
-#define z__PRIV__Arr_foreach_4(item, arr, from, upto)    z__PRIV__Arr_foreach_5(item, arr, from, upto, 1)
-#define z__PRIV__Arr_foreach_3(item, arr, from)          z__PRIV__Arr_foreach_4(item, arr, from, arr.lenUsed)
-#define z__PRIV__Arr_foreach_2(item, arr)                z__PRIV__Arr_foreach_3(item, arr, 0)
+#define z__PRIV__Arr_foreach__compas_normal <
+#define z__PRIV__Arr_foreach__compas_reverse >=
+
+#define z__PRIV__Arr_foreach__compas_step_normal  +=
+#define z__PRIV__Arr_foreach__compas_step_reverse -=
+
+#define z__PRIV__Arr_foreach__compas_def_from_normal(arr) 0
+#define z__PRIV__Arr_foreach__compas_def_from_reverse(arr) (arr).lenUsed-1
+
+#define z__PRIV__Arr_foreach__compas_def_upto_normal(arr) (arr).lenUsed
+#define z__PRIV__Arr_foreach__compas_def_upto_reverse(arr) 0
+
+#define z__PRIV__Arr_foreach_5(item, arr, c, from, upto) z__PRIV__Arr_foreach_6(item, arr, c, from, upto, 1)
+
+#define z__PRIV__Arr_foreach_4(item, arr, c, from)\
+    z__PRIV__Arr_foreach_5(item, arr, c, from, zpp__CAT(z__PRIV__Arr_foreach__compas_def_upto_, c)(arr))
+
+#define z__PRIV__Arr_foreach_3(item, arr, c)\
+    z__PRIV__Arr_foreach_4(item, arr, c, zpp__CAT(z__PRIV__Arr_foreach__compas_def_from_, c)(arr))
+
+#define z__PRIV__Arr_foreach_2(item, arr)                z__PRIV__Arr_foreach_3(item, arr, normal)
 #define z__PRIV__Arr_foreach(...)                        zpp__Args_Overload(z__PRIV__Arr_foreach_, __VA_ARGS__)
 
 #define z__Arr_foreach(iterator, arr, ...)              z__PRIV__Arr_foreach(iterator, arr, ##__VA_ARGS__)
@@ -587,4 +592,3 @@
 #endif
 
 #endif
-
