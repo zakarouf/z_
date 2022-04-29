@@ -8,8 +8,12 @@ void z__mem_Arr_clean(void * arr);
 void z__mem_free(void * ptr);
 
 void *z__mem_safe_realloc(void * data, size_t size);
-z__size z__mem_memshift_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto);
-z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto);
+
+void z__mem_copy_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
+void z__mem_shift_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
+
+void z__mem_copy_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
+void z__mem_shift_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
 
 //#define Z___TYPE_CONFIG__USE_MEM__TRACK
 //#define Z___TYPE_CONFIG__USE_MEM__VTRACK

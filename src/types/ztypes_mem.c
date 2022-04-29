@@ -16,27 +16,39 @@ void *z__mem_safe_realloc(void * data, size_t size)
     return data;
 }
 
-z__size z__mem_memshift_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto)
+
+void z__mem_copy_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont)
 {
-    char *dest = ori+ ((from + how_much) * unit_size);
-    char *src = ori+ (from * unit_size);
-
-    z__size diff = upto - from;
-    memmove(dest, src, unit_size * diff);
-    memset(src, 0, unit_size * unit_size);
-
-    return diff;
+		char *src = data + (index_from * unit_size);
+		char *dest = data + ((index_from + cont) * unit_size);
+		
+		memmove(dest, src, len * unit_size);
 }
 
-z__size z__mem_memcopy_right_nocheck(void *ori, z__u32 unit_size, z__u32 how_much, z__size from, z__u32 upto)
+void z__mem_shift_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont)
 {
-    char *dest = ori+ ((from + how_much) * unit_size);
-    char *src = ori+ (from * unit_size);
+		char *src = data + (index_from * unit_size);
+		char *dest = data + ((index_from + cont) * unit_size);
+		
+		memmove(dest, src, len * unit_size);
+		memset(src, 0, cont * unit_size);
+}
 
-    z__size diff = upto - from;
-    memmove(dest, src, unit_size * diff);
+void z__mem_copy_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont)
+{
+		char *src = data + (index_from * unit_size);
+		char *dest = data + ((index_from - cont) * unit_size);
+		
+		memmove(dest, src, len * unit_size);
+}
 
-    return diff;
+void z__mem_shift_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont)
+{
+		char *src = data + (index_from * unit_size);
+		char *dest = data + ((index_from - cont) * unit_size);
+		
+		memmove(dest, src, len * unit_size);
+		memset(dest + (len * unit_size), 0, unit_size * cont);
 }
 
 
