@@ -34,12 +34,12 @@
  *
  * @param T Type of the units.
  */
-#define z__Arr(T)\
-    struct              \
-    {                   \
-        T* data;        \
-        z__u32 len;     \
-        z__u32 lenUsed; \
+#define z__Arr(...)\
+    struct                  \
+    {                       \
+        __VA_ARGS__ *data;  \
+        z__u32 len;         \
+        z__u32 lenUsed;     \
     }
 
 /**
