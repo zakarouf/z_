@@ -447,45 +447,24 @@
 
 
 
-#define z__Arr_shift_right_check(arr, n, from_index0, upto_index0)\
-    {                                                                       \
-        z__size sh_r_var___n = n,                                           \
-                sh_r_var___from = from_index0,                              \
-                sh_r_var___upto = upto_index0,                              \
-                sh_r_var___diff = sh_r_var___upto - sh_r_var___from;        \
-                                                                                                    \
-        if(sh_r_var___upto > sh_r_var___from && (sh_r_var___n + sh_r_var___diff) < (arr)->len) {    \
-            memmove(&(arr)->data[sh_r_var___from +sh_r_var___n],                                    \
-                &(arr)->data[sh_r_var___from],                                                      \
-                (sizeof(*(arr)->data) * (sh_r_var___diff)));                                        \
-                                                                                                    \
-            memset(&(arr)->data[sh_r_var___from], 0, sizeof(*(arr)->data) * (sh_r_var___diff));     \
-            (arr)->lenUsed = (sh_r_var___diff) + sh_r_var___n;                                      \
-        }                                                                                           \
-    }
+#define z__PRIV__Arr_shift_right_nocheck_4(arr, n, index, len)\
+    z__mem_shift_right((arr)->data, sizeof(*(arr)->data), len, index, n)
 
-#define z__PRIV__Arr_shift_right_nocheck_4(arr, n, from, upto)\
-    {\
-            (arr)->lenUsed = z__mem_memshift_right_nocheck((arr)->data, sizeof(*(arr)->data), n,from, upto) + n;\
-    }
+#define z__PRIV__Arr_shift_right_nocheck_3(arr, n, index) z__PRIV__Arr_shift_right_nocheck_4(arr, n, index, (arr)->lenUsed - (index + n))
+#define z__PRIV__Arr_shift_right_nocheck_2(arr, n)      z__PRIV__Arr_shift_right_nocheck_3(arr, n, 0)
 
-#define z__PRIV__Arr_shift_right_nocheck_3(arr, n, from)\
-    {\
-        (arr)->lenUsed = z__mem_memshift_right_nocheck((arr)->data, sizeof(*(arr)->data), n, from, (arr)->lenUsed) + n;\
-    }
+#define z__PRIV__Arr_shift_right_nocheck(...)   zpp__Args_Overload(z__PRIV__Arr_shift_right_nocheck_, __VA_ARGS__)
+#define z__Arr_shift_right_nocheck(arr, n, ...) z__PRIV__Arr_shift_right_nocheck(arr, n, ##__VA_ARGS__)
 
-#define z__PRIV__Arr_shift_right_nocheck_2(arr, n)\
-    {                                                       \
-        z__u32 sh_r_var___n = n;                            \
-        if (sh_r_var___n + (arr)->lenUsed < (arr)->len) {   \
-            memmove(&(arr)->data[n], (arr)->data, sizeof(*(arr)->data) * (arr)->lenUsed);   \
-            (arr)->lenUsed += sh_r_var___n;                                                 \
-            memset((arr)->data, 0, sizeof(*(arr)->data) * sh_r_var___n);                    \
-        }                                                                                   \
-    }   
 
-#define z__PRIV__Arr_shift_right_nocheck(...)         zpp__Args_Overload(z__PRIV__Arr_shift_right_nocheck_, __VA_ARGS__)
-#define z__Arr_shift_right_nocheck(arr, n, ...)      z__PRIV__Arr_shift_right_nocheck(arr, n, ##__VA_ARGS__)
+#define z__PRIV__Arr_shift_left_nocheck_4(arr, n, index, len)\
+    z__mem_shift_left((arr)->data, sizeof(*(arr)->data), len, index, n)
+#define z__PRIV__Arr_shift_left_nocheck_3(arr, n, index)z__PRIV__Arr_shift_left_nocheck_4(arr, n, index, (arr)->lenUsed - index)
+#define z__PRIV__Arr_shift_left_nocheck_2(arr, n)   z__PRIV__Arr_shift_left_nocheck_3(arr, n, n)
+
+#define z__PRIV__Arr_shift_left_nocheck(...)   zpp__Args_Overload(z__PRIV__Arr_shift_left_nocheck_, __VA_ARGS__)
+#define z__Arr_shift_left_nocheck(arr, n, ...) z__PRIV__Arr_shift_left_nocheck(arr, n, ##__VA_ARGS__)
+
 
 #ifdef Z___TYPE_CONFIG__USE_ARR_FUNTION_GENERATION_TEMPLATE
     /* INCOMPLETE */
