@@ -92,7 +92,19 @@
         z__PRIV__HashInt_set_entry(ht, key, val);   \
     }
 
-#define z__HashInt_foreach(ht, e)\
+#define z__HashInt_getreff(ht, key)\
+    ({                                                  \
+        z__typeof((ht)->entries->value) *reff = NULL;   \
+        z__u32 _hashint = key;                          \
+        z__PRIV__HashInt_sethash(_hashint);             \
+        z__u32 _idx = _hashint & ((ht)->len - 1);       \
+        if((ht)->entries[_idx].is_set) {                \
+            reff =  &(ht)->entries[_idx].value;         \
+        }                                               \
+        reff;                                           \
+    })
+
+#define z__HashInt_foreach(e, ht)\
     for (z__typeof((ht)->entries) e = (ht)->entries; e < (ht)->entries + (ht)->len; e++)\
         if(e->is_set)
 
