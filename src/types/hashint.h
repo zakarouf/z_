@@ -1,5 +1,5 @@
-#ifndef ZAKAROUF__ZTYPES_TYPES__HASH_HOYT_H
-#define ZAKAROUF__ZTYPES_TYPES__HASH_HOYT_H
+#ifndef ZAKAROUF__ZTYPES_TYPES__HASH_INT_H
+#define ZAKAROUF__ZTYPES_TYPES__HASH_INT_H
 
 #include "base.h"
 #include "mem.h"
