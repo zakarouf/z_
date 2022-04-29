@@ -138,7 +138,9 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
         }                                       \
     }
 
- 
+#define z__HashHoyt_foreach(e, ht)\
+    for (z__typeof((ht)->entries) e = (ht)->entries; e < (ht)->len + (ht)->entries; e++)\
+        if((e)->key != NULL)
 
 #endif
 
