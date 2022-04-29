@@ -10,6 +10,7 @@ typedef struct z__Bytes {
 } z__Bytes;
 
 void z__Bytes_new(z__Bytes *, z__u32 const);
+void z__Bytes_delete(z__Bytes *bt);
 void z__Bytes_push(z__Bytes *, z__u8 const);
 void z__Bytes_pushStream(z__Bytes *, void const * const, z__size const);
 void z__Bytes_pop(z__Bytes *);
@@ -36,5 +37,8 @@ z__u32 z__Bytes_setCur_next(z__Bytes *bt, z__size by);
 
 #define z__Bytes_pushV(Bytes, t) z__Bytes_pushStream(Bytes, &(t), sizeof(t))
 
-#endif
+/**/
 
+#define z__bytes_get(data, T, idx) (z__typeof(T) *)(((z__byte *)data) + (sizeof(T) * idx))
+
+#endif
