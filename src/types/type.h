@@ -17,16 +17,23 @@
 #define z__PRIV__typeset__FirstArgof_Param(x)\
     zpp__PRIV__Args_get_1 x
 
-#define z__PRIV__typeset_enumtag_prefix z__typeset__
+#define z__PRIV__typeset_enumtag_prefix z__typeset__Type_
 
 
 
 #define z__PRIV__typeset_segment_unwrap_first(x)\
     z__PRIV__typeset_segment_first(x)
 
+/**
+ * #define type(T) z__typeset_def(T, 0, (int, 1), (float, 2), ...)
+ */
 #define z__typeset_def(T, defaultVal, ...)\
     z__PRIV__typeset_map(T, defaultVal, __VA_ARGS__)
 
+
+/**
+ * #define type(T, T2) z__typeset_def_nonuni(0, (T, int, 1), (T2, int, 2))
+ */
 #define z__typeset_def_nonuni(defaultVal, ...)\
     z__PRIV__typeset_nonuni_map(defaultVal, __VA_ARGS__)
 

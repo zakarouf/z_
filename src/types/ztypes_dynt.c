@@ -27,6 +27,7 @@ z__Dynt z__Dynt_new(z__size unitsize, z__u32 len, z__u8 typeID, const char *comm
     } else {
         arrt.comment = z__MALLOC(sizeof(char) * commentLength);
         memcpy(arrt.comment, comment, commentLength);
+        arrt.comment[commentLength-1] = 0;
         arrt.commentLen = commentLength;
     }
 

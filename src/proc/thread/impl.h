@@ -17,6 +17,8 @@ void z__thread_start(void);
 void z__thread_end(void);
 
 /**
+ * Create a new Thread
+ * First Arg takes in the pointer to an integer that will return as the thread id.
  */
 z__u32 z__thread_run_raw(z__u32 *id, z__Thread_Attr *attr, void *(*fn) (void *), void *arg, char const *name, z__u32 name_size);
 

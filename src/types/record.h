@@ -7,7 +7,9 @@
 #include "typeof.h"
 
 #define z__RecordX(...)\
-    z__Record(,__VA_ARGS__)
+    struct {\
+        z__PRIV__Record__createMembers_redirect(__VA_ARGS__)\
+    }
 
 /**
  * Create a Record Type
@@ -19,9 +21,9 @@
  *          => Different/Varied 
  */
 #define z__Record(Name, ...)\
-    z__typeof(struct Name {\
+    typedef struct Name {\
         z__PRIV__Record__createMembers_redirect(__VA_ARGS__)\
-    })\
+    } Name\
 
 /**
  * Call Record
@@ -42,7 +44,6 @@
  *      *y = 52;
  */
 #define z__Record_toReffrence(record, ...) z__PRIV__Record__toReffrence(record, __VA_ARGS__)
-
 
 
 /*------------------------------------------------*/
@@ -903,8 +904,6 @@
 #define z__PRIV__Record__createMembers__apply__3(x, ...) z__PRIV__Record__checkbit(x), z__PRIV__Record__createMembers__apply__2(__VA_ARGS__)
 #define z__PRIV__Record__createMembers__apply__2(x, ...) z__PRIV__Record__checkbit(x), z__PRIV__Record__createMembers__apply__1(__VA_ARGS__)
 #define z__PRIV__Record__createMembers__apply__1(x, ...) z__PRIV__Record__checkbit(x)
-
-
 
 #endif
 
