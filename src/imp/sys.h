@@ -3,10 +3,23 @@
 
 
 /* System */
+
+/**
+ * Get Ram Usage by the current program (in bytes)
+ */
 long z__sys_getRamUsage(void);
 
 
 /* Log */
+
+/**
+ * Basic Print Function (Basically fprintf)
+ * _verbose: with __FILE__ __LINE__ __func__ detail
+ * _cl256: Custom Foreground Color
+ * _cl256_full: Custom Color
+ * _clrgb: 24bit Color, Foreground only
+ * _clrgb_full: 24bit Color
+ */
 void z__logfile_basic(void * fileStream ,const char *format, ...)
     __attribute__ ((format (printf, 2, 3)));
 
