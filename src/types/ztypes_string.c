@@ -177,7 +177,7 @@ inline void z__Strint_appendStr(z__String *str, const z__char *src, z__u32 lengt
     str->lenUsed += length;
 }
 
-void z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...)
+z__String *z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...)
 {
     va_list args, args_final;
     va_start(args, format);
@@ -187,13 +187,20 @@ void z__String_append(z__String *str, unsigned pad, char padchar, char const* __
     va_end(args);
 
     if((len + pad) > str->len - str->lenUsed) {
-        z__String_resize(str, (len + pad + 4 + str->len));
+        z__String_expand(str, (len + pad + 1));
     }
 
-    memset(&str->data[str->lenUsed], padchar, pad * sizeof(*str->data));
-    str->lenUsed += vsnprintf(&str->data[str->lenUsed + pad], str->len - str->lenUsed, format, args_final) + pad;
+    memset(&str->data[str->lenUsed-1], padchar, pad * sizeof(padchar));
+    str->lenUsed += vsnprintf(
+        &str->data[str->lenUsed-1 + pad]
+        , str->len - str->lenUsed
+        , format
+        , args_final) + pad;
+
     va_end(args_final);
+    return str;
 }
+
 
 inline void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace)
 {
