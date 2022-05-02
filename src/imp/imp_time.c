@@ -10,6 +10,8 @@
 
 #include "time.h"
 
+#include "../types/string.h"
+
 void z__time_msleep(int milliseconds)
 { // cross-platform sleep function
     #ifdef WIN32
@@ -30,12 +32,21 @@ void z__time_msleep(int milliseconds)
 int z__time_getLocalTime(int *h, int *m, int *s)
 {
     time_t tCurrentTime;
-    struct tm *timeinfo;
+    struct tm timeinfo;
     time(&tCurrentTime);
-    timeinfo = localtime(&tCurrentTime);
-    *h = timeinfo->tm_hour;
-    *m = timeinfo->tm_min;
-    *s = timeinfo->tm_sec;
+    localtime_r(&tCurrentTime, &timeinfo);
+    *h = timeinfo.tm_hour;
+    *m = timeinfo.tm_min;
+    *s = timeinfo.tm_sec;
 
     return 0;
+}
+
+void z__time_printLocalTime(z__String *str)
+{
+    if(str->len < 27) z__String_expand(str, 27);
+    time_t tCurrentTime;
+    time(&tCurrentTime);
+    ctime_r(&tCurrentTime, str->data);
+    str->data[24] = ' ';
 }
