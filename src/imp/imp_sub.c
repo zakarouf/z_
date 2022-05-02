@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include <spawn.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #include <errno.h>
@@ -9,7 +10,12 @@ extern char **environ;
 
 #include "sub.h"
 
-int z__sub_runf(const char *command)
+char** z__sub_getenv(void)
+{
+    return environ;
+}
+
+int z__sub_fork(const char *command)
 {
     pid_t child, p;
     int   status;
@@ -85,19 +91,28 @@ int z__sub_runf(const char *command)
     return 1;
 }
 
-int z__sub_runp(char const *cmd)
+int z__sub_exec_nowait_raw(int *pid, char const *exec_path, char * const *argv)
+{
+    int status = posix_spawn(pid, exec_path, NULL, NULL, argv, environ);
+    return status;
+}
+
+int z__sub_exec_raw(char const *exec_path, char * const *argv)
 {
     pid_t pid;
-    char *argv[] = {"sh", "-c", (char*)cmd, NULL};
-    int status;
-    status = posix_spawn(&pid, "/bin/sh", NULL, NULL, argv, environ);
+    int status = posix_spawn(&pid, exec_path, NULL, NULL, argv, environ);
     if (status == 0) {
         do {
-          if (waitpid(pid, &status, 0) == -1) {
-            exit(1);
-          }
+            if (waitpid(pid, &status, 0) == -1) {
+                exit(1);
+            }
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
     return 1;
+}
+
+int z__sub_spawn(char * const cmd)
+{
+    return z__sub_exec("/bin/sh", "sh", "-c", cmd);
 }
 
