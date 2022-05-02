@@ -8,6 +8,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 
+#define COLOR_INT 4
+#define COLOR_STRING 2
+#define COLOR_FLOAT 3
+#define COLOR_PTR 5
+#define COLOR_DYNT 11
+
 #define t(n) z__typeid_getminor_raw(z__type_id_lit(n))
 static const char *fmt_int[] = {
   [t(u8)] = "%hhu ",
@@ -19,7 +25,7 @@ static const char *fmt_int[] = {
   [t(i64)] = "%lli ",
   [t(u64)] = "%llu ",
   [t(char)] = "%c ",
-  [t(ptr)] = "%p ",
+  [t(ptr)] = z__ansi_fmt((cl256_fg, COLOR_PTR)) "%p ",
 };
 
 static const z__size unit_sizes_int[] = {
@@ -35,33 +41,29 @@ static const z__size unit_sizes_int[] = {
   [t(ptr)] = z__sizeof(void *),
 };  
 
-#define COLOR_INT 4
-#define COLOR_STRING 2
-#define COLOR_FLOAT 3
-#define COLOR_PTR 5
-#define COLOR_DYNT 6
-
 static inline void _print_arr_int(FILE *fp, void *data, z__u32 length, z__u32 unit_size, char const *fmt)
 {
-    fputs(z__ansi_fmt((cl256_fg, COLOR_INT)) "[ ", fp);
+    fputs("[ " z__ansi_fmt((cl256_fg, COLOR_INT)), fp);
     char *p = data;
     for (size_t i = 0; i < length; i++, p += unit_size) {
         fprintf(fp, fmt, *p);
     }
-    fputs("] ", fp);
+    fputs(z__ansi_fmt((plain))
+        "] ", fp);
 }
 
 static inline void _print_arr_f32(FILE *fp, z__f32 *data, z__u32 length)
 {
-    fputs(z__ansi_fmt((cl256_fg, COLOR_FLOAT)) "[ ", fp);
+    fputs("[ " z__ansi_fmt((cl256_fg, COLOR_FLOAT)), fp);
     float *p = data;
     for (size_t i = 0; i < length; i++, p += 1) {
         fprintf(fp, "%f ", *p);
     }
-    fputs("] ", fp);
+    fputs(z__ansi_fmt((plain))
+        "] ", fp);
 }
 
-int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
+int _z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
 {
     va_list arg;
     va_start(arg, sizes);
@@ -73,11 +75,14 @@ int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
             fputs(z__ansi_fmt((cl256_fg, COLOR_INT)), fp);
             fprintf(fp
               , fmt_int[z__typeid_getminor_raw(tid->raw)], va_arg(arg, z__i64)); 
+            fputs(z__ansi_fmt((plain)), fp);
           } break;
 
           case _Z__PRIV__TYPE_M_ATOM_FLOAT: {
-            fputs(z__ansi_fmt((cl256_fg, COLOR_FLOAT)), fp);
-            fprintf(fp, "%f ", va_arg(arg, z__f64)); 
+            fprintf(fp,
+                    z__ansi_fmt((cl256_fg, COLOR_FLOAT))
+                    "%f "
+                    z__ansi_fmt((plain)), va_arg(arg, z__f64)); 
           } break;
 
           case _Z__PRIV__TYPE_M_PRIM_ARR: {
@@ -115,6 +120,7 @@ int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
                       fprintf(fp, 
                           z__ansi_fmt((cl256_fg, COLOR_DYNT))
                           "(%s){p = %p [%u/%u]*%zu T %u} "
+                          z__ansi_fmt((plain))
                           , d.comment
                           , d.data
                           , d.lenUsed, d.len
@@ -124,13 +130,15 @@ int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
                   case 2: /* C String */ {
                       fprintf(fp,
                           z__ansi_fmt((cl256_fg, COLOR_STRING))
-                          "%s ", va_arg(arg, char *));
+                          "%s "
+                          z__ansi_fmt((plain)), va_arg(arg, char *));
                   } break;
 
                   case 3: /* String */ {
                       fprintf(fp,
                           z__ansi_fmt((cl256_fg, COLOR_STRING))
-                          "%s ", va_arg(arg, z__String).data);
+                          "%s "
+                          z__ansi_fmt((plain)), va_arg(arg, z__String).data);
 
                   } break;
 
@@ -139,7 +147,8 @@ int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
                       for (size_t i = 0; i < sl.lenUsed; i++) {
                           fprintf(fp,
                               z__ansi_fmt((cl256_fg, COLOR_STRING))
-                              "%s ", sl.data[i]);
+                              "%s "
+                              z__ansi_fmt((plain)), sl.data[i]);
                       }
                   } break;
                   default: goto _L_return_FAIL;
@@ -151,13 +160,14 @@ int z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
         fputs(z__ansi_fmt((plain)), fp);
     }
 
-    fputs(z__ansi_fmt((plain))"\n", fp);
+    fputs("\n", fp);
     va_end(arg);
     return 1;
 
     _L_return_FAIL:
-    fputs("Unknown", fp);
-    fputs(z__ansi_fmt((plain))"\n", fp);
+    fputs(z__ansi_fmt((cl256_fg, 1))
+            "Unknown"
+          z__ansi_fmt((plain)) "\n", fp);
     va_end(arg);
     return 0;
 }
