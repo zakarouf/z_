@@ -1,5 +1,4 @@
 #include "../src/imp/test.h"
-#include <stdio.h>
 
 z__test_expsu(arr);
 z__test_expsu(string);

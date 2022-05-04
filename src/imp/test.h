@@ -52,7 +52,7 @@
         z__logfile_cl256(stdout, 3                                                      \
             , "For Suite \"" #suite "\" %zu out of "                                        \
                zpp__to_string(zpp__Args_Count(__VA_ARGS__))                                 \
-              " test passed & %zu failed\n", passed, zpp__Args_Count(__VA_ARGS__) - passed);\
+              " test passed & %zu failed\n\n", passed, zpp__Args_Count(__VA_ARGS__) - passed);\
         passed;                                                                             \
     })
 
@@ -66,7 +66,7 @@
         return z__test_run(suite, __VA_ARGS__);\
     }
 
-#define z__test_callsu(suite, total) zpp__CAT(_test__, suite)(total); puts("");
+#define z__test_callsu(suite, total) zpp__CAT(_test__, suite)(total);
 
 #endif
 
