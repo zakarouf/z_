@@ -190,9 +190,9 @@ z__String *z__String_append(z__String *str, unsigned pad, char padchar, char con
         z__String_expand(str, (len + pad + 1));
     }
 
-    memset(&str->data[str->lenUsed-1], padchar, pad * sizeof(padchar));
+    memset(&str->data[str->lenUsed], padchar, pad * sizeof(padchar));
     str->lenUsed += vsnprintf(
-        &str->data[str->lenUsed-1 + pad]
+        &str->data[str->lenUsed + pad]
         , str->len - str->lenUsed
         , format
         , args_final) + pad;
