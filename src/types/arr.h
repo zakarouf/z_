@@ -12,6 +12,7 @@
 #include "base.h"
 #include "mem.h"
 #include "../prep/args.h"
+#include "../prep/nm/cond.h"
 
 /* Known Type-safe arrays */
 
@@ -298,6 +299,16 @@
         }                                                                                               \
         memcpy(&(dest)->data[(dest)->lenUsed], from.data, from.lenUsed * sizeof(*(dest)->data));        \
     }
+
+/**
+ */
+#define z__Arr_cmpdata(arr, _ptr_data, size)(\
+    zpp__ter__if((sizeof(*(arr).data) * (arr).lenUsed) < (size)) -1\
+    zpp__ter__elif((sizeof(*(arr).data) * (arr).lenUsed) > (size)) 1\
+    zpp__ter__else(memcmp((arr).data, _ptr_data, (size))))
+
+#define z__Arr_cmp(arr1, arr2)\
+    z__Arr_cmpdata(arr1, (arr2).data, sizeof(*(arr2).data) * (arr2).lenUsed)
 
 /**
  * Returns True if equal
