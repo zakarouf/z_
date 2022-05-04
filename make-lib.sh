@@ -6,7 +6,7 @@ OUT="libzkcollection.a"
 CFILES="$(find src -name '*.c')"
 
 echo "Compiling\n"
-CC -Os -O2 -c $CFILES
+$CC -Os -O3 -Wall -Wextra -c $CFILES
 
 echo "Creating Library $OUT\n"
 AR -q $OUT *.o
