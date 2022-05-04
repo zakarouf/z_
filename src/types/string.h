@@ -341,6 +341,7 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
                             zpp__Args_maplist_fn_Pattern(z__PRIV__typegen_primlist, ,, __VA_ARGS__));   \
         z__String str_out = z__String_newFrom(_tmp.data, __VA_ARGS__);                                  \
         z__String_delete(&_tmp);                                                                        \
+        str_out.lenUsed -= 1;                                                                           \
         str_out;                                                                                        \
     })
 
