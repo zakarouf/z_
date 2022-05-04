@@ -52,7 +52,6 @@ Mkfile.old
 dkms.confest
 
 # Self
-test
 a.out
 .DS_Store
 logtest
