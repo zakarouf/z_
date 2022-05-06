@@ -2,23 +2,69 @@
 #define ZAKAROUF_Z_IMP__PRINT_H
 
 #include <stdio.h>
+#include "ansi.h"
+#include "../prep/nm/string.h"
 
-#include "../prep/args.h"
-#include "../prep/map.h"
-#include "../types/base.h"
+/**
+ * Basic Print Function (Basically fprintf)
+ * _vb: with __FILE__ __LINE__ __func__ detail
+ * _cl256: Custom Foreground Color
+ * _cl256_full: Custom Color
+ * _clrgb: 24bit Color, Foreground only
+ * _clrgb_full: 24bit Color
+ */
+int z__fprint(FILE *fp, const char * __restrict fmt, ...)
+    __attribute__((format (printf, 2, 3)));
 
-#include "type.h"
-
-int _z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...);
-#define z__tfprint(fp, ...)\
-      _z__tfprint_raw(fp, zpp__Args_Count(__VA_ARGS__),\
-          (z__u16[]){zpp__Args_maplist(z__typeid_raw, __VA_ARGS__)},\
-          (z__size[]){zpp__Args_maplist(z__sizeof, __VA_ARGS__)},\
-          __VA_ARGS__\
-      );\
-
-#define z__tprint(...) z__tfprint(stdout, __VA_ARGS__)
+int z__print(const char * __restrict fmt, ...)
+    __attribute__((format (printf, 1, 2)));
 
 
-#endif
+/* impl */
+#define z__fprint_cl256(fp, bg, fg, fmt, ...)\
+    z__fprint(fp, z__ansi_fmt((cl256, %d, %d)) fmt z__ansi_fmt((plain)), bg, fg, ##__VA_ARGS__)
+
+#define z__fprint_cl256f(fp, fg, fmt, ...)\
+    z__fprint(fp, z__ansi_fmt((cl256_fg, %d)) fmt z__ansi_fmt((plain)), fg, ##__VA_ARGS__)
+
+#define z__fprint_clrgb(fp, b_r, b_g, b_b, f_r, f_g, f_b, fmt, ...)\
+    z__fprint(fp,\
+        z__ansi_fmt((clrgb, b_r, b_g, b_b, f_r, f_g, f_b))\
+            fmt\
+        z__ansi_fmt((plain)), ##__VA_ARGS__ )
+
+#define z__fprint_clrgbf(fp, f_r, f_g, f_b, fmt, ...)\
+    z__fprint(fp,\
+        z__ansi_fmt((clrgb_fg, f_r, f_g, f_b))\
+            fmt\
+        z__ansi_fmt((plain)), ##__VA_ARGS__ )
+
+
+#define z__fprint_vb(fp, fmt, ...)\
+    z__fprint(fp\
+        , __FILE__ ":" zpp__to_string(__LINE__) " @ %s(): " fmt\
+        , __func__, ##__VA_ARGS__ )
+
+#define z__fprint_vb_cl256(fp, bg, fg, fmt, ...)\
+    z__fprint_cl256(fp, bg, fg\
+        , __FILE__ ":" zpp__to_string(__LINE__) " @ %s(): " fmt\
+        , __func__, ##__VA_ARGS__ )
+
+#define z__fprint_vb_cl256f(fp, fg, fmt, ...)\
+    z__fprint_cl256f(fp, fg\
+        , __FILE__ ":" zpp__to_string(__LINE__) " @ %s(): " fmt\
+        , __func__, ##__VA_ARGS__ )
+
+
+#define z__fprint_vb_clrgb(fp,  b_r, b_g, b_b, f_r, f_g, f_b, fmt, ...)\
+    z__fprint_clrgb(fp,  b_r, b_g, b_b, f_r, f_g, f_b\
+        , __FILE__ ":" zpp__to_string(__LINE__) " @ %s(): " fmt\
+        , __func__, ##__VA_ARGS__ )
+
+#define z__fprint_vb_clrgbf(fp, f_r, f_g, f_b, fmt, ...)\
+    z__fprint_clrgbf(fp, f_r, f_g, f_b\
+        , __FILE__ ":" zpp__to_string(__LINE__) " @ %s(): " fmt\
+        , __func__, ##__VA_ARGS__ )
+
+#endif // ZAKAROUF_Z_IMP__PRINT_H
 
