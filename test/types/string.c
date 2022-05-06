@@ -33,7 +33,7 @@ TEST(new_and_replace_and_append) {
 
     z__test_assert(strncmp(s.data, "Eggs, Onions, Potatoes, Chilli Powder...", s.lenUsed) == 0, "Got :%s", s.data);
     z__String_delete(&s);
-
+    
     z__test_done();
 }
 
@@ -87,16 +87,31 @@ TEST(tokens) {
     z__test_assert(strncmp(s.data + prev, "", i-prev) == 0, "");
 
     z__test_done();
+
 }
 
 TEST(join) {
     z__String s = z__String_newFrom("Hello");
     z__String s2 = z__String_newFrom(", World!");
+    z__String s3 = z__String_newFrom("42");
 
-    z__String_join(&s, &s2, 0);
-    z__test_assert(strncmp(s.data, "Hello, World!", s.lenUsed) == 0, "");
-    z__test_done();
+    z__test_assert(s.lenUsed == 5, "Got: %i", s.lenUsed);
+    z__test_assert(s2.lenUsed == 8, "Got: %i", s2.lenUsed);
+    z__test_assert(s3.lenUsed == 2, "Got: %i", s3.lenUsed);
+
+    z__String_join(&s, &s2);
+    z__test_assert(strncmp(s.data, "Hello, World!", s.lenUsed) == 0, "Got: %s|%u", s.data, s.lenUsed);
+    
+    z__String_join(&s, &s3);
+    z__test_assert(strncmp(s.data, "Hello, World!42", s.lenUsed) == 0, "Got: %s|%u", s.data, s.lenUsed);
+
+    z__test_done(
+        z__String_delete(&s);
+        z__String_delete(&s2);
+        z__String_delete(&s3);
+    );
+
 }
 
-z__test_defsu(string, new_and_replace_and_append, split, tokens, join);
+z__test_export(string, new_and_replace_and_append, split, tokens, join);
 
