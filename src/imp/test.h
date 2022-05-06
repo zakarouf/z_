@@ -13,7 +13,7 @@
     ({ z__log_cl256(1\
         , " =>> " __FILE__ ":" zpp__to_string(__LINE__)  ": for test \"%s\", Assertion Failed!\n"\
           z__ansi_fmt((plain))                                              \
-          fmt "\n" , _name_, ##__VA_ARGS__); return 0; })
+          fmt "\n" , _id_, _name_, ##__VA_ARGS__); _name_ = 0; goto _L_test_return; })
 
 #define z__test_assert(exp, fmt, ...)\
     zpp__assert_construct(exp, z__PRIV__test_exception, "For Expression: " #exp "\n" fmt ,##__VA_ARGS__)
@@ -23,7 +23,11 @@
         zpp__assert_construct( e1 == e2, z__PRIV__test_exception, "Expected: %i\nGot: %i", e1, e2);\
     }
 
-#define z__test_done() return 1;
+#define z__test_done(...) {\
+    _L_test_return:         \
+    __VA_ARGS__;            \
+    return (size_t)_name_;     \
+}
 
 #define z__test_def(suite, name)\
     static int zpp__CAT3(suite, , name)(char const * const _name_)
