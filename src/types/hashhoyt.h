@@ -46,7 +46,9 @@
 #define z__HashHoyt_delete(ht)\
     {                                       \
         for(z__size i = 0; i < (ht)->len; i++) {\
-            z__FREE((void *)(ht)->entries[i].key); \
+            if((ht)->entries[i].key != NULL) {\
+                z__FREE((void *)(ht)->entries[i].key); \
+            }\
         }                                   \
         z__FREE((ht)->entries);             \
         (ht)->len = 0;                      \
@@ -85,23 +87,23 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
     }
 
 #define z__PRIV__HashHoyt_set_entry(ht, hkey, val)\
-    {\
-        z__u64 hash_k = z__HashHoyt_hashkey(hkey);\
-        z__size idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1));\
-        while((ht)->entries[idx].key != NULL) {\
-            if (strcmp(hkey, (ht)->entries[idx].key) == 0) {\
-                (ht)->entries[idx].value = val;\
-                break;\
-            }\
-            idx += 1;               \
-            if (idx > (ht)->len) {  \
-                idx = 0;            \
-            }   \
-        }       \
-                \
-        (ht)->entries[idx].key = strdup(hkey);\
-        (ht)->entries[idx].value = val;      \
-        (ht)->used += 1;                     \
+    {                                                               \
+        z__u64 hash_k = z__HashHoyt_hashkey(hkey);                  \
+        z__size idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1));  \
+        while((ht)->entries[idx].key != NULL) {                     \
+            if (strcmp(hkey, (ht)->entries[idx].key) == 0) {        \
+                goto zpp__CAT(_hash_L_, __COUNTER__);               \
+            }                                                       \
+            idx += 1;                                               \
+            if (idx >= (ht)->len) {                                 \
+                idx = 0;                                            \
+            }                                                       \
+        }                                                           \
+                                                                    \
+        (ht)->entries[idx].key = strdup(hkey);                      \
+        (ht)->used += 1;                                            \
+        zpp__CAT(_hash_L_, zpp__DEC(__COUNTER__)):;                 \
+        (ht)->entries[idx].value = val;                             \
     }
 
 #define z__HashHoyt_set(ht, key, val)\
