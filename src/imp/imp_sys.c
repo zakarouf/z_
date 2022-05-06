@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "sys.h"
+#include "print.h"
 //#include "../../prep/prep.h"
 
 long z__sys_getRamUsage(void)
@@ -13,25 +14,13 @@ long z__sys_getRamUsage(void)
     return usage.ru_maxrss;
 }
 
-void z__logfile_basic(void * fileStream ,const char * restrict format, ...)
-{
-    va_list args;
-
-    va_start(args, format);
-    vfprintf(fileStream, format, args);
-    va_end(args);
-
-    fflush(fileStream);
-
-}
-
 void z__panic(char const *str_msg)
 {
-    z__logfile_basic(stderr, "%s", str_msg);
+    z__fprint(stderr, "%s", str_msg);
 }
 
 void z__die(char const *str_msg, int code)
 {
-    z__logfile_basic(stdout, "FORCE EXIT %s\n", str_msg);
+    z__fprint(stdout, "FORCE EXIT %s\n", str_msg);
     exit(code);
 }
