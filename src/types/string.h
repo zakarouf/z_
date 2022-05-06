@@ -192,7 +192,7 @@ z__String* z__String_append(z__String *str, unsigned pad, char padchar, char con
 /**
  * Append a string into onto another string
  */
-void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace);
+void z__String_join(z__String *dest, z__String const *src);
 
 /**
  * Replace an already initialized string with another c string.

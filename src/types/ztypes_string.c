@@ -71,7 +71,7 @@ inline void z__String_delete(z__String * s)
 void z__String_expand(z__String *str, z__size by)
 {
     str->len += by;
-    str->data = z__mem_safe_realloc(str->data, str->len);
+    str->data = z__REALLOC(str->data, str->len);
 }
 
 void z__String_copy(z__String *dest, const z__String val)
@@ -85,8 +85,10 @@ void z__String_copy(z__String *dest, const z__String val)
 
 int z__String_cmp(z__String const *s1, z__String const *s2)
 {
-    if(s1->lenUsed != s2->lenUsed) return false;
-    return !memcmp(s1->data, s2->data, s1->len * sizeof(*s1->data));
+    if(s1->lenUsed == s2->lenUsed) {
+        return memcmp(s1->data, s2->data, s1->len * sizeof(*s1->data));
+    }
+    return s1->lenUsed - s2->lenUsed;
 }
 
 
@@ -202,12 +204,15 @@ z__String *z__String_append(z__String *str, unsigned pad, char padchar, char con
 }
 
 
-inline void z__String_join(z__String *dest, z__String *src, unsigned int extraSpace)
+inline void z__String_join(z__String *dest, z__String const *src)
 {
-    dest->len = dest->len + src->lenUsed + extraSpace;
-    dest->data = reallocf(dest->data, dest->len);
+    z__size newsize = dest->lenUsed + src->lenUsed;
+    if(newsize > dest->len) {
+        z__String_expand(dest, src->lenUsed);
+    }
 
-    memcpy(&dest[dest->lenUsed], src->data, src->lenUsed);
+    memcpy(dest->data + dest->lenUsed, src->data, src->lenUsed * sizeof(*src->data));
+    dest->lenUsed = newsize;
 }
 
 void z__String_pushChar(z__String *dest, z__char ch)
