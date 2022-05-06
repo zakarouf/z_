@@ -49,7 +49,7 @@
                 goto zpp__CAT(_hash_L_, __COUNTER__);   \
             }                                           \
             _idx += 1;                                  \
-            if(_idx > (ht)->len) {                      \
+            if(_idx >= (ht)->len) {                     \
                 _idx = 0;                               \
             }                                           \
         }                                               \
