@@ -5,7 +5,7 @@
 #include "type.h"
 #include "ansi.h"
 
-#include "tprint.h"
+#include "tgprint.h"
 
 #include <stdarg.h>
 #include <stdio.h>
