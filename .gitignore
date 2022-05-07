@@ -59,3 +59,5 @@ build
 ./build
 docs/vid/*
 site/
+src/prep/gen/num/inc_u16.h
+src/prep/gen/num/dec_u16.h
