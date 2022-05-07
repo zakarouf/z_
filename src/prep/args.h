@@ -75,8 +75,17 @@ zpp__PRIV_Args_ISEMPTY_MATCH(                                                   
 
 // Dups  //
 #define zpp__PRIV__Args_toDuplicateParenList(...) zpp__CAT(zpp__PRIV__Args_toDuplicateParen__, zpp__Args_Count(__VA_ARGS__))(__VA_ARGS__)
-
 #define zpp__Args_toDuplicateParenList(...) zpp__PRIV__Args_toDuplicateParenList(__VA_ARGS__)
+
+/**
+ *
+ */
+#define zpp__PRIV__Args_Expandif_1(...)
+#define zpp__PRIV__Args_Expandif_0(prefix, suffix, ...) zpp__EXPAND prefix __VA_ARGS__ zpp__EXPAND suffix
+#define zpp__PRIV__Args_Expandif(prefix, suffix, ...)\
+        zpp__CAT(zpp__PRIV__Args_Expandif_, zpp__Args_IS_EMPTY(__VA_ARGS__))(prefix, suffix, __VA_ARGS__)
+#define zpp__Args_Expandif(prefix, suffix, ...) zpp__PRIV__Args_Expandif(prefix, suffix, __VA_ARGS__)
+
 // Gen  //
 
 
