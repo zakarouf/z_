@@ -56,6 +56,10 @@
 #define zpp__IS_PAREN(x) zpp__DETECT_check(zpp__IS_PAREN_PROBE x)
 
 #define zpp__UNPAREN(x) zpp__EXPAND x
+#define zpp__PAREN(...) (__VA_ARGS__)
+
+#define zpp__APPENDL(a, b) (zpp__EXPAND a, zpp__EXPAND b)
+#define zpp__APPENDLUP(a) zpp__APPENDL a
 
 #define zpp__From(...) ({ __VA_ARGS__  })
 
