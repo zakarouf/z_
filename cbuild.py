@@ -63,7 +63,7 @@ def compile(cfiles):
     run_command.append('-o')
     run_command.append(OUTEXE)
     
-    run([ "rm","-rf","build" ])
+    run([ "rm","-rf","build/*" ])
     run(["mkdir", "build"])    
     run(run_command)
 
