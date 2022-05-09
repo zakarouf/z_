@@ -17,7 +17,7 @@ void z__time_msleep(int milliseconds)
     #ifdef WIN32
         Sleep(milliseconds);
     #elif _POSIX_C_SOURCE >= 199309L
-        struct timespec ts;
+        struct timespec ts = {0};
         ts.tv_sec = milliseconds / 1000;
         ts.tv_nsec = (milliseconds % 1000) * 1000000;
         nanosleep(&ts, NULL);
@@ -42,8 +42,24 @@ int z__time_getLocalTime(int *h, int *m, int *s)
     return 0;
 }
 
-void z__time_printLocalTime(z__String *str)
+z__u64 z__time(void)
 {
+    return time(NULL);
+}
+
+z__u64 z__time_process(void)
+{
+    return clock();
+}
+
+z__u64 z__time_tps(void)
+{
+    return CLOCKS_PER_SEC;
+}
+
+void z__time_getLocalTime_str(z__String *str)
+{
+    if(str->len == 0) z__String_new(28);
     if(str->len < 27) z__String_expand(str, 27);
     time_t tCurrentTime;
     time(&tCurrentTime);
