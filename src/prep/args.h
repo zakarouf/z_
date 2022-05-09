@@ -78,6 +78,17 @@ zpp__PRIV_Args_ISEMPTY_MATCH(                                                   
 #define zpp__Args_toDuplicateParenList(...) zpp__PRIV__Args_toDuplicateParenList(__VA_ARGS__)
 
 /**
+ * Apply fxy
+ */
+#include "gen/args/applyfxy.h"
+#define zpp__PRIV__Args_applyfxy_raw(f, va, count, ...) zpp__CAT(zpp__PRIV__Args_applyfxy__step_, count)(f, va, __VA_ARGS__)
+#define zpp__Args_applyfxy_raw(f, va, count, ...) zpp__PRIV__Args_applyfxy_raw(f, va, count, __VA_ARGS__)
+
+#define zpp__PRIV__Args_applyfxy(f, va, ...) zpp__Args_applyfxy_raw(f, va, zpp__Args_Count(__VA_ARGS__), __VA_ARGS__)
+#define zpp__Args_applyfxy(f, va, ...) zpp__PRIV__Args_applyfxy(f, va, __VA_ARGS__)
+
+
+/**
  *
  */
 #define zpp__PRIV__Args_Expandif_1(...)
