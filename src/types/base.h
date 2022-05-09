@@ -51,6 +51,8 @@ typedef ptrdiff_t z__ptrdiff;
 #define z__sizeof sizeof
 typedef size_t z__size;
 
+#define z__cast(T, val) ((T)(val))
+
 // Type config_types
 #define z__i8(v) ((z__i8)(v))
 #define z__i16(v) ((z__i16)(v))
