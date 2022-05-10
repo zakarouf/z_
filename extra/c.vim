@@ -50,8 +50,12 @@ syn keyword cStatement match slot unslot ifSlot emptyslot
 syn keyword cStructure z__Result z__Option
 
 syn keyword cType z__auto
-syn keyword cOperator z__typeof z__sizeof z__typeID
+syn keyword cOperator z__typeof z__sizeof z__typeID z__cont_typeof
 
+"Objfn & Closure
+syn keyword cStatement z__objcl_call
+syn keyword cFunction  z__objfn_cl
+syn keyword cStructure z__objcl
 
 "Mem
 
