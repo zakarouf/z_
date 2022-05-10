@@ -113,5 +113,5 @@ TEST(join) {
 
 }
 
-z__test_export(string, new_and_replace_and_append, split, tokens, join);
+z__test_impl(string, new_and_replace_and_append, split, tokens, join);
 

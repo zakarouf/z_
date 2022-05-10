@@ -27,5 +27,5 @@ TEST(size_evaluation)
     z__test_done();
 }
 
-z__test_export(TEST_SUITE, size_evaluation);
+z__test_impl(TEST_SUITE, size_evaluation);
 

@@ -50,5 +50,5 @@ TEST(hashhoyt)
     z__test_done();
 }
 
-z__test_export(hashhoyt, hashhoyt);
+z__test_impl(hashhoyt, hashhoyt);
 

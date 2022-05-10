@@ -15,5 +15,5 @@ TEST(main)
     z__test_done();
 }
 
-z__test_export(TEST_SUITE, main);
+z__test_impl(TEST_SUITE, main);
 

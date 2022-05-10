@@ -34,5 +34,5 @@ TEST(copy) {
     z__test_done();
 }
 
-z__test_export(arr, init_and_delete, copy);
+z__test_impl(arr, init_and_delete, copy);
 

@@ -20,5 +20,5 @@ TEST(print) {
     z__test_done();
 }
 
-z__test_export(imp_print, print);
+z__test_impl(imp_print, print);
 

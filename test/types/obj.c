@@ -54,5 +54,5 @@ TEST(obj_check)
     z__test_done();
 }
 
-z__test_export(TEST_SUITE, obj_check);
+z__test_impl(TEST_SUITE, obj_check);
 

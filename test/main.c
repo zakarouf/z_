@@ -1,34 +1,71 @@
 #include "../src/imp/test.h"
+#include "../src/prep/args.h"
 #include <assert.h>
+#include <stdlib.h>
 
-z__test_import(types_base);
-z__test_import(arr);
-z__test_import(string);
-z__test_import(hashhoyt);
-z__test_import(types_obj);
+#define import_sin(x) z__test_implext(x);
+#define import(...) zpp__Args_map(import_sin, __VA_ARGS__)
 
-z__test_import(imp_print);
-z__test_import(time);
+#define testrun_sin(test)\
+    {\
+        int total = 0;\
+        int passed = z__test_callsu(test, &total);\
+        assert(passed == total);\
+    }
 
-z__test_import(playground);
+#define testrun(...)\
+    zpp__Args_map(testrun_sin, __VA_ARGS__);\
+
+import(
+    types_base
+  , arr
+  , string
+  , hashhoyt
+  , types_obj
+);
+
+import(
+    imp_print
+  , time
+);
+
+import(playground);
+
+void die(const char *msg)
+{
+    z__print("%s", msg);
+    abort();
+}
 
 int main (void)
 {
     int total = 0;
 
+
     /* Types */
-    z__test_callsu(types_base, &total);
-    z__test_callsu(arr, &total);
-    z__test_callsu(string, &total);
-    z__test_callsu(hashhoyt, &total);
-    z__test_callsu(types_obj, &total);
+    testrun(
+        types_base
+      , arr
+      , string
+      , hashhoyt
+      , types_obj
+    );
 
     /* Imp */
-    z__test_callsu(imp_print, &total);
-    z__test_callsu(time, &total);
+    testrun(
+        imp_print
+      , time
+    );
 
     /**/
-    z__test_callsu(playground, &total);
+    testrun(playground);
+
+    z__print(
+        z__ansi_fmt((bold))
+            "All Test Passed"
+        z__ansi_fmt((plain))
+            "\n"
+    );
 
     return 0;
 }
