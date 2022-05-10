@@ -9,8 +9,7 @@
 void *z__fio_newFromFile(char const filename[], z__size unitsize, z__size *len)
 {
     FILE *fp;
-    if ((fp = fopen(filename, "rb")) == NULL)
-    {
+    if ((fp = fopen(filename, "rb")) == NULL) {
         return NULL;
     }
 
@@ -102,7 +101,7 @@ z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, cha
 {
     FILE *fp;
     if ((fp = fopen(filename, "rb")) == NULL) {
-        return (z__Dynt){NULL};
+        return (z__Dynt){0};
     }
 
     /* Take in File size */
