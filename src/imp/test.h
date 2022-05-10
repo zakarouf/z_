@@ -71,14 +71,14 @@
 #define z__PRIV__test_defsu(suite)\
     int zpp__CAT(_test__, suite)(int *_total_)
 
-#define z__test_import(suite)\
-    extern z__PRIV__test_defsu(suite)
-
-#define z__test_export(suite, ...)\
+#define z__test_impl(suite, ...)\
     z__PRIV__test_defsu(suite) {\
         *_total_ = zpp__Args_Count(__VA_ARGS__);\
         return z__test_run(suite, __VA_ARGS__);\
     }
+
+#define z__test_implext(suite)\
+    extern z__PRIV__test_defsu(suite)
 
 #define z__test_callsu(suite, total) zpp__CAT(_test__, suite)(total);
 
