@@ -18,5 +18,5 @@ mkdir build
 mkdir ./build/lib
 mv "$OUT" ./build/lib/
 
-sh extract-headers.sh
+sh make-headers.sh
 

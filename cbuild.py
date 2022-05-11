@@ -4,7 +4,7 @@ from subprocess import Popen
 from datetime import datetime
 
 
-folderIgnore={"NULL", "examples", "docs"}
+folderIgnore={"NULL", "examples", "docs", "spec", "build"}
 
 IgnoreNames={"main-si.c", "test_.c", "rough.c", "test_preview.c", "gen_print_first_df.c", "main_l.c"}
 
