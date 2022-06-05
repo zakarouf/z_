@@ -86,13 +86,30 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
         }\
     }
 
+#define z__HashHoyt_getidx(ht, hkey, index)\
+    {\
+        *(index) = -1;\
+        z__u64 hash_k = z__HashHoyt_hashkey(hkey);\
+        z__size idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1));\
+        while((ht)->entries[idx].key != NULL) {\
+            if (strcmp(hkey, (ht)->entries[idx].key) == 0) {\
+                *(index) = idx;\
+                break;\
+            }\
+            idx += 1;\
+            if (idx > (ht)->len) { \
+                idx = 0;\
+            }\
+        }\
+    }
+
 #define z__PRIV__HashHoyt_set_entry(ht, hkey, val)\
     {                                                               \
         z__u64 hash_k = z__HashHoyt_hashkey(hkey);                  \
         z__size idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1));  \
         while((ht)->entries[idx].key != NULL) {                     \
             if (strcmp(hkey, (ht)->entries[idx].key) == 0) {        \
-                goto zpp__CAT(_hash_L_, __COUNTER__);               \
+                goto zpp__CAT(_hash_L_, __COUNTER__);   \
             }                                                       \
             idx += 1;                                               \
             if (idx >= (ht)->len) {                                 \
@@ -135,7 +152,7 @@ static inline z__u64 z__HashHoyt_hashkey(const char *key)
                         (ht)->entries[i].value);\
                 }                               \
             }                                   \
-            z__FREE((ht)->entries);             \
+            z__HashHoyt_delete(ht);             \
             *(ht) = htnew;                      \
         }                                       \
     }
