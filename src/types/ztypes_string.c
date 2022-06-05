@@ -413,6 +413,18 @@ z__u64 z__String_tok(z__String const str, z__u64 prevtok, z__Str seperator)
     return i;
 }
 
+z__u64 z__String_tokskip(z__String const str, z__u64 prevtok, z__Str nest)
+{
+    size_t i = prevtok;
+    for (; i < str.lenUsed; i++) {
+        for (register size_t j = 0; j < nest.len; j++) {
+            if(nest.data[j] != str.data[i]) goto _L_return;
+        }
+    }
+    _L_return:
+    return i;
+}
+
 z__String z__String_newFromFile(char const filename[])
 {
     FILE *f;
