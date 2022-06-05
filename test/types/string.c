@@ -86,7 +86,9 @@ TEST(tokens) {
     i = z__String_tok(s, prev, z__Str(",", 1));
     z__test_assert(strncmp(s.data + prev, "", i-prev) == 0, "");
 
-    z__test_done();
+    z__test_done(
+        z__String_delete(&s);
+    );
 
 }
 
