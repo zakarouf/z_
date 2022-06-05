@@ -65,7 +65,7 @@ static inline void _print_arr_f32(FILE *fp, z__f32 *data, z__u32 length)
         "] ", fp);
 }
 
-int _z__tfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
+int _z__tgfprint_raw(FILE *fp, z__u32 count, z__u16 tids[], z__size sizes[], ...)
 {
     va_list arg;
     va_start(arg, sizes);
