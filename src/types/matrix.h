@@ -83,6 +83,7 @@
         (dest)->raw[3][0] = (a).raw[3][0] operator (b).raw[3][0]; /**/ (dest)->raw[3][1] = (a).raw[3][1] operator (b).raw[3][1];  /**/ (dest)->raw[3][2] = (a).raw[3][2] operator (b).raw[3][2]; /**/ (dest)->raw[3][3] = (a).raw[3][3] operator (b).raw[3][3]; \
     }
 
+    #define z__Matrix2_det(A)\
+        ( ((A).raw[0][0] * (A).raw[1][1]) - ((A).raw[0][1] * (A).raw[1][0]) )
 
 #endif
-
