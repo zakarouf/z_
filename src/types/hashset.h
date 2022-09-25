@@ -25,6 +25,8 @@
 /* Template for string key hash table types */
 #define z__HashStr(T) z__HashSet(z__Str, T)
 
+/* Template for interger key */
+#define z__HashInt(V) z__HashSet(z__i32, V)
 
 /*** Interfaces ***/
 /** z__HashSet Interface **/
@@ -205,6 +207,27 @@
     z__HashSet_set(ht, key, val, z__Str_newCopy, z__PRIV__HashStr_hashfn, z__Str_isequal)
 
 #define z__HashStr_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashStr_hashfn, z__Str_isequal)
+
+
+/** z__HashInt Interface **/
+#define z__HashInt_new(ht) z__HashSet_new(ht)
+#define z__HashInt_delete(ht) z__HashSet_delete(ht)
+#define z__HashInt_delete_with_val_decon(ht, val_decon) z__HashSet_delete_with_val_decon(ht, val_decon)
+
+#define z__PRIV__HashInt_isequal(x, y) (x == y)
+#define z__PRIV__HashInt_hashfn(hash, hkey)\
+    {                                                           \
+        z__u32 _hash_key = hkey;                                \
+        _hash_key = ((_hash_key >> 16) ^ _hash_key) * 0x45d9f3b;\
+        _hash_key = ((_hash_key >> 16) ^ _hash_key) * 0x45d9f3b;\
+        _hash_key = (_hash_key >> 16) ^ _hash_key;              \
+        *(hash) = _hash_key;                                    \
+    }
+
+#define z__HashInt_set(ht, hkey, val)\
+    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, z__PRIV__HashInt_hashfn, z__PRIV__HashInt_isequal)
+
+#define z__HashInt_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashInt_hashfn, z__PRIV__HashInt_isequal)
 
 #endif
 
