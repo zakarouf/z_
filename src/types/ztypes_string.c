@@ -64,7 +64,6 @@ z__String z__String_newFrom(char const * __restrict format, ...)
 
 z__String z__String_newCopy(const z__String str)
 {
-
     z__String str2 = {
        .data= z__CALLOC(sizeof(z__char) , str.len),
         .len = str.len,
@@ -371,6 +370,8 @@ char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, co
         str++;
         size--;
     }
+    
+    return NULL;
 
     _L_return: {
         return str;
