@@ -1,5 +1,5 @@
-#ifndef ZAKAROUF_Z_IMP__ANSI_H
-#define ZAKAROUF_Z_IMP__ANSI_H
+#ifndef ZAKAROUF_Z_IMP__ANSIFMT_H
+#define ZAKAROUF_Z_IMP__ANSIFMT_H
 
 
 #include "../prep/base.h"
