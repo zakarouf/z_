@@ -12,7 +12,7 @@
 #define z__vec_z(vec) vec[2]
 #define z__vec_w(vec) vec[3]
 
-/* New type declarator, Vector and Maxtrix */
+/* New type declarator, Vector and Matrix */
 #define z__VectorSt(T, ...)\
     struct {            \
         z__typeof(T) __VA_ARGS__;  \
