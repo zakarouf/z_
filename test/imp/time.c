@@ -11,6 +11,7 @@ TEST(main)
     printf("time => %lld\n", z__time());
     printf("tps => %lld\n", z__time_tps());
     printf("process time => %lld\n", z__time_process());
+    printf("Execution Time => %f\n", z__time_delta(0, z__time_process()));
     
     z__test_assert(1, ""); // Supress Warning
     z__test_done();

@@ -7,6 +7,8 @@
 #define TEST_SUITE imp_argparse
 #define TEST(name) z__test_def(TEST_SUITE, name)
 
+#if 0
+
 static
 const char *argv[] = {
     "--run",
@@ -31,4 +33,4 @@ TEST(argparse) {
 }
 
 z__test_impl(TEST_SUITE, argparse);
-
+#endif

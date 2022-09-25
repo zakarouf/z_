@@ -16,19 +16,19 @@
 #define testrun(...)\
     zpp__Args_map(testrun_sin, __VA_ARGS__);\
 
-import(
-    types_base
-  , arr
-  , string
-  , hashhoyt
-  , types_obj
-);
+#define test_list_types \
+      types_base\
+    , arr\
+    , string\
+    , hashset\
+    , types_obj
 
-import(
-    imp_print
-  , time
-);
+#define test_list_imp \
+      imp_print\
+    , time
 
+import(test_list_types);
+import(test_list_imp);
 import(playground);
 
 void die(const char *msg)
@@ -43,19 +43,10 @@ int main (void)
 
 
     /* Types */
-    testrun(
-        types_base
-      , arr
-      , string
-      , hashhoyt
-      , types_obj
-    );
+    testrun(test_list_types);
 
     /* Imp */
-    testrun(
-        imp_print
-      , time
-    );
+    testrun(test_list_imp);
 
     /**/
     testrun(playground);
