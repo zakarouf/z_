@@ -25,6 +25,8 @@
 /* Template for string key hash table types */
 #define z__HashStr(T) z__HashSet(z__Str, T)
 
+
+/*** Interfaces ***/
 /** z__HashSet Interface **/
 
 #define z__PRIV__HashSet_new(ht, n)\
@@ -37,7 +39,7 @@
     }
 
 
-#define z__HashSet_new(ht) z__PRIV__HashSet_new(ht, 16)
+#define z__HashSet_new(ht) z__PRIV__HashSet_new(ht, 16) //< This thing should be a 16 or any other power of 2
 
 #define z__HashSet_delete(ht)\
     {                               \
@@ -77,7 +79,7 @@
         z__HashSet_delete(ht);                                 \
     }
 
-#define z__PRIV__HashSet_set_entry(ht, key, key_copy, hashfn, key_cmpfn, val, ...)\
+#define z__PRIV__HashSet_set_entry(ht, key, val, key_copy, hashfn, key_cmpfn, ...)\
     {                                                               \
         z__u64 hash_k;                                              \
         hashfn(&hash_k, key);                                       \
@@ -114,22 +116,22 @@
                 (ht_new).keys[_idx] = (ht)->keys[i];    \
                 (ht_new).values[_idx] = (ht)->values[i];\
                 z__bitf_set((ht_new).is_set, _idx);     \
-                (ht_new).lenUsed += 1;\
+                (ht_new).lenUsed += 1;                  \
             }                                           \
         }                                               \
         z__HashSet_delete(ht);                          \
         *(ht) = ht_new;                                 \
     }
 
-#define z__HashSet_set(ht, key, key_copy, hashfn, key_cmpfn, val, ...)\
-    {\
-        if((ht)->len/2 <= (ht)->lenUsed) {\
-            z__PRIV__HashSet_expand(ht, hashfn);\
-        }\
-        z__PRIV__HashSet_set_entry(ht, key, key_copy, hashfn, key_cmpfn, val, __VA_ARGS__);\
+#define z__HashSet_set(ht, key, val, key_copy, hashfn, key_cmpfn, ...)\
+    {                                                                                           \
+        if((ht)->len/2 <= (ht)->lenUsed) {                                                      \
+            z__PRIV__HashSet_expand(ht, hashfn);                                                \
+        }                                                                                       \
+        z__PRIV__HashSet_set_entry(ht, key, val, key_copy, hashfn, key_cmpfn, __VA_ARGS__);     \
     }
 
-#define z__HashSet_getreff(ht, hkey, hashfn, key_cmpfn, valptr)\
+#define z__HashSet_getreff(ht, hkey, valptr, hashfn, key_cmpfn)\
     {                                                               \
         (valptr) = NULL;                                            \
         z__u64 hash_k;                                              \
@@ -169,6 +171,15 @@
         z__HashAtom_delete(ht);                                 \
     }
 
+#define z__PRIV__HashAtom_newCopy(v) (v);
+#define z__HashAtom_set(ht, hkey, val, hashfn, key_cmpfn)\
+    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, hashfn, key_cmpfn)
+
+#define z__HashAtom_getreff(ht, hkey, valptr, hashfn, key_cmpfn)\
+    z__HashSet_getreff(ht, hkey, valptr, hashfn, key_cmpfn)
+
+
+
 /** z__HashStr Interface **/
 #define z__HashStr_new(ht) z__HashSet_new(ht)
 #define z__PRIV__HashStr_key_decon(k) z__FREE((k).data)
@@ -191,9 +202,9 @@
     }
 
 #define z__HashStr_set(ht, key, val)\
-    z__HashSet_set(ht, key, z__Str_newCopy, z__PRIV__HashStr_hashfn, z__Str_isequal, val)
+    z__HashSet_set(ht, key, val, z__Str_newCopy, z__PRIV__HashStr_hashfn, z__Str_isequal)
 
-#define z__HashStr_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, z__PRIV__HashStr_hashfn, z__Str_isequal, valptr)
+#define z__HashStr_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashStr_hashfn, z__Str_isequal)
 
 #endif
 
