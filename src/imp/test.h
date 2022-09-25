@@ -7,7 +7,7 @@
 #include "../prep/nm/string.h"
 
 #include "print.h"
-#include "ansi.h"
+#include "ansifmt.h"
 
 #define z__PRIV__test_exception(fmt, ...)\
     ({ z__fprint_cl256f(stdout, 1,\
