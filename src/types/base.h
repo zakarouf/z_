@@ -53,6 +53,7 @@ typedef size_t z__size;
 
 #define z__cast(T, val) ((T)(val))
 
+#ifdef Z___TYPE_CONFIG__USE_MACRO_TYPE_CONVERTOR
 // Type config_types
 #define z__i8(v) ((z__i8)(v))
 #define z__i16(v) ((z__i16)(v))
@@ -71,6 +72,8 @@ typedef size_t z__size;
 #define z__ptr(v) ((z__ptr)(v))
 
 #define z__size(v) ((z__size)(v))
+
+#endif
 
 #include "fnptr.h"
 
