@@ -84,4 +84,15 @@ void z__mem_shift_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_fr
 #define z__Arrfree __attribute__((cleanup(z__mem_Arr_clean)))
 #define z__autofree __attribute__((cleanup(z__mem_free)))
 
+
+/** Bit Arr functions **/
+
+#define z__BIT_SIZE_DETERMINE_FOR_BYTES(x) ((x >> 3) + 1)
+
+#define z__BITMALLOC(x) z__MALLOC(z__BIT_SIZE_DETERMINE_FOR_BYTES(x))
+#define z__BITCALLOC(x, y) z__CALLOC(z__BIT_SIZE_DETERMINE_FOR_BYTES(x), y)
+#define z__BITREALLOC(ptr, newsize) z__REALLOC(ptr, z__BIT_SIZE_DETERMINE_FOR_BYTES(newsize))
+
+
+
 #endif
