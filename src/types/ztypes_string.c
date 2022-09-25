@@ -1,16 +1,31 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
 #include "mem.h"
 #include "string.h"
 
+z__Str z__Str_newCopy(z__Str str)
+{
+    return (z__Str){
+        .data = strndup(str.data, str.len),
+        .len = str.len
+    };
+}
+
+int z__Str_isequal(z__Str str1, z__Str str2)
+{
+    if(str1.len == str2.len) {
+        return !strncmp(str1.data, str2.data, str1.len);
+    }
+    return 0;
+}
+
 z__String z__String_new(int size)
 {
     return (z__String){
-
        .data= z__CALLOC(sizeof(z__char) , size+ 1),
         .len = size,
         .lenUsed = 0

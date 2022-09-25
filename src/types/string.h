@@ -89,6 +89,9 @@ typedef struct z__StringListArr
 #define z__StringListArr_getData(lns)          (lns).Sldata
 #define z__StringListArr_getDataLine(lns, l)  (lns).Sldata[l]
 
+/* Str */
+z__Str z__Str_newCopy(z__Str str);
+int z__Str_isequal(z__Str str1, z__Str str2);
 
 /* String */
 
