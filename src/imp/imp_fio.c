@@ -47,13 +47,8 @@ void* z__fio_ptr_newLoad(z__size *unitsize, z__size *len, FILE *fp)
     ptr = z__MALLOC(_unit * _l);
     fread(ptr, _unit * _l, 1, fp);
 
-    if(unitsize){
-        *unitsize = _unit;
-    }
-
-    if(len){
-        *len = _l;
-    }
+    if(unitsize) *unitsize = _unit;
+    if(len) *len = _l;
 
     return ptr;
 }
@@ -126,20 +121,23 @@ z__StringList z__fio_getfnames(char const path[])
 {
     DIR * drip = opendir(path);
     if(drip == NULL) return (z__StringList){0};
-    struct dirent* dp;
+    struct dirent* dp = NULL, cur = {};
     int items = 0;
-
-    while((dp = readdir(drip)) != NULL) {
+    
+    readdir_r(drip, &cur, &dp);
+    while(dp != NULL) {
         items++;
+        readdir_r(drip, &cur, &dp);
     }
     closedir(drip);
 
     drip = opendir(path);
     z__StringList fnames = z__StringList_new(items);
 
-    while((dp = readdir(drip)) != NULL)
-    {
+    readdir_r(drip, &cur, &dp);
+    while(dp != NULL) {
         z__StringList_push(&fnames, dp->d_name, dp->d_namlen);
+        readdir_r(drip, &cur, &dp);
     }
     closedir(drip);
 
