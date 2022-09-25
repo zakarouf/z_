@@ -498,8 +498,12 @@ void z__StringList_delete(z__StringList *ln)
     {\
         if((l)->lenUsed >= (l)->len) {\
             (l)->len += (l)->len;\
-            (l)->data = z__REALLOC((l)->data, sizeof(*(l)->data) * (l)->len);\
-            (l)->slens = z__REALLOC((l)->slens, sizeof(*(l)->slens) * (l)->len);\
+            (l)->data = z__REALLOC(                 \
+                    (l)->data                       \
+                  , sizeof(*(l)->data) * (l)->len); \
+            (l)->slens = z__REALLOC(\
+                    (l)->slens\
+                  , sizeof(*(l)->slens) * (l)->len);\
         }\
     }
 
