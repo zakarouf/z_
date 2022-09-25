@@ -1,6 +1,32 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__BITF_H
 #define ZAKAROUF__ZTYPES_TYPES__BITF_H
 
+#include "base.h"
+
+#define z__bit_set(b, offset)       b |= 1 << (offset)
+#define z__bit_clear(b, offset)     b &= ~(1 << (offset))
+#define z__bit_toggle(b, offset)    b ^= 1 << (offset)
+#define z__bit_is(b, offset)        b & (1 << (offset))
+#define z__bit_has(b, offset)       (((b) >> (offset)) & 1)
+#define z__bit_iseq(b, offset)      ((b)&(offset) == offset)
+//#define z__bitf(method, b, offset)   zpp__CAT(z__bitf_, method)(b, offset)   
+
+#define z__PRIV__BITMAKE_U8IDX(x, bit_num) *(z__cast(z__u8 *, x) + (bit_num >> 3))
+
+#define z__bitf_has(x, bit_num)\
+    z__bit_has(z__PRIV__BITMAKE_U8IDX(x, bit_num), bit_num & 7)
+
+#define z__bitf_toggle(x, bit_num)\
+    z__bit_toggle(z__PRIV__BITMAKE_U8IDX(x, bit_num), bit_num & 7)
+
+#define z__bitf_set(x, bit_num)\
+    z__bit_set(z__PRIV__BITMAKE_U8IDX(x, bit_num), bit_num & 7)
+
+#define z__bitf_clear(x, bit_num)\
+    z__bit_clear(z__PRIV__BITMAKE_U8IDX(x, bit_num), bit_num & 7)
+
+
+/*  */
 
 #define z__BitFieldIndex__PRIV__gen(x) x
 
@@ -10,13 +36,7 @@
 #define z__BitField_id(Tag, ...)\
         enum{ zpp__Args_maplist_fn_Pattern(z__BitFieldIndex__PRIV__gen, z__BitField_idTag(Tag),, __VA_ARGS__) }
 
-#define z__bitf_set(b, offset)       b |= 1 << (offset)
-#define z__bitf_clear(b, offset)     b &= ~(1 << (offset))
-#define z__bitf_toggle(b, offset)    b ^= 1 << (offset)
-#define z__bitf_is(b, offset)        b & (1 << (offset))
-#define z__bitf_has(b, offset)       (((b) >> (offset))&1)
-#define z__bitf_iseq(b, offset)      ((b)&(offset) == offset)
-//#define z__bitf(method, b, offset)   zpp__CAT(z__bitf_, method)(b, offset)   
+
 
 #define z__BitField_set(of, tag, bitIndex)      z__bitf_set(of, z__BitField_idTagIn(tag, bitIndex))
 #define z__BitField_clear(of, tag, bitIndex)    z__bitf_clear(of, z__BitField_idTagIn(tag, bitIndex))
