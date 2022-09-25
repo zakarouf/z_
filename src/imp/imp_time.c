@@ -57,6 +57,11 @@ z__u64 z__time_tps(void)
     return CLOCKS_PER_SEC;
 }
 
+z__f64 z__time_delta(z__u64 process_0, z__u64 process_1)
+{
+    return (z__f64)(process_1 - process_0) / CLOCKS_PER_SEC;
+}
+
 void z__time_getLocalTime_str(z__String *str)
 {
     if(str->len == 0) z__String_new(28);
