@@ -161,8 +161,10 @@ void z__String_replace_seg(z__String *str, z__size from, z__size seg_len, char c
 
 void z__String_replaceStr(z__String *str, const char * s, int len)
 {
-    if(len == -1) len = strlen(s);
-    if((z__u32)len > str->len) z__String_resize(str, len + 1);
+    if(len < 0) len = strlen(s);
+    if((z__u32)len > str->len) { 
+        z__String_expand(str, len + 1);
+    }
     memcpy(str->data, s, sizeof(*s) * len);
     str->lenUsed = len;
     str->data[str->lenUsed] = 0;
