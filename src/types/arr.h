@@ -422,6 +422,9 @@
  * Example: z__Arr_foreach(i, arr){
  *              printf("%d\n", *i);
  *          }
+ *          z__Arr_foreach(i, arr, reverse, 4, 0, 1) {
+ *              printf("%d\n", *i);
+ *          }
  *  FOR OLDER VERSIONS
  *  NOTE: OLDER VERSIONS ARE DEPRICATED
  */
