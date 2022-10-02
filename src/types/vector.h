@@ -24,6 +24,8 @@
         z__VectorSt(T, __VA_ARGS__);        \
     }
 
+#define z__vec(T, sz) z__typeof(T[sz])
+
 /* |x, y, z, w| -> w is the last */
 #ifndef Z___TYPE_CONFIG__CGLM_ALIAS_TYPE_VECTOR
         typedef z__i32                  z__ivec2[2];
