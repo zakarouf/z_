@@ -17,9 +17,10 @@
 #define zpp__doif_construct_onlypost(condition, method, ...)\
     if(condition)\
         for(int keep = 1; keep; keep ^= 1, method(__VA_ARGS__) )
+
 #define zpp__doif_construct(condition, methodandArgs1, methodandArgs2)\
     if(condition)\
-        zpp__do_construct(methodandArgs1, methodandArgs1)
+        zpp__do_construct(methodandArgs1, methodandArgs2)
 
 #define zpp__ter__if(exp)   (exp)?
 #define zpp__ter__elif(exp) :(exp)?
