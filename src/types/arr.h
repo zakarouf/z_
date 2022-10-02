@@ -162,6 +162,13 @@
         (arr)->lenUsed = (arr_src).lenUsed;                                 \
     }
 
+/**
+ * @def z__Arr_clone(arr)
+ * @brief Returns an copy of the any Array.
+ *
+ * @param arr The Source Array
+ * @return Copy of the array
+ */
 #define z__Arr_clone(arr)\
     ({                                                                  \
         z__typeof(arr) temp_arr;                                        \
@@ -303,9 +310,9 @@
 /**
  */
 #define z__Arr_cmpdata(arr, _ptr_data, size)(\
-    zpp__ter__if((sizeof(*(arr).data) * (arr).lenUsed) < (size)) -1\
-    zpp__ter__elif((sizeof(*(arr).data) * (arr).lenUsed) > (size)) 1\
-    zpp__ter__else(memcmp((arr).data, _ptr_data, (size))))
+    (zpp__ter__if((sizeof(*(arr).data) * (arr).lenUsed) < (size)) -1\
+     zpp__ter__elif((sizeof(*(arr).data) * (arr).lenUsed) > (size)) 1\
+     zpp__ter__else(memcmp((arr).data, _ptr_data, (size)))))
 
 #define z__Arr_cmp(arr1, arr2)\
     z__Arr_cmpdata(arr1, (arr2).data, sizeof(*(arr2).data) * (arr2).lenUsed)
