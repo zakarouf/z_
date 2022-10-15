@@ -1,7 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPEID_H
 #define ZAKAROUF__ZTYPES_TYPEID_H
 
-#include "ztypes.h"
+#include "../types.h"
 
 	#define __builtin_choose_expr __builtin_choose_expr
 	#define z__typeID(T) \

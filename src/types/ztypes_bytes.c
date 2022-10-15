@@ -36,6 +36,24 @@ void z__Bytes_pushStream(z__Bytes *bt, void const * const data, z__size data_siz
     bt->bytes.lenUsed += data_size;
 }
 
+void z__Bytes_pushBytes_range(z__Bytes *bt, z__Bytes const *src, z__u64 from, z__u64 len)
+{
+    z__Bytes_pushStream(bt, src->bytes.data + from, len);
+}
+
+void z__Bytes_pushBytes(z__Bytes *bt, z__Bytes const *src)
+{
+    z__Bytes_pushStream(bt, src->bytes.data, src->bytes.lenUsed);
+}
+
+int z__Bytes_cmp(z__Bytes *bt1, z__Bytes *bt2)
+{
+    if(bt1->bytes.lenUsed != bt2->bytes.lenUsed) {
+        return (z__i64)bt1->bytes.lenUsed - (z__i64)bt2->bytes.lenUsed;
+    }
+    return memcmp(bt1->bytes.data, bt2->bytes.data, bt1->bytes.lenUsed);
+}
+
 int z__Bytes_isdataequal(z__Bytes *bt1, z__Bytes *bt2)
 {
     if(bt1->bytes.lenUsed != bt2->bytes.lenUsed) return 0;

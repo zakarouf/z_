@@ -40,6 +40,16 @@ void z__Bytes_push(z__Bytes *, z__u8 const);
 void z__Bytes_pushStream(z__Bytes *, void const * const, z__size const);
 
 /**
+ * Push a z__Bytes type's data in a range
+ */
+void z__Bytes_pushBytes_range(z__Bytes *bt, z__Bytes const *src, z__u64 from, z__u64 len);
+
+/**
+ * Push a z__Bytes type's data as a whole
+ */
+void z__Bytes_pushBytes(z__Bytes *bt, z__Bytes const *src);
+
+/**
  * Delete the last pushed byte off the stream
  */
 void z__Bytes_pop(z__Bytes *);
@@ -53,6 +63,11 @@ void z__Bytes_popStream(z__Bytes *, z__size const);
  * Resize the stream
  */
 void z__Bytes_resize(z__Bytes *, z__size const);
+
+/**
+ * Compare Function for z__Bytes
+ */
+int z__Bytes_cmp(z__Bytes *bt1, z__Bytes *bt2);
 
 /**
  * Check if data from two Byte Stream is equal;
