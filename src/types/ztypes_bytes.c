@@ -10,6 +10,14 @@ void z__Bytes_new(z__Bytes *bt, z__u32 len)
     
 }
 
+
+void z__Bytes_newFromPtr(z__Bytes *bt, const z__u8 *src, z__size len)
+{
+    z__Bytes_new(bt, len + 8);
+    memcpy(bt->bytes.data, src, len);
+    bt->bytes.lenUsed = len;
+}
+
 void z__Bytes_delete(z__Bytes *bt)
 {
     z__Arr_delete(&bt->bytes);
