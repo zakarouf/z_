@@ -101,6 +101,7 @@
         z__bitf_set((ht)->is_set, _idx);                            \
         zpp__CAT(_hash_L_, zpp__DEC(__COUNTER__)):;                 \
         (ht)->values[_idx] = val;                                   \
+        __VA_ARGS__;                                                \
     }
 
 #define z__PRIV__HashSet_expand(ht, hashfn)\
@@ -130,18 +131,25 @@
         if((ht)->len/2 <= (ht)->lenUsed) {                                                      \
             z__PRIV__HashSet_expand(ht, hashfn);                                                \
         }                                                                                       \
-        z__PRIV__HashSet_set_entry(ht, key, val, key_copy, hashfn, key_cmpfn, __VA_ARGS__);     \
+        z__PRIV__HashSet_set_entry(ht, key, val, key_copy, hashfn, key_cmpfn ,##__VA_ARGS__);   \
     }
+
+#define z__HashSet_getreff_r(ht, hkey, hashfn, key_cmpfn)\
+    ({                                                              \
+        z__typeof((ht)->values) valptr;                             \
+        z__HashSet_getreff(ht, hkey, &valptr, hashfn, key_cmpfn);   \
+        valptr;                                                     \
+    })
 
 #define z__HashSet_getreff(ht, hkey, valptr, hashfn, key_cmpfn)\
     {                                                               \
-        (valptr) = NULL;                                            \
+        *(valptr) = NULL;                                           \
         z__u64 hash_k;                                              \
         hashfn(&hash_k, hkey);                                      \
         z__size _idx = (z__size)(hash_k & ((z__u64)(ht)->len - 1)); \
         while(z__bitf_has((ht)->is_set, _idx)) {                    \
             if (key_cmpfn((ht)->keys[_idx], hkey)) {                \
-                valptr = &(ht)->values[_idx];                       \
+                *(valptr) = &(ht)->values[_idx];                    \
                 break;                                              \
             }                                                       \
             _idx += 1;                                              \
@@ -174,8 +182,8 @@
     }
 
 #define z__PRIV__HashAtom_newCopy(v) (v);
-#define z__HashAtom_set(ht, hkey, val, hashfn, key_cmpfn)\
-    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, hashfn, key_cmpfn)
+#define z__HashAtom_set(ht, hkey, val, hashfn, key_cmpfn, ...)\
+    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, hashfn, key_cmpfn ,##__VA_ARGS__)
 
 #define z__HashAtom_getreff(ht, hkey, valptr, hashfn, key_cmpfn)\
     z__HashSet_getreff(ht, hkey, valptr, hashfn, key_cmpfn)
@@ -203,8 +211,8 @@
         }                                                                                           \
     }
 
-#define z__HashStr_set(ht, key, val)\
-    z__HashSet_set(ht, key, val, z__Str_newCopy, z__PRIV__HashStr_hashfn, z__Str_isequal)
+#define z__HashStr_set(ht, key, val, ...)\
+    z__HashSet_set(ht, key, val, z__Str_newCopy, z__PRIV__HashStr_hashfn, z__Str_isequal ,##__VA_ARGS__)
 
 #define z__HashStr_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashStr_hashfn, z__Str_isequal)
 
@@ -224,8 +232,8 @@
         *(hash) = _hash_key;                                    \
     }
 
-#define z__HashInt_set(ht, hkey, val)\
-    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, z__PRIV__HashInt_hashfn, z__PRIV__HashInt_isequal)
+#define z__HashInt_set(ht, hkey, val, ...)\
+    z__HashSet_set(ht, hkey, val, z__PRIV__HashAtom_newCopy, z__PRIV__HashInt_hashfn, z__PRIV__HashInt_isequal ,##__VA_ARGS__)
 
 #define z__HashInt_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashInt_hashfn, z__PRIV__HashInt_isequal)
 
