@@ -61,7 +61,8 @@ TEST(bit)
     bitass(8);
     bitass(729480);
     bitass(0);
-
+    
+    z__test_assert(1, "");
     z__test_done();
 }
 
