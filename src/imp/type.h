@@ -97,6 +97,7 @@ enum {
     /**/
     t(dynt) = z__typeid_make_id(_Z__PRIV__TYPE_M_OBJ, 1),
     t(cstr),
+    t(str),
     t(string),
     t(stringlist),
 };
@@ -169,6 +170,7 @@ enum {
         \
         \
         , (z__Dynt, z__type_id_lit(dynt))\
+        , (z__Str, z__type_id_lit(str))\
         , (z__String, z__type_id_lit(string))\
         , (z__StringList, z__type_id_lit(stringlist))\
     )
