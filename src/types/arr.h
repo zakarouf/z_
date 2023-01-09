@@ -219,6 +219,13 @@
         }                                                                                       \
     }
 
+#define z__Arr_expand_ifneeded(arr, by)\
+    {\
+        if(((arr)->lenUsed + by) > (arr)->len) {\
+            z__Arr_expand(arr, by);\
+        }\
+    }
+
 #define z__Arr_expand(arr, by)\
     {                                                                                   \
         (arr)->len += by;                                                               \
@@ -241,6 +248,17 @@
         (arr)->lenUsed += 1;                            \
     }
 
+#define z__Arr_pushStream(arr, data_ptr, data_len)          \
+    {                                                       \
+        if(((arr)->lenUsed + data_len) > (arr)->len) {      \
+            z__Arr_expand(arr, (data_len));                 \
+        }                                                   \
+        memcpy((arr)->data + (arr)->lenUsed                 \
+             , (data_ptr)                                   \
+             , (data_len) * sizeof(*(arr)->data));          \
+        (arr)->lenUsed += data_len;                         \
+    }
+
 #define z__Arr_pushMC(arr, ...)\
     {                                                                               \
         z__Arr_expand_ifThreadhold(arr)                                             \
@@ -254,13 +272,27 @@
         (arr)->lenUsed += 1;            \
     }
 
+#define z__Arr_pushIncBy(arr, by)\
+    {                                   \
+        z__Arr_expand_ifneeded(arr, by);\
+        (arr)->lenUsed += by;           \
+    }
+
 #define z__Arr_push_nocheck(arr, ...)\
     {                                               \
         (arr)->data[(arr)->lenUsed] = __VA_ARGS__;  \
         (arr)->lenUsed += 1;                        \
     }
 
-#define z__Arr_push_nocheckMC(arr, ...)\
+#define z__Arr_pushStream_nocheck(arr, data_ptr, data_len)  \
+    {                                                       \
+       memcpy((arr)->data + (arr)->lenUsed                  \
+             , data_ptr                                     \
+             , data_len * sizeof(*data_ptr));               \
+        (arr)->lenUsed += data_len;                         \
+    }
+
+#define z__Arr_pushMC_nocheck(arr, ...)\
     {                                                                               \
         memcpy(&(arr)->data[(arr)->lenUsed], (__VA_ARGS__), sizeof(*(arr)->data));  \
         (arr)->lenUsed += 1;                                                        \
