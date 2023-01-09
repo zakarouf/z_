@@ -25,6 +25,11 @@ typedef struct z__Bytes {
 void z__Bytes_new(z__Bytes *, z__u32 const);
 
 /**
+ * Create a New Byte Stream and Loads up data;
+ */
+void z__Bytes_newFromPtr(z__Bytes *bt, const z__u8 *src, z__size _size);
+
+/**
  * Deconstructor
  */
 void z__Bytes_delete(z__Bytes *bt);
