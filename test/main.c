@@ -6,11 +6,14 @@
 #define import_sin(x) z__test_implext(x);
 #define import(...) zpp__Args_map(import_sin, __VA_ARGS__)
 
-#define testrun_sin(test)\
-    {\
-        int total = 0;\
-        int passed = z__test_callsu(test, &total);\
-        assert(passed == total);\
+#define testrun_sin(suite)\
+    {                                               \
+        int total = 0;                              \
+        int passed = z__test_callsu(suite, &total);  \
+        if(total != passed) {                       \
+            z__fprint(stdout, "Test in suite \"" #suite "\" Failed!\n");    \
+            abort();                                \
+        }                                           \
     }
 
 #define testrun(...)\
@@ -39,9 +42,6 @@ void die(const char *msg)
 
 int main (void)
 {
-    int total = 0;
-
-
     /* Types */
     testrun(test_list_types);
 
