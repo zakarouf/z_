@@ -32,7 +32,7 @@ typedef struct z__String
 } z__String;
 
 /**
- * Constant string type, for slices and c strings
+ * Mutable String type, for slices
  */
 typedef struct z__Str {
 
@@ -43,6 +43,20 @@ typedef struct z__Str {
     z__u32 len;
 
 }z__Str;
+
+/**
+ * Constant string type, for slices and c strings
+ */
+typedef struct z__CStr {
+
+    /* String Data */
+    z__char const * data;
+
+    /* String Length */
+    z__u32 len;
+
+}z__CStr;
+
 
 /**
  * List of Strings
@@ -92,60 +106,30 @@ typedef struct z__StringListArr
 /* Str */
 z__Str z__Str_newCopy(z__Str str);
 int z__Str_isequal(z__Str str1, z__Str str2);
+//***************************<>***************************//
 
-/* String */
+/* CSTR */
+/**
+ * Skip all the non white spaces character, and returns the first occurrence when reached one.
+ */
+char const *z__str_skipget_ws(char const *str, z__u32 size);
 
 /**
- * @def z__String_new(int size);
- * @brief Create a new String Type 
- * 
- * @param size Length of the string
+ * Skip all the white spaces characters; and
+ * returns the first occurrence of a non white space character.
  */
-z__String z__String_new(int size);
-
-z__String z__String_newFromStr(const char *st, int size);
-z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
-z__String z__String_newFromFile(char const filename[]);
-z__String z__String_newCopy(const z__String str);
+char const *z__str_skipget_nonws(char const *str, z__u32 size);
 
 /**
- * @def z__String_delete(z__String *s);
- * @brief Delete the allocated string type
- * 
- * @param str String type
+ * Find the First occurrence of any of the provided char list.
  */
-void z__String_delete(z__String *str);
-
+char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize);
 
 /**
- * @def z__String_resize(z__String *str, int newsize)
- * @brief Resizes the string
- * 
- * @param str String
- * @param newsize Length of the string
+ * Returns the first occurrence of the next word
+ * i.e First letter after finding (a/series of) white space
  */
-void z__String_resize(z__String *str, int newsize);
-
-/**
- * Expand the the total length allocated by a given length.
- */
-void z__String_expand(z__String *str, z__size by);
-
-
-/**
- * @def z__String_copy(z__String *str, const z__String val);
- * @brief Copy the Data to / str from / val
- * 
- * @param str String
- * @param val String to be copied
- */
-void z__String_copy(z__String *str, const z__String val);
-
-
-/**
- * @def z__String_cmp(z__String const *s1, z__String const *s2);
- */
-int z__String_cmp(z__String const *s1, z__String const *s2);
+char const *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
 
 
 /**
@@ -168,18 +152,68 @@ int z__str_isradix(char const *str, z__size len);
  */
 int z__str_isdecimal(char const *str, z__size len);
 
-
 /**
  * Finds and returns a pointer to the first occurrence of char `ch`
  * Returns NULL, if no such occurrences occurred.
  */
 const char *z__str_findchar(const char ch, char const *str, z__size len);
 
-
 /**
  * Create a wrapper around a str. Use with caution if the `str` is no heap allocated.
  */
 z__String z__String_bind(char *str, z__int sz);
+//***************************<>***************************//
+
+
+/* String */
+/**
+ * @def z__String_new(int size);
+ * @brief Create a new String Type 
+ * 
+ * @param size Length of the string
+ */
+z__String z__String_new(int size);
+
+z__String z__String_newFromStr(const char *st, int size);
+z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
+z__String z__String_newFromFile(char const filename[]);
+z__String z__String_newCopy(const z__String str);
+
+/**
+ * @def z__String_delete(z__String *s);
+ * @brief Delete the allocated string type
+ * 
+ * @param str String type
+ */
+void z__String_delete(z__String *str);
+
+/**
+ * @def z__String_resize(z__String *str, int newsize)
+ * @brief Resizes the string
+ * 
+ * @param str String
+ * @param newsize Length of the string
+ */
+void z__String_resize(z__String *str, int newsize);
+
+/**
+ * Expand the the total length allocated by a given length.
+ */
+void z__String_expand(z__String *str, z__size by);
+
+/**
+ * @def z__String_copy(z__String *str, const z__String val);
+ * @brief Copy the Data to / str from / val
+ * 
+ * @param str String
+ * @param val String to be copied
+ */
+void z__String_copy(z__String *str, const z__String val);
+
+/**
+ * @def z__String_cmp(z__String const *s1, z__String const *s2);
+ */
+int z__String_cmp(z__String const *s1, z__String const *s2);
 
 /**
  * Append a string of length provided, into the str. Auto re-allocates if required
@@ -215,28 +249,6 @@ void z__String_replace(z__String *str, char const * __restrict format, ...) __pr
 void z__String_replace_seg(z__String *str, z__size from, z__size len, char const * __restrict format, ...) __printflike(4, 5);
 
 /**
- * Skip all the non white spaces character, and returns the first occurrence when reached one.
- */
-char const *z__str_skipget_ws(char const *str, z__u32 size);
-
-/**
- * Skip all the white spaces characters; and
- * returns the first occurrence of a non white space character.
- */
-char const *z__str_skipget_nonws(char const *str, z__u32 size);
-
-/**
- * Find the First occurrence of any of the provided char list.
- */
-char const *z__str_find_chars(char const *str, z__u32 size, char const * tab, const z__size tabsize);
-
-/**
- * Returns the first occurrence of the next word
- * i.e First letter after finding (a/series of) white space
- */
-char const *z__str_get_next_word(const char *ori, z__u32 len, char const *cursor);
-
-/**
  * Same as z__str_get_next_word but applied on z__String
  */
 char const *z__String_get_next_word(const z__String *ori, char const *cursor);
@@ -266,12 +278,11 @@ void z__String_delChar(z__String *dest, z__u32 pos);
  * Pushes a char at the end
  */
 void z__String_pushChar(z__String *dest, z__char ch);
-
+//***************************<>***************************//
 
 
 
 /* String List */
-
 /**
  * Create a new String List
  */
@@ -338,8 +349,7 @@ void z__StringListArr_delete(z__StringListArr *lns);
 void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 
-// Macros
-
+/* Macros */
 /**
  * String Constructor
  */
@@ -353,14 +363,20 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
         str_out;                                                                                        \
     })
 
+/**/
 #define z__Str(str, l)\
         ((z__Str){.data = str, .len = l})
 
+#define z__CStr(str, l)\
+        ((z__CStr){.data = str, .len = l})
+
+#define z__cstr(str) ((z__CStr){.data = str, .len = sizeof(str)-1})
+
 #define z__StringList_init(...)\
-    ({\
-        z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);\
-        z__PRIV__StringList_pushstr(__VA_ARGS__);\
-        tmp;\
+    ({                                                                          \
+        z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);  \
+        z__PRIV__StringList_pushstr(__VA_ARGS__);                               \
+        tmp;                                                                    \
     })
 
 
