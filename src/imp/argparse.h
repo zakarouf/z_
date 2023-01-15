@@ -29,23 +29,6 @@
 #define z__PRIV__argp_arg_check(a)\
     zpp__CAT(z__PRIV__argp_arg_check_empty_, zpp__Args_IS_EMPTY(a))(a)
 
-#define z__argp_ifarg(v, ...)\
-        if(z__PRIV__argp_arg_cmp(zpp__PRIV__Args_get_1(__VA_ARGS__))                    \
-            zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) ){    \
-            z__argp_next();                                                             \
-            _Static_assert(sizeof(z__PRIV__strto_scan_typegen(v)) > 1, "Argparse: Strto Doesn't Support this type");\
-            z__strto(*_priv_argp_chptr, v);                                             \
-        }
-
-#define z__argp_elifarg(v, ...)\
-       else if(z__PRIV__argp_arg_cmp(zpp__PRIV__Args_get_1(__VA_ARGS__))                \
-            zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) ){    \
-            z__argp_next();                                                             \
-            _Static_assert(sizeof(z__PRIV__strto_scan_typegen(v)) > 1, "Argparse: Strto Doesn't Support this type");\
-            z__strto(*_priv_argp_chptr, v);                                             \
-        }
-
-
 #define z__argp_ifarg_custom(...)\
         if(z__PRIV__argp_arg_cmp(zpp__PRIV__Args_get_1(__VA_ARGS__))                    \
             zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) )
@@ -54,7 +37,21 @@
         else if(z__PRIV__argp_arg_cmp(zpp__PRIV__Args_get_1(__VA_ARGS__))               \
             zpp__Args_map(z__PRIV__argp_arg_check, zpp__Args_skip_1(__VA_ARGS__)) )
  
+#define z__argp_ifarg(v, ...)\
+        z__argp_ifarg_custom(__VA_ARGS__) {                                             \
+            z__argp_next();                                                             \
+            _Static_assert(sizeof(z__PRIV__strto_scan_typegen(v)) > 1                   \
+                    , "Argparse: Strto Doesn't Support this type");                     \
+            z__strto(*_priv_argp_chptr, v);                                             \
+        }
 
+#define z__argp_elifarg(v, ...)\
+        z__argp_elifarg_custom(__VA_ARGS__)                                             \
+            z__argp_next();                                                             \
+            _Static_assert(sizeof(z__PRIV__strto_scan_typegen(v)) > 1                   \
+                    , "Argparse: Strto Doesn't Support this type");                     \
+            z__strto(*_priv_argp_chptr, v);                                             \
+        }
 
 #endif
 
