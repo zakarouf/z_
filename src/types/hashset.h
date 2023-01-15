@@ -50,35 +50,35 @@
         z__FREE((ht)->is_set);      \
     }
 
-#define z__HashSet_delete_with_key_decon(ht, key_decon)\
+#define z__HashSet_reset_all(ht, key_decon, val_decon)\
     {\
         for (size_t i = 0; i < (ht)->len; i++) {                \
             if(z__bitf_has((ht)->is_set, i)) {                  \
-                key_decon((ht)->keys[i]);                       \
-            }                                                   \
-        }                                                       \
-        z__HashSet_delete(ht);                                 \
-    }
-
-#define z__HashSet_delete_with_val_decon(ht, val_decon)\
-    {\
-        for (size_t i = 0; i < (ht)->len; i++) {                \
-            if(z__bitf_has((ht)->is_set, i)) {                  \
+                z__bitf_clear((ht)->is_set, i);                 \
+                key_decon((ht)->keys + i);                      \
                 val_decon((ht)->values + i);                    \
             }                                                   \
         }                                                       \
-        z__HashSet_delete(ht);                                  \
+        (ht)->lenUsed = 0;                                      \
     }
 
 #define z__HashSet_delete_with_decon(ht, key_decon, val_decon)\
-    {\
-        for (size_t i = 0; i < (ht)->len; i++) {                \
-            if(z__bitf_has((ht)->is_set, i)) {                  \
-                key_decon((ht)->keys[i]);                       \
-                val_decon((ht)->values + i);                    \
-            }                                                   \
-        }                                                       \
-        z__HashSet_delete(ht);                                 \
+    {                                                       \
+        z__HashSet_reset_all(ht, key_decon, val_decon);     \
+        z__HashSet_delete(ht);                              \
+    }
+
+#define z__HashSet_delete_with_key_decon(ht, key_decon)\
+    z__HashSet_delete_with_decon(ht, key_decon, zpp__IGNORE)
+    
+#define z__HashSet_delete_with_val_decon(ht, val_decon)\
+    z__HashSet_delete_with_decon(ht, zpp__IGNORE, val_decon)
+
+#define z__HashSet_reset_all_memset(ht)\
+    {                                                           \
+        memset((ht)->len                                        \
+            , 0, z__BIT_SIZE_DETERMINE_FOR_BYTES((ht)->len));   \
+        (ht)->lenUsed = 0;                                      \
     }
 
 #define z__PRIV__HashSet_set_entry(ht, key, val, key_copy, hashfn, key_cmpfn, ...)\
@@ -192,7 +192,10 @@
 
 /** z__HashStr Interface **/
 #define z__HashStr_new(ht) z__HashSet_new(ht)
-#define z__PRIV__HashStr_key_decon(k) z__FREE((k).data)
+#define z__PRIV__HashStr_key_decon(k) z__FREE((k)->data)
+
+#define z__HashStr_reset_all_val_decon(ht, val_decon)\
+    { z__HashSet_reset_all(ht, z__PRIV__HashStr_key_decon, val_decon); }
 
 #define z__HashStr_delete(ht) z__HashSet_delete_with_key_decon(ht, z__PRIV__HashStr_key_decon)
 #define z__HashStr_delete_with_val_decon(ht, val_decon) z__HashSet_delete_with_decon(ht, z__PRIV__HashStr_key_decon, val_decon)

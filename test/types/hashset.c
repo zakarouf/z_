@@ -19,19 +19,62 @@ static int memctr = 0; // Counting memory allocation since we are dealing w/ mac
 
 #define free(x) heapfree(free, x)
 
-TEST(hashstr) {
-    
+TEST(reset) {
+    _description_ = "Create a HashStr, use reset and reuse the Hash Func.";
     #define cstr(cstr) z__Str(cstr, sizeof(cstr)-1)
+    #define set(k, v) z__HashStr_set(&ht, cstr(k), v)
 
-    #define tassheap(expected) \
-        z__test_assert(memctr == expected, "Heap Alloc Counter at %i, expected %i", memctr, expected);
+    z__HashStr(z__u32) ht;
+    z__HashStr_new(&ht);
+
+    set("Los", 0);
+    set("Troal", 1);
+    set("Noct", 2);
+    set("Belic", 3);
+    set("Aragaratata", 4);
+    set("Poe", 5);
+    set("Xr", 6);
+    set("L'kor", 7);
+    set("Mitac 2031", 8);
+    set("67 + 23", 90);
 
     #define tassval(k, v) \
         z__HashStr_getreff(&ht, cstr(k), &val);\
         z__test_assert(val != NULL, "%s Not Found", k);\
         z__test_assert(*val == v, "Value found incorrect, expected: `%d` but found `%d`", v, *val);
+   
+    z__u32 *val = NULL;
+    tassval("Los", 0);
+    tassval("Troal", 1);
+    tassval("Noct", 2);
+    tassval("Belic", 3);
+    tassval("Aragaratata", 4);
+    tassval("Poe", 5);
+    tassval("Xr", 6);
+    tassval("L'kor", 7);
+    tassval("Mitac 2031", 8);
+    tassval("67 + 23", 90);
 
+    z__HashStr_reset_all_val_decon(&ht, zpp__IGNORE);
+    z__test_assert(ht.len, "Hash Set len is zero after reset");
+    z__test_assert(ht.lenUsed == 0, "Hash Set len Used is not zero after reset, `%u`", ht.lenUsed);
+    
+    z__test_done();
+}
+
+TEST(hashstr) {
+    
+    #define cstr(cstr) z__Str(cstr, sizeof(cstr)-1)
     #define set(k, v) z__HashStr_set(&ht, cstr(k), v)
+
+    #define tassheap(expected) \
+        z__test_assert(memctr == expected, "Heap Alloc Counter at %i, expected %i", memctr, expected);
+
+    #undef tassval
+    #define tassval(k, v) \
+        z__HashStr_getreff(&ht, cstr(k), &val);\
+        z__test_assert(val != NULL, "%s Not Found", k);\
+        z__test_assert(*val == v, "Value found incorrect, expected: `%d` but found `%d`", v, *val);
 
     #define memctr_print() z__print("Memctr at %i\n", memctr);
 
@@ -86,7 +129,7 @@ struct {
 
 TEST(hashint) {
 
-    const z__u32 length = 22;
+    const z__u32 length = sizeof(pairs)/sizeof(*pairs);
 
     z__HashInt(z__u64) ht;
     z__HashInt_new(&ht);
@@ -106,5 +149,5 @@ TEST(hashint) {
     z__test_done();
 }
 
-z__test_impl(TEST_SUITE, hashstr, hashint);
+z__test_impl(TEST_SUITE, hashstr, hashint, reset);
 
