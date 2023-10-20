@@ -10,9 +10,9 @@ ARFLAGS="-q"
 OUT_BIN="z_"
 OUT_LIB="libz_.a"
 OUT_HEAD="z_"
-BIN_DIR="$HOME/../usr/bin/"
-LIB_DIR="$HOME/../usr/lib/"
-INC_DIR="$HOME/../usr/include/"
+BIN_DIR="/usr/local/bin/"
+LIB_DIR="/usr/local/lib/"
+INC_DIR="/usr/local/include/"
 
 check_build() {
     if [ -d "./build" ]; then
