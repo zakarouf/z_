@@ -38,6 +38,16 @@ syn keyword cType z__versor;
 syn keyword cType z__Vector2 z__Vector3 z__Vector4 z__Versor
 syn keyword cType z__Vint2 z__Vint3 z__Vint4
 
+syn keyword cType z__i8Vec2 z__i8Vec3 z__i8Vec4
+syn keyword cType z__i16Vec2 z__i16Vec3 z__i16Vec4
+syn keyword cType z__i32Vec2 z__i32Vec3 z__i32Vec4
+syn keyword cType z__i64Vec2 z__i64Vec3 z__i64Vec4
+
+syn keyword cType z__u8Vec2 z__u8Vec3 z__u8Vec4
+syn keyword cType z__u16Vec2 z__u16Vec3 z__u16Vec4
+syn keyword cType z__u32Vec2 z__u32Vec3 z__u32Vec4
+syn keyword cType z__u64Vec2 z__u64Vec3 z__u64Vec4
+
 syn keyword cType z__Matrix2 z__Matrix3 z__Matrix4
 syn keyword cType z__Mint2 z__Mint3 z__Mint4
 
