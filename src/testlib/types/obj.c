@@ -1,4 +1,4 @@
-#include "../../lib/types/obj.h"
+#include "../../lib/obj.h"
 #include "../../lib/test.h"
 
 #define TEST_SUITE types_obj

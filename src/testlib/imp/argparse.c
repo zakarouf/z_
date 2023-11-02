@@ -1,6 +1,6 @@
 #include "../../lib/argparse.h"
 #include "../../lib/test.h"
-#include "../../lib/types/primitives.h"
+#include "../../lib/std/primitives.h"
 
 #include <string.h>
 

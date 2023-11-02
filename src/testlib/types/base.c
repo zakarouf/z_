@@ -1,4 +1,4 @@
-#include "../../lib/types/primitives.h"
+#include "../../lib/std/primitives.h"
 #include "../../lib/test.h"
 
 #define TEST_SUITE types_primitives

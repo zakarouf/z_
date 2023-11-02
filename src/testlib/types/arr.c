@@ -1,4 +1,5 @@
-#include "../../lib/types/arr.h"
+#include "../../lib/arr.h"
+#include "../../lib/std/mem.h"
 #include "../../lib/test.h"
 
 #include <string.h>

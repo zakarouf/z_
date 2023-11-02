@@ -1,4 +1,4 @@
-#include "../../lib/types/string.h"
+#include "../../lib/string.h"
 #include "../../lib/test.h"
 
 #include <string.h>

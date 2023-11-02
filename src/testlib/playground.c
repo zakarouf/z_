@@ -5,18 +5,18 @@
 #include "../lib/prep/loop.h"
 #include "../lib/prep/num.h"
 
-#include "../lib/types/primitives.h"
+#include "../lib/std/primitives.h"
 
-#include "../lib/types/record.h"
-#include "../lib/types/vector.h"
-#include "../lib/types/arr.h"
-#include "../lib/types/llist.h"
-#include "../lib/types/string.h"
-#include "../lib/types/hashset.h"
+#include "../lib/record.h"
+#include "../lib/vector.h"
+#include "../lib/arr.h"
+#include "../lib/llist.h"
+#include "../lib/string.h"
+#include "../lib/hashset.h"
 
-#include "../lib/types/bitf.h"
+#include "../lib/bitf.h"
 
-#include "../lib/types/obj.h"
+#include "../lib/obj.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

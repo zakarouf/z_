@@ -1,4 +1,4 @@
-#include "../../lib/types/bitf.h"
+#include "../../lib/bitf.h"
 #include "../../lib/test.h"
 
 #include <string.h>

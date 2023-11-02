@@ -1,4 +1,4 @@
-#include "../../lib/types/hashset.h"
+#include "../../lib/hashset.h"
 #include "../../lib/test.h"
 
 #include <string.h>
