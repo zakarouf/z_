@@ -132,7 +132,7 @@ This forces to you to include linked list type manually.
 ```
 Now this will work as it should.
 
-### Adding Syntax Highlighting (Vim)
+### Adding Syntax Highlighting (Vim & NeoVim)
 
 Additional syntax Highlighting for types and such are include in the extra/c.vim.
 
