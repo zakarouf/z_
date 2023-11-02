@@ -8,6 +8,7 @@
 
 #include "print.h"
 #include "ansifmt.h"
+#include "typeof.h"
 
 #ifndef z__PRIV__test_ON_ASSERT_FALIURE
 #define z__PRIV__test_ON_ASSERT_FALIURE() goto _L_test_return;
