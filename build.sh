@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Basic Config, edit these variabl
 PROJECT_NAME="z_"
 CC=gcc
 CCFLAGS="-Wall -Wextra -O2"
@@ -13,13 +14,23 @@ OUT_HEAD="z_"
 BIN_DIR="/usr/local/bin/"
 LIB_DIR="/usr/local/lib/"
 INC_DIR="/usr/local/include/"
+BIN_DIR="$HOME/../usr/bin/"
+LIB_DIR="$HOME/../usr/lib/"
+INC_DIR="$HOME/../usr/include/"
 
-check_build() {
-    if [ -d "./build" ]; then
+check_mkdir() {
+    if [ -d "$1" ]; then
         continue
     else
-        $(mkdir ./build)
+        $(mkdir "$1")
     fi
+}
+
+check_build() {
+    check_mkdir "./build"
+    check_mkdir "./build/lib"
+    check_mkdir "./build/include"
+    check_mkdir "./build/bin"
 }
 
 make_clean() {
@@ -36,7 +47,7 @@ make_clean() {
         ;;
         "ofiles") clean_what="*.o"
         ;;
-        "all") clean_what="$clean_what *.o"
+        "all") clean_what="./build/* *.o"
         ;;
         *) echo "Unknown option '$*'"
            return
@@ -61,8 +72,7 @@ make_lib(){
     $($CC $CCFLAGS $extraflags -c $FILES)
     $($AR $ARFLAGS $OUT_LIB *.o)
     make_clean "all"
-    $(mkdir ./build)
-    $(mkdir ./build/lib)
+    check_build
     $(mv $OUT_LIB ./build/lib)
 }
 
@@ -100,11 +110,18 @@ make_install() {
 make_test_lib(){
     make_lib $TESTFLAGS
     FILES=$(find "./src/testlib" -name '*.c')
-    $($CC $CCFLAGS $FILES ./build/lib/$OUT_LIB -o "./build/testlib")
+    $($CC $CCFLAGS $TESTFLAGS $FILES ./build/lib/$OUT_LIB -o "./build/testlib")
+
+    case "$1" in
+        "run") $(./build/testlib)
+        ;;
+        *) echo "Use './build.sh testlib run' to build & run the test"
+        ;;
+    esac   
 }
 
 make() {
-    check_build $1
+    check_build
     case "$1" in
         "lib") make_lib
         ;;
@@ -114,9 +131,9 @@ make() {
         ;;
         "install") make_install $2
         ;;
-        "testlib") make_test_lib
+        "testlib") make_test_lib $2
         ;;
-        "testbin") make_test_bin
+        "testbin") make_test_bin $2
         ;;
         "clean") 
             make_clean $2
