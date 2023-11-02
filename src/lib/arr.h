@@ -46,6 +46,19 @@
         z__u32 lenUsed;     \
     }
 
+/**
+ */
+#define z__Arr_getLen(arr)          (arr).len
+#define z__Arr_getUsed(arr)         (arr).lenUsed
+#define z__Arr_getData(arr)         (arr).data
+#define z__Arr_getUnitSize(arr)     sizeof(*(arr).data)
+#define z__Arr_getSize(arr)         (z__Arr_getUnitSize(arr) * z__Arr_getLen(arr))
+#define z__Arr_getSizeUsed(arr)     (z__Arr_getUnitSize(arr) * z__Arr_getUsed(arr))
+#define z__Arr_getVal(arr, index)   (arr).data[index]
+#define z__Arr_getTop(arr)          (arr).data[(arr).lenUsed-1]
+#define z__Arr_getTopEmpty(arr)     (arr).data[(arr).lenUsed]
+
+
 // Signed
 typedef z__Arr(z__i8)  z__i8Arr;
 typedef z__Arr(z__i16) z__i16Arr;
@@ -488,17 +501,6 @@ typedef z__Arr(void) z__voidArr;
  */
 #define z__Arr_shift_left_nocheck(arr, n, ...)\
     z__PRIV__Arr_shift_left_nocheck(arr, n, ##__VA_ARGS__)
-
-
-#define z__Arr_getLen(arr)          (arr).len
-#define z__Arr_getUsed(arr)         (arr).lenUsed
-#define z__Arr_getData(arr)         (arr).data
-#define z__Arr_getUnitSize(arr)     sizeof(*(arr).data)
-#define z__Arr_getSize(arr)         (z__Arr_getUnitSize(arr) * z__Arr_getLen(arr))
-#define z__Arr_getSizeUsed(arr)     (z__Arr_getUnitSize(arr) * z__Arr_getUsed(arr))
-#define z__Arr_getVal(arr, index)   (arr).data[index]
-#define z__Arr_getTop(arr)          (arr).data[(arr).lenUsed-1]
-#define z__Arr_getTopEmpty(arr)     (arr).data[(arr).lenUsed]
 
 /**
  * PRIVs
