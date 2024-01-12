@@ -13,6 +13,8 @@ void z__mem_shift_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_f
 void z__mem_copy_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
 void z__mem_shift_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont);
 
+void* z__mem_mcopy(void const * const data, size_t size);
+
 #ifdef Z__CONFIG__MEM_USE_MEM__TRACK
 
     void z__mem_init(void);
@@ -77,6 +79,10 @@ void z__mem_shift_left(void *data, z__u32 unit_size, z__u32 len, z__u32 index_fr
 
 #define z__autofree __attribute__((cleanup(z__mem_free)))
 
+/**
+ */
+#define z__MEMCPY(to, from, size) memcpy(to, from, size)
+#define z__MCOPY(p, size) z__MEMCPY(z__MALLOC(size), p, size);
 
 /** Bit Arr functions **/
 

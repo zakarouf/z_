@@ -24,7 +24,9 @@
     z__PRIV__forrange_r_4(iterator, from, upto, -1)
 
 
-#define z__forrange(...)    zpp__Args_Overload(z__PRIV__forrange_, __VA_ARGS__)
+#define z__forrange(iterator, upto, ...)\
+    zpp__Args_Overload(z__PRIV__forrange_, iterator, upto ,##__VA_ARGS__)
+
 #define z__forrange_r(...)  zpp__Args_Overload(z__PRIV__forrange_r_, __VA_ARGS__)
 #define z__forrange_t(iterator, init, upto)\
     z__forrange(iterator, init, upto, (iterator + 1), z__typeof(init))

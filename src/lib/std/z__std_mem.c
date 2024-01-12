@@ -16,6 +16,10 @@ void *z__mem_safe_realloc(void * data, size_t size)
     return data;
 }
 
+void *z__mem_mcopy(void const * const p, size_t size)
+{
+	return z__MCOPY(p, size);
+}
 
 void z__mem_copy_right(void *data, z__u32 unit_size, z__u32 len, z__u32 index_from, z__u64 cont)
 {

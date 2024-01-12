@@ -22,6 +22,10 @@ int z__print(const char * __restrict fmt, ...)
 
 int z__print_String(z__String const str);
 
+int z__fprint_str(FILE *fp, char const *str, z__size size);
+int z__print_str(char const *str, z__size size);
+int z__print_char(z__u32 ch);
+
 /* impl */
 #define z__fprint_cl256(fp, bg, fg, fmt, ...)\
     z__fprint(fp, z__ansi_fmt((cl256, %d, %d)) fmt z__ansi_fmt((plain)), bg, fg, ##__VA_ARGS__)
