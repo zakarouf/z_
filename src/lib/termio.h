@@ -11,12 +11,12 @@ void z__termio_get_term_size(z__u32 * _Nonnull x, z__u32 * _Nonnull y);
 /**
  * Get a key input as char (blocking)
  */
-z__u8 z__termio_getkey(void);
+z__u8 z__termio_getchar(void);
 
 /**
  * Get a key input as char (non blocking)
  */
-z__u8 z__termio_getkey_nowait(void);
+z__u8 z__termio_getchar_nowait(void);
 
 /**
  * Get Key Hit
