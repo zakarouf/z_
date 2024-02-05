@@ -3,6 +3,7 @@
 
 #include "std/primitives.h"
 #include "vector.h"
+#include "utils.h"
 
 #include "u8arr.h"
 
@@ -46,8 +47,6 @@
 #define z__MapCh_MAX_CHUNKCOUNT (0xFFFF)
 #define z__MapCh_MAX_CHUNKRADIUS (0xFFFF/0xFF)
 
-#define z__xy2Dto1D(x, y, X) ((x) + ((y) * (X)))
-#define z__xyz3Dto1D(x, y, z, X, Y) (z__xy2Dto1D(x, y, X) + ((z) * (X) * (Y))) 
 
 #define z__PRIV__map__CH_DEFAULT_RADIUS_SIZE 1
 #define z__PRIV__map__CH_DEFAULT_X_SIZE 		32

@@ -11,7 +11,6 @@ void z__MapCh_new__raw(void *_map, z__u32 plotsize, z__u32Vec3 size, z__u16 ch_c
 {
     self;
 
-    printf("%p\n", map);fflush(stdout);
     map->size = size;
     map->chunk_count = ch_count;
     map->chunk_radius = chunk_radius;

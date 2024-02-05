@@ -38,4 +38,5 @@ int z__Map_layer_push_copy__raw(void *_map_, z__u64 plotsize, z__u32 src);
 
 int z__Map_layer_swap__raw(void *map, z__u32 l1, z__u32 l2);
 int z__Map_layer_swap_at_top__raw(void *map, z__u32 layer);
+
 #endif
