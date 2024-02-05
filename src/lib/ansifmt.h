@@ -6,6 +6,11 @@
 #include "prep/args.h"
 #include "prep/map.h"
 
+/**
+ * How to use?
+ * A: z__ansi_fmt((x, arg1, arg2), (y, arg1), ...)
+ */
+
 /* Formats Text */
 #define z__ansi_fmt(...) z__PRIV__ANSIFMT__FMT(__VA_ARGS__)
 
@@ -79,8 +84,8 @@
 
 #define z__PRIV__ANSISCR__SCR__C__jump(...)         "H"
 #define z__PRIV__ANSISCR__SCR__C__jumpxy(...)\
-            zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) ";"\
-            zpp__TO_STRING(zpp__PRIV__Args_get_2(__VA_ARGS__)) "H"
+            zpp__TO_STRING(zpp__PRIV__Args_get_2(__VA_ARGS__)) ";"\
+            zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) "H"
 
 #define z__PRIV__ANSISCR__SCR__C__up(...)         zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) "A"
 #define z__PRIV__ANSISCR__SCR__C__down(...)       zpp__TO_STRING(zpp__PRIV__Args_get_1(__VA_ARGS__)) "B"
