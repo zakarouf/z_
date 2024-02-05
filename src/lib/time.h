@@ -22,6 +22,6 @@ z__u64 z__time(void);
 z__u64 z__time_process(void);
 z__u64 z__time_tps(void);
 z__f64 z__time_delta(z__u64 process_0, z__u64 process_1);
-
+z__u64 z__time_mfps(z__u32 fps);
 
 #endif

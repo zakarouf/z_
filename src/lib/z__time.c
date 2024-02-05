@@ -52,6 +52,12 @@ z__u64 z__time_process(void)
     return clock();
 }
 
+z__u64 z__time_mfps(z__u32 fps)
+{
+    z__float x = 1.0f/fps;
+    return (z__u64)(x * 1000);
+}
+
 z__u64 z__time_tps(void)
 {
     return CLOCKS_PER_SEC;
