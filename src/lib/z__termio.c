@@ -3,8 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
-#include <readline/readline.h>
 
+#include "std/primitives.h"
 #include "string.h"
 #include "termio.h"
 
@@ -58,10 +58,46 @@ int z__termio_kbhit(void)
     return FD_ISSET(STDIN_FILENO, &fds);
 }
 
-z__u8 z__termio_getkey(void)
+z__u8 z__termio_getchar(void)
 {
     char buf = 0;
     struct termios old = {0};
+
+    fflush(stdout);
+    tcgetattr(0, &old);
+
+    old.c_lflag &= ~ICANON;
+    old.c_lflag &= ~ECHO;
+    old.c_cc[VMIN] = 1;
+    old.c_cc[VTIME] = 0;
+
+    tcsetattr(0, TCSANOW, &old);
+    read(0, &buf, 1);
+
+    old.c_lflag |= ICANON;
+    old.c_lflag |= ECHO;
+    tcsetattr(0, TCSADRAIN, &old);
+
+    return buf;
+} 
+
+#define k(n) z__termio_key_##n
+enum z__termio_key {
+      k(null) = 0
+    , k(soh)
+
+    , k(space) = 32
+    , k(tilde) = 126
+    , k(delete) = 127
+
+    , k(arrow_up) = 128
+};
+
+z__u32 z__termio_getkey(void)
+{
+    char buf = 0;
+    struct termios old = {0};
+
     fflush(stdout);
     tcgetattr(0, &old);
 
@@ -80,7 +116,7 @@ z__u8 z__termio_getkey(void)
     return buf;
 }
 
-z__u8 z__termio_getkey_nowait(void)
+z__u8 z__termio_getchar_nowait(void)
 {
     struct termios ttystate;
 
