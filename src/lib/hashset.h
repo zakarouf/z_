@@ -219,6 +219,12 @@
 
 #define z__HashStr_getreff(ht, hkey, valptr) z__HashSet_getreff(ht, hkey, valptr, z__PRIV__HashStr_hashfn, z__Str_isequal)
 
+#define z__HashStr_impl(Name, T, vT)\
+    void zpp__CAT(Name, _new) (T* self) { z__HashStr_new(self); }\
+    void zpp__CAT(Name, _delete) (T* self) { z__HashStr_delete(self); }\
+    void zpp__CAT(Name, _set) (T* self, z__Str key, vT val) { z__HashStr_set(self, key, val); }\
+    void zpp__CAT(Name, _getreff) (T* self, z__Str key, vT **val) { z__HashStr_getreff(self, key, val); }\
+    vT*  zpp__CAT(Name, _getreff_r) (T* self, z__Str key) { vT *v; z__HashStr_getreff(self, key, &v); return v; }\
 
 /** z__HashInt Interface **/
 #define z__HashInt_new(ht) z__HashSet_new(ht)
