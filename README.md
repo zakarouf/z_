@@ -91,9 +91,9 @@ git clone --depth=1 git://github.com/zakarouf/z_.git
 sh build.sh lib
 ```
 
-Will result a library libzkcollection.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
+Will result a library libz_.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
 
-Copy the `z_` folder onto your `include` directory. And copy the `libzkcollection.a` to the `lib` directory and link it against the executable and we are good to go.
+Copy the `z_` folder onto your `include` directory. And copy the `libz_.a` to the `lib` directory and link it against the executable and we are good to go.
 
 ```c
 #include <z_/z_.h>
@@ -101,20 +101,18 @@ Copy the `z_` folder onto your `include` directory. And copy the `libzkcollectio
 
 #### Method 2: Global Installation
 
-Run the `install.sh` script. <br>
+Run the `build.sh` script, with the following parameters <br>
 ```sh
-sh install.sh
+sh build.sh install lib
 ```
-
-This will run the `make-lib.sh` script and move the headers and the library to their designated path in your system.<br>
-By Default, the path for Headers is `usr/local/include/z_` and for library it is `libzkcollection.a`, you can change it by editing the
-`install.sh` file itself, `LIB_DIR` and `INCLUDE_DIR` to be specfic.
+By Default, the path for Headers is `usr/local/include/z_` and for library it is `libz_.a`, you can change it by editing the
+`build.sh` file itself, `LIB_DIR` and `INCLUDE_DIR` to be specfic.
 
 ### Config
 Inside the source directory `config_{MODULE}.h` that can be modified by the user in-order to change the behaviour, include, exclude the fuctionality of that sub-library.
 > {MODULE} is the name of the Module i.e. config_imp.h, config_prep.h etc.
 
-Such as inside of `src/config_types.h`
+Such as inside of `src/lib/_config_types.h`
 ```c
 #define Z___TYPE_CONFIG__USE_TYPE_LINKEDLIST
 
@@ -165,17 +163,17 @@ Bloat. Creating such library that I can use anywhere, I wanted to have as less b
 If by any case, I dont want use a bare macro. I would wrap it up inside of a function.
 
 ```c
-#define my_macro_functions(a, b) { ... }
+#define my_macro_function(a, b) { ... }
 
 void my_function(int a, int b)
 {
-    my_macro_functions(a, b);
+    my_macro_function(a, b);
 }
 ```
 
 ### Who is this for?
 
-Me. Or you if you stumble upon my stuff and found it cool. But as of writting this I created this for myself. This repo is so I can easily maintain and access the code and or share it with my friends. **I am not a Programmer by a long shot**, I just like when my computer goes beep-boop.
+Me. Or you if you stumble upon my stuff and found it cool. But as of writing, I created this for myself. This repo is so I can easily maintain and access the code and or share it with my friends. **I am not a good Programmer by a long shot**, I just like when my computer goes beep-boop.
 
 ## Credit & References
 
