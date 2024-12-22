@@ -225,7 +225,7 @@ int z__String_cmp(z__String const *s1, z__String const *s2);
 /**
  * Append a string of length provided, into the str. Auto re-allocates if required
  */
-z__String* z__Strint_append_str(z__String *str, const z__char *src, z__u32 length);
+z__String* z__String_append_str(z__String *str, const z__char *src, z__u32 length);
 
 /**
  * Append a formated string provided similar to sprintf

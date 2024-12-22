@@ -367,7 +367,7 @@ void z__String_replaceStr(z__String *str, const char * s, int len)
     str->data[str->lenUsed] = 0;
 }
 
-z__String* z__Strint_append_str(z__String *str, const z__char *src, z__u32 length)
+z__String* z__String_append_str(z__String *str, const z__char *src, z__u32 length)
 {
     if((str->len - str->lenUsed) > length){
         z__String_expand(str, length + 2);
