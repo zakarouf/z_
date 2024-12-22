@@ -35,3 +35,11 @@ void z__panic(int code, char const *str_msg_fmt, ...)
 }
 
 
+int z__exit(int code, char const *fmt, ...)
+{
+    va_list arg;
+    va_start(arg, fmt);
+    vfprintf(stderr, fmt, arg);
+    va_end(arg);
+    exit(code);
+}
