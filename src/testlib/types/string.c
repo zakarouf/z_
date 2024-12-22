@@ -2,8 +2,6 @@
 #include "../../lib/test.h"
 
 #include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 #define TEST(name) z__test_def(string, name)
 
@@ -13,7 +11,7 @@ TEST(new_and_replace_and_append) {
 
     /* Creating a Basic z__String using primitive types and strings */
     z__String s = z__String("Hello this is", name, "from Street No.", 31);
-    z__test_assert(strncmp(s.data, "Hello this is Jason from Street No. 31", s.lenUsed) == 0, "Got: %s", s.data);
+    z__test_assert(strncmp(s.data, "Hello this is Jason from Street No. 31", s.lenUsed) == 0, "Got: %.*s", s.lenUsed, s.data);
 
     /* Checking Replace */
     z__String_replace(&s, "%s left, at %i in the evening", name, 6);
