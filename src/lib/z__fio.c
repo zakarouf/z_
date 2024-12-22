@@ -40,6 +40,20 @@ void z__fio_ptr_dump(void const *ptr, z__size const unitsize, z__size const len,
     fwrite(ptr, unitsize * len, 1, fp);
 }
 
+int z__fio_write_file(void const *ptr, z__size const unitsize, z__size const len
+		, z__Str fname)
+{
+    if(z__fio_fileExist(fname.data)
+    || unitsize <= 0 || len <= 0) return 0;
+
+    FILE *fp = fopen(fname.data, "w");
+    if(fp == NULL) return 0;
+    
+    fwrite(ptr, unitsize, len, fp);
+    fclose(fp);
+    return 1;
+}
+
 void* z__fio_ptr_newLoad(z__size *unitsize, z__size *len, FILE *fp)
 {
     z__size _l, _unit;
@@ -193,4 +207,3 @@ int z__fio_mkdir(const char *p, z__size mode)
 {
     return mkdir(p, mode);
 }
-
