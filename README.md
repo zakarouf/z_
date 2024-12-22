@@ -17,7 +17,7 @@ This library provides Core Functionality built upon the C language. Inspired and
 
 ### Memory Tracker
 
-A simple memory tracker for debug purpose. **NOT GC (Garbage Collector)**.
+A simple memory wrapper for debug purpose.
 
 * A wrapper around malloc, calloc, realloc, free. z__MALLOC, z__CALLOC, z__REALLOC, z__FREE.
 * Logging memory allocation and de-allocation that can output in any file-stream including stdout.
@@ -88,7 +88,7 @@ Therefore, You need to explicitly include the `<stdlib.h>`, `<string.h>`.
 Inorder to integrated `z_` in your project only
 ```sh
 git clone --depth=1 git://github.com/zakarouf/z_.git
-sh make-lib.sh
+sh build.sh lib
 ```
 
 Will result a library libzkcollection.a created in the `./build/lib` and headers at `./build/include` as `z_` directory. <br>
