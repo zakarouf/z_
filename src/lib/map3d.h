@@ -38,8 +38,8 @@
     {                                   \
         __VA_ARGS__;                    \
         z__FREE((map)->plots);          \
-        (map)-size = (z__u32Vec3){0};   \
-        (map)-size_total = 0;           \
+        (map)->size = (z__u32Vec3){0};   \
+        (map)->size_total = 0;           \
     }                                   \
 
 #endif
