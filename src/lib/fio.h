@@ -33,19 +33,31 @@ void* z__fio_ptr_newLoad(z__size *unitsize, z__size *len, FILE *fp);
 void z__fio_ptr_dump(void const *ptr, z__size const unitsize, z__size const len, FILE *fp);
 
 /**
+ * Write data to a new file, returns true on success
+ */
+int z__fio_write_file(void const *ptr, z__size const unitsize, z__size const len
+		, z__Str fname);
+
+/**
+ * Append data to a file, returns true on success
+ */
+int z__fio_append_file(void const *ptr, z__size const unitsize, z__size const len
+		, z__Str fname);
+
+/**
  * Load Up a file as a dynt object.
  */
 z__Dynt z__fio_Dynt_newFromFile(char const filename[], z__size const subDiv, char const *comment, z__i32 const commentLen);
 
 /**
- * Dump a Dynt Object into a file.
- */
-void z__fio_Dynt_dump(z__Dynt *obj, FILE *fp);
-
-/**
  * Load a Dynt Object form a file.
  */
 void z__fio_Dynt_newLoad(z__Dynt *obj, FILE *fp);
+
+/**
+ * Dump a Dynt Object into a file.
+ */
+void z__fio_Dynt_dump(z__Dynt *obj, FILE *fp);
 
 /**
  * Create a new directory.
