@@ -33,7 +33,7 @@
         zpp__assert_construct(                      \
                 e1 == e2                            \
                 , z__PRIV__test_exception           \
-                , "Expected: %i\nGot: %i", e1, e2); \
+                , "Expected: %i\nGot: %i", e2, e1); \
     }
 
 #define z__test_done(...) {\
