@@ -398,12 +398,12 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 #define z__PRIV__typegen_primlist(v) z__typegen_def((v), "",\
                 , (char, "%c")   \
-                , (z__i16, PRIi16)    \
-                , (z__u16, PRIu16)    \
-                , (z__i32, PRIi32)     \
-                , (z__u32, PRIu32)     \
-                , (z__i64, PRIi64)   \
-                , (z__u64, PRIu64)   \
+                , (z__i16, "%" PRIi16)    \
+                , (z__u16, "%" PRIu16)    \
+                , (z__i32, "%" PRIi32)     \
+                , (z__u32, "%" PRIu32)     \
+                , (z__i64, "%" PRIi64)   \
+                , (z__u64, "%" PRIu64)   \
                 \
                 , (z__f32, "%f")    \
                 , (z__f64, "%lF")   \
