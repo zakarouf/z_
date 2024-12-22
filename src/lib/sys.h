@@ -23,4 +23,9 @@ z__String z__sys_getcwd(void);
  */
 z__String z__sys_getcwf(void);
 
+/**
+ * Print message & Exit.
+ */
+int z__exit(int code, char const *fmt, ...);
+
 #endif
