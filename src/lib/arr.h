@@ -14,6 +14,8 @@
 #include "std/primitives.h"
 #include "std/mem.h"
 
+#include "typeof.h"
+
 #define Z__CONFIG__ARR__GROWTH_FACTOR__NUM      8
 #define Z__CONFIG__ARR__SHRINK_FACTOR__NUM      8
 
@@ -287,7 +289,7 @@ typedef z__Arr(void) z__voidArr;
     {\
         if ((arr)->lenUsed >= (arr)->len)                                                       \
         {                                                                                       \
-            (arr)->len += Z__CONFIG__ARR__GROWTH_FACTOR__NUM;                             \
+            (arr)->len *= 2;                                                                    \
             (arr)->data = z__REALLOC_SAFE((arr)->data,  sizeof(*(arr)->data)* ((arr)->len) );   \
         }                                                                                       \
     }
