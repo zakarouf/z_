@@ -28,7 +28,8 @@
 
 #define test_list_imp \
       imp_print\
-    , time
+    , time\
+    , arena
 
 import(test_list_types);
 import(test_list_imp);
