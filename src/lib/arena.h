@@ -1,14 +1,20 @@
-#ifndef ZAKAROUF__Z__ARRLLIST_H
-#define ZAKAROUF__Z__ARRLLIST_H
+#ifndef ZAKAROUF__Z__ARENA_ALLOCATOR_H
+#define ZAKAROUF__Z__ARENA_ALLOCATOR_H
 
 #include "std/primitives.h"
 
 typedef struct z__Arena z__Arena;
-struct z__Arena {
+typedef struct z__ArenaRegion z__ArenaRegion;
+struct z__ArenaRegion {
     z__byte *pool;
     z__size capacity;
     z__size used;
-    z__Arena *next;
+    z__ArenaRegion *next;
+};
+
+struct z__Arena {
+    z__ArenaRegion 
+        *begin, *end;
 };
 
 z__Arena*   z__Arena_new(z__size pool_capacity);
