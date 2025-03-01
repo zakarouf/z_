@@ -39,7 +39,7 @@ void z__Arena_delete(z__Arena *arena)
     z__ArenaRegion *reg = arena->begin;
     z__ArenaRegion *reg_next = reg->next;
     z__FREE(reg);
-    reg = reg->next;
+    reg = reg_next;
     while(reg) {
         reg->next = reg;
         z__FREE(reg);
@@ -49,15 +49,16 @@ void z__Arena_delete(z__Arena *arena)
 
 void *z__Arena_alloc(z__Arena *arena, z__size size)
 {
-    z__i64 leftover = arena->end->used - size;
-    if(leftover < size) {
-        z__ArenaRegion *r = ArenaRegion_new(size > arena->end->capacity?
-                                           (size) : arena->end->capacity);
-        arena->end->next = r;
-        arena->end = r;
+    z__ArenaRegion *r = arena->end;
+    z__size availiable = r->capacity - r->used;
+    if(availiable < size) {
+        z__ArenaRegion *new_r = ArenaRegion_new(size > r->capacity?
+                                                size : r->capacity);
+        r->next = new_r;
+        arena->end = r->next;
+        r = new_r;
     }
 
-    z__ArenaRegion *r = arena->end;
     void *mem = r->pool + r->used;
     r->used += size;
     return mem;
