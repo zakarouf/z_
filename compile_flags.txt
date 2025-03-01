@@ -1,0 +1,7 @@
+-std=c99
+-Wall
+-Wextra
+-Wpedantic
+-Winline
+-Wswitch
+-Warith-conversion
