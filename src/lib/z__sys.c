@@ -9,6 +9,7 @@
 //#include "../../prep/prep.h"
 
 #if defined(_WIN32) || defined (_WIN64) || defined (WINDOWS) || defined (_MSC_VER)
+    #include <windows.h>
     #include <direct.h>
     #define getcwd _getcwd
 #else 
@@ -17,6 +18,7 @@
 
 long z__sys_getRamUsage(void)
 {
+
     struct rusage usage;
     getrusage(RUSAGE_SELF, &usage);
 
