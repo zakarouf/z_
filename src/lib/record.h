@@ -27,7 +27,7 @@
 /**
  * Call Record
  */
-#define record struct
+//#define record struct
 
 /**
  * Assignment directly onto a Record.
