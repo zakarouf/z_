@@ -9,74 +9,125 @@
 
 This library provides Core Functionality built upon the C language. Inspired and taken from Modern Languages such as Python, Rust etc.
 
-* **Memory Management.** Minimal Memory Tracker for logging memory, Autofree that can act as a build-in deconstructor.
-* **Type & Data Structures.** Clean Systematic Data types and Structures with feature-full fuctionality.
-* **Meta-Programming.** An absolute abuse of C-preprocessor.
-* **Multi-Threading.** A more elegant way to handle concurrency.
-* **Standard Functions.** Did you wanted stuff like logging, better File IO, Generic Printing, Error Handling similar to try catch. Yes we got those.
+* **Memory Management:** Allocators, Memory Debugger.
+* **Types & Data Structures:** Clean Systematic Data types and Structures with feature-full fuctionality.
+* **Meta-Programming:** An absolute abuse of C-preprocessor.
+* **Utilities:** Mini Libraries and modules for extendend fucntionality (e.g. TUI) and wrappers (e.g. curl, cglm)
 
-### Memory Tracker
+## Sub-Modules
+List of sub-modules of provided by the library.
 
-A simple memory wrapper for debug purpose.
+- [ansifmt.h](./src/lib/ansifmt.h): 
+- [argparse.h](./src/lib/argparse.h): 
+- [arr.h](./src/lib/arr.h): Implementation of Generic Dyanmic Array
+- [arrfree.h](./src/lib/arrfree.h)
+- [arrllist.h](./src/lib/arrllist.h): Implementation of Array Allocated Generic Linked List
+- [assert.h](./src/lib/assert.h)
+- [atomic.h](./src/lib/atomic.h)
+- [autotype.h](./src/lib/autotype.h)
+- [bitf.h](./src/lib/bitf.h)
+- [bnf.h](./src/lib/bnf.h)
+- [bytes.h](./src/lib/bytes.h): Implementation of byte array
+- [cglm.h](./src/lib/cglm.h)
+- [contof.h](./src/lib/contof.h): Container of macro
+- [curl.h](./src/lib/curl.h): Wrapper around curl
+- [dynt.h](./src/lib/dynt.h): Implementation of Opaque Array
+- [enum.h](./src/lib/enum.h): Implementation of [Sum Type](https://en.wikipedia.org/wiki/Tagged_union)
+- [fio.h](./src/lib/fio.h)
+- [fnptr.h](./src/lib/fnptr.h)
+- [forrange.h](./src/lib/forrange.h)
+- [gmath.h](./src/lib/gmath.h)
+- [hashset.h](./src/lib/hashset.h): Implementation of Generic Hash List/Map/Table
+- [hashstr.h](./src/lib/hashstr.h): Implementation of String Key, Hash Set. 
+- [htmlfmt.h](./src/lib/htmlfmt.h): 
+- [irrg.h](./src/lib/irrg.h): Implementation of Opaque List
+- [lexer.h](./src/lib/lexer.h)
+- [llist.h](./src/lib/llist.h): Implementation of [Linked List](https://en.wikipedia.org/wiki/Linked_list)
+- [map.h](./src/lib/map.h)
+- [map2d.h](./src/lib/map2d.h)
+- [map3d.h](./src/lib/map3d.h)
+- [mapch.h](./src/lib/mapch.h)
+- [matrix.h](./src/lib/matrix.h)
+- [obj.h](./src/lib/obj.h)
+- [omp.h](./src/lib/omp.h)
+- [option.h](./src/lib/option.h): Implementation of Option Sum Type
+- [offsetof.h](./src/lib/offsetof.h)
+- [pairarr.h](./src/lib/pairarr.h): Implementation of Pair Array
+- [print.h](./src/lib/print.h)
+- [record.h](./src/lib/record.h): Struct Gen that can be used by c macros, [Record](https://en.wikipedia.org/wiki/Record_(computer_science)).
+- [result.h](./src/lib/result.h)
+- [return.h](./src/lib/return.h)
+- [sys.h](./src/lib/sys.h)
+- [subp.h](./src/lib/subp.h)
+- [soarr.h](./src/lib/soarr.h): Implementation of Struct of Arrays
+- [strto.h](./src/lib/strto.h)
+- [serial.h](./src/lib/serial.h)
+- [string.h](./src/lib/string.h): Implementation of Byte String (ASCII).
+- [string8.h](./src/lib/string8.h): Implementation of utf-8 compactible String.
+- [structarr.h](./src/lib/structarr.h)
+- [tui.h](./src/lib/tui.h)
+- [time.h](./src/lib/time.h)
+- [test.h](./src/lib/test.h)
+- [tree.h](./src/lib/tree.h)
+- [type.h](./src/lib/type.h)
+- [tuple.h](./src/lib/tuple.h): Implementation of [Tuple Type](https://en.wikipedia.org/wiki/Tuple).
+- [termio.h](./src/lib/termio.h)
+- [thread.h](./src/lib/thread.h)
+- [typeid.h](./src/lib/typeid.h)
+- [typeof.h](./src/lib/typeof.h)
+- [tgprint.h](./src/lib/tgprint.h)
+- [typegen.h](./src/lib/typegen.h)
+- [utf8.h](./src/lib/utf8.h)
+- [u8arr.h](./src/lib/u8arr.h)
+- [utils.h](./src/lib/utils.h)
+- [vector.h](./src/lib/vector.h)
 
-* A wrapper around malloc, calloc, realloc, free. z__MALLOC, z__CALLOC, z__REALLOC, z__FREE.
-* Logging memory allocation and de-allocation that can output in any file-stream including stdout.
-* Evaluation of Total allocation and free, helps to combat memory leaks and such
+### Pre-Processing Modules (PreP)
+Meta-programming using C-preprocessor. [Explore Source](./src/lib/prep)
 
-### Types (types)
+- [prep/args.h](./src/lib/prep/args.h)
+- [prep/base.h](./src/lib/prep/base.h)
+- [prep/call.h](./src/lib/prep/call.h)
+- [prep/eval.h](./src/lib/prep/eval.h)
+- [prep/loop.h](./src/lib/prep/loop.h)
+- [prep/map.h](./src/lib/prep/map.h)
+- [prep/num.h](./src/lib/prep/num.h)
 
-Types to allow more stable/systamatic programming procedure with type-safe generic Data-types and Data-Structures, say no more to "Implement this basic functionaity 10 different ways in 10 different programs". Whilst some types are compatible with other libraries too! <br> Vectors and Matrix in particular are totally compatible with the [cglm](https://github.com/recp/cglm) library.
+- [prep/comp/eval.h](./src/lib/prep/comp/eval.h)
 
-- [Primitive Types](https://en.wikipedia.org/wiki/Primitive_data_type)
-- [Type System]() & [Typesets]()
-- [Algebraic Data Type](https://en.wikipedia.org/wiki/Algebraic_data_type)
-  - [Tuple](https://en.wikipedia.org/wiki/Tuple)
-  - [Record](https://en.wikipedia.org/wiki/Record_(computer_science))
-  - [Sum Type](https://en.wikipedia.org/wiki/Tagged_union)
-- [String](https://en.wikipedia.org/wiki/String_(computer_science))
-- [String List]()
-- [String List Array]()
-- [Arrays](https://en.wikipedia.org/wiki/Array_data_structure)
-  - [Dyanmic Array Types](https://en.wikipedia.org/wiki/Dynamic_array)
-    - [Generic](https://en.wikipedia.org/wiki/Generic_programming)
-    - [Void Type](https://en.wikipedia.org/wiki/Void_type)
-    - [Void Objects](./docs/in-depth/Irrg.md)
-  - [Fixed Length Arrays]()
-    - [Using Record]()
-    - [Using Raw Array]()
-- [Vector Types](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics))
-  - [Using Record]()
-  - [Using Raw Array]()
-- [Matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics))
-  - [Using Record]()
-  - [Using Raw Array]()
-- [Linked List](https://en.wikipedia.org/wiki/Linked_list)
+- [prep/gen/args/applyfxy.h](./src/lib/prep/gen/args/applyfxy.h)
+- [prep/gen/args/get.h](./src/lib/prep/gen/args/get.h)
+- [prep/gen/args/getupto.h](./src/lib/prep/gen/args/getupto.h)
+- [prep/gen/args/skip.h](./src/lib/prep/gen/args/skip.h)
+- [prep/gen/args/var.h](./src/lib/prep/gen/args/var.h)
 
-### Pre-Processing (PreP)
+- [prep/gen/num/dec_u8.h](./src/lib/prep/gen/num/dec_u8.h)
+- [prep/gen/num/dec_n1024.h](./src/lib/prep/gen/num/dec_n1024.h)
+- [prep/gen/num/dec_n2048.h](./src/lib/prep/gen/num/dec_n2048.h)
+- [prep/gen/num/inc_u8.h](./src/lib/prep/gen/num/inc_u8.h)
+- [prep/gen/num/inc_n1024.h](./src/lib/prep/gen/num/inc_n1024.h)
+- [prep/gen/num/inc_n2048.h](./src/lib/prep/gen/num/inc_n2048.h.h)
 
-Meta-programming using C-preprocessor. [Source Code](./src/prep)
+- [prep/nm/assert.h](./src/lib/prep/nm/assert.h)
+- [prep/nm/cond.h](./src/lib/prep/nm/cond.h)
+- [prep/nm/ident.h](./src/lib/prep/nm/ident.h)
+- [prep/nm/pragma.h](./src/lib/prep/nm/pragma.h)
+- [prep/nm/string.h](./src/lib/prep/nm/string.h)
 
-### Multi Threading (Proc)
+### Prelude
+Stuff that is probably needed everywhere.
 
-Multi-Threading wrapper arrund both OpenMP and Pthread with C11 `<threads.h>` considered for the future. <br>
-
-The Development has started with OpenMP.   <br>
-Pthreads impletation has also started with its [base](src/proc/pt_base.h). <br>
-
-Benchmark Report of the performance achieved with OpenMP, Pthread compared to its single threaded counter-part is in the works.
-> Currently I'm using Macbook Air 2012-mid with 4 Threads for the benchmark.
-- 2D 10000x10000 Terain Map Generation with Perlin Noise. **64% Faster**. [Source code](./examples/gen_perlin2D)<br>
-
-### Standard Functions (IMPs)
-
-Lastly `z_` Also Provides Basic day-to-day set of functions revolving around Time, File IO, System, Logging and many more.
-
+- [std/alloc.h](./src/lib/std/alloc.h)
+- [std/arch.h](./src/lib/std/arch.h)
+- [std/io.h](./src/lib/std/io.h)
+- [std/mem.h](./src/lib/std/mem.h)
+- [std/primitives.h](./src/lib/std/primitives.h)
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
 it doesn't even include standard library except `stddef.h`, `stdint.h` and `stdbool.h` for type
 declaration **but** they still require the bare minimum `base` for to be working properly such
-as, `z_/types/arr.h` can be included in itself but it still require `base.h` of `types`
+as, `z_/arr.h` can be included in itself but it still require `base.h` of `types`
 for `z__u32` and `mem.h` for memory allocation definitions.
 
 Therefore, You need to explicitly include the `<stdlib.h>`, `<string.h>`.

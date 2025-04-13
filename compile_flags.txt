@@ -1,7 +1,8 @@
--std=c99
+-std=c23
 -Wall
 -Wextra
 -Wpedantic
 -Winline
 -Wswitch
 -Warith-conversion
+-DZ__IMPLEMENTATION

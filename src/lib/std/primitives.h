@@ -6,12 +6,6 @@
 #include <stdbool.h>
 #include <inttypes.h>
 
-#ifdef Z__CONFIG__PRIMITIVES_USE_MACRO_TYPE_CONVERTOR
-#undef Z__CONFIG__PRIMITIVES_USE_MACRO_TYPE_CONVERTOR
-#else
-#define Z__CONFIG__PRIMITIVES_USE_MACRO_TYPE_CONVERTOR
-#endif
-
 /* Basic Types */
 // Unsigned
 typedef uint8_t  z__u8;
@@ -57,28 +51,6 @@ typedef ptrdiff_t z__ptrdiff;
 typedef size_t z__size;
 
 #define z__cast(T, val) ((T)(val))
-
-#ifdef Z__CONFIG__PRIMITIVES_USE_MACRO_TYPE_CONVERTOR
-// Type config_types
-#define z__i8(v) ((z__i8)(v))
-#define z__i16(v) ((z__i16)(v))
-#define z__i32(v) ((z__i32)(v))
-#define z__i64(v) ((z__i64)(v))
-
-#define z__u8(v) ((z__u8)(v))
-#define z__u16(v) ((z__u16)(v))
-#define z__u32(v) ((z__u32)(v))
-#define z__u64(v) ((z__u64)(v))
-
-#define z__int(v) ((z__int)(v))
-#define z__float(v) ((z__float)(v))
-#define z__byte(v)  ((z__byte)(v))
-#define z__bool(v)  ((z__bool)(v))
-#define z__ptr(v) ((z__ptr)(v))
-
-#define z__size(v) ((z__size)(v))
-
-#endif
 
 
 #endif // Header Guard

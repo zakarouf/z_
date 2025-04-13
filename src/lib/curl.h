@@ -6,8 +6,7 @@ z__Curl *z__Curl_new(void);
 void z__Curl_delete(z__Curl *zc);
 void z__Curl_request(z__Curl *zc, const char *link_nullterm);
 
-#define ZAKAROUF_CURLWRAP_IMPLEMENTATION
-#ifdef ZAKAROUF_CURLWRAP_IMPLEMENTATION
+#ifdef Z__IMPLEMENTATION 
 #include <stdlib.h>
 #include <string.h>
 
