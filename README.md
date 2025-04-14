@@ -17,81 +17,88 @@ This library provides Core Functionality built upon the C language. Inspired and
 ## Sub-Modules
 List of sub-modules of provided by the library.
 
-- [ansifmt.h](./src/lib/ansifmt.h): 
-- [argparse.h](./src/lib/argparse.h): 
+- [ansifmt.h](./src/lib/ansifmt.h): ANSI Terminal string format (e.g. clear, jump cursor, change text color)
+- [argparse.h](./src/lib/argparse.h): Parse list of arguments of a program.
 - [arr.h](./src/lib/arr.h): Implementation of Generic Dyanmic Array
-- [arrfree.h](./src/lib/arrfree.h)
+- [arrfree.h](./src/lib/arrfree.h): Implementation of auto free for Dyanmic array type
 - [arrllist.h](./src/lib/arrllist.h): Implementation of Array Allocated Generic Linked List
-- [assert.h](./src/lib/assert.h)
-- [atomic.h](./src/lib/atomic.h)
-- [autotype.h](./src/lib/autotype.h)
-- [bitf.h](./src/lib/bitf.h)
-- [bnf.h](./src/lib/bnf.h)
+- [assert.h](./src/lib/assert.h): Custom assert implementation.
+- [atomic.h](./src/lib/atomic.h): Custom atomic wrapper.
+- [autotype.h](./src/lib/autotype.h): Autotype alias.
+- [bitf.h](./src/lib/bitf.h): Macros for bit field manupilation
+- [bnf.h](./src/lib/bnf.h): Context free grammer notation [Backus-Naur form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form)
 - [bytes.h](./src/lib/bytes.h): Implementation of byte array
-- [cglm.h](./src/lib/cglm.h)
+- [cglm.h](./src/lib/cglm.h): Wrapper for cglm
 - [contof.h](./src/lib/contof.h): Container of macro
 - [curl.h](./src/lib/curl.h): Wrapper around curl
 - [dynt.h](./src/lib/dynt.h): Implementation of Opaque Array
 - [enum.h](./src/lib/enum.h): Implementation of [Sum Type](https://en.wikipedia.org/wiki/Tagged_union)
-- [fio.h](./src/lib/fio.h)
-- [fnptr.h](./src/lib/fnptr.h)
-- [forrange.h](./src/lib/forrange.h)
-- [gmath.h](./src/lib/gmath.h)
+- [fio.h](./src/lib/fio.h): File IO
+- [fnptr.h](./src/lib/fnptr.h): Function pointer macro
+- [forrange.h](./src/lib/forrange.h): For-range for different data types
+- [gmath.h](./src/lib/gmath.h): Math functions for vectors and matrix
 - [hashset.h](./src/lib/hashset.h): Implementation of Generic Hash List/Map/Table
 - [hashstr.h](./src/lib/hashstr.h): Implementation of String Key, Hash Set. 
-- [htmlfmt.h](./src/lib/htmlfmt.h): 
+- [htmlfmt.h](./src/lib/htmlfmt.h): Format Macro for html
 - [irrg.h](./src/lib/irrg.h): Implementation of Opaque List
-- [lexer.h](./src/lib/lexer.h)
+- [lexer.h](./src/lib/lexer.h): Generic Lexer
 - [llist.h](./src/lib/llist.h): Implementation of [Linked List](https://en.wikipedia.org/wiki/Linked_list)
-- [map.h](./src/lib/map.h)
-- [map2d.h](./src/lib/map2d.h)
-- [map3d.h](./src/lib/map3d.h)
-- [mapch.h](./src/lib/mapch.h)
-- [matrix.h](./src/lib/matrix.h)
-- [obj.h](./src/lib/obj.h)
-- [omp.h](./src/lib/omp.h)
+- [map.h](./src/lib/map.h): Multi-layer tilemap.
+- [map2d.h](./src/lib/map2d.h): Single-layer tilemap.
+- [map3d.h](./src/lib/map3d.h): 3-Dimentional tilemap.
+- [mapch.h](./src/lib/mapch.h): Multi Chunk 3D tilemap
+- [matrix.h](./src/lib/matrix.h): Matrix Type
+- [obj.h](./src/lib/obj.h): Closure & V-Tables
+- [omp.h](./src/lib/omp.h): OpenMP wrapper
 - [option.h](./src/lib/option.h): Implementation of Option Sum Type
-- [offsetof.h](./src/lib/offsetof.h)
+- [offsetof.h](./src/lib/offsetof.h): Custom Offset macro.
 - [pairarr.h](./src/lib/pairarr.h): Implementation of Pair Array
-- [print.h](./src/lib/print.h)
+- [print.h](./src/lib/print.h): Print Implentation
 - [record.h](./src/lib/record.h): Struct Gen that can be used by c macros, [Record](https://en.wikipedia.org/wiki/Record_(computer_science)).
-- [result.h](./src/lib/result.h)
-- [return.h](./src/lib/return.h)
-- [sys.h](./src/lib/sys.h)
-- [subp.h](./src/lib/subp.h)
+- [result.h](./src/lib/result.h): Result Type
+- [return.h](./src/lib/return.h): Function return definitions
+- [sys.h](./src/lib/sys.h): Functions for comunicating with system.
+- [subp.h](./src/lib/subp.h): Spawing a sub-process/child process
 - [soarr.h](./src/lib/soarr.h): Implementation of Struct of Arrays
-- [strto.h](./src/lib/strto.h)
-- [serial.h](./src/lib/serial.h)
+- [strto.h](./src/lib/strto.h): 
+- [serial.h](./src/lib/serial.h):
 - [string.h](./src/lib/string.h): Implementation of Byte String (ASCII).
 - [string8.h](./src/lib/string8.h): Implementation of utf-8 compactible String.
-- [structarr.h](./src/lib/structarr.h)
-- [tui.h](./src/lib/tui.h)
-- [time.h](./src/lib/time.h)
-- [test.h](./src/lib/test.h)
-- [tree.h](./src/lib/tree.h)
-- [type.h](./src/lib/type.h)
+- [tui.h](./src/lib/tui.h): Terminal based UI, lightweight alternative to ncurses.
+- [time.h](./src/lib/time.h): Time based functionality
+- [test.h](./src/lib/test.h): Test Suite Impletation
+- [tree.h](./src/lib/tree.h): [m-ary tree](https://en.wikipedia.org/wiki/M-ary_tree) Implentationw
+- [type.h](./src/lib/type.h): Define a Type Set
 - [tuple.h](./src/lib/tuple.h): Implementation of [Tuple Type](https://en.wikipedia.org/wiki/Tuple).
-- [termio.h](./src/lib/termio.h)
-- [thread.h](./src/lib/thread.h)
-- [typeid.h](./src/lib/typeid.h)
-- [typeof.h](./src/lib/typeof.h)
-- [tgprint.h](./src/lib/tgprint.h)
-- [typegen.h](./src/lib/typegen.h)
-- [utf8.h](./src/lib/utf8.h)
-- [u8arr.h](./src/lib/u8arr.h)
-- [utils.h](./src/lib/utils.h)
-- [vector.h](./src/lib/vector.h)
+- [termio.h](./src/lib/termio.h): Terminal io functions
+- [thread.h](./src/lib/thread.h): Thread Wrapper around pthread
+- [typeid.h](./src/lib/typeid.h): List of Type-ids generated from `typegen.h`
+- [typeof.h](./src/lib/typeof.h): typeof macro
+- [tgprint.h](./src/lib/tgprint.h): Type Generic Print
+- [typegen.h](./src/lib/typegen.h): Macro for generating type info
+- [utf8.h](./src/lib/utf8.h): utf-8 functions
+- [u8arr.h](./src/lib/u8arr.h): u8 array
+- [utils.h](./src/lib/utils.h): Utility macro and functions
+- [vector.h](./src/lib/vector.h): Vector Type
 
 ### Pre-Processing Modules (PreP)
 Meta-programming using C-preprocessor. [Explore Source](./src/lib/prep)
 
-- [prep/args.h](./src/lib/prep/args.h)
-- [prep/base.h](./src/lib/prep/base.h)
-- [prep/call.h](./src/lib/prep/call.h)
-- [prep/eval.h](./src/lib/prep/eval.h)
-- [prep/loop.h](./src/lib/prep/loop.h)
-- [prep/map.h](./src/lib/prep/map.h)
-- [prep/num.h](./src/lib/prep/num.h)
+- [prep/args.h](./src/lib/prep/args.h): Macro for passed-in arguments.
+- [prep/base.h](./src/lib/prep/base.h): Basic Utility Macros
+- [prep/call.h](./src/lib/prep/call.h): Function Call Wrapper
+- [prep/eval.h](./src/lib/prep/eval.h): Eval Macro
+- [prep/loop.h](./src/lib/prep/loop.h): Macro for compile-time loop
+- [prep/map.h](./src/lib/prep/map.h): Map Macro
+- [prep/num.h](./src/lib/prep/num.h): Macro for compile time small number arithmatic and comparism
+
+- [prep/nm/assert.h](./src/lib/prep/nm/assert.h): Assert Constructors
+- [prep/nm/cond.h](./src/lib/prep/nm/cond.h): 
+- [prep/nm/ident.h](./src/lib/prep/nm/ident.h):
+- [prep/nm/pragma.h](./src/lib/prep/nm/pragma.h):
+- [prep/nm/string.h](./src/lib/prep/nm/string.h):
+
+Helper function for preprocessor macros, not used directly
 
 - [prep/comp/eval.h](./src/lib/prep/comp/eval.h)
 
@@ -108,20 +115,14 @@ Meta-programming using C-preprocessor. [Explore Source](./src/lib/prep)
 - [prep/gen/num/inc_n1024.h](./src/lib/prep/gen/num/inc_n1024.h)
 - [prep/gen/num/inc_n2048.h](./src/lib/prep/gen/num/inc_n2048.h.h)
 
-- [prep/nm/assert.h](./src/lib/prep/nm/assert.h)
-- [prep/nm/cond.h](./src/lib/prep/nm/cond.h)
-- [prep/nm/ident.h](./src/lib/prep/nm/ident.h)
-- [prep/nm/pragma.h](./src/lib/prep/nm/pragma.h)
-- [prep/nm/string.h](./src/lib/prep/nm/string.h)
-
 ### Prelude
 Stuff that is probably needed everywhere.
 
-- [std/alloc.h](./src/lib/std/alloc.h)
-- [std/arch.h](./src/lib/std/arch.h)
-- [std/io.h](./src/lib/std/io.h)
-- [std/mem.h](./src/lib/std/mem.h)
-- [std/primitives.h](./src/lib/std/primitives.h)
+- [std/alloc.h](./src/lib/std/alloc.h): Alloctor
+- [std/arch.h](./src/lib/std/arch.h): Macro for defining Architecture
+- [std/io.h](./src/lib/std/io.h): IO Functions
+- [std/mem.h](./src/lib/std/mem.h): Memory Function
+- [std/primitives.h](./src/lib/std/primitives.h): Primitives
 
 ## Getting Started
 `z_` is made with modularity in mind so many parts of it are as self-isolated as they can,
@@ -180,6 +181,15 @@ This forces to you to include linked list type manually.
 #include <z_/types/llist.h>
 ```
 Now this will work as it should.
+
+### Using Library
+`z_` is now uses stb-style header impletation macro without compiling a `.a` library to link to.
+Define `Z__IMPLEMENTATION` in any one of the source file before including the header.
+I would recommended creating a seperate empty source file with all the impletation defined.
+```c
+#define Z__IMPLEMENTATION
+#include <z_/time.h>
+```
 
 ### Adding Syntax Highlighting (Vim & NeoVim)
 

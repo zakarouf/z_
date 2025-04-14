@@ -8,6 +8,7 @@
 #include "gen/args/getupto.h"
 #include "gen/args/skip.h"
 #include "gen/args/var.h"
+#include "gen/args/applyfxy.h"
 
 
 #define zpp__Args_HAS_COMMA(...) zpp__PRIV__VARIADICS_COUNT_AUX(__VA_ARGS__, \
@@ -80,7 +81,6 @@ zpp__PRIV_Args_ISEMPTY_MATCH(                                                   
 /**
  * Apply fxy
  */
-#include "gen/args/applyfxy.h"
 #define zpp__PRIV__Args_applyfxy_raw(f, va, count, ...) zpp__CAT(zpp__PRIV__Args_applyfxy__step_, count)(f, va, __VA_ARGS__)
 #define zpp__Args_applyfxy_raw(f, va, count, ...) zpp__PRIV__Args_applyfxy_raw(f, va, count, __VA_ARGS__)
 

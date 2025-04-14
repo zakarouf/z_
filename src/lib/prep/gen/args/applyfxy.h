@@ -1,3 +1,6 @@
+#ifndef ZAKAROUF__ZPREP_GEN_ARGS_APPLYFXY_H
+#define ZAKAROUF__ZPREP_GEN_ARGS_APPLYFXY_H
+
 #define zpp__PRIV__Args_applyfxy__step_159(f, va, v, ...)\
 f(va, v)\
 zpp__PRIV__Args_applyfxy__step_158(f, va, __VA_ARGS__)\
@@ -635,3 +638,5 @@ f(va, v)\
 zpp__PRIV__Args_applyfxy__step_0(f, va, __VA_ARGS__)\
 
 #define zpp__PRIV__Args_applyfxy__step_0(...)
+
+#endif

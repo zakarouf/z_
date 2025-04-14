@@ -12,8 +12,8 @@ void z__time_msleep(int milliseconds);
 /**
  * Get Local Time
  */
-int z__time_getLocalTime(int * _Nonnull h, int * _Nonnull m, int * _Nonnull s);
-void z__time_getLocalTime_str(z__String * _Nonnull str);
+int z__time_getLocalTime(int *h, int *m, int *s);
+void z__time_getLocalTime_str(z__String *str);
 
 /**
  * Get time
