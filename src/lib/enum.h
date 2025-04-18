@@ -1,6 +1,7 @@
 #ifndef ZAKAROUF__ZTYPES_TYPES__ENUM_H
 #define ZAKAROUF__ZTYPES_TYPES__ENUM_H
 
+#include "_export.h"
 #include "std/primitives.h"
 #include "tuple.h"
 #include "record.h"
@@ -72,15 +73,6 @@
 
 #define z__Enum_mtag(M) zpp__CAT(ENUM_TAG__, M)
 
-#define z__Enum__PRIV__chip_Apply_if_0(...) z__Tuple_assign(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
-#define z__Enum__PRIV__chip_Apply_if_1(...) z__Record_assign(zpp__PRIV__Args_get_1(__VA_ARGS__), zpp__Args_skip_1(__VA_ARGS__))
-
-#define z__Enum__PRIV__chip_Apply_if(...) zpp__CAT(z__Enum__PRIV__chip_Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_2(__VA_ARGS__)))(__VA_ARGS__)
-
-#define z__Enum__PRIV__chip__if_0(...) z__Enum__PRIV__chip_Apply_if(__VA_ARGS__) 
-#define z__Enum__PRIV__chip__if_1(...)
-#define z__Enum__PRIV__chip__if(...)\
-    zpp__CAT(z__Enum__PRIV__chip__if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
 
 #define z__Enum_chip(En, sl, ...)                           \
     {                                                       \
@@ -100,8 +92,43 @@
         for(z__typeof(en) *z__tmp__enum = &en; keep; keep ^= 1) \
             switch((z__tmp__enum)->tag)                         \
 
+#define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
 
+#define z__Enum_emptyslot break; default:
+#define z__Enum_unslot }
 
+#define z__Enum_ifSlot(En, M, ...)\
+        if(z__Enum_matches(En, M))\
+        { z__Enum__PRIV__slot__Apply_if((&En)->data.M, __VA_ARGS__)
+
+#define z__Enum_matches(En, M) (z__Enum_mtag(M) == (En).tag)
+
+#ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
+
+    #define match(En) z__Enum_match(En)
+    #define slot(...) z__Enum_slot(__VA_ARGS__)
+    #define unslot z__Enum_unslot
+
+    #define emptyslot z__Enum_emptyslot
+    #define ifSlot(En, M, ...) z__Enum_ifSlot(En, M, __VA_ARGS__)
+
+    #define matches(En, M) z__Enum_matches(En, M)
+
+#endif
+
+/************************************************************************
+ *                                  PRIVATE                             *
+ ************************************************************************/
+
+#define z__Enum__PRIV__chip_Apply_if_0(...) z__Tuple_assign(zpp__PRIV__Args_get_1(__VA_ARGS__) ,zpp__Args_skip_1(__VA_ARGS__))
+#define z__Enum__PRIV__chip_Apply_if_1(...) z__Record_assign(zpp__PRIV__Args_get_1(__VA_ARGS__), zpp__Args_skip_1(__VA_ARGS__))
+
+#define z__Enum__PRIV__chip_Apply_if(...) zpp__CAT(z__Enum__PRIV__chip_Apply_if_, zpp__IS_PAREN(zpp__PRIV__Args_get_2(__VA_ARGS__)))(__VA_ARGS__)
+
+#define z__Enum__PRIV__chip__if_0(...) z__Enum__PRIV__chip_Apply_if(__VA_ARGS__) 
+#define z__Enum__PRIV__chip__if_1(...)
+#define z__Enum__PRIV__chip__if(...)\
+    zpp__CAT(z__Enum__PRIV__chip__if_, zpp__Args_IS_EMPTY(zpp__Args_skip_1(__VA_ARGS__)))(__VA_ARGS__)
 
 // Syntax, slot(x, (), a) <= For Tuple
 // Syntax, slot(x, (a, b), (t, d))  <= For Record
@@ -148,31 +175,6 @@
 // Check slot is emply or not
 #define z__Enum__PRIV__slot__if(...)\
     zpp__CAT(z__Enum__PRIV__slot__if_, zpp__Args_IS_EMPTY(__VA_ARGS__))(__VA_ARGS__)
-
-#define z__Enum_slot(...) z__Enum__PRIV__slot__if(__VA_ARGS__)
-
-#define z__Enum_emptyslot break; default:
-#define z__Enum_unslot }
-
-#define z__Enum_ifSlot(En, M, ...)\
-        if(z__Enum_matches(En, M))\
-        { z__Enum__PRIV__slot__Apply_if((&En)->data.M, __VA_ARGS__)
-
-#define z__Enum_matches(En, M) (z__Enum_mtag(M) == (En).tag)
-
-#ifdef Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
-
-    #define match(En) z__Enum_match(En)
-    #define slot(...) z__Enum_slot(__VA_ARGS__)
-    #define unslot z__Enum_unslot
-
-    #define emptyslot z__Enum_emptyslot
-    #define ifSlot(En, M, ...) z__Enum_ifSlot(En, M, __VA_ARGS__)
-
-    #define matches(En, M) z__Enum_matches(En, M)
-
-#endif
-
 
 /* Enum Generation */
 
