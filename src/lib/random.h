@@ -3,14 +3,14 @@
 
 #include "std/primitives.h"
 
-z__u64 z__random_spm64(z__u64 counter, z__u64 seed); 
-z__u64 z__random_hash64_splitmix(z__u64 x);
-z__u64 z__random_hash64_wang(z__u64 x);
-z__u64 z__random_hash64_murmur(z__u64 x);
+z__u64 z__rnd_spm64(z__u64 counter, z__u64 seed); 
+z__u64 z__rnd_hash64_splitmix(z__u64 x);
+z__u64 z__rnd_hash64_wang(z__u64 x);
+z__u64 z__rnd_hash64_murmur(z__u64 x);
 
 #ifdef Z__IMPLEMENTATION
 
-z__u64 z__random_hash64_splitmix(z__u64 x)
+z__u64 z__rnd_hash64_splitmix(z__u64 x)
 {
     x ^= x >> 30;
     x *= 0xbf58476d1ce4e5b9ULL;
@@ -20,7 +20,7 @@ z__u64 z__random_hash64_splitmix(z__u64 x)
     return x;
 }
 
-z__u64 z__random_hash64_wang(z__u64 x)
+z__u64 z__rnd_hash64_wang(z__u64 x)
 {
     x = (~x) + (x << 21);
     x = x ^ (x >> 24);
@@ -32,7 +32,7 @@ z__u64 z__random_hash64_wang(z__u64 x)
     return x;
 }
 
-z__u64 z__random_hash64_murmur(z__u64 x)
+z__u64 z__rnd_hash64_murmur(z__u64 x)
 {
     x ^= x >> 33;
     x *= 0xff51afd7ed558ccdULL;
@@ -42,7 +42,7 @@ z__u64 z__random_hash64_murmur(z__u64 x)
     return x;
 }
 
-z__u64 z__random_spm64(z__u64 x, z__u64 seed) 
+z__u64 z__rnd_spm64(z__u64 x, z__u64 seed) 
 {
     x ^= seed;
     x ^= x >> 30;
