@@ -15,11 +15,8 @@
 #define z__PairArr_new(pa, _len)\
     {\
         (pa)->len = _len;\
-        (pa)->data_a = z__MALLOC(\
-                (sizeof((pa)->data_a) * (pa)->len)\
-                + (sizeof((pa)->data_b) * (pa)->len)\
-            );\
-        (pa)->data_b = z__cast(void *, (pa)->data_a + (pa)->len);\
+        (pa)->data_a = z__MALLOC(sizeof(*(pa)->data_a) * (pa)->len);\
+        (pa)->data_b = z__MALLOC(sizeof(*(pa)->data_b) * (pa)->len);\
         (pa)->lenUsed = 0;\
     }
 
@@ -32,14 +29,27 @@
 
 #define z__PairArr_expand(pa, by)\
     {\
+        (pa)->len += by;\
+        (pa)->data_a = z__REALLOC((pa)->data_a, sizeof(*(pa)->data_a) * (pa)->len);\
+        (pa)->data_b = z__REALLOC((pa)->data_b, sizeof(*(pa)->data_b) * (pa)->len);\
     }
 
-#define z__PairArr_check_for_expand(pa)\
+#define z__PairArr_expand_iffull(pa)\
     {\
+        if((pa)->lenUsed >= (pa)->len) { z__PairArr_expand(pa, (pa)->len); }\
     }
 
-#define z__PairArr_push(pa, Va, Vb)\
-    {\
+#define z__PairArr_push_nocheck(pa, Va, Vb) \
+    {                                       \
+        (pa)->data_a[(pa)->lenUsed] = Va;   \
+        (pa)->data_b[(pa)->lenUsed] = Vb;   \
+        (pa)->lenUsed += 1;                 \
+    }
+
+#define z__PairArr_push(pa, Va, Vb)     \
+    {                                   \
+        z__PairArr_expand_iffull(pa);   \
+        z__PairArr_push_nocheck(pa, Va, Vb);    \
     }
 
 
