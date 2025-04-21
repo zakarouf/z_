@@ -50,7 +50,72 @@ typedef ptrdiff_t z__ptrdiff;
 #define z__sizeof sizeof
 typedef size_t z__size;
 
+
+#define TYPEDEFVEC(T, n) typedef T T##x##n[n]
+
+/* 8-bit vec */
+TYPEDEFVEC(z__i8, 2);
+TYPEDEFVEC(z__i8, 4);
+TYPEDEFVEC(z__i8, 6);
+TYPEDEFVEC(z__i8, 8);
+TYPEDEFVEC(z__u8, 12);
+TYPEDEFVEC(z__i8, 16);
+
+TYPEDEFVEC(z__u8, 2);
+TYPEDEFVEC(z__u8, 4);
+TYPEDEFVEC(z__u8, 6);
+TYPEDEFVEC(z__u8, 8);
+TYPEDEFVEC(z__u8, 12);
+TYPEDEFVEC(z__u8, 16);
+
+
+/* 16-bit vec */
+TYPEDEFVEC(z__i16, 2);
+TYPEDEFVEC(z__i16, 3);
+TYPEDEFVEC(z__i16, 4);
+TYPEDEFVEC(z__i16, 8);
+
+TYPEDEFVEC(z__u16, 2);
+TYPEDEFVEC(z__u16, 3);
+TYPEDEFVEC(z__u16, 4);
+TYPEDEFVEC(z__u16, 8);
+
+
+/* 32-bit vec */
+TYPEDEFVEC(z__i32, 2);
+TYPEDEFVEC(z__i32, 3);
+TYPEDEFVEC(z__i32, 4);
+
+TYPEDEFVEC(z__u32, 2);
+TYPEDEFVEC(z__u32, 3);
+TYPEDEFVEC(z__u32, 4);
+
+
+/* 64-bit vec */
+TYPEDEFVEC(z__i64, 2);
+TYPEDEFVEC(z__i64, 3);
+TYPEDEFVEC(z__i64, 4);
+
+TYPEDEFVEC(z__u64, 2);
+TYPEDEFVEC(z__u64, 3);
+TYPEDEFVEC(z__u64, 4);
+
+
+/* floats vec */
+TYPEDEFVEC(z__f32, 2);
+TYPEDEFVEC(z__f32, 3);
+TYPEDEFVEC(z__f32, 4);
+
+
+/* double vec */
+TYPEDEFVEC(z__f64, 2);
+TYPEDEFVEC(z__f64, 3);
+TYPEDEFVEC(z__f64, 4);
+
+#undef TYPEDEFVEC
+
 #define z__cast(T, val) ((T)(val))
+#define z__constptr(T) T const * const 
 
 
 #endif // Header Guard
