@@ -29,9 +29,9 @@
 
 #define z__is_in_range_unsafe(number, min, max) ((number >= min) & (number <= max))
 #define z__is_in_range(number, min, max)\
-    ({                                              \
-        z__typeof(number) = _temp_number = number;  \
-        z__is_in_range(_temp_number, min, max);     \
+    ({                                                  \
+        z__typeof(number) _temp_number = number;        \
+        z__is_in_range_unsafe(_temp_number, min, max);  \
     )}
 
 #define z__abs_unsafe(number) (number>0? number : -number)
@@ -44,10 +44,40 @@
 #define z__hasOppositeSign(x, y) ((x ^ y) < 0)
 #define z__isPowOf2(x) !(x & (x - 1))
 
+/* Normalize u32, between 0.0 to 1.0 in float-32 */
+#define z__u32norm(u32) z__cast(z__f32, ((u32 >> 8) * (1.0f / (1U << 24))))
+
+/* Normalize u64, between 0.0 to 1.0 in float-64 */
+#define z__u64norm(u64) z__cast(z__f64, ((u64 >> 11) * (1.0 / (1ULL << 53))))
+
+
+
 #define z__cmp_ptr_data(pX, pX_len, pY, pY_len, cmpfn)\
     ((sizeof(*pX) * pX_len) == (sizeof(*pY) * pY_len))?\
         (cmpfn(pX, pY, (sizeof(*pX) * pX_len))):\
         ((int)(sizeof(*pX) * pX_len) - (int)(sizeof(*pY) * pY_len))
+
+
+/**
+ * Functions
+ */
+#include "std/primitives.h"
+
+z__u32 z__u64_count_digits(z__u64 number);
+
+
+/** IMPLEMENTATION **/
+#ifdef Z__IMPLEMENTATION
+z__u32 z__u64_count_digits(z__u64 number)
+{
+    z__u32 count = 0;
+    while(number) {
+        number >>= 1;
+        count += 1;
+    }
+    return count;
+}
+#endif // Z__IMPLEMENTATION 
 
 #endif
 
