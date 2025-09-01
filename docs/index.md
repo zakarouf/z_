@@ -5,7 +5,8 @@ Guide & Documentation for `z_` Library
 **`#include <z_/z_.h>`**
 
 ## Table of Contents
-
+- [LICENCE](./LICENCE.md)
+- [Overview(old)](./overview.md)
 - **Types**
     - [Primitive Types & Base Utils](types/base/base.md)
     - [Memory]()
