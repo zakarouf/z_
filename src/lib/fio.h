@@ -99,14 +99,14 @@ int z__fio_directoryExist(const char *p);
 		z__size len;										\
 		(arr)->data =										\
 			z__fio_newFromFile(								\
-					filepath, sizeof((arr)->data), &len);	\
+					filepath, sizeof(*(arr)->data), &len);	\
 															\
 		(arr)->len = len;									\
 		(arr)->lenUsed = (arr)->len;						\
 	}
 
 /**
- * Load Up Array from an open file.
+ * Load Up Array from an opened file.
  */
 #define z__fio_Arr_newLoad(arr, fp)\
 	({														\
