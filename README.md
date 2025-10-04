@@ -62,7 +62,7 @@ List of sub-modules of provided by the library.
 | **Terminal IO** ||
 |[ansifmt.h](./src/lib/ansifmt.h)   | ANSI Terminal string format. |
 |[print.h](./src/lib/print.h)       | Print Implentation                      |
-|[tui.h](./src/lib/tui.h)           | Terminal based UI, lightweight alternative to ncurses.                |
+|[tui.h](./src/lib/tui.h)           | Terminal based UI, lightweight alternative to ncurses.  |
 |[termio.h](./src/lib/termio.h)     | Terminal io functions                 |
 |[tgprint.h](./src/lib/tgprint.h)   | Type Generic Print                    |
 | **Web & Networking** ||
@@ -81,14 +81,15 @@ List of sub-modules of provided by the library.
 |[lexer.h](./src/lib/lexer.h)       | Generic Lexer                           |
 |[offsetof.h](./src/lib/offsetof.h) | Custom Offset macro.                    |
 |[strto.h](./src/lib/strto.h)       | Do a type generic sscanf                |
+|[scene.h](./src/lib/scene.h)       | Scene Director for apps and games       |
 |[serial.h](./src/lib/serial.h)     | Serializer                              |
 | **Design** ||
-|[argparse.h](./src/lib/argparse.h) | Parse list of arguments of a program.                                                                       |
-|[assert.h](./src/lib/assert.h)     | Custom assert implementation.                                                                               |
-|[forrange.h](./src/lib/forrange.h) | For-range for different data types                                                                          |
-|[gmath.h](./src/lib/gmath.h)       | Math functions for vectors and matrix                                                                       |
-|[test.h](./src/lib/test.h)         | Test Suite Impletation                                                |
-|[type.h](./src/lib/type.h)         | Define a Type Set                                                     |
+|[argparse.h](./src/lib/argparse.h) | Parse list of arguments of a program. |
+|[assert.h](./src/lib/assert.h)     | Custom assert implementation.         |
+|[forrange.h](./src/lib/forrange.h) | For-range for different data types    |
+|[gmath.h](./src/lib/gmath.h)       | Math functions for vectors and matrix |
+|[test.h](./src/lib/test.h)         | Test Suite Impletation                |
+|[type.h](./src/lib/type.h)         | Define a Type Set                     |
 |[typeid.h](./src/lib/typeid.h)     | List of Type-ids generated from `typegen.h`   |
 |[typeof.h](./src/lib/typeof.h)     | `typeof` macro                                |
 |[typegen.h](./src/lib/typegen.h)   | Macro for generating type info                |
@@ -131,7 +132,6 @@ Helper function for preprocessor macros, not used directly
 
 ### Prelude
 Stuff that is probably needed everywhere.
-
 
 |                  Sub-Module                  |                         Description |
 |:---------------------------------------------|:------------------------------------|
