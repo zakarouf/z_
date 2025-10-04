@@ -29,6 +29,7 @@
 #define test_list_imp \
       imp_print\
     , time\
+    , scene\
     , arena
 
 import(test_list_types);

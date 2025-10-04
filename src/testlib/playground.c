@@ -1,34 +1,27 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define Z__IMPLEMENTATION
-
 #include "../lib/std/primitives.h"
-
 #include "../lib/test.h"
 #include "../lib/forrange.h"
-
 #include "../lib/prep/args.h"
 #include "../lib/prep/loop.h"
 #include "../lib/prep/num.h"
-
 #include "../lib/string.h"
 #include "../lib/time.h"
-
 #include "../lib/record.h"
 #include "../lib/vector.h"
 #include "../lib/arr.h"
 #include "../lib/llist.h"
 #include "../lib/string.h"
 #include "../lib/hashset.h"
-
 #include "../lib/bitf.h"
-
 #include "../lib/obj.h"
 #include "../lib/assert.h"
-
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "../lib/scene.h"
 #include "../lib/arena.h"
 
 #define def(name) z__test_def(playground, name)
