@@ -150,6 +150,11 @@ void z__tui_Term_new_custom(z__tui_Term *t, z__u32 const x, z__u32 const y);
 void z__tui_Term_new(z__tui_Term *t);
 void z__tui_Term_delete(z__tui_Term *t);
 
+z__tui_Window* z__tui_Term_win_push(z__tui_Term *t, z__u32 const x, z__u32 const y, z__u32 const width, z__u32 const height);
+z__tui_Window* z__tui_Term_win_push_attach(z__tui_Term *t, z__tui_Window *w, z__u32 const x, z__u32 const y);
+z__tui_Window* z__tui_Term_win_push_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 const x, z__u32 const y);
+z__tui_Window* z__tui_Term_win_replace(z__tui_Term *t, z__tui_Window *w, z__u32 n);
+z__tui_Window* z__tui_Term_win_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 n);
 
 /* Window Impl */
 void z__tui_Window_new(z__tui_Window *w, z__u32 const width, z__u32 const height);
@@ -285,6 +290,41 @@ z__tui_Window* z__tui_Term_win_push(z__tui_Term *t, z__u32 const x, z__u32 const
     return w;
 }
 
+
+z__tui_Window* z__tui_Term_win_push_attach(z__tui_Term *t, z__tui_Window *w, z__u32 const x, z__u32 const y)
+{
+    z__Arr_push(&t->windows, *w);
+    z__Arr_pushInc(&t->windows_pos);
+    z__Arr_getTop(t->windows_pos).x = x;
+    z__Arr_getTop(t->windows_pos).y = y;
+    return &z__Arr_getTop(t->windows);
+}
+
+z__tui_Window* z__tui_Term_win_push_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 const x, z__u32 const y)
+{
+    z__Arr_pushInc(&t->windows);
+    z__tui_Window_new(&z__Arr_getTop(t->windows), w->width, w->height);
+    z__tui_Window_overlay(&z__Arr_getTop(t->windows), w, 0, 0);
+
+    z__Arr_pushInc(&t->windows_pos);
+    z__Arr_getTop(t->windows_pos).x = x;
+    z__Arr_getTop(t->windows_pos).y = y;
+    return &z__Arr_getTop(t->windows);
+}
+
+z__tui_Window *z__tui_Term_win_replace(z__tui_Term *t, z__tui_Window *w, z__u32 n) {
+    z__tui_Window_delete(&z__Arr_getVal(t->windows, n));
+    z__Arr_getVal(t->windows, n) = *w;
+    return &z__Arr_getVal(t->windows, n);
+}
+
+z__tui_Window *z__tui_Term_win_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 n)
+{
+    z__tui_Window_delete(&z__Arr_getVal(t->windows, n));
+    z__tui_Window_new(&z__Arr_getVal(t->windows, n), w->width, w->height);
+    z__tui_Window_overlay(&z__Arr_getVal(t->windows, n), w, 0, 0);
+    return &z__Arr_getVal(t->windows, n);
+}
 
 /************************************************************************
  *                              Window 
