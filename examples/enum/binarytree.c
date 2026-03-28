@@ -1,5 +1,6 @@
     #include <stdio.h>
-    #include <z_/z_.h>
+    #define Z___TYPE_CONFIG__USE_ENUM_ALIAS_MATCH_STATEMENT
+    #include <z_/enum.h>
 
     z__Enum(
         BinaryTree,

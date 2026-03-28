@@ -200,7 +200,7 @@ z__String z__String_bind(char *str, z__int sz);
 z__String z__String_new(int size);
 
 z__String z__String_newFromStr(const char *st, int size);
-z__String z__String_newFrom(char const * __restrict format, ...) __printflike(1, 2);
+z__String z__String_newFrom(char const * __restrict format, ...) __attribute__((format(printf, 1, 2)));
 z__String z__String_newFromFile(char const filename[]);
 z__String z__String_newCopy(const z__String str);
 
@@ -249,8 +249,8 @@ z__String* z__String_append_str(z__String *str, const z__char *src, z__u32 lengt
  * Append a formated string provided similar to sprintf
  * Auto re-allocates if required
  */
-z__String *z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __printflike(4, 5);
-z__String *z__String_append_nopad(z__String *str, char const* __restrict format, ...) __printflike(2, 3);
+z__String *z__String_append(z__String *str, unsigned pad, char padchar, char const* __restrict format, ...) __attribute__((format(printf, 4, 5)));
+z__String *z__String_append_nopad(z__String *str, char const* __restrict format, ...) __attribute__((format(printf, 2, 3)));
 
 /**
  * Append a string into onto another string
@@ -266,14 +266,14 @@ void z__String_replaceStr(z__String *str, const char * s, int len);
  * Replace an already initialized string with a formated string
  * Re-allocates if necessary
  */
-void z__String_replace(z__String *str, char const * __restrict format, ...) __printflike(2, 3);
+void z__String_replace(z__String *str, char const * __restrict format, ...) __attribute__((format(printf, 2, 3)));
 
 /**
  * Replaces a segment of a string, from a given index and of a given length, with a formated string.
  * Re-allocates if necessary
  * If seg_len < 0, then overflow; 
  */
-int z__String_replace_seg(z__String *str, z__size from, z__i64 seg_len, char const * __restrict format, ...) __printflike(4, 5);
+int z__String_replace_seg(z__String *str, z__size from, z__i64 seg_len, char const * __restrict format, ...) __attribute__((format(printf, 4, 5)));
 
 
 z__i64 z__String_findchar(z__String const *str, z__char ch);
@@ -342,7 +342,7 @@ void z__StringList_push(z__StringList *ln , char const * st, int len);
 /**
  * Push A Formated String List
  */
-const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict format, ...) __printflike(2, 3);
+const char *z__StringList_pushFmt(z__StringList *ln, char const * __restrict format, ...) __attribute__((format(printf, 2, 3)));
 
 /**
  * Pop the last String Value
@@ -440,6 +440,7 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 #ifdef Z__IMPLEMENTATION
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -631,10 +632,12 @@ int z__str_cmp_nocase(const char *s1, const char *s2, z__u32 len)
 /*******/
 z__Str z__Str_newCopy(z__Str str)
 {
-    return (z__Str){
-        .data = strndup(str.data, str.len),
+    z__Str new_str = {
+        .data = z__MALLOC(str.len),
         .len = str.len
     };
+    z__MEMCPY(new_str.data, str.data, str.len);
+    return new_str;
 }
 
 int z__Str_isequal(z__Str str1, z__Str str2)
