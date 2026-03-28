@@ -45,6 +45,9 @@
 #include "arr.h"
 #include "vector.h"
 #include "string.h"
+#include <string.h>
+#include <z_/print.h>
+#include <z_/string.h>
 
 typedef z__u8 z__tui_attr;
 typedef char  z__tui_char;
@@ -160,18 +163,70 @@ z__tui_Window* z__tui_Term_win_copy(z__tui_Term *t, z__tui_Window const *w, z__u
 void z__tui_Window_new(z__tui_Window *w, z__u32 const width, z__u32 const height);
 void z__tui_Window_delete(z__tui_Window *window);
 
-void z__tui_Window_set_cur_x(z__tui_Window *w, z__u32 x);
-void z__tui_Window_set_cur_y(z__tui_Window *w, z__u32 y);
-void z__tui_Window_set_cur_xy(z__tui_Window *w, z__u32 x, z__u32 y);
 #define z__tui_Window_xy(w, x, y) z__xy2Dto1D(x, y, (w)->width)
 
-void z__tui_Window_put(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg);
-void z__tui_Window_putxy(z__tui_Window *w, z__u32 x, z__u32 y, z__tui_char c, z__u8 fg, z__u8 bg);
+#define z__tui_Window_draw_point_i(w, index, c, fg, bg)\
+    {                                \
+        (w)->ch_data[index] = c;       \
+        (w)->fg_data[index] = fg;      \
+        (w)->bg_data[index] = bg;      \
+    }
 
-void z__tui_Window_change_ch(z__tui_Window *w, char c);
-void z__tui_Window_change_fg(z__tui_Window *w, z__u8 fg);
-void z__tui_Window_change_bg(z__tui_Window *w, z__u8 bg);
-void z__tui_Window_change_chars(z__tui_Window *w, char const *s, z__u32 const len);
+#define z__tui_Window_cursor_inc(w) {\
+        if((w)->cursor < (w)->len) (w)->cursor += 1;\
+    }
+
+#define z__tui_Window_set_cur_x(w, x) {\
+        (w)->cursor = z__xy2Dto1D(x, z__tui_Window_get_y(w), (w)->width);\
+    }
+
+#define z__tui_Window_set_cur_y(w, y) {\
+        (w)->cursor = z__xy2Dto1D(z__tui_Window_get_x(w), y, (w)->width);\
+    }
+
+#define z__tui_Window_set_cur_xy(w, x, y){\
+        (w)->cursor = z__xy2Dto1D(x, y, (w)->width);\
+    }
+
+#define z__tui_Window_put(w, c, fg, bg) {\
+            z__u32 const _index = (w)->cursor;\
+            (w)->ch_data[_index] = c;\
+            (w)->fg_data[_index] = fg;\
+            (w)->bg_data[_index] = bg;\
+            z__tui_Window_cursor_inc(w);\
+        }
+
+#define z__tui_Window_putxy(w, x, y, c, fg, bg) {\
+            z__tui_Window_set_cur_xy(w, x, y);\
+            z__tui_Window_put(w, c, fg, bg);\
+        }
+
+#define z__tui_Window_change_ch(w, c) {\
+            (w)->ch_data[(w)->cursor] = c;\
+            z__tui_Window_cursor_inc(w); }
+
+#define z__tui_Window_change_fg(w, fg) {\
+            (w)->fg_data[(w)->cursor] = fg;\
+            z__tui_Window_cursor_inc(w);\
+        }
+
+#define z__tui_Window_change_bg(w, bg) {\
+            (w)->bg_data[(w)->cursor] = bg;\
+            z__tui_Window_cursor_inc(w);\
+        }
+
+#define z__tui_Window_change_chars(w, s, len){\
+            size_t i = (w)->cursor;\
+            size_t end = z__min_unsafe(len, (w)->len);\
+            for (; i < end; i++) {\
+                z__tui_Window_change_ch(w, s[i]);\
+            }\
+        }
+
+#define z__tui_Window_is_cursor_atend(w) ((w)->cursor == (w)->len)
+#define z__tui_Window_is_cursor_valid(w) ((w)->cursor < (w)->len)
+#define z__tui_Window_get_x(w) (((w)->cursor % (w)->width))
+#define z__tui_Window_get_y(w) (((w)->cursor - z__tui_Window_get_x(w))/(w)->width)
 
 /**/
 
@@ -192,8 +247,8 @@ void z__tui_Window_clear_at(z__tui_Window *w, z__tui_attr  at);
 
 
 /* Draw Functions, does not change the cursor position.*/
-void z__tui_Window_draw_point(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg, z__tui_attr at);
-void z__tui_Window_draw_border(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg);
+//void z__tui_Window_draw_point(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg, z__tui_attr at);
+void z__tui_Window_draw_border(z__tui_Window *w, z__tui_Window_point p);
 
 void z__tui_Window_draw_line(z__tui_Window *w, z__u32 const x1, z__u32 const y1, z__u32 x2, z__u32 y2, z__tui_char c, z__u8 fg, z__u8 bg);
 void z__tui_Window_draw_line_ch(z__tui_Window *w, z__u32 const x1, z__u32 const y1, z__u32 x2, z__u32 y2, z__tui_char c);
@@ -201,12 +256,16 @@ void z__tui_Window_draw_line_ch(z__tui_Window *w, z__u32 const x1, z__u32 const 
 void z__tui_Window_draw_rect(z__tui_Window *w , z__u32 const x, z__u32 const y, z__u32 const width, z__u32 const height, z__tui_char c, z__u8 fg, z__u8 bg);
 void z__tui_Window_draw_rect_fill(z__tui_Window *w , z__u32 const x, z__u32 const y, z__u32 const width, z__u32 const height, z__tui_char c, z__u8 fg, z__u8 bg);
 
-void z__tui_Window_draw_vline(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__tui_char ch, z__u8 fg, z__u8 bg);
-void z__tui_Window_draw_vline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 fg);
-void z__tui_Window_draw_vline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 bg);
+void z__tui_Window_draw_hline(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__tui_char ch, z__u8 fg, z__u8 bg);
+void z__tui_Window_draw_hline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 fg);
+void z__tui_Window_draw_hline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 bg);
 
 void z__tui_Window_draw_str(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg);
 void z__tui_Window_draw_str_right(z__tui_Window *w, z__u32 const x_end, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg);
+
+void z__tui_Window_draw_rect_fill_ch(
+    z__tui_Window *w, z__u32 const x, z__u32 const y
+  , z__u32 const width, z__u32 const height, z__tui_char c);
 
 /*
 int z__tui_Window_draw_strl_center(
@@ -253,7 +312,7 @@ void z__tui_Term_new_custom(z__tui_Term *t, z__u32 const x, z__u32 const y)
     z__Arr_new(&t->windows, 4);
     z__Arr_new(&t->windows_pos, 4);
 
-    z__String_new(NORMAL_CHAR_SIZE * x * y);
+    t->buffer = z__String_new(NORMAL_CHAR_SIZE * x * y);
 
     z__tui_Window_new(&t->main_window, x, y);
 }
@@ -265,6 +324,7 @@ void z__tui_Term_delete(z__tui_Term *t)
     }
 
     z__tui_Window_delete(&t->main_window);
+    z__String_delete(&t->buffer);
 
     z__Arr_delete(&t->windows);
     z__Arr_delete(&t->windows_pos);
@@ -303,7 +363,7 @@ z__tui_Window* z__tui_Term_win_push_attach(z__tui_Term *t, z__tui_Window *w, z__
 z__tui_Window* z__tui_Term_win_push_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 const x, z__u32 const y)
 {
     z__Arr_pushInc(&t->windows);
-    z__tui_Window_new(&z__Arr_getTop(t->windows), w->width, w->height);
+    z__tui_Window_new(&z__Arr_getTop(t->windows), (w)->width, (w)->height);
     z__tui_Window_overlay(&z__Arr_getTop(t->windows), w, 0, 0);
 
     z__Arr_pushInc(&t->windows_pos);
@@ -321,7 +381,7 @@ z__tui_Window *z__tui_Term_win_replace(z__tui_Term *t, z__tui_Window *w, z__u32 
 z__tui_Window *z__tui_Term_win_copy(z__tui_Term *t, z__tui_Window const *w, z__u32 n)
 {
     z__tui_Window_delete(&z__Arr_getVal(t->windows, n));
-    z__tui_Window_new(&z__Arr_getVal(t->windows, n), w->width, w->height);
+    z__tui_Window_new(&z__Arr_getVal(t->windows, n), (w)->width, (w)->height);
     z__tui_Window_overlay(&z__Arr_getVal(t->windows, n), w, 0, 0);
     return &z__Arr_getVal(t->windows, n);
 }
@@ -336,12 +396,31 @@ z__tui_Window *z__tui_Term_win_copy(z__tui_Term *t, z__tui_Window const *w, z__u
 
 #include <stdlib.h>
 
-#define z__tui_Window_draw_point_i(window, index, c, fg, bg)\
-    {                                \
-        (w)->ch_data[index] = c;       \
-        (w)->fg_data[index] = fg;      \
-        (w)->bg_data[index] = bg;      \
+
+void z__tui_Window_overlay(z__tui_Window *w, z__tui_Window const *w1, z__u32 x, z__u32 y)
+{
+    size_t h_end = z__min_unsafe((w)->height, w1->height);
+    size_t w_end = z__min_unsafe((w)->width, w1->width);
+
+    for (size_t _h = 0; _h < h_end; _h++) {
+
+        z__tui_Window_set_cur_xy(w, x, y + _h);
+        size_t plot = z__xy2Dto1D(0, _h, w1->width);
+
+        for (size_t _w = 0; _w < w_end; _w++) {
+            
+            z__tui_Window_draw_point_i(
+                w, (w)->cursor
+              , w1->ch_data[plot]
+              , w1->fg_data[plot]
+              , w1->bg_data[plot]
+            );
+
+            (w)->cursor += 1;
+            plot += 1;
+        }
     }
+}
 
 void z__tui_Window_new(z__tui_Window *window, z__u32 const x, z__u32 const y)
 {
@@ -371,124 +450,13 @@ void z__tui_Window_delete(z__tui_Window *window)
     z__FREE(window->at_data);
 }
 
-inline void z__tui_Window_cursor_inc(z__tui_Window *w)
-{
-    if(w->cursor < w->len) w->cursor += 1;
-}
-
-inline int z__tui_Window_is_cursor_atend(z__tui_Window *w)
-{
-    return w->cursor == w->len;
-}
-
-inline int z__tui_Window_is_cursor_valid(z__tui_Window *w)
-{
-    return w->cursor < w->len;
-}
-
-inline z__u32 z__tui_Window_get_x(z__tui_Window *w)
-{
-    return (w->cursor % w->width);
-}
-
-inline z__u32 z__tui_Window_get_y(z__tui_Window *w)
-{
-    return w->cursor/w->width;
-}
-
-inline void z__tui_Window_set_cur_x(z__tui_Window *w, z__u32 x)
-{
-    z__u32 y = z__tui_Window_get_y(w);
-    w->cursor = z__xy2Dto1D(x, y, w->width);
-}
-
-inline void z__tui_Window_set_cur_y(z__tui_Window *w, z__u32 y)
-{
-    z__u32 x = z__tui_Window_get_x(w);
-    w->cursor = z__xy2Dto1D(x, y, w->width);
-}
-
-inline void z__tui_Window_set_cur_xy(z__tui_Window *w, z__u32 x, z__u32 y)
-{
-    w->cursor = z__xy2Dto1D(x, y, w->width);
-}
-
-inline void z__tui_Window_put(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg)
-{
-    z__u32 const index = w->cursor;
-    w->ch_data[index] = c;
-    w->fg_data[index] = fg;
-    w->bg_data[index] = bg;
-
-    z__tui_Window_cursor_inc(w);
-}
-
-inline void z__tui_Window_putxy(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char c, z__u8 fg, z__u8 bg)
-{
-    z__tui_Window_set_cur_xy(w, x, y);
-    z__tui_Window_put(w, c, fg, bg);
-}
-
-inline void z__tui_Window_change_ch(z__tui_Window *w, z__tui_char c)
-{
-    w->ch_data[w->cursor] = c;
-    z__tui_Window_cursor_inc(w);
-}
-
-inline void z__tui_Window_change_fg(z__tui_Window *w, z__u8 fg)
-{
-    w->fg_data[w->cursor] = fg;
-    z__tui_Window_cursor_inc(w);
-}
-
-inline void z__tui_Window_change_bg(z__tui_Window *w, z__u8 bg)
-{
-    w->bg_data[w->cursor] = bg;
-    z__tui_Window_cursor_inc(w);
-}
-
-inline void z__tui_Window_change_chars(z__tui_Window *w, char const *s, z__u32 const len)
-{
-    size_t i = w->cursor;
-    size_t end = z__min_unsafe(len, w->len);
-    for (; i < end; i++) {
-        z__tui_Window_change_ch(w, s[i]);
-    }
-}
-
-inline void z__tui_Window_overlay(z__tui_Window *w, z__tui_Window const *w1, z__u32 x, z__u32 y)
-{
-    size_t h_end = z__min_unsafe(w->height, w1->height);
-    size_t w_end = z__min_unsafe(w->width, w1->width);
-
-    for (size_t _h = 0; _h < h_end; _h++) {
-
-        z__tui_Window_set_cur_xy(w, x, y + _h);
-        size_t plot = z__xy2Dto1D(0, _h, w1->width);
-
-        for (size_t _w = 0; _w < w_end; _w++) {
-            
-            z__tui_Window_draw_point_i(
-                w, w->cursor
-              , w1->ch_data[plot]
-              , w1->fg_data[plot]
-              , w1->bg_data[plot]
-            );
-
-            w->cursor += 1;
-            plot += 1;
-        }
-    }
-    
-}
-
 void z__tui_Window_draw_line(
       z__tui_Window *w
     , z__u32 const x1, z__u32 const y1, z__u32 x2, z__u32 y2
     , z__tui_char c, z__u8 fg, z__u8 bg) 
 {
-    y2 = z__min_unsafe(y2, w->height);
-    x2 = z__min_unsafe(x2, w->width);
+    y2 = z__min_unsafe(y2, (w)->height);
+    x2 = z__min_unsafe(x2, (w)->width);
 
     int dx = x2 - x1;
     int dy = y2 - y1;
@@ -502,7 +470,7 @@ void z__tui_Window_draw_line(
 
     for (int i = 0; i <= steps; i++) {
         
-        size_t index = (z__xy2Dto1D(x, y, w->width));
+        size_t index = (z__xy2Dto1D(x, y, (w)->width));
         z__tui_Window_draw_point_i(w, index, c, fg, bg);
     
         x += xIncrement;
@@ -522,8 +490,8 @@ void z__tui_Window_draw_line_ch(
 
     while (x <= x2) {
 
-        size_t index = (z__xy2Dto1D(x, y, w->width));
-        w->ch_data[index] = c;
+        size_t index = (z__xy2Dto1D(x, y, (w)->width));
+        (w)->ch_data[index] = c;
 
         x += 1;
 
@@ -538,8 +506,8 @@ void z__tui_Window_draw_line_ch(
 
 void z__tui_Window_draw_line_ch_old(z__tui_Window *w, z__u32 const x1, z__u32 const y1, z__u32 x2, z__u32 y2, z__tui_char c)
 {
-    y2 = z__min_unsafe(y2, w->height);
-    x2 = z__min_unsafe(x2, w->width);
+    y2 = z__min_unsafe(y2, (w)->height);
+    x2 = z__min_unsafe(x2, (w)->width);
 
     int dx = x2 - x1;
     int dy = y2 - y1;
@@ -553,8 +521,8 @@ void z__tui_Window_draw_line_ch_old(z__tui_Window *w, z__u32 const x1, z__u32 co
 
     for (int i = 0; i <= steps; i++) {
         
-        size_t index = (z__xy2Dto1D(x, y, w->width));
-        w->ch_data[index] = c;
+        size_t index = (z__xy2Dto1D(x, y, (w)->width));
+        (w)->ch_data[index] = c;
     
         x += xIncrement;
         y += yIncrement;
@@ -566,34 +534,34 @@ void z__tui_Window_draw_rect(
   , z__u32 const x, z__u32 const y, z__u32 width, z__u32 height
   , z__tui_char c, z__u8 fg, z__u8 bg)
 {
-    size_t x_end = z__min_unsafe((x + width), w->width);
-    size_t y_end = z__min_unsafe((y + height), w->height);
+    size_t x_end = z__min_unsafe((x + width), (w)->width);
+    size_t y_end = z__min_unsafe((y + height), (w)->height);
 
     // Draw top line
-    size_t i = z__xy2Dto1D(x, y, w->width);
-    size_t i_end = z__xy2Dto1D(x_end, y, w->width);
+    size_t i = z__xy2Dto1D(x, y, (w)->width);
+    size_t i_end = z__xy2Dto1D(x_end, y, (w)->width);
     for (; i < i_end; i++) { 
         z__tui_Window_draw_point_i(w, i, c, fg, bg);        
     }
 
     // Draw bottom line
-    i = z__xy2Dto1D(x, y_end, w->width);
-    i_end = z__xy2Dto1D(x_end, y_end, w->width);
+    i = z__xy2Dto1D(x, y_end, (w)->width);
+    i_end = z__xy2Dto1D(x_end, y_end, (w)->width);
     for (; i < i_end; i++) {
         z__tui_Window_draw_point_i(w, i, c, fg, bg);        
     }
 
     // Draw left line
-    i = z__xy2Dto1D(x, y+1, w->width);
-    i_end = z__xy2Dto1D(x, y_end, w->width);
-    for (; i < i_end; i += w->width) {
+    i = z__xy2Dto1D(x, y+1, (w)->width);
+    i_end = z__xy2Dto1D(x, y_end, (w)->width);
+    for (; i < i_end; i += (w)->width) {
         z__tui_Window_draw_point_i(w, i, c, fg, bg);
     }
 
     // Draw right line
-    i = z__xy2Dto1D(x_end-1, y+1, w->width);
-    i_end = z__xy2Dto1D(x_end, y_end, w->width);
-    for (; i < i_end; i += w->width) {
+    i = z__xy2Dto1D(x_end-1, y+1, (w)->width);
+    i_end = z__xy2Dto1D(x_end, y_end, (w)->width);
+    for (; i < i_end; i += (w)->width) {
         z__tui_Window_draw_point_i(w, i, c, fg, bg);
     }
 }
@@ -604,134 +572,183 @@ void z__tui_Window_draw_rect_fill(
   , z__tui_char c, z__u8 fg, z__u8 bg)
 {
     size_t x_end = x + width;
-    if(x_end > w->width) x_end = (w->width - x);
+    if(x_end > (w)->width) x_end = ((w)->width - x);
     else x_end = (width);
-    size_t y_end = z__min_unsafe((y + height), w->height);
+    size_t y_end = z__min_unsafe((y + height), (w)->height);
 
     for (size_t i = y; i < y_end; i++) {
         size_t index = (z__tui_Window_xy(w, x, i));
-        memset(w->ch_data + index, c, x_end);
-        memset(w->fg_data + index, fg, x_end);
-        memset(w->bg_data + index, bg, x_end);
+        memset((w)->ch_data + index, c, x_end);
+        memset((w)->fg_data + index, fg, x_end);
+        memset((w)->bg_data + index, bg, x_end);
     }
+}
+
+
+void z__tui_Window_draw_rect_fill_ch(
+    z__tui_Window *w
+  , z__u32 const x, z__u32 const y, z__u32 const width, z__u32 const height
+  , z__tui_char c)
+{    
+    size_t x_end = x + width;
+    if(x_end > (w)->width) x_end = ((w)->width - x);
+    else x_end = (width);
+    size_t y_end = z__min_unsafe((y + height), (w)->height);
+
+    for (size_t i = y; i < y_end; i++) {
+        size_t index = (z__tui_Window_xy(w, x, i));
+        memset((w)->ch_data + index, c, x_end);
+    }   
 }
 
 void z__tui_Window_clear(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg)
 {
-    memset(w->ch_data, c , w->len * sizeof(*w->ch_data));
-    memset(w->fg_data, fg, w->len * sizeof(*w->fg_data));
-    memset(w->bg_data, bg, w->len * sizeof(*w->bg_data));
-    memset(w->at_data, 0 , w->len * sizeof(*w->bg_data));
+    memset((w)->ch_data, c , (w)->len * sizeof(*(w)->ch_data));
+    memset((w)->fg_data, fg, (w)->len * sizeof(*(w)->fg_data));
+    memset((w)->bg_data, bg, (w)->len * sizeof(*(w)->bg_data));
+    memset((w)->at_data, 0 , (w)->len * sizeof(*(w)->bg_data));
 }
 
 void z__tui_Window_clear_ch(z__tui_Window *w, z__tui_char c)
 {
-    memset(w->ch_data, c, w->len * sizeof(*w->ch_data));
+    memset((w)->ch_data, c, (w)->len * sizeof(*(w)->ch_data));
 }
 
 void z__tui_Window_clear_fg(z__tui_Window *w, z__u8 fg)
 {
-    memset(w->fg_data, fg, w->len * sizeof(*w->fg_data));
+    memset((w)->fg_data, fg, (w)->len * sizeof(*(w)->fg_data));
 }
 
 void z__tui_Window_clear_bg(z__tui_Window *w, z__u8 bg)
 {
-    memset(w->bg_data, bg, w->len * sizeof(*w->bg_data));
+    memset((w)->bg_data, bg, (w)->len * sizeof(*(w)->bg_data));
 }
 
 void z__tui_Window_clear_at(z__tui_Window *w, z__tui_attr at)
 {
-    memset(w->at_data, at, w->len * sizeof(*w->bg_data));
+    memset((w)->at_data, at, (w)->len * sizeof(*(w)->bg_data));
 }
 
-void z__tui_Window_draw_border(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg)
+void z__tui_Window_draw_border(z__tui_Window *w, z__tui_Window_point p)
 {
     // top
-    memset(w->ch_data, c, w->width - 1);
-    memset(w->fg_data, fg, w->width - 1);
-    memset(w->bg_data, bg, w->width - 1);
+    memset((w)->ch_data, p.c, (w)->width - 1);
+    memset((w)->fg_data, p.fg, (w)->width - 1);
+    memset((w)->bg_data, p.bg, (w)->width - 1);
 
     // bottom
-    size_t i = z__tui_Window_xy(w, 0, w->height - 1);
-    memset(w->ch_data + i, c, w->width - 1);
-    memset(w->fg_data + i, fg, w->width - 1);
-    memset(w->bg_data + i, bg, w->width - 1);
+    size_t i = z__tui_Window_xy(w, 0, (w)->height - 1);
+    memset((w)->ch_data + i, p.c, (w)->width - 1);
+    memset((w)->fg_data + i, p.fg, (w)->width - 1);
+    memset((w)->bg_data + i, p.bg, (w)->width - 1);
 
     // left
     size_t y = 1;
-    for (y = 0; y < w->height; y++) {
+    for (y = 0; y < (w)->height; y++) {
         i = z__tui_Window_xy(w, 0, y);
-        z__tui_Window_draw_point_i(w, i, c, fg, bg);
+        z__tui_Window_draw_point_i(w, i, p.c, p.fg, p.bg);
     }
 
     // right
     y = 1;
-    for (y = 0; y < w->height; y++) {
-        i = z__tui_Window_xy(w, w->width - 1, y);
-        z__tui_Window_draw_point_i(w, i, c, fg, bg);
+    for (y = 0; y < (w)->height; y++) {
+        i = z__tui_Window_xy(w, (w)->width - 1, y);
+        z__tui_Window_draw_point_i(w, i, p.c, p.fg, p.bg);
     }
 }
 
-void z__tui_Window_draw_vline(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__tui_char ch, z__u8 fg, z__u8 bg)
+void z__tui_Window_draw_hline(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__tui_char ch, z__u8 fg, z__u8 bg)
 {
     z__u32 index = z__tui_Window_xy(w, x, y);
-    len = z__min_unsafe(len + index, w->width);
-    memset(w->ch_data + index, ch, len);
-    memset(w->fg_data + index, fg, len);
-    memset(w->bg_data + index, bg, len);
+    len = z__min_unsafe(len + index, (w)->width);
+    memset((w)->ch_data + index, ch, len);
+    memset((w)->fg_data + index, fg, len);
+    memset((w)->bg_data + index, bg, len);
 }
 
-void z__tui_Window_draw_vline_bg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 bg)
+void z__tui_Window_draw_hline_bg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 bg)
 {
     z__u32 index = z__tui_Window_xy(w, x, y);
-    len = z__min_unsafe(len + index, w->width);
-    memset(w->bg_data + index, bg, len);
+    len = z__min_unsafe(len + index, (w)->width);
+    memset((w)->bg_data + index, bg, len);
 }
 
-void z__tui_Window_draw_vline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 fg)
+void z__tui_Window_draw_hline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 len, z__u8 fg)
 {
     z__u32 index = z__tui_Window_xy(w, x, y);
-    len = z__min_unsafe(len + index, w->width);
-    memset(w->fg_data + index, fg, len);
+    len = z__min_unsafe(len + index, (w)->width);
+    memset((w)->fg_data + index, fg, len);
 }
 
 void z__tui_Window_draw_str(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg)
 {
     z__u32 index = z__tui_Window_xy(w, x, y);
-    len = z__min_unsafe(len, w->width);
+    len = z__min_unsafe(len, (w)->width);
 
-    memcpy(w->ch_data + index, str, len * sizeof(*w->ch_data));
-    memset(w->fg_data + index, fg , len);
-    memset(w->bg_data + index, bg , len);
+    memcpy((w)->ch_data + index, str, len * sizeof(*(w)->ch_data));
+    memset((w)->fg_data + index, fg , len);
+    memset((w)->bg_data + index, bg , len);
 }
 
 void z__tui_Window_draw_str_right(z__tui_Window *w, z__u32 const x_end, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg)
 {
-    len = z__min_unsafe(len, w->width);
-    z__u32 const x = w->width - x_end - len;
+    len = z__min_unsafe(len, (w)->width);
+    z__u32 const x = (w)->width - x_end - len;
     z__u32 index = z__tui_Window_xy(w, x, y);
 
-    memcpy(w->ch_data + index, str, len * sizeof(*w->ch_data));
-    memset(w->fg_data + index, fg , len);
-    memset(w->bg_data + index, bg , len);
+    memcpy((w)->ch_data + index, str, len * sizeof(*(w)->ch_data));
+    memset((w)->fg_data + index, fg , len);
+    memset((w)->bg_data + index, bg , len);
 }
 
+z__u32 z__tui_Window_draw_str_wrapbox(
+    z__tui_Window *w, z__u32 x, z__u32 y,
+    z__u32 width, z__u32 height, z__tui_char const *str, z__u32 len,
+    z__tui_attr attr, z__u32 scroll){
+
+    if((x+width) > w->width) {
+        width = w->width - x;
+    }
+    z__u32 y_end = y+height;
+    if((y_end) > w->height) {
+        height = w->height - y;
+    }
+    
+    z__u32 text_start = width * scroll;
+    if(text_start > len) return 0;
+    z__u32 textleft = len - text_start;
+    z__u32 i = 0;
+
+    if(textleft < height * width) { z__tui_Window_draw_rect_fill_ch(
+        w, x, y, width, height, ' ');
+    }
+
+    for (; i < height; i++) {
+        if(textleft < width) { goto _L_done; }
+        memcpy(w->ch_data + z__tui_Window_xy(w, x, (y+i))
+             , str + text_start, width * sizeof(*w->ch_data));
+        textleft -= width;
+        text_start += width;
+    }
+    _L_done:
+    return textleft/width;
+} 
 /*
 int z__tui_Window_draw_strl_center(
     z__tui_Window *w, z__u32 x, z__u32 y, z__u32 width, z__u32 height
   , z__Str str, z__u32 highlight
   , z__u8 fg, z__u8 bg, z__u8 h_fg, z__u8 h_bg)
 {
-    if(x > w->width || y > w->height) return 0;
+    if(x > (w)->width || y > (w)->height) return 0;
 
     // Clipping so we dont go out of screen;
     z__u32 const x1 = x + width;
     z__u32 const y1 = y + height;
-    if(x1 > w->width) {
-        width = w->width - x;
+    if(x1 > (w)->width) {
+        width = (w)->width - x;
     }
-    if(y1 > w->height) {
-        height = w->height - y;
+    if(y1 > (w)->height) {
+        height = (w)->height - y;
     }
 
     str.len = z__min_unsafe(str.len, height);
@@ -786,21 +803,21 @@ void z__tui_display_window(z__tui_Window const *w)
 
     int plain_set = false;
     z__u32 i = 0;
-    for (size_t y = 0; y < w->height; y++) {
-        for (size_t x = 0; x < w->width; x++) {
+    for (size_t y = 0; y < (w)->height; y++) {
+        for (size_t x = 0; x < (w)->width; x++) {
 
-            if(w->bg_data[i]) {
-                if(w->fg_data[i]) {
-                    z__print(z__ansi_fmt((cl256, %d, %d)), w->fg_data[i], w->bg_data[i]);
+            if((w)->bg_data[i]) {
+                if((w)->fg_data[i]) {
+                    z__print(z__ansi_fmt((cl256, %d, %d)), (w)->fg_data[i], (w)->bg_data[i]);
                 } else {
-                    z__print(z__ansi_fmt((plain), (cl256_bg, %d)), w->bg_data[i]);
+                    z__print(z__ansi_fmt((plain), (cl256_bg, %d)), (w)->bg_data[i]);
                 }
                 plain_set = false;
                 goto _L_print_char;
             } 
 
-            if(w->fg_data[i]) {
-                z__print(z__ansi_fmt((plain), (cl256_fg, %d)), w->fg_data[i]);
+            if((w)->fg_data[i]) {
+                z__print(z__ansi_fmt((plain), (cl256_fg, %d)), (w)->fg_data[i]);
                 plain_set = false;
             } else if(!plain_set) {
                 z__print(z__ansi_fmt((plain)));
@@ -808,14 +825,51 @@ void z__tui_display_window(z__tui_Window const *w)
             }
 
             _L_print_char:
-            z__print_char(w->ch_data[i]);
+            z__print_char((w)->ch_data[i]);
 
             i += 1;
         }
         z__print(z__ansi_fmt((plain))"\n");
-    } 
+    }
 }
 
+void z__tui_display_window_buffered(z__tui_Window const *w, z__String *buffer)
+{
+    buffer->lenUsed = 0;
+    z__String_append_nopad(buffer, z__ansi_scr((jump)));
+    int plain_set = false;
+    z__u32 i = 0;
+    for (size_t y = 0; y < (w)->height; y++) {
+        for (size_t x = 0; x < (w)->width; x++) {
+
+            if((w)->bg_data[i]) {
+                if((w)->fg_data[i]) {
+                    z__String_append_nopad(buffer, z__ansi_fmt((cl256, %d, %d)), (w)->fg_data[i], (w)->bg_data[i]);
+                } else {
+                    z__String_append_nopad(buffer, z__ansi_fmt((plain), (cl256_bg, %d)), (w)->bg_data[i]);
+                }
+                plain_set = false;
+                goto _L_print_char;
+            } 
+
+            if((w)->fg_data[i]) {
+                z__String_append_nopad(buffer, z__ansi_fmt((plain), (cl256_fg, %d)), (w)->fg_data[i]);
+                plain_set = false;
+            } else if(!plain_set) {
+                z__String_append_nopad(buffer, z__ansi_fmt((plain)));
+                plain_set = true;
+            }
+
+            _L_print_char:
+            z__print_char((w)->ch_data[i]);
+
+            i += 1;
+        }
+        z__String_append_nopad(buffer, z__ansi_fmt((plain))"\n");
+    }
+
+    z__print("%.*s", buffer->lenUsed, buffer->data);
+}
 
 #endif //Z__IMPLEMENTATION
 #endif
