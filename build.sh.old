@@ -12,12 +12,9 @@ OUT_BIN="z_"
 OUT_LIB="libz_.a"
 OUT_SOLIB="lib$PROJECT_NAME.so"
 OUT_HEAD="z_"
-BIN_DIR="/usr/local/bin/"
-LIB_DIR="/usr/local/lib/"
-INC_DIR="/usr/local/include/"
-BIN_DIR="$HOME/../usr/bin/"
-LIB_DIR="$HOME/../usr/lib/"
-INC_DIR="$HOME/../usr/include/"
+BIN_DIR="/usr/bin/"
+LIB_DIR="/usr/lib/"
+INC_DIR="/usr/include/"
 
 check_mkdir() {
     if [ -d "$1" ]; then
@@ -111,7 +108,7 @@ make_install() {
 make_test_lib(){
     make_lib $TESTFLAGS
     FILES=$(find "./src/testlib" -name '*.c')
-    $($CC $CCFLAGS $TESTFLAGS $FILES ./build/lib/$OUT_LIB -o "./build/testlib")
+    $($CC $CCFLAGS $TESTFLAGS $FILES -o "./build/testlib")
 
     case "$1" in
         "run") $(./build/testlib)

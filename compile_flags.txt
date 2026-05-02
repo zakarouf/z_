@@ -1,7 +1,6 @@
--std=c23
+-std=c11
 -Wall
 -Wextra
--Wpedantic
 -Winline
 -Wswitch
 -Warith-conversion
