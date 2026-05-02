@@ -24,7 +24,7 @@
 /**
  * Get Size of the Current Terminal
  */
-void z__termio_get_term_size(z__u32 * _Nonnull x, z__u32 * _Nonnull y);
+void z__termio_get_term_size(z__u32 *x, z__u32 *y);
 
 /**
  * Get a key input as char (blocking)
@@ -64,7 +64,7 @@ void z__termio_putchar(z__char c);
 /**
  * Put a string on terminal
  */
-void z__termio_putString(const z__String * _Nonnull str);
+void z__termio_putString(const z__String *str);
 
 
 #ifdef Z__IMPLEMENTATION
@@ -73,6 +73,7 @@ void z__termio_putString(const z__String * _Nonnull str);
 #include <string.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <sys/time.h>
 
 #include "std/primitives.h"
 #include "string.h"

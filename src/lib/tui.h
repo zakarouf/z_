@@ -247,7 +247,7 @@ void z__tui_Window_clear_at(z__tui_Window *w, z__tui_attr  at);
 
 
 /* Draw Functions, does not change the cursor position.*/
-//void z__tui_Window_draw_point(z__tui_Window *w, z__tui_char c, z__u8 fg, z__u8 bg, z__tui_attr at);
+void z__tui_Window_draw_point(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char c, z__u8 fg, z__u8 bg);
 void z__tui_Window_draw_border(z__tui_Window *w, z__tui_Window_point p);
 
 void z__tui_Window_draw_line(z__tui_Window *w, z__u32 const x1, z__u32 const y1, z__u32 x2, z__u32 y2, z__tui_char c, z__u8 fg, z__u8 bg);
@@ -448,6 +448,11 @@ void z__tui_Window_delete(z__tui_Window *window)
     z__FREE(window->fg_data);
     z__FREE(window->bg_data);
     z__FREE(window->at_data);
+}
+
+void z__tui_Window_draw_point(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char c, z__u8 fg, z__u8 bg) {
+    z__u32 index = z__tui_Window_xy(w, x, y);
+    z__tui_Window_draw_point_i(w, index, c, fg, bg);
 }
 
 void z__tui_Window_draw_line(
