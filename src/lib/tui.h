@@ -45,6 +45,7 @@
 #include "arr.h"
 #include "vector.h"
 #include "string.h"
+#include <stdio.h>
 #include <string.h>
 #include <z_/print.h>
 #include <z_/string.h>
@@ -262,6 +263,7 @@ void z__tui_Window_draw_hline_fg(z__tui_Window *w, z__u32 x, z__u32 y, z__u32 le
 
 void z__tui_Window_draw_str(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg);
 void z__tui_Window_draw_str_right(z__tui_Window *w, z__u32 const x_end, z__u32 const y, z__tui_char const *str, z__u32 len, z__u8 fg, z__u8 bg);
+int z__tui_Window_draw_strfmt(z__tui_Window *w, z__u32 x, z__u32 y, const char *restrict fmt, ...);
 
 void z__tui_Window_draw_rect_fill_ch(
     z__tui_Window *w, z__u32 const x, z__u32 const y
@@ -450,7 +452,9 @@ void z__tui_Window_delete(z__tui_Window *window)
     z__FREE(window->at_data);
 }
 
-void z__tui_Window_draw_point(z__tui_Window *w, z__u32 const x, z__u32 const y, z__tui_char c, z__u8 fg, z__u8 bg) {
+void z__tui_Window_draw_point(z__tui_Window *w, z__u32 x, z__u32 y, z__tui_char c, z__u8 fg, z__u8 bg) {
+    if(x >= w->width) return;
+    if(y >= w->height) return;
     z__u32 index = z__tui_Window_xy(w, x, y);
     z__tui_Window_draw_point_i(w, index, c, fg, bg);
 }
@@ -781,6 +785,15 @@ int z__tui_Window_draw_strl_center(
 }
 */
 
+int z__tui_Window_draw_strfmt(z__tui_Window *w, z__u32 x, z__u32 y, const char *restrict fmt, ...)
+{
+    if(x >= w->width || y >= w->height) return 0;
+    va_list arg;
+    va_start(arg, fmt);
+    int len = vsnprintf(w->ch_data + z__tui_Window_xy(w, x, y), w->width - x, fmt, arg);
+    va_end(arg);
+    return len;
+}
 
 /************************************************************************
  *                              Display 
