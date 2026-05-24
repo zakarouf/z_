@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <float.h>
 
 /* Basic Types */
 // Unsigned
@@ -49,6 +50,32 @@ typedef ptrdiff_t z__ptrdiff;
 
 #define z__sizeof sizeof
 typedef size_t z__size;
+
+
+/* Max Values */
+#define z__i8MAX  INT8_MAX
+#define z__i16MAX INT16_MAX
+#define z__i32MAX INT32_MAX
+#define z__i64MAX INT64_MAX
+
+#define z__u8MAX  UINT32_MAX
+#define z__u16MAX UINT32_MAX
+#define z__u32MAX UINT32_MAX
+#define z__u64MAX UINT64_MAX
+
+#define z__f64MAX DBL_MAX
+#define z__f64MIN DBL_MIN 
+
+#define z__f32MAX FLT_MAX
+#define z__f32MIN FLT_MIN 
+
+#define z__sizeMAX SIZE_MAX
+
+/* Min Values */
+#define z__i8MIN  INT8_MIN
+#define z__i16MIN INT16_MIN
+#define z__i32MIN INT32_MIN
+#define z__i64MIN INT64_MIN
 
 
 #define TYPEDEFVEC(T, n) typedef T T##x##n[n]
@@ -115,7 +142,7 @@ TYPEDEFVEC(z__f64, 4);
 #undef TYPEDEFVEC
 
 #define z__cast(T, val) ((T)(val))
-#define z__constptr(T) T const * const 
+#define z__constptr(T) (T const * const)
 
 
 #endif // Header Guard
