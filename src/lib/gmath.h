@@ -25,4 +25,9 @@
 #include "vector.h"
 #include "matrix.h"
 
+#define z__gm_vec2_arith(op, res_x, res_y, v0_x, v0_y, v1_x, v1_y)\
+	{{res_x = v0_x op v1_x;}\
+	 {res_y = v0_y op v1_y;}}
+
+
 #endif
