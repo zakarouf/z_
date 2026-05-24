@@ -180,8 +180,20 @@ int z__str_isdecimal(char const *str, z__size len);
 const char *z__str_findchar(const char ch, char const *str, z__size len);
 
 /**
+ * Finds and returns a pointer to the last occurrence of char `ch`
+ * Returns NULL, if no such occurrences occurred.
  */
 const char *z__str_findchar_last(const char ch, char const *str, z__size len);
+
+// TODO: Docs
+z__size z__str_calc_linecount(char const *str, z__size size);
+z__size z__str_calc_column(const char *at, const char *str);
+z__size z__str_calc_lineend(char const *at, char const *end);
+char const *z__str_file_extension(char const *str, z__u32 str_size, z__u32 *size);
+z__i32 z__str_to_int(z__i64 *ret, char const *str, z__u32 size);
+z__i32 z__str_to_uint(z__u64 *ret, char const *str, z__u32 size);
+z__i32 z__str_to_double(z__f64 *ret, char const *str, z__u32 size);
+
 
 /**
  * Create a wrapper around a str. Use with caution if the `str` is no heap allocated.
@@ -403,6 +415,8 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 #define z__cstr(str) ((z__CStr){.data = str, .len = sizeof(str)-1})
 
+#define z__str(str) str, sizeof(str)-1
+
 #define z__StringList_init(...)\
     ({                                                                          \
         z__StringList tmp = z__StringList_new(zpp__Args_Count(__VA_ARGS__)+1);  \
@@ -437,6 +451,12 @@ void z__StringListArr_resize(z__StringListArr *lns, z__u32 newsize);
 
 #define z__PRIV__StringList_tmp_pushstr(v) z__StringList_push(&tmp, v, -1);
 #define z__PRIV__StringList_pushstr(...) zpp__Args_map(z__PRIV__StringList_tmp_pushstr, __VA_ARGS__)
+
+#define z__char_is_upper(ch) ( (ch) >= 'A' && (ch) <= 'Z' )
+#define z__char_is_lower(ch) ( (ch) >= 'a' && (ch) <= 'z' )
+#define z__char_is_alpha(ch) ( z__char_is_lower(ch) || z__char_is_upper(ch) ) 
+#define z__char_is_alnum(ch) ( z__char_is_alpha(ch) || z__char_is_digit(ch) )
+#define z__char_is_digit(ch)   ( (ch) >= '0' && (ch) <= '9' )
 
 #ifdef Z__IMPLEMENTATION
 #include <string.h>
@@ -628,6 +648,148 @@ int z__str_cmp_nocase(const char *s1, const char *s2, z__u32 len)
     }
     return 0;
 }
+
+/** Originaly taken from haywire **/
+z__size z__str_calc_linecount(char const *str, z__size size)
+{
+    z__size line_count = 0;
+    for (size_t i = 0; i < size; i++) {
+        if(str[i] == '\n') line_count += 1;
+    }
+    return line_count;
+}
+
+z__size z__str_calc_column(const char *at, const char *str)
+{
+    z__size col = 0;
+    while(at > str && *at != '\n') {
+        col += 1;
+        at -= 1;
+    }
+    return col;
+}
+
+z__size z__str_calc_lineend(char const *at, char const *end)
+{
+    z__size line_end = 0;
+    while (at < end && *at != '\n') {
+        line_end += 1;
+        at += 1;
+    }
+    return line_end;
+}
+
+char const *z__str_file_extension(char const *str, z__u32 str_size, z__u32 *size)
+{
+    char const* at = str + (str_size - 1);
+    while (at > str && *at != '.') {
+        at -= 1;
+    }
+    if(at != str + str_size - 1) { at += 1; // skip dot 
+                                            }
+    *size = (str + str_size) - at;
+    return at;
+}
+
+z__i32 z__str_to_int(z__i64 *ret, char const *str, z__u32 size)
+{
+    z__i64 result = 0;
+    z__i64 const sign = (*str == '-')? -1:1;
+    char const *end = str + size;
+
+    while (str < end && z__char_is_digit(*str)) {
+        char digit = *str - '0';
+        if(result > (z__i64MAX - digit)) {
+            *ret = sign * z__i64MAX;
+            return end - str;
+        }
+        result = (result * 10) + (digit);
+        str++;
+    }
+
+    *ret = sign * result;
+    return end - str;
+}
+
+
+z__i32 z__str_to_uint(z__u64 *ret, char const *str, z__u32 size)
+{
+    z__u64 result = 0;
+    char const *end = str + size;
+
+    while (str < end && z__char_is_digit(*str)) {
+        char digit = *str - '0';
+        if(result > (z__u64MAX - digit)) {
+            return end - str;
+        }
+        result = (result * 10) + (digit);
+        str++;
+    }
+    
+    *ret = result;
+    return end - str;
+}
+
+z__i32 z__str_to_double(z__f64 *ret, char const *str, z__u32 size)
+{
+    z__f64 result = 0.0;
+    z__i64 sign = 1;
+    if(*str == '-') { sign = -1; str++; }
+
+    char const *end = str + size;
+    
+    // Integer Part
+    while( str < end && z__char_is_digit(*str) ) {
+        z__f64 digit = *str - '0';
+        if(result > (z__f64MAX - digit)) {
+            *ret = sign * z__f64MAX;
+            return end - str;
+        }
+        result = (result * 10.0) + (digit);
+        str++;
+    }
+
+    // Fraction Part
+    if(*str == '.') {
+        str++;
+        z__u32 fraction = 0;
+        z__f64 pow = 1;
+        while( str < end && z__char_is_digit(*str) ) {
+            z__f64 digit = *str - '0';
+            fraction = (fraction * 10) + (digit);
+            pow *= 10;
+            str++;
+        }
+        result += ((z__f64)fraction/(z__f64)pow);
+    }
+    
+    // Exponent Part
+    if(*str == 'e' || *str == 'E') {
+        str++;
+        z__size exp = 0;
+        z__bool exp_sign = 1;
+        if(str < end && *str == '-') {
+            str ++;
+            exp_sign = 0;
+        }
+
+        z__u32 const left = z__str_to_uint(&exp, str, end - str);
+        str += left;
+        z__f64 power = 1.0f;
+        for (size_t i = 0; i < exp; i++) {
+            power *= 10.0;
+        }
+
+        if(exp_sign) { result *= power; }
+        else         { result /= power; }
+
+    }
+    
+    *ret = sign * result;
+    return end - str;
+}
+
+/** end source from haywire **/
 
 /*******/
 z__Str z__Str_newCopy(z__Str str)
