@@ -45,6 +45,8 @@
         y = _temp_x;                \
     }
 
+#define z__sign(T, v) ((T)((x) > 0) - (T)((x) < 0))
+
 #define z__is_in_range_unsafe(number, min, max) ((number >= min) & (number <= max))
 #define z__is_in_range(number, min, max)\
     ({                                                  \
