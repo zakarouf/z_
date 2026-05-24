@@ -24,6 +24,7 @@
 z__u8* z__u8Arr_pushStream(z__u8Arr *arr, void const *data, z__u32 data_size);
 int    z__u8Arr_loadStream(z__u8Arr *arr, z__size from, z__size size, void *data);
 z__u8* z__u8Arr_pushBlank(z__u8Arr *arr, z__u32 size);
+z__u32 z__u8Arr_pushfmt(z__u8Arr *arr, const char *restrict fmt, ...) __attribute__((format(printf, 2, 3)));
 
 #ifdef Z__IMPLEMENTATION
 #include "string.h"
@@ -60,6 +61,23 @@ int z__u8Arr_loadStream(z__u8Arr *arr, z__size from, z__size size, void *data)
    
     memcpy(data, arr->data + from, size);
     return 1;
+}
+
+z__u32 z__u8Arr_pushfmt(z__u8Arr *arr, const char *restrict fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    z__size const len = _get_string_fmt_required_size(fmt, args);
+
+    if((len) > (arr->len - arr->lenUsed)) {
+        z__Arr_expand(arr, (len + 1));
+    }
+
+    vsnprintf((char *)arr->data + arr->lenUsed, len + 1, fmt, args);
+    arr->lenUsed += len;
+
+    va_end(args);
+    return len;
 }
 
 #endif //Z__IMPLEMENTATION
